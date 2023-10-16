@@ -1,0 +1,113 @@
+{
+  "common": {
+    "company": "NearForm",
+    "copyright": "Droits d'auteur © ",
+    "learn-more": "En savoir plus",
+    "search": "Rechercher...",
+    "title": "NearForm Terrain de jeu pour les tests"
+  },
+  "navigation": {
+    "back": "Retour",
+    "back_to_main_page": "Retour à la page principale"
+  },
+  "scenarios": {
+    "description": "Description",
+    "scenario": "Scénario",
+    "information": "Information",
+    "add-remove": {
+      "title": "Ajouter/Supprimer",
+      "description": "Ajouter et supprimer dynamiquement des éléments de la page",
+      "information": "En plus de pouvoir ajouter et supprimer dynamiquement des éléments de la page, vous pouvez également ajouter `?initialElements=X` à l'URL pour générer des éléments au chargement.",
+      "add-element": "Ajouter un élément",
+      "remove-element": "Supprimer un élément"
+    },
+    "drag-and-drop": {
+      "title": "Glisser-déposer",
+      "description": "Faites glisser des éléments d'un côté de la page et déposez-les de l'autre côté.",
+      "information": "Vous pouvez faire glisser une quantité infinie de boîtes rouges et les déposer sur la boîte grise.",
+      "box": "Boîte",
+      "drag-me": "Faites glisser moi",
+      "drop-here": "Déposer ici",
+      "total-drops": "Total des dépôts"
+    },
+    "drag-and-drop-hard": {
+      "title": "Glisser-déposer (Difficile)",
+      "description": "Faites glisser les formes plus petites appropriées sur la forme plus grande.",
+      "information": "Un dépôt correct entraînera le passage de la forme au vert, sinon la forme passera au jaune. Note : les formes changent à chaque rechargement de la page",
+      "total-correct": "Total correct"
+    },
+    "dynamic-table": {
+      "title": "Tableau dynamique",
+      "description": "Trouvez les données dans la barre verte dans le tableau.",
+      "information": "Remarque : les données du tableau se rafraîchissent à chaque rechargement.",
+      "name": "Nom",
+      "cpu": "UC",
+      "memory": "Mémoire",
+      "network": "Réseau",
+      "disk": "Disque",
+      "chrome": "Chrome",
+      "docker": "Docker",
+      "system": "Système",
+      "slack": "Slack"
+    },
+    "login-form": {
+      "title": "Formulaire de connexion",
+      "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
+      "information": "Le nom d'utilisateur est '<strong>admin</strong>' et le mot de passe est '<strong>Passw0rd!</strong>'.",
+      "logged-in-message": "Vous êtes actuellement connecté !",
+      "invalid-credentials": "Les informations que vous avez fournies ne sont pas valides",
+      "login-button": "Se connecter",
+      "logout-button": "Se déconnecter",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe"
+    },
+    "various-inputs": {
+      "title": "Diverses entrées",
+      "description": "Tous les différents types d'entrées HTML sur cette page avec une sortie pouvant être utilisée pour vérifier",
+      "input": "Entrée",
+      "output": "Sortie",
+      "text": "Texte",
+      "password": "Mot de passe",
+      "number": "Nombre",
+      "date": "Date",
+      "textarea": "Zone de texte",
+      "clear-all": "Tout effacer"
+    },
+    "notification": {
+      "title": "Notification",
+      "description": "Vérifiez les alertes qui sont envoyées en tant que popup et font également partie de la page principale.",
+      "information": "Cliquez sur l'un des boutons pour déclencher une notification de ce type. La popup reste visible pendant 6 secondes.",
+      "generate-notification": "Générer une notification",
+      "type": {
+        "success": "Succès",
+        "info": "Info",
+        "warning": "Avertissement",
+        "error": "Erreur"
+      },
+      "messages": {
+        "success": "Il s'agit d'un message de notification réussi",
+        "info": "Il s'agit d'un message de notification d'information",
+        "warning": "Il s'agit d'un message de notification d'avertissement",
+        "error": "Il s'agit d'un message de notification d'erreur"
+      }
+    },
+    "radio-button": {
+      "title": "Bouton radio",
+      "description": "Un ensemble de boutons radio à cocher.",
+      "information": "Selon le premier bouton radio cliqué, un second ensemble apparaîtra et changera en fonction du premier cliqué.",
+      "first-set": "Couleurs primaires",
+      "second-set": "Couleurs secondaires",
+      "first": {
+        "first": "Rouge",
+        "second": "Bleu",
+        "third": "Jaune",
+        "fourth": "Blanc"
+      },
+      "second": {
+        "first": "Violet",
+        "second": "Orange",
+        "third": "Vert"
+      }
+    }
+  }
+}

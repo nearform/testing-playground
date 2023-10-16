@@ -1,0 +1,113 @@
+{
+  "common": {
+    "company": "NearForm",
+    "copyright": "Direitos autorais © ",
+    "learn-more": "Saiba mais",
+    "search": "Pesquisar...",
+    "title": "NearForm Playground de Testes"
+  },
+  "navigation": {
+    "back": "Voltar",
+    "back_to_main_page": "Voltar para a Página Principal"
+  },
+  "scenarios": {
+    "description": "Descrição",
+    "scenario": "Cenário",
+    "information": "Informação",
+    "add-remove": {
+      "title": "Adicionar/Remover",
+      "description": "Adicione e remova dinamicamente elementos da página",
+      "information": "Além de poder adicionar e remover dinamicamente elementos da página, você também pode adicionar `?initialElements=X` à URL para gerar elementos no carregamento.",
+      "add-element": "Adicionar Elemento",
+      "remove-element": "Remover Elemento"
+    },
+    "drag-and-drop": {
+      "title": "Arrastar e Soltar",
+      "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
+      "information": "Você pode arrastar uma quantidade infinita de caixas vermelhas e soltá-las na caixa cinza.",
+      "box": "Caixa",
+      "drag-me": "Arraste-me",
+      "drop-here": "Solte aqui",
+      "total-drops": "Total de Solturas"
+    },
+    "drag-and-drop-hard": {
+      "title": "Arrastar e Soltar (Difícil)",
+      "description": "Arraste as formas menores apropriadas para a forma maior.",
+      "information": "Um soltar correto resultará na forma ficando verde, caso contrário, a forma ficará amarela. Observação: as formas mudam a cada recarregamento.",
+      "total-correct": "Total Correto"
+    },
+    "dynamic-table": {
+      "title": "Tabela Dinâmica",
+      "description": "Encontre os dados na barra verde dentro da tabela.",
+      "information": "Observação: os dados da tabela se atualizam a cada recarregamento.",
+      "name": "Nome",
+      "cpu": "CPU",
+      "memory": "Memória",
+      "network": "Rede",
+      "disk": "Disco",
+      "chrome": "Chrome",
+      "docker": "Docker",
+      "system": "Sistema",
+      "slack": "Slack"
+    },
+    "login-form": {
+      "title": "Formulário de Login",
+      "description": "Um formulário de login típico com nome de usuário e senha.",
+      "information": "O nome de usuário é '<strong>admin</strong>' e a senha é '<strong>Passw0rd!</strong>'.",
+      "logged-in-message": "Você está atualmente logado!",
+      "invalid-credentials": "As credenciais fornecidas são inválidas",
+      "login-button": "Login",
+      "logout-button": "Logout",
+      "username": "Nome de Usuário",
+      "password": "Senha"
+    },
+    "various-inputs": {
+      "title": "Várias entradas",
+      "description": "Todos os diferentes tipos de entradas HTML nesta página com uma saída que pode ser usada para verificar",
+      "input": "Entrada",
+      "output": "Saída",
+      "text": "Texto",
+      "password": "Senha",
+      "number": "Número",
+      "date": "Data",
+      "textarea": "Área de Texto",
+      "clear-all": "Limpar Tudo"
+    },
+    "notification": {
+      "title": "Notificação",
+      "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",
+      "information": "Clique em qualquer um dos botões para acionar uma notificação desse tipo. O popup permanece visível por 6 segundos.",
+      "generate-notification": "Gerar Notificação",
+      "type": {
+        "success": "Sucesso",
+        "info": "Informação",
+        "warning": "Aviso",
+        "error": "Erro"
+      },
+      "messages": {
+        "success": "Esta é uma mensagem de notificação bem-sucedida",
+        "info": "Esta é uma mensagem de notificação de informação",
+        "warning": "Esta é uma mensagem de notificação de aviso",
+        "error": "Esta é uma mensagem de notificação de erro"
+      }
+    },
+    "radio-button": {
+      "title": "Botão de Rádio",
+      "description": "Um conjunto de botões de rádio para verificar.",
+      "information": "Dependendo do primeiro botão de rádio clicado, um segundo conjunto aparecerá e mudará com base no primeiro clicado.",
+      "first-set": "Cores Primárias",
+      "second-set": "Cores Secundárias",
+      "first": {
+        "first": "Vermelho",
+        "second": "Azul",
+        "third": "Amarelo",
+        "fourth": "Branco"
+      },
+      "second": {
+        "first": "Roxo",
+        "second": "Laranja",
+        "third": "Verde"
+      }
+    }
+  }
+}

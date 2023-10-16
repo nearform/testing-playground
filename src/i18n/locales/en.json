@@ -1,0 +1,113 @@
+{
+  "common": {
+    "company": "NearForm",
+    "copyright": "Copyright © ",
+    "learn-more": "Learn More",
+    "search": "Search...",
+    "title": "NearForm Testing Playground"
+  },
+  "navigation": {
+    "back": "Back",
+    "back_to_main_page": "Back to Main Page"
+  },
+  "scenarios": {
+    "description": "Description",
+    "scenario": "Scenario",
+    "information": "Information",
+    "add-remove": {
+      "title": "Add/Remove",
+      "description": "Dynamically add and remove elements from the page",
+      "information": "As well as being able to dynamically add and remove elements from the page, you can also add `?initialElements=X` onto the url to generate elements on load.",
+      "add-element": "Add Element",
+      "remove-element": "Remove Element"
+    },
+    "drag-and-drop": {
+      "title": "Drag and Drop",
+      "description": "Drag elements from one side of the page and drop them on the other side.",
+      "information": "You able to drag an infinite amount of the red boxes and drop them on the grey box.",
+      "box": "Box",
+      "drag-me": "Drag Me",
+      "drop-here": "Drop Here",
+      "total-drops": "Total Drops"
+    },
+    "drag-and-drop-hard": {
+      "title": "Drag and Drop (Hard)",
+      "description": "Drag the appropriate smaller shapes onto the larger shape.",
+      "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
+      "total-correct": "Total Correct"
+    },
+    "dynamic-table": {
+      "title": "Dynamic Table",
+      "description": "Find the data within the green bar within the table.",
+      "information": "Note: the table data refreshes on a reload.",
+      "name": "Name",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "network": "Network",
+      "disk": "Disk",
+      "chrome": "Chrome",
+      "docker": "Docker",
+      "system": "System",
+      "slack": "Slack"
+    },
+    "login-form": {
+      "title": "Login Form",
+      "description": "A typical login form with username and password.",
+      "information": "The username is '<strong>admin</strong>' and the password is '<strong>Passw0rd!</strong>'.",
+      "logged-in-message": "You are currently logged in!",
+      "invalid-credentials": "The credentials you have provided are invalid",
+      "login-button": "Login",
+      "logout-button": "Logout",
+      "username": "Username",
+      "password": "Password"
+    },
+    "various-inputs": {
+      "title": "Various Inputs",
+      "description": "There are all the different types of HTML inputs this page with an output that can be used to verify",
+      "input": "Input",
+      "output": "Output",
+      "text": "Text",
+      "password": "Password",
+      "number": "Number",
+      "date": "Date",
+      "textarea": "TextArea",
+      "clear-all": "Clear All"
+    },
+    "notification": {
+      "title": "Notification",
+      "description": "Check alerts that are sent as a popup and also part of the main page.",
+      "information": "Click on any of the buttons to trigger a notification that is of that type. The popup stays visible for 6 seconds.",
+      "generate-notification": "Generate Notification",
+      "type": {
+        "success": "Success",
+        "info": "Info",
+        "warning": "Warning",
+        "error": "Error"
+      },
+      "messages": {
+        "success": "This is a successful notification message",
+        "info": "This is an info notification message",
+        "warning": "This is a warning notification message",
+        "error": "This is an error notification message"
+      }
+    },
+    "radio-button": {
+      "title": "Radio Button",
+      "description": "A set of radio buttons to check against.",
+      "information": "Depending on the first radio button clicked, a second set will appear and change based on the first one clicked.",
+      "first-set": "Primary Colours",
+      "second-set": "Secondary Colours",
+      "first": {
+        "first": "Red",
+        "second": "Blue",
+        "third": "Yellow",
+        "fourth": "White"
+      },
+      "second": {
+        "first": "Purple",
+        "second": "Orange",
+        "third": "Green"
+      }
+    }
+  }
+}
