@@ -29,5 +29,11 @@
         "newlines-between": "always"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "excludedFiles": ["src/tests/**/*"]
+    }
+  ]
 }

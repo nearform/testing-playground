@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "vitest"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -27,6 +28,8 @@
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.0.0",
     "@types/node": "^20.8.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
@@ -40,9 +43,11 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.0",
+    "jsdom": "^22.1.0",
     "lint-staged": "^15.0.1",
     "prettier": "3.0.3",
     "typescript": "^5.2.2",
-    "vite": "latest"
+    "vite": "latest",
+    "vitest": "^0.34.6"
   }
 }
