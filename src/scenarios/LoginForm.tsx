@@ -96,7 +96,7 @@ const LoginForm = (): JSX.Element => {
               }}
               data-testid='password'
             />
-            {error.length > 0 && <Typography color='error'>{error}</Typography>}
+            {error.length > 0 && <Typography color='error' data-testid="error-invalid-credentials">{error}</Typography>}
             <Button
               variant='contained'
               color='primary'

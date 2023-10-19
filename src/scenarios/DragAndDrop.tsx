@@ -114,7 +114,7 @@ const DragAndDrop = (): JSX.Element => {
         </Grid>
       </Grid>
 
-      <Typography align='center' sx={{ marginTop: '10px' }}>
+      <Typography align='center' sx={{ marginTop: '10px' }} data-testid='total-drops'>
         {t('scenarios.drag-and-drop.total-drops')}: {dropCount}
       </Typography>
     </Layout>

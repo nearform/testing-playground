@@ -44,7 +44,7 @@ const RadioButton = (): JSX.Element => {
             {t('scenarios.radio-button.second-set')}:
           </Typography>
           <RadioGroup
-            aria-labelledby='demo-radio-buttons-group-label'
+            aria-labelledby='radio-button-group-2-label'
             defaultValue=''
             data-testid='radio-button-group-2'
           >
@@ -52,9 +52,8 @@ const RadioButton = (): JSX.Element => {
               <FormControlLabel
                 key={index}
                 value={label.toLowerCase()}
-                control={<Radio />}
+                control={<Radio data-testid={`radio-button-group-2-${index + 1}`} />}
                 label={label}
-                data-testid={`radio-button-${label.toLowerCase()}`}
               />
             ))}
           </RadioGroup>
@@ -77,23 +76,20 @@ const RadioButton = (): JSX.Element => {
             {t('scenarios.radio-button.first-set')}:
           </Typography>
           <RadioGroup
-            aria-labelledby='demo-radio-buttons-group-label'
+            aria-labelledby='radio-button-group-1-label'
             defaultValue=''
             value={firstRadioValue}
             onChange={handleFirstRadioChange}
             data-testid='radio-button-group-1'
           >
-            {['first', 'second', 'third', 'fourth'].map((value) => (
+            {['first', 'second', 'third', 'fourth'].map((value, index) => (
               <FormControlLabel
                 key={value}
                 value={t(`scenarios.radio-button.first.${value.toLowerCase()}`)}
-                control={<Radio />}
+                control={<Radio data-testid={`radio-button-group-1-${index + 1}`} />}
                 label={t(`scenarios.radio-button.first.${value.toLowerCase()}`)}
-                data-testid={`radio-button-${t(
-                  `scenarios.radio-button.first.${value.toLowerCase()}`
-                )}`}
                 // Disable the last radio button
-                disabled={value === 'fourth'}
+                disabled={index === 3}
               />
             ))}
           </RadioGroup>

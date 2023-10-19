@@ -152,7 +152,7 @@ const DynamicTable = (): JSX.Element => {
       <Box>
         <Typography
           sx={{ mt: 4, backgroundColor: 'yellowgreen', textAlign: 'center' }}
-          data-testid={t('scenarios.dynamic-table.target-scenario')}
+          data-testid='target-scenario'
         >
           {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}
           {findCpuPercentage(tableData, randomScenario?.name ?? '')}

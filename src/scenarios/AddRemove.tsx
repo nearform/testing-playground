@@ -15,19 +15,14 @@ const AddRemove = (): JSX.Element => {
   })
 
   const location = useLocation()
-  const initialElementsParam = new URLSearchParams(location.search).get(
-    'initialElements'
-  )
+  const initialElementsParam = new URLSearchParams(location.search).get('initialElements')
 
   useEffect(() => {
     if (elements.length === 0 && initialElementsParam != null) {
       const initialElementsCount = parseInt(initialElementsParam, 10)
       if (!isNaN(initialElementsCount) && initialElementsCount > 0) {
         setNextIndex(initialElementsCount - 1)
-        sessionStorage.setItem(
-          'nextIndex',
-          (initialElementsCount - 1).toString()
-        )
+        sessionStorage.setItem('nextIndex', (initialElementsCount - 1).toString())
         setElements(Array.from({ length: initialElementsCount }, (_, i) => i))
       }
     }
@@ -44,9 +39,7 @@ const AddRemove = (): JSX.Element => {
 
   const removeElement = (indexToRemove: number): void => {
     setElements((prevElements) => {
-      const newElements = prevElements.filter(
-        (element) => element !== indexToRemove
-      )
+      const newElements = prevElements.filter((element) => element !== indexToRemove)
       if (newElements.length === 0) {
         setNextIndex(0)
         sessionStorage.setItem('nextIndex', '0')
@@ -67,8 +60,8 @@ const AddRemove = (): JSX.Element => {
     return (
       <>
         <Button
-          variant='contained'
-          color='error'
+          variant="contained"
+          color="error"
           onClick={removeElement}
           data-testid={`remove-element-${index + 1}`}
         >
@@ -85,19 +78,10 @@ const AddRemove = (): JSX.Element => {
         description={t('scenarios.add-remove.description')}
         information={t('scenarios.add-remove.information')}
       />
-      <Button
-        variant='contained'
-        onClick={addElement}
-        sx={{ mb: 4 }}
-        data-testid='add-element'
-      >
+      <Button variant="contained" onClick={addElement} sx={{ mb: 4 }} data-testid="add-element">
         {t('scenarios.add-remove.add-element')}
       </Button>
-      <Box
-        display='grid'
-        gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
-        gap={2}
-      >
+      <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={2}>
         {elements.map((element, index) => (
           <div key={index}>
             <ElementComponent

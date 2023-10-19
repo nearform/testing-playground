@@ -50,6 +50,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 }
                 minRows={3}
                 style={{ width: '100%' }}
+                data-testid="textarea-input"
               />
                 )
               : (
@@ -60,6 +61,7 @@ const InputField: React.FC<InputFieldProps> = ({
                   onChange as React.ChangeEventHandler<HTMLInputElement>
                 }
                 sx={{ width: '100%' }}
+                inputProps={{ 'data-testid': `${type}-input` }}
               />
                 )}
           </Box>

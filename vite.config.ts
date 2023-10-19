@@ -4,7 +4,13 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/testing-playground',
   build: {
-    minify: false,
+    minify: false
   },
   plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/tests/setup.ts'],
+    testMatch: ['./src/tests/**/*.test.tsx'],
+    globals: true
+  }
 })
