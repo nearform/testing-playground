@@ -2,7 +2,7 @@ import { ThemeProvider } from '@emotion/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 import i18n from './i18n/i18nConfig'
 import Router from './Router'
@@ -15,11 +15,11 @@ if (rootElement !== null) {
     <React.StrictMode>
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={Theme}>
-          <BrowserRouter basename='/testing-playground'>
+          <HashRouter basename={import.meta.env.BASE_URL}>
             <Router />
-          </BrowserRouter>
+          </HashRouter>
         </ThemeProvider>
       </I18nextProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
   )
 }
