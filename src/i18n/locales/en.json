@@ -19,6 +19,7 @@
       "description": "Dynamically add and remove elements from the page",
       "information": "As well as being able to dynamically add and remove elements from the page, you can also add `?initialElements=X` onto the url to generate elements on load.",
       "add-element": "Add Element",
+      "clear-storage": "Clear Storage",
       "remove-element": "Remove Element"
     },
     "drag-and-drop": {

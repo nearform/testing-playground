@@ -49,4 +49,25 @@ describe('AddRemove component', () => {
     const removeSecondElementButton = screen.getByTestId('remove-element-2')
     expect(removeSecondElementButton).toBeInTheDocument()
   })
+
+  it('clears storage when the "Clear Storage" button is clicked', () => {
+    TestRenderer(<AddRemove />)
+
+    // Add an element first
+    const addButton = screen.getByTestId('add-element')
+    fireEvent.click(addButton)
+    const removeElementButton = screen.queryByTestId('remove-element-1')
+    expect(removeElementButton).toBeInTheDocument()
+
+    // Click the "Clear Storage" button
+    const clearStorageButton = screen.getByTestId('clear-storage')
+    fireEvent.click(clearStorageButton)
+
+    // Check if storage is cleared
+    expect(sessionStorage.getItem('elements')).toEqual('[]')
+    expect(sessionStorage.getItem('nextIndex')).toBeNull()
+
+    // Check if state is updated
+    expect(removeElementButton).not.toBeInTheDocument()
+  })
 })

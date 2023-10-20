@@ -1,4 +1,4 @@
-name: Deploy
+name: PR Tests
 
 on:
   pull_request:
