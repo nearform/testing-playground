@@ -19,6 +19,7 @@
       "description": "Ajouter et supprimer dynamiquement des éléments de la page",
       "information": "En plus de pouvoir ajouter et supprimer dynamiquement des éléments de la page, vous pouvez également ajouter `?initialElements=X` à l'URL pour générer des éléments au chargement.",
       "add-element": "Ajouter un élément",
+      "clear-storage": "Effacer le stockage",
       "remove-element": "Supprimer un élément"
     },
     "drag-and-drop": {

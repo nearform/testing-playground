@@ -8,7 +8,11 @@ import PageSetup from '../components/PageSetup'
 
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
-  const [elements, setElements] = useState<number[]>([])
+  const [elements, setElements] = useState<number[]>(() => {
+    // Retrieve elements from sessionStorage
+    const storedElements = sessionStorage.getItem('elements')
+    return storedElements !== null ? JSON.parse(storedElements) : []
+  })
   const [nextIndex, setNextIndex] = useState(() => {
     const storedIndex = sessionStorage.getItem('nextIndex')
     return storedIndex !== null ? parseInt(storedIndex, 10) : 0
@@ -27,6 +31,11 @@ const AddRemove = (): JSX.Element => {
       }
     }
   }, [elements, initialElementsParam])
+
+  useEffect(() => {
+    // Save elements to sessionStorage whenever it changes
+    sessionStorage.setItem('elements', JSON.stringify(elements))
+  }, [elements])
 
   const addElement = (): void => {
     setNextIndex((prevIndex) => {
@@ -48,6 +57,12 @@ const AddRemove = (): JSX.Element => {
     })
   }
 
+  const clearStorage = (): void => {
+    sessionStorage.clear()
+    setElements([]) // Clear elements in state as well
+    setNextIndex(0)
+  }
+
   const ElementComponent = ({
     index,
     removeElement
@@ -60,8 +75,8 @@ const AddRemove = (): JSX.Element => {
     return (
       <>
         <Button
-          variant="contained"
-          color="error"
+          variant='contained'
+          color='error'
           onClick={removeElement}
           data-testid={`remove-element-${index + 1}`}
         >
@@ -78,10 +93,15 @@ const AddRemove = (): JSX.Element => {
         description={t('scenarios.add-remove.description')}
         information={t('scenarios.add-remove.information')}
       />
-      <Button variant="contained" onClick={addElement} sx={{ mb: 4 }} data-testid="add-element">
-        {t('scenarios.add-remove.add-element')}
-      </Button>
-      <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(200px, 1fr))" gap={2}>
+      <Box display="flex" mb={4}>
+        <Button variant="contained" onClick={addElement} data-testid="add-element" sx={{ mr: 2 }}>
+          {t('scenarios.add-remove.add-element')}
+        </Button>
+        <Button variant="contained" onClick={clearStorage} data-testid="clear-storage" color="secondary">
+        {t('scenarios.add-remove.clear-storage')}
+        </Button>
+      </Box>
+      <Box display='grid' gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))' gap={2}>
         {elements.map((element, index) => (
           <div key={index}>
             <ElementComponent
