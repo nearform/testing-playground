@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from './customRender'
-import RadioButton from '../scenarios/RadioButton'
+import RadioButton from '../scenarios/RadioButton.scenario'
 
 describe('RadioButton component', () => {
   beforeEach(() => {
@@ -31,7 +31,9 @@ describe('RadioButton component', () => {
     expect(fourthRadioButton).not.toBeChecked()
 
     const secondRadioFirstButton = screen.getByRole('radio', { name: 'Purple' })
-    const secondRadioSecondButton = screen.getByRole('radio', { name: 'Orange' })
+    const secondRadioSecondButton = screen.getByRole('radio', {
+      name: 'Orange'
+    })
 
     fireEvent.click(secondRadioFirstButton)
     expect(secondRadioFirstButton).toBeChecked()

@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from './customRender'
-import DragAndDropHard from '../scenarios/DragAndDropHard'
+import DragAndDropHard from '../scenarios/DragAndDropHard.scenario'
 
 describe('DragAndDropHard component', () => {
   beforeEach(() => {
@@ -19,9 +19,15 @@ describe('DragAndDropHard component', () => {
   it('increases the count when moved to the correct shape', async () => {
     TestRenderer(<DragAndDropHard />)
     // Get the first draggable square with data-testid starting with 'draggable-'
-    const firstDraggable = screen.getByTestId((id: string) => id.startsWith('draggable-') && id.endsWith('-1'))
+    const firstDraggable = screen.getByTestId(
+      (id: string) => id.startsWith('draggable-') && id.endsWith('-1')
+    )
     // Determine the drop target based on the shape of the first draggable square
-    const dropTargetTestId = (((firstDraggable as HTMLElement)?.getAttribute('data-testid')?.includes('circle')) ?? false) ? 'drop-circle' : 'drop-square'
+    const dropTargetTestId = (firstDraggable
+      ?.getAttribute('data-testid')
+      ?.includes('circle') as boolean)
+      ? 'drop-circle'
+      : 'drop-square'
     const dropTarget = screen.getByTestId(dropTargetTestId)
     await act(async () => {
       fireEvent.dragStart(firstDraggable, {
@@ -36,7 +42,9 @@ describe('DragAndDropHard component', () => {
       })
     })
     await waitFor(() => {
-      expect(screen.getByTestId('total-count')).toHaveTextContent('Total Correct: 1')
+      expect(screen.getByTestId('total-count')).toHaveTextContent(
+        'Total Correct: 1'
+      )
     })
   })
 })

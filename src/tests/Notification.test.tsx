@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from './customRender'
-import Notification from '../scenarios/Notification'
+import Notification from '../scenarios/Notification.scenario'
 
 describe('Notification component', () => {
   beforeEach(() => {
@@ -28,7 +28,10 @@ describe('Notification component', () => {
     await waitFor(() => {
       expect(screen.getByTestId('notification-error')).toBeInTheDocument()
     })
-    await waitFor(() => { expect(screen.queryByTestId('notification-error')).toBeNull() },
+    await waitFor(
+      () => {
+        expect(screen.queryByTestId('notification-error')).toBeNull()
+      },
       { timeout: 6000 } // Notification displays for 6 seconds
     )
   }, 10000)

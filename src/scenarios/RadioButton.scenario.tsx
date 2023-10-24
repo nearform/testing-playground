@@ -52,7 +52,9 @@ const RadioButton = (): JSX.Element => {
               <FormControlLabel
                 key={index}
                 value={label.toLowerCase()}
-                control={<Radio data-testid={`radio-button-group-2-${index + 1}`} />}
+                control={
+                  <Radio data-testid={`radio-button-group-2-${index + 1}`} />
+                }
                 label={label}
               />
             ))}
@@ -86,7 +88,9 @@ const RadioButton = (): JSX.Element => {
               <FormControlLabel
                 key={value}
                 value={t(`scenarios.radio-button.first.${value.toLowerCase()}`)}
-                control={<Radio data-testid={`radio-button-group-1-${index + 1}`} />}
+                control={
+                  <Radio data-testid={`radio-button-group-1-${index + 1}`} />
+                }
                 label={t(`scenarios.radio-button.first.${value.toLowerCase()}`)}
                 // Disable the last radio button
                 disabled={index === 3}

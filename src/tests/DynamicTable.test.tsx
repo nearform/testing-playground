@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import '@testing-library/jest-dom'
 
 import TestRenderer from './customRender'
-import DynamicTable from '../scenarios/DynamicTable'
+import DynamicTable from '../scenarios/DynamicTable.scenario'
 
 describe('DynamicTable component', () => {
   beforeEach(() => {
@@ -17,8 +17,12 @@ describe('DynamicTable component', () => {
     expect(screen.getByTestId('dynamic-table')).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-name-header')).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-cpu-header')).toBeInTheDocument()
-    expect(screen.getByTestId('dynamic-table-memory-header')).toBeInTheDocument()
-    expect(screen.getByTestId('dynamic-table-network-header')).toBeInTheDocument()
+    expect(
+      screen.getByTestId('dynamic-table-memory-header')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByTestId('dynamic-table-network-header')
+    ).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-disk-header')).toBeInTheDocument()
   })
 
@@ -29,7 +33,9 @@ describe('DynamicTable component', () => {
     expect(screen.getByTestId('dynamic-table-row-name-0')).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-row-cpu-0')).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-row-memory-0')).toBeInTheDocument()
-    expect(screen.getByTestId('dynamic-table-row-network-0')).toBeInTheDocument()
+    expect(
+      screen.getByTestId('dynamic-table-row-network-0')
+    ).toBeInTheDocument()
     expect(screen.getByTestId('dynamic-table-row-disk-0')).toBeInTheDocument()
   })
 

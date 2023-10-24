@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from './customRender'
-import DragAndDrop from '../scenarios/DragAndDrop'
+import DragAndDrop from '../scenarios/DragAndDrop.scenario'
 
 describe('DragAndDrop component', () => {
   beforeEach(() => {
@@ -25,7 +25,9 @@ describe('DragAndDrop component', () => {
       dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') }
     })
 
-    expect(screen.getByTestId('total-drops')).toHaveTextContent('Total Drops: 1')
+    expect(screen.getByTestId('total-drops')).toHaveTextContent(
+      'Total Drops: 1'
+    )
   })
 
   it('displays the correct total drops', () => {
@@ -40,6 +42,8 @@ describe('DragAndDrop component', () => {
         dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') }
       })
     }
-    expect(screen.getByTestId('total-drops')).toHaveTextContent('Total Drops: 3')
+    expect(screen.getByTestId('total-drops')).toHaveTextContent(
+      'Total Drops: 3'
+    )
   })
 })
