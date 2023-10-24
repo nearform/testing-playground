@@ -4,7 +4,7 @@ import '@testing-library/jest-dom'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from './customRender'
-import LoginForm from '../scenarios/LoginForm'
+import LoginForm from '../scenarios/LoginForm.scenario'
 
 describe('LoginForm component', () => {
   beforeEach(() => {
@@ -31,8 +31,14 @@ describe('LoginForm component', () => {
     TestRenderer(<LoginForm />)
 
     // Enter valid credentials and click login
-    fireEvent.change(screen.getByTestId('username').querySelector('input') as Element, { target: { value: 'admin' } })
-    fireEvent.change(screen.getByTestId('password').querySelector('input') as Element, { target: { value: 'Passw0rd!' } })
+    fireEvent.change(
+      screen.getByTestId('username').querySelector('input') as Element,
+      { target: { value: 'admin' } }
+    )
+    fireEvent.change(
+      screen.getByTestId('password').querySelector('input') as Element,
+      { target: { value: 'Passw0rd!' } }
+    )
     fireEvent.click(screen.getByTestId('login-button'))
 
     // Wait for the success message and logout button to appear
@@ -50,13 +56,21 @@ describe('LoginForm component', () => {
     TestRenderer(<LoginForm />)
 
     // Enter invalid credentials and click login
-    fireEvent.change(screen.getByTestId('username').querySelector('input') as Element, { target: { value: 'invalidUser' } })
-    fireEvent.change(screen.getByTestId('password').querySelector('input') as Element, { target: { value: 'invalidPassword' } })
+    fireEvent.change(
+      screen.getByTestId('username').querySelector('input') as Element,
+      { target: { value: 'invalidUser' } }
+    )
+    fireEvent.change(
+      screen.getByTestId('password').querySelector('input') as Element,
+      { target: { value: 'invalidPassword' } }
+    )
     fireEvent.click(screen.getByTestId('login-button'))
 
     // Wait for the error message to appear
     await waitFor(() => {
-      expect(screen.getByTestId('error-invalid-credentials')).toBeInTheDocument()
+      expect(
+        screen.getByTestId('error-invalid-credentials')
+      ).toBeInTheDocument()
     })
   })
 
@@ -64,8 +78,14 @@ describe('LoginForm component', () => {
     TestRenderer(<LoginForm />)
 
     // Log in first
-    fireEvent.change(screen.getByTestId('username').querySelector('input') as Element, { target: { value: 'admin' } })
-    fireEvent.change(screen.getByTestId('password').querySelector('input') as Element, { target: { value: 'Passw0rd!' } })
+    fireEvent.change(
+      screen.getByTestId('username').querySelector('input') as Element,
+      { target: { value: 'admin' } }
+    )
+    fireEvent.change(
+      screen.getByTestId('password').querySelector('input') as Element,
+      { target: { value: 'Passw0rd!' } }
+    )
     fireEvent.click(screen.getByTestId('login-button'))
 
     // Wait for the success message and logout button to appear
@@ -78,8 +98,12 @@ describe('LoginForm component', () => {
     fireEvent.click(screen.getByTestId('logout-button'))
 
     // Ensure login form is rendered after logout
-    expect(screen.getByTestId('username').querySelector('input') as Element).toBeInTheDocument()
-    expect(screen.getByTestId('password').querySelector('input') as Element).toBeInTheDocument()
+    expect(
+      screen.getByTestId('username').querySelector('input') as Element
+    ).toBeInTheDocument()
+    expect(
+      screen.getByTestId('password').querySelector('input') as Element
+    ).toBeInTheDocument()
     expect(screen.getByTestId('login-button')).toBeInTheDocument()
 
     // Ensure success message and logout button are not rendered after logout

@@ -19,14 +19,19 @@ const AddRemove = (): JSX.Element => {
   })
 
   const location = useLocation()
-  const initialElementsParam = new URLSearchParams(location.search).get('initialElements')
+  const initialElementsParam = new URLSearchParams(location.search).get(
+    'initialElements'
+  )
 
   useEffect(() => {
     if (elements.length === 0 && initialElementsParam != null) {
       const initialElementsCount = parseInt(initialElementsParam, 10)
       if (!isNaN(initialElementsCount) && initialElementsCount > 0) {
         setNextIndex(initialElementsCount - 1)
-        sessionStorage.setItem('nextIndex', (initialElementsCount - 1).toString())
+        sessionStorage.setItem(
+          'nextIndex',
+          (initialElementsCount - 1).toString()
+        )
         setElements(Array.from({ length: initialElementsCount }, (_, i) => i))
       }
     }
@@ -48,7 +53,9 @@ const AddRemove = (): JSX.Element => {
 
   const removeElement = (indexToRemove: number): void => {
     setElements((prevElements) => {
-      const newElements = prevElements.filter((element) => element !== indexToRemove)
+      const newElements = prevElements.filter(
+        (element) => element !== indexToRemove
+      )
       if (newElements.length === 0) {
         setNextIndex(0)
         sessionStorage.setItem('nextIndex', '0')
@@ -93,15 +100,29 @@ const AddRemove = (): JSX.Element => {
         description={t('scenarios.add-remove.description')}
         information={t('scenarios.add-remove.information')}
       />
-      <Box display="flex" mb={4}>
-        <Button variant="contained" onClick={addElement} data-testid="add-element" sx={{ mr: 2 }}>
+      <Box display='flex' mb={4}>
+        <Button
+          variant='contained'
+          onClick={addElement}
+          data-testid='add-element'
+          sx={{ mr: 2 }}
+        >
           {t('scenarios.add-remove.add-element')}
         </Button>
-        <Button variant="contained" onClick={clearStorage} data-testid="clear-storage" color="secondary">
-        {t('scenarios.add-remove.clear-storage')}
+        <Button
+          variant='contained'
+          onClick={clearStorage}
+          data-testid='clear-storage'
+          color='secondary'
+        >
+          {t('scenarios.add-remove.clear-storage')}
         </Button>
       </Box>
-      <Box display='grid' gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))' gap={2}>
+      <Box
+        display='grid'
+        gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
+        gap={2}
+      >
         {elements.map((element, index) => (
           <div key={index}>
             <ElementComponent

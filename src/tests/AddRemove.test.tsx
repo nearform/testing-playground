@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from './customRender'
-import AddRemove from '../scenarios/AddRemove'
+import AddRemove from '../scenarios/AddRemove.scenario'
 
 describe('AddRemove component', () => {
   beforeEach(() => {

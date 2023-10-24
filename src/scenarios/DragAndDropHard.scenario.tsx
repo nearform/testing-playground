@@ -94,10 +94,15 @@ const DragAndDropHard = (): JSX.Element => {
     }
   }
 
-  const handleDrop = (e: React.DragEvent, targetShape: 'circle' | 'square'): void => {
+  const handleDrop = (
+    e: React.DragEvent,
+    targetShape: 'circle' | 'square'
+  ): void => {
     e.preventDefault()
     const shapeId = e.dataTransfer?.getData('shapeId') ?? ''
-    const draggedShape = shapes.find((shape) => shape.id === parseInt(shapeId, 10))
+    const draggedShape = shapes.find(
+      (shape) => shape.id === parseInt(shapeId, 10)
+    )
 
     if (draggedShape != null) {
       const updatedShapes: Shape[] = [...shapes]
@@ -107,13 +112,17 @@ const DragAndDropHard = (): JSX.Element => {
         setTotalCorrectCount((prevCount) => prevCount + 1)
 
         // Handle the possibility of find returning undefined
-        const updatedShape = updatedShapes.find((shape) => shape.id === draggedShape.id)
+        const updatedShape = updatedShapes.find(
+          (shape) => shape.id === draggedShape.id
+        )
         if (updatedShape != null) {
           updatedShape.color = 'green'
         }
       } else {
         // If dropped onto the wrong shape, turn the shape yellow
-        const updatedShape = updatedShapes.find((shape) => shape.id === draggedShape.id)
+        const updatedShape = updatedShapes.find(
+          (shape) => shape.id === draggedShape.id
+        )
         if (updatedShape != null) {
           updatedShape.color = 'yellow'
         }
@@ -131,26 +140,35 @@ const DragAndDropHard = (): JSX.Element => {
         information={t('scenarios.drag-and-drop-hard.information')}
       />
       <Container>
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid container justifyContent='center' alignItems='center'>
           {shapes.map((shape) => (
-            <DraggableShape key={shape.id} shape={shape} onDragStart={handleDragStart} />
+            <DraggableShape
+              key={shape.id}
+              shape={shape}
+              onDragStart={handleDragStart}
+            />
           ))}
         </Grid>
-        <Grid container justifyContent="center" alignItems="center" marginTop={2}>
+        <Grid
+          container
+          justifyContent='center'
+          alignItems='center'
+          marginTop={2}
+        >
           <DropTarget
-            shape="circle"
+            shape='circle'
             onDrop={(e) => {
               handleDrop(e, 'circle')
             }}
           />
           <DropTarget
-            shape="square"
+            shape='square'
             onDrop={(e) => {
               handleDrop(e, 'square')
             }}
           />
         </Grid>
-        <Box marginTop={2} textAlign="center" data-testid="total-count">
+        <Box marginTop={2} textAlign='center' data-testid='total-count'>
           {t('scenarios.drag-and-drop-hard.total-correct')}: {totalCorrectCount}
         </Box>
       </Container>
