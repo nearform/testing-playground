@@ -22,6 +22,20 @@
       "clear-storage": "Limpar Armazenamento",
       "remove-element": "Remover Elemento"
     },
+    "check-box": {
+      "title": "Checkbox",
+      "description": "Cenários para testes utilizando checkbox.",
+      "information": "-",
+      "scenario-form": "Formulário com campo obrigatório",
+      "checked": "Selecionado",
+      "required": "Obrigatório",
+      "required-message": "Marque o campo obrigatório.",
+      "disabled": "Desativado",
+      "scenario-icons": "Checkbox como ícones",
+      "scenario-tree": "Seleção em árvore",
+      "parent": "Pai",
+      "child": "Filho"
+    },
     "drag-and-drop": {
       "title": "Arrastar e Soltar",
       "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
