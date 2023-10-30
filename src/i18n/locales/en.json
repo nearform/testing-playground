@@ -22,6 +22,20 @@
       "clear-storage": "Clear Storage",
       "remove-element": "Remove Element"
     },
+    "check-box": {
+      "title": "Checkbox",
+      "description": "A set of checkbox scenarios to test against.",
+      "information": "-",
+      "scenario-form": "Scenario within a form",
+      "checked": "Checked",
+      "required": "Required",
+      "required-message": "Please select required field.",
+      "disabled": "Disabled",
+      "scenario-icons": "Scenario with checkbox as icons",
+      "scenario-tree": "Scenario with tree selection",
+      "parent": "Parent",
+      "child": "Child"
+    },
     "drag-and-drop": {
       "title": "Drag and Drop",
       "description": "Drag elements from one side of the page and drop them on the other side.",

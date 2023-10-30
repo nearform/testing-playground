@@ -22,6 +22,20 @@
       "clear-storage": "Effacer le stockage",
       "remove-element": "Supprimer un élément"
     },
+    "check-box": {
+      "title": "Checkbox",
+      "description": "Tester des scénarios à l'aide d'une case à cocher.",
+      "information": "-",
+      "scenario-form": "Formulaire avec champ obligatoire",
+      "checked": "Choisi",
+      "required": "Obligatoire",
+      "required-message": "Marquez le champ obligatoire.",
+      "disabled": "Désactivé",
+      "scenario-icons": "Checkbox comme des icônes",
+      "scenario-tree": "Sélection d'arbre",
+      "parent": "Père",
+      "child": "Fils"
+    },
     "drag-and-drop": {
       "title": "Glisser-déposer",
       "description": "Faites glisser des éléments d'un côté de la page et déposez-les de l'autre côté.",
