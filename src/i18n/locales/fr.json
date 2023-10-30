@@ -65,6 +65,16 @@
       "system": "Système",
       "slack": "Slack"
     },
+    "file-upload": {
+      "title": "Téléchargement de fichier",
+      "description": "En utilisant des composants de navigateur courants, téléchargez un fichier.",
+      "information": "Le téléchargement peut prendre entre 1 et 10 secondes, indépendamment de la taille, car la fonction de téléchargement est simulée.",
+      "please-select-file": "Veuillez sélectionner un fichier.",
+      "select-file": "Sélectionner un fichier",
+      "selected-file": "Fichier : \"{{ filename }}\"",
+      "upload-button": "Télécharger",
+      "upload-success": "Fichier \"{{ filename }}\" téléchargé avec succès !"
+    },
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",

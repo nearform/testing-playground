@@ -65,6 +65,16 @@
       "system": "System",
       "slack": "Slack"
     },
+    "file-upload": {
+      "title": "File Upload",
+      "description": "Using common browser components, upload a file.",
+      "information": "The upload can be anywhere between 1-10 seconds regardless of size as the upload function is mocked.",
+      "please-select-file": "Please select a file.",
+      "select-file": "Select File",
+      "selected-file": "File: \"{{ filename }}\"",
+      "upload-button": "Upload",
+      "upload-success": "File \"{{ filename }}\" uploaded successfully!"
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
