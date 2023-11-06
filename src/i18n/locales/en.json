@@ -88,6 +88,14 @@
       "textarea": "TextArea",
       "clear-all": "Clear All"
     },
+    "slider-page": {
+      "title": "Sliders",
+      "description": "A range of sliders for you to interact with.",
+      "basic-slider": "Basic Slider",
+      "range-slider": "Slider with Range",
+      "slider-with-input": "Slider with input",
+      "value": "Value"
+    },
     "notification": {
       "title": "Notification",
       "description": "Check alerts that are sent as a popup and also part of the main page.",

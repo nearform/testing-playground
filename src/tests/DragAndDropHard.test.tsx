@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, act } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import TestRenderer from './customRender'
+import TestRenderer from './TestRenderer'
 import DragAndDropHard from '../scenarios/DragAndDropHard.scenario'
 
 describe('DragAndDropHard component', () => {

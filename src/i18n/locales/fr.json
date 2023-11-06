@@ -88,6 +88,14 @@
       "textarea": "Zone de texte",
       "clear-all": "Tout effacer"
     },
+    "slider-page": {
+      "title": "Curseurs",
+      "description": "Une gamme de curseurs avec lesquels interagir.",
+      "basic-slider": "Curseur de base",
+      "range-slider": "Curseur avec Plage",
+      "slider-with-input": "Curseur avec entrée",
+      "value": "Valeur"
+    },
     "notification": {
       "title": "Notification",
       "description": "Vérifiez les alertes qui sont envoyées en tant que popup et font également partie de la page principale.",

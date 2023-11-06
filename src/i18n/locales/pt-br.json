@@ -88,6 +88,14 @@
       "textarea": "Área de Texto",
       "clear-all": "Limpar Tudo"
     },
+    "slider-page": {
+      "title": "Deslizadores",
+      "description": "Uma variedade de deslizadores para interação.",
+      "basic-slider": "Deslizador Básico",
+      "range-slider": "Deslizador com Faixa",
+      "slider-with-input": "Deslizador com Entrada",
+      "value": "Valor"
+    },
     "notification": {
       "title": "Notificação",
       "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",

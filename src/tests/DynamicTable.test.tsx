@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import '@testing-library/jest-dom'
 
-import TestRenderer from './customRender'
+import TestRenderer from './TestRenderer'
 import DynamicTable from '../scenarios/DynamicTable.scenario'
 
 describe('DynamicTable component', () => {
