@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import TestRenderer from './customRender'
+import TestRenderer from './TestRenderer'
 import RadioButton from '../scenarios/RadioButton.scenario'
 
 describe('RadioButton component', () => {

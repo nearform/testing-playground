@@ -3,7 +3,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import TestRenderer from './customRender'
+import TestRenderer from './TestRenderer'
 import LoginForm from '../scenarios/LoginForm.scenario'
 
 describe('LoginForm component', () => {
