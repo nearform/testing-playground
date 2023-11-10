@@ -1,5 +1,7 @@
+import ClearIcon from '@mui/icons-material/Clear'
 import {
   Box,
+  Button,
   Typography,
   TextField,
   Select,
@@ -31,7 +33,7 @@ export default function Index (): JSX.Element {
     return {
       title: t(`scenarios.${link}.title`),
       description: t(`scenarios.${link}.description`),
-      link: transformLink(link),
+      link,
       rating: parseInt(t(`scenarios.${link}.rating`))
     }
   })
@@ -72,27 +74,55 @@ export default function Index (): JSX.Element {
             <TextField
               label={t('common.search')}
               variant='outlined'
+              value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value)
               }}
               sx={{ minWidth: '220px' }}
               data-testid='search-input'
+              InputProps={{
+                endAdornment: searchTerm.length > 0 && (
+                  <Button
+                    variant='text'
+                    color='inherit'
+                    size='small'
+                    onClick={() => {
+                      setSearchTerm('')
+                    }}
+                  >
+                    <ClearIcon />
+                  </Button>
+                )
+              }}
             />
             <FormControl>
-              <InputLabel>{t('common.select-difficulty')}</InputLabel>
+              <InputLabel id='select-difficulty-label'>
+                {t('common.select-difficulty')}
+              </InputLabel>
               <Select
-                value={selectedDifficulty ?? ''}
+                labelId='select-difficulty-label'
+                label='select-difficulty'
+                value={selectedDifficulty ?? 0}
                 onChange={(e) => {
                   setSelectedDifficulty(
-                    e.target.value === '' ? null : Number(e.target.value)
+                    e.target.value === 0 ? null : Number(e.target.value)
                   )
                 }}
                 sx={{ minWidth: '240px', ml: 1 }}
+                data-testid='select-difficulty'
               >
-                <MenuItem value=''>{t('common.all')}</MenuItem>
-                <MenuItem value={1}>{t('common.easy')}</MenuItem>
-                <MenuItem value={2}>{t('common.medium')}</MenuItem>
-                <MenuItem value={3}>{t('common.hard')}</MenuItem>
+                <MenuItem value={0} data-testid='select-difficulty-all'>
+                  {t('common.all')}
+                </MenuItem>
+                <MenuItem value={1} data-testid='select-difficulty-easy'>
+                  {t('common.easy')}
+                </MenuItem>
+                <MenuItem value={2} data-testid='select-difficulty-medium'>
+                  {t('common.medium')}
+                </MenuItem>
+                <MenuItem value={3} data-testid='select-difficulty-hard'>
+                  {t('common.hard')}
+                </MenuItem>
               </Select>
             </FormControl>
           </Box>
