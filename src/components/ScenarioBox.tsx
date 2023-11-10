@@ -1,5 +1,5 @@
 import { Circle } from '@mui/icons-material'
-import { Box, Rating, Typography } from '@mui/material'
+import { Box, Rating, Tooltip, Typography } from '@mui/material'
 import { red, orange, green } from '@mui/material/colors'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,14 +10,6 @@ interface ScenarioBoxProps {
   description: string
   link: string
   rating: number
-}
-
-function truncateDescription (description: string, limit: number = 50): string {
-  if (description.length <= limit) {
-    return description
-  } else {
-    return description.slice(0, limit) + '...'
-  }
 }
 
 const ScenarioBox: React.FC<ScenarioBoxProps> = ({
@@ -88,9 +80,21 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
             alignItems: 'flex-end'
           }}
         >
-          <Typography variant='body2' paragraph>
-            {truncateDescription(description)}
-          </Typography>
+          <Tooltip title={description} arrow>
+            <Typography
+              variant='body2'
+              paragraph
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical'
+              }}
+            >
+              {description}
+            </Typography>
+          </Tooltip>
         </Box>
       </Box>
     </Link>
