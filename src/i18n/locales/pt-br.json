@@ -141,6 +141,15 @@
         "second": "Laranja",
         "third": "Verde"
       }
+    },
+    "tooltip-page": {
+      "title": "Tooltip",
+      "description": "Cenários para testes utilizando tooltip.",
+      "information": "Passe o mouse sobre os elementos desta página para ver o tooltip.",
+      "no-permission": "Você não tem permissão para fazer isso",
+      "more-information": "Mais informações",
+      "more-information-msg": "Para mais informações, clique aqui:",
+      "really-long-text": "Um exemplo de texto realmente muito longo"
     }
   }
 }

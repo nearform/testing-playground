@@ -141,6 +141,15 @@
         "second": "Orange",
         "third": "Green"
       }
+    },
+    "tooltip-page": {
+      "title": "Tooltips",
+      "description": "A set of tooltips to test against.",
+      "information": "Hover over the elements in this page to view the tooltips.",
+      "no-permission": "You don't have permission to do this",
+      "more-information": "More info",
+      "more-information-msg": "For more information, click here:",
+      "really-long-text": "A really really long text example"
     }
   }
 }
