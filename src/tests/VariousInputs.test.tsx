@@ -89,4 +89,16 @@ describe('VariousInputs component', () => {
     expect(dateInput).toHaveValue('')
     expect(textareaInput).toHaveValue('')
   })
+
+  it('clears text input value using clear icon', () => {
+    TestRenderer(<VariousInputs />)
+
+    const textInput = screen.getByTestId('text-input')
+    fireEvent.change(textInput, { target: { value: 'Hello, World!' } })
+    expect(textInput).toHaveValue('Hello, World!')
+
+    const clearIcon = screen.getByTestId('clear-icon')
+    fireEvent.click(clearIcon)
+    expect(textInput).toHaveValue('')
+  })
 })
