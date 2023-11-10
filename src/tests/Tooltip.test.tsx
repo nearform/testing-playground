@@ -11,7 +11,7 @@ describe('CheckBox component', () => {
     sessionStorage.clear()
   })
 
-  it('renders tootip when overing disabled button', async () => {
+  it('renders tooltip when hovering disabled button', async () => {
     TestRenderer(<TooltipPage />)
     await userEvent.hover(screen.getByTestId('delete-button'))
     await waitFor(() => {
@@ -19,7 +19,7 @@ describe('CheckBox component', () => {
     })
   })
 
-  it('renders tootip when overing active button', async () => {
+  it('renders tooltip when hovering active button', async () => {
     TestRenderer(<TooltipPage />)
     await userEvent.hover(screen.getByTestId('more-info-button'))
     await waitFor(() => {
@@ -27,7 +27,7 @@ describe('CheckBox component', () => {
     })
   })
 
-  it('renders tootip when overing truncated text', async () => {
+  it('renders tooltip when hovering truncated text', async () => {
     TestRenderer(<TooltipPage />)
     await userEvent.hover(screen.getByTestId('text'))
     await waitFor(() => {

@@ -7,8 +7,6 @@ import {
   Tooltip,
   Typography
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import { type TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,18 +15,6 @@ import PageSetup from '../components/PageSetup'
 
 const TooltipPage = (): JSX.Element => {
   const { t } = useTranslation()
-
-  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.background,
-      color: theme.palette.text,
-      maxWidth: 200,
-      fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9'
-    }
-  }))
 
   return (
     <Layout>
@@ -55,10 +41,11 @@ const TooltipPage = (): JSX.Element => {
           </span>
         </Tooltip>
 
-        <HtmlTooltip
+        <Tooltip
+          arrow
           placement='right'
           title={
-            <React.Fragment>
+            <>
               {t('scenarios.tooltip-page.more-information-msg')}{' '}
               <Link
                 color='inherit'
@@ -66,13 +53,13 @@ const TooltipPage = (): JSX.Element => {
               >
                 {'Testing Playground'}
               </Link>
-            </React.Fragment>
+            </>
           }
         >
           <Button variant='outlined' data-testid='more-info-button'>
             {t('scenarios.tooltip-page.more-information')}
           </Button>
-        </HtmlTooltip>
+        </Tooltip>
 
         <div
           style={{
