@@ -1,7 +1,7 @@
 import ClearIcon from '@mui/icons-material/Clear'
 import {
   Box,
-  Button,
+  IconButton,
   Typography,
   TextField,
   Select,
@@ -82,21 +82,19 @@ export default function Index (): JSX.Element {
               data-testid='search-input'
               InputProps={{
                 endAdornment: searchTerm.length > 0 && (
-                  <Button
-                    variant='text'
-                    color='inherit'
+                  <IconButton
                     size='small'
                     onClick={() => {
                       setSearchTerm('')
                     }}
                   >
-                    <ClearIcon />
-                  </Button>
+                    <ClearIcon fontSize='inherit' />
+                  </IconButton>
                 )
               }}
             />
             <FormControl>
-              <InputLabel id='select-difficulty-label'>
+              <InputLabel id='select-difficulty-label' sx={{ ml: 1 }}>
                 {t('common.select-difficulty')}
               </InputLabel>
               <Select
