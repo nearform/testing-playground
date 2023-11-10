@@ -61,23 +61,16 @@ const TooltipPage = (): JSX.Element => {
           </Button>
         </Tooltip>
 
-        <div
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            width: '10rem'
-          }}
+        <Tooltip
+          title={t('scenarios.tooltip-page.really-long-text')}
+          arrow
+          placement='right'
+          sx={{ width: '10rem' }}
         >
-          <Tooltip
-            title={t('scenarios.tooltip-page.really-long-text')}
-            arrow
-            placement='right'
-          >
-            <Typography noWrap data-testid='text'>
-              {t('scenarios.tooltip-page.really-long-text')}
-            </Typography>
-          </Tooltip>
-        </div>
+          <Typography noWrap data-testid='text'>
+            {t('scenarios.tooltip-page.really-long-text')}
+          </Typography>
+        </Tooltip>
       </Stack>
     </Layout>
   )
