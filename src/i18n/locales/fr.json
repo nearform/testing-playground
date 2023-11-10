@@ -4,7 +4,13 @@
     "copyright": "Droits d'auteur © ",
     "learn-more": "En savoir plus",
     "search": "Rechercher...",
-    "title": "NearForm Terrain de jeu pour les tests"
+    "title": "NearForm Terrain de jeu pour les tests",
+    "difficulty": "Difficulté",
+    "select-difficulty": "Sélectionnez la difficulté",
+    "all": "Tous",
+    "easy": "Facile",
+    "medium": "Moyen",
+    "hard": "Difficile"
   },
   "navigation": {
     "back": "Retour",
@@ -18,6 +24,7 @@
       "title": "Ajouter/Supprimer",
       "description": "Ajouter et supprimer dynamiquement des éléments de la page",
       "information": "En plus de pouvoir ajouter et supprimer dynamiquement des éléments de la page, vous pouvez également ajouter `?initialElements=X` à l'URL pour générer des éléments au chargement.",
+      "rating": "1",
       "add-element": "Ajouter un élément",
       "clear-storage": "Effacer le stockage",
       "remove-element": "Supprimer un élément"
@@ -25,7 +32,7 @@
     "check-box": {
       "title": "Checkbox",
       "description": "Tester des scénarios à l'aide d'une case à cocher.",
-      "information": "-",
+      "rating": "1",
       "scenario-form": "Formulaire avec champ obligatoire",
       "checked": "Choisi",
       "required": "Obligatoire",
@@ -40,21 +47,24 @@
       "title": "Glisser-déposer",
       "description": "Faites glisser des éléments d'un côté de la page et déposez-les de l'autre côté.",
       "information": "Vous pouvez faire glisser une quantité infinie de boîtes rouges et les déposer sur la boîte grise.",
+      "rating": "2",
       "box": "Boîte",
       "drag-me": "Faites glisser moi",
       "drop-here": "Déposer ici",
       "total-drops": "Total des dépôts"
     },
     "drag-and-drop-hard": {
-      "title": "Glisser-déposer (Difficile)",
+      "title": "Glisser-déposer",
       "description": "Faites glisser les formes plus petites appropriées sur la forme plus grande.",
       "information": "Un dépôt correct entraînera le passage de la forme au vert, sinon la forme passera au jaune. Note : les formes changent à chaque rechargement de la page",
+      "rating": "3",
       "total-correct": "Total correct"
     },
     "dynamic-table": {
       "title": "Tableau dynamique",
       "description": "Trouvez les données dans la barre verte dans le tableau.",
       "information": "Remarque : les données du tableau se rafraîchissent à chaque rechargement.",
+      "rating": "3",
       "name": "Nom",
       "cpu": "UC",
       "memory": "Mémoire",
@@ -69,6 +79,7 @@
       "title": "Téléchargement de fichier",
       "description": "En utilisant des composants de navigateur courants, téléchargez un fichier.",
       "information": "Le téléchargement peut prendre entre 1 et 10 secondes, indépendamment de la taille, car la fonction de téléchargement est simulée.",
+      "rating": "2",
       "please-select-file": "Veuillez sélectionner un fichier.",
       "select-file": "Sélectionner un fichier",
       "selected-file": "Fichier : \"{{ filename }}\"",
@@ -79,6 +90,7 @@
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
       "information": "Le nom d'utilisateur est '<strong>admin</strong>' et le mot de passe est '<strong>Passw0rd!</strong>'.",
+      "rating": "1",
       "logged-in-message": "Vous êtes actuellement connecté !",
       "invalid-credentials": "Les informations que vous avez fournies ne sont pas valides",
       "login-button": "Se connecter",
@@ -86,30 +98,11 @@
       "username": "Nom d'utilisateur",
       "password": "Mot de passe"
     },
-    "various-inputs": {
-      "title": "Diverses entrées",
-      "description": "Tous les différents types d'entrées HTML sur cette page avec une sortie pouvant être utilisée pour vérifier",
-      "input": "Entrée",
-      "output": "Sortie",
-      "text": "Texte",
-      "password": "Mot de passe",
-      "number": "Nombre",
-      "date": "Date",
-      "textarea": "Zone de texte",
-      "clear-all": "Tout effacer"
-    },
-    "slider-page": {
-      "title": "Curseurs",
-      "description": "Une gamme de curseurs avec lesquels interagir.",
-      "basic-slider": "Curseur de base",
-      "range-slider": "Curseur avec Plage",
-      "slider-with-input": "Curseur avec entrée",
-      "value": "Valeur"
-    },
     "notification": {
       "title": "Notification",
       "description": "Vérifiez les alertes qui sont envoyées en tant que popup et font également partie de la page principale.",
       "information": "Cliquez sur l'un des boutons pour déclencher une notification de ce type. La popup reste visible pendant 6 secondes.",
+      "rating": "2",
       "generate-notification": "Générer une notification",
       "type": {
         "success": "Succès",
@@ -128,6 +121,7 @@
       "title": "Bouton radio",
       "description": "Un ensemble de boutons radio à cocher.",
       "information": "Selon le premier bouton radio cliqué, un second ensemble apparaîtra et changera en fonction du premier cliqué.",
+      "rating": "1",
       "first-set": "Couleurs primaires",
       "second-set": "Couleurs secondaires",
       "first": {
@@ -142,14 +136,37 @@
         "third": "Vert"
       }
     },
+    "slider-page": {
+      "title": "Curseurs",
+      "description": "Une gamme de curseurs avec lesquels interagir.",
+      "rating": "3",
+      "basic-slider": "Curseur de base",
+      "range-slider": "Curseur avec Plage",
+      "slider-with-input": "Curseur avec entrée",
+      "value": "Valeur"
+    },
     "tooltip-page": {
       "title": "Tooltip",
       "description": "Testez des scénarios à l'aide d'une tooltips.",
       "information": "Survolez les éléments de cette page pour afficher les tooltips.",
+      "rating": "1",
       "no-permission": "Vous n'avez pas la permission de faire ça",
       "more-information": "Plus d'informations",
       "more-information-msg": "Pour plus d'informations, cliquez ici:",
       "really-long-text": "Un exemple de texte vraiment très long"
+    },
+    "various-inputs": {
+      "title": "Diverses entrées",
+      "description": "Tous les différents types d'entrées HTML sur cette page avec une sortie pouvant être utilisée pour vérifier",
+      "rating": "1",
+      "input": "Entrée",
+      "output": "Sortie",
+      "text": "Texte",
+      "password": "Mot de passe",
+      "number": "Nombre",
+      "date": "Date",
+      "textarea": "Zone de texte",
+      "clear-all": "Tout effacer"
     }
   }
 }

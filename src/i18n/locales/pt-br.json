@@ -4,7 +4,13 @@
     "copyright": "Direitos autorais © ",
     "learn-more": "Saiba mais",
     "search": "Pesquisar...",
-    "title": "NearForm Playground de Testes"
+    "title": "NearForm Playground de Testes",
+    "difficulty": "Dificuldade",
+    "select-difficulty": "Selecione a Dificuldade",
+    "all": "Todos",
+    "easy": "Fácil",
+    "medium": "Médio",
+    "hard": "Difícil"
   },
   "navigation": {
     "back": "Voltar",
@@ -18,6 +24,7 @@
       "title": "Adicionar/Remover",
       "description": "Adicione e remova dinamicamente elementos da página",
       "information": "Além de poder adicionar e remover dinamicamente elementos da página, você também pode adicionar `?initialElements=X` à URL para gerar elementos no carregamento.",
+      "rating": "1",
       "add-element": "Adicionar Elemento",
       "clear-storage": "Limpar Armazenamento",
       "remove-element": "Remover Elemento"
@@ -25,7 +32,7 @@
     "check-box": {
       "title": "Checkbox",
       "description": "Cenários para testes utilizando checkbox.",
-      "information": "-",
+      "rating": "1",
       "scenario-form": "Formulário com campo obrigatório",
       "checked": "Selecionado",
       "required": "Obrigatório",
@@ -40,21 +47,24 @@
       "title": "Arrastar e Soltar",
       "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
       "information": "Você pode arrastar uma quantidade infinita de caixas vermelhas e soltá-las na caixa cinza.",
+      "rating": "2",
       "box": "Caixa",
       "drag-me": "Arraste-me",
       "drop-here": "Solte aqui",
       "total-drops": "Total de Solturas"
     },
     "drag-and-drop-hard": {
-      "title": "Arrastar e Soltar (Difícil)",
+      "title": "Arrastar e Soltar",
       "description": "Arraste as formas menores apropriadas para a forma maior.",
       "information": "Um soltar correto resultará na forma ficando verde, caso contrário, a forma ficará amarela. Observação: as formas mudam a cada recarregamento.",
+      "rating": "3",
       "total-correct": "Total Correto"
     },
     "dynamic-table": {
       "title": "Tabela Dinâmica",
       "description": "Encontre os dados na barra verde dentro da tabela.",
       "information": "Observação: os dados da tabela se atualizam a cada recarregamento.",
+      "rating": "3",
       "name": "Nome",
       "cpu": "CPU",
       "memory": "Memória",
@@ -69,6 +79,7 @@
       "title": "Upload de Arquivo",
       "description": "Usando componentes comuns do navegador, faça o upload de um arquivo.",
       "information": "O upload pode levar de 1 a 10 segundos, independentemente do tamanho, pois a função de upload é simulada.",
+      "rating": "2",
       "please-select-file": "Por favor, selecione um arquivo.",
       "select-file": "Selecionar Arquivo",
       "selected-file": "Arquivo: \"{{ filename }}\"",
@@ -79,6 +90,7 @@
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",
       "information": "O nome de usuário é '<strong>admin</strong>' e a senha é '<strong>Passw0rd!</strong>'.",
+      "rating": "1",
       "logged-in-message": "Você está atualmente logado!",
       "invalid-credentials": "As credenciais fornecidas são inválidas",
       "login-button": "Login",
@@ -86,30 +98,11 @@
       "username": "Nome de Usuário",
       "password": "Senha"
     },
-    "various-inputs": {
-      "title": "Várias entradas",
-      "description": "Todos os diferentes tipos de entradas HTML nesta página com uma saída que pode ser usada para verificar",
-      "input": "Entrada",
-      "output": "Saída",
-      "text": "Texto",
-      "password": "Senha",
-      "number": "Número",
-      "date": "Data",
-      "textarea": "Área de Texto",
-      "clear-all": "Limpar Tudo"
-    },
-    "slider-page": {
-      "title": "Deslizadores",
-      "description": "Uma variedade de deslizadores para interação.",
-      "basic-slider": "Deslizador Básico",
-      "range-slider": "Deslizador com Faixa",
-      "slider-with-input": "Deslizador com Entrada",
-      "value": "Valor"
-    },
     "notification": {
       "title": "Notificação",
       "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",
       "information": "Clique em qualquer um dos botões para acionar uma notificação desse tipo. O popup permanece visível por 6 segundos.",
+      "rating": "2",
       "generate-notification": "Gerar Notificação",
       "type": {
         "success": "Sucesso",
@@ -128,6 +121,7 @@
       "title": "Botão de Rádio",
       "description": "Um conjunto de botões de rádio para verificar.",
       "information": "Dependendo do primeiro botão de rádio clicado, um segundo conjunto aparecerá e mudará com base no primeiro clicado.",
+      "rating": "1",
       "first-set": "Cores Primárias",
       "second-set": "Cores Secundárias",
       "first": {
@@ -142,14 +136,37 @@
         "third": "Verde"
       }
     },
+    "slider-page": {
+      "title": "Deslizadores",
+      "description": "Uma variedade de deslizadores para interação.",
+      "rating": "2",
+      "basic-slider": "Deslizador Básico",
+      "range-slider": "Deslizador com Faixa",
+      "slider-with-input": "Deslizador com Entrada",
+      "value": "Valor"
+    },
     "tooltip-page": {
       "title": "Tooltip",
       "description": "Cenários para testes utilizando tooltip.",
       "information": "Passe o mouse sobre os elementos desta página para ver o tooltip.",
+      "rating": "1",
       "no-permission": "Você não tem permissão para fazer isso",
       "more-information": "Mais informações",
       "more-information-msg": "Para mais informações, clique aqui:",
       "really-long-text": "Um exemplo de texto realmente muito longo"
+    },
+    "various-inputs": {
+      "title": "Várias entradas",
+      "description": "Todos os diferentes tipos de entradas HTML nesta página com uma saída que pode ser usada para verificar",
+      "rating": "1",
+      "input": "Entrada",
+      "output": "Saída",
+      "text": "Texto",
+      "password": "Senha",
+      "number": "Número",
+      "date": "Data",
+      "textarea": "Área de Texto",
+      "clear-all": "Limpar Tudo"
     }
   }
 }

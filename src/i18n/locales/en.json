@@ -4,7 +4,13 @@
     "copyright": "Copyright © ",
     "learn-more": "Learn More",
     "search": "Search...",
-    "title": "NearForm Testing Playground"
+    "title": "NearForm Testing Playground",
+    "difficulty": "Difficulty",
+    "select-difficulty": "Select Difficulty",
+    "all": "All",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
   },
   "navigation": {
     "back": "Back",
@@ -18,6 +24,7 @@
       "title": "Add/Remove",
       "description": "Dynamically add and remove elements from the page",
       "information": "As well as being able to dynamically add and remove elements from the page, you can also add `?initialElements=X` onto the url to generate elements on load.",
+      "rating": "1",
       "add-element": "Add Element",
       "clear-storage": "Clear Storage",
       "remove-element": "Remove Element"
@@ -25,7 +32,7 @@
     "check-box": {
       "title": "Checkbox",
       "description": "A set of checkbox scenarios to test against.",
-      "information": "-",
+      "rating": "1",
       "scenario-form": "Scenario within a form",
       "checked": "Checked",
       "required": "Required",
@@ -40,21 +47,24 @@
       "title": "Drag and Drop",
       "description": "Drag elements from one side of the page and drop them on the other side.",
       "information": "You able to drag an infinite amount of the red boxes and drop them on the grey box.",
+      "rating": "2",
       "box": "Box",
       "drag-me": "Drag Me",
       "drop-here": "Drop Here",
       "total-drops": "Total Drops"
     },
     "drag-and-drop-hard": {
-      "title": "Drag and Drop (Hard)",
+      "title": "Drag and Drop",
       "description": "Drag the appropriate smaller shapes onto the larger shape.",
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
+      "rating": "3",
       "total-correct": "Total Correct"
     },
     "dynamic-table": {
       "title": "Dynamic Table",
       "description": "Find the data within the green bar within the table.",
       "information": "Note: the table data refreshes on a reload.",
+      "rating": "3",
       "name": "Name",
       "cpu": "CPU",
       "memory": "Memory",
@@ -69,6 +79,7 @@
       "title": "File Upload",
       "description": "Using common browser components, upload a file.",
       "information": "The upload can be anywhere between 1-10 seconds regardless of size as the upload function is mocked.",
+      "rating": "2",
       "please-select-file": "Please select a file.",
       "select-file": "Select File",
       "selected-file": "File: \"{{ filename }}\"",
@@ -79,6 +90,7 @@
       "title": "Login Form",
       "description": "A typical login form with username and password.",
       "information": "The username is '<strong>admin</strong>' and the password is '<strong>Passw0rd!</strong>'.",
+      "rating": "1",
       "logged-in-message": "You are currently logged in!",
       "invalid-credentials": "The credentials you have provided are invalid",
       "login-button": "Login",
@@ -86,30 +98,11 @@
       "username": "Username",
       "password": "Password"
     },
-    "various-inputs": {
-      "title": "Various Inputs",
-      "description": "There are all the different types of HTML inputs this page with an output that can be used to verify",
-      "input": "Input",
-      "output": "Output",
-      "text": "Text",
-      "password": "Password",
-      "number": "Number",
-      "date": "Date",
-      "textarea": "TextArea",
-      "clear-all": "Clear All"
-    },
-    "slider-page": {
-      "title": "Sliders",
-      "description": "A range of sliders for you to interact with.",
-      "basic-slider": "Basic Slider",
-      "range-slider": "Slider with Range",
-      "slider-with-input": "Slider with input",
-      "value": "Value"
-    },
     "notification": {
       "title": "Notification",
       "description": "Check alerts that are sent as a popup and also part of the main page.",
       "information": "Click on any of the buttons to trigger a notification that is of that type. The popup stays visible for 6 seconds.",
+      "rating": "2",
       "generate-notification": "Generate Notification",
       "type": {
         "success": "Success",
@@ -128,6 +121,7 @@
       "title": "Radio Button",
       "description": "A set of radio buttons to check against.",
       "information": "Depending on the first radio button clicked, a second set will appear and change based on the first one clicked.",
+      "rating": "1",
       "first-set": "Primary Colours",
       "second-set": "Secondary Colours",
       "first": {
@@ -146,10 +140,33 @@
       "title": "Tooltips",
       "description": "A set of tooltips to test against.",
       "information": "Hover over the elements in this page to view the tooltips.",
+      "rating": "1",
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
       "really-long-text": "A really really long text example"
+    },
+    "slider-page": {
+      "title": "Sliders",
+      "description": "A range of sliders for you to interact with.",
+      "rating": "2",
+      "basic-slider": "Basic Slider",
+      "range-slider": "Slider with Range",
+      "slider-with-input": "Slider with input",
+      "value": "Value"
+    },
+    "various-inputs": {
+      "title": "Various Inputs",
+      "description": "There are all the different types of HTML inputs this page with an output that can be used to verify",
+      "rating": "1",
+      "input": "Input",
+      "output": "Output",
+      "text": "Text",
+      "password": "Password",
+      "number": "Number",
+      "date": "Date",
+      "textarea": "TextArea",
+      "clear-all": "Clear All"
     }
   }
 }
