@@ -1,11 +1,11 @@
-import { CssBaseline, Container } from '@mui/material'
+import { CssBaseline, Container, Divider } from '@mui/material'
 import React, { type ReactNode } from 'react'
 
 import Footer from './Footer'
 import Header from './Header'
 
 interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -16,6 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
         {children}
       </Container>
+      <Divider sx={{ mt: 3, mb: 3 }} />
       <Footer />
     </Container>
   )

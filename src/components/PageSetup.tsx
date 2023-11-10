@@ -13,7 +13,7 @@ interface PageSetupProps {
 const PageSetup: React.FC<PageSetupProps> = ({
   title,
   description,
-  information,
+  information
 }) => {
   const { t } = useTranslation()
 
@@ -23,7 +23,7 @@ const PageSetup: React.FC<PageSetupProps> = ({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <Typography variant='h4' component='h1' gutterBottom>
