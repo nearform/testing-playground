@@ -1,10 +1,13 @@
+import ClearIcon from '@mui/icons-material/Clear'
 import {
   Box,
   Grid,
   Typography,
   TextField,
   TextareaAutosize,
-  Button
+  Button,
+  InputAdornment,
+  IconButton
 } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -60,8 +63,24 @@ const InputField: React.FC<InputFieldProps> = ({
                 onChange={
                   onChange as React.ChangeEventHandler<HTMLInputElement>
                 }
-                sx={{ width: '100%' }}
+                sx={{ width: '80%' }}
                 inputProps={{ 'data-testid': `${type}-input` }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      {value.length > 0 && (
+                        <IconButton
+                          edge='end'
+                          onClick={() => {
+                            onChange({ target: { value: '' } } as any)
+                          }}
+                        >
+                          <ClearIcon data-testid='clear-icon' />
+                        </IconButton>
+                      )}
+                    </InputAdornment>
+                  )
+                }}
               />
                 )}
           </Box>
@@ -71,13 +90,26 @@ const InputField: React.FC<InputFieldProps> = ({
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.output')}:
             </Typography>
-            <TextField
-              value={value}
-              InputProps={{ readOnly }}
-              fullWidth
-              variant='outlined'
-              sx={{ width: '100%' }}
-            />
+            {type === 'textarea'
+              ? (
+              <TextareaAutosize
+                value={value}
+                onChange={
+                  onChange as React.ChangeEventHandler<HTMLTextAreaElement>
+                }
+                minRows={3}
+                style={{ width: '100%' }}
+              />
+                )
+              : (
+              <TextField
+                value={value}
+                InputProps={{ readOnly }}
+                fullWidth
+                variant='outlined'
+                sx={{ width: '100%' }}
+              />
+                )}
           </Box>
         </Grid>
       </Grid>
