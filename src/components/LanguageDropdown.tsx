@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import React from 'react'
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 function LanguageSelector (): JSX.Element {
   const { i18n } = useTranslation()
+  const theme = useTheme()
 
   const handleChangeLanguage = async (
     event: SelectChangeEvent<string>
@@ -18,7 +20,7 @@ function LanguageSelector (): JSX.Element {
       value={i18n.language}
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onChange={handleChangeLanguage}
-      sx={{ color: 'inherit', minWidth: '240px' }}
+      sx={{ color: theme.palette.secondary.contrastText, minWidth: '240px' }}
     >
       <MenuItem value='en'>English</MenuItem>
       <MenuItem value='fr'>Français</MenuItem>
