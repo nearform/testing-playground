@@ -86,6 +86,13 @@
       "upload-button": "Télécharger",
       "upload-success": "Fichier \"{{ filename }}\" téléchargé avec succès !"
     },
+    "file-download": {
+      "title": "Téléchargement de Fichier",
+      "description": "Utilisez les composants de navigateur courants pour télécharger un fichier.",
+      "information": "Lorem ipsum",
+      "rating": "2",
+      "download": "Télécharger le Fichier"
+    },
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",

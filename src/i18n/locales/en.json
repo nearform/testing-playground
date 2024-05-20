@@ -86,6 +86,13 @@
       "upload-button": "Upload",
       "upload-success": "File \"{{ filename }}\" uploaded successfully!"
     },
+    "file-download": {
+      "title": "File Download",
+      "description": "Using common browser components, download a file.",
+      "information": "Lorem ipsum",
+      "rating": "2",
+      "download": "Download File"
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
