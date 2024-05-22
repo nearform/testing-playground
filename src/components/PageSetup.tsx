@@ -1,4 +1,3 @@
-import { Box, Divider, Typography } from '@mui/material'
 import ReactHtmlParser from 'html-react-parser'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,39 +12,46 @@ interface PageSetupProps {
 const PageSetup: React.FC<PageSetupProps> = ({
   title,
   description,
-  information
+  information,
 }) => {
   const { t } = useTranslation()
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}
-      >
-        <Typography variant='h4' component='h1' gutterBottom>
-          {title}
-        </Typography>
-        <Link to='/' data-testid={t('navigation.back').toLowerCase()}>
-          {t('navigation.back_to_main_page')}
+      <div className='flex justify-between items-center'>
+        <h1 className='text-2xl mb-4'>{title}</h1>
+        <Link
+          to='/'
+          data-testid={t('navigation.back').toLowerCase()}
+          className='text-foreground-muted text-sm'
+        >
+          &lt; {t('navigation.back_to_main_page')}
         </Link>
-      </Box>
-      <Box>
-        <Typography variant='h6'>{t('scenarios.description')}</Typography>
-        <Typography gutterBottom>{ReactHtmlParser(t(description))}</Typography>
-      </Box>
+      </div>
+      <div>
+        <h6 className='text-l'>{t('scenarios.description')}</h6>
+        <p className='mb-4 text-sm text-foreground-muted'>
+          {ReactHtmlParser(t(description))}
+        </p>
+      </div>
       {information != null && (
-        <Box>
-          <Typography variant='h6'>{t('scenarios.information')}</Typography>
-          <Typography gutterBottom>
+        <div>
+          <h6 className='text-l'>{t('scenarios.information')}</h6>
+          <p className='mb-4 text-foreground-muted'>
             {ReactHtmlParser(t(information))}
-          </Typography>
-        </Box>
+          </p>
+        </div>
       )}
-      <Divider sx={{ mt: 4, mb: 4 }} />
+      <div className='relative py-4 mb-8'>
+        <div className='absolute inset-0 flex items-center'>
+          <div className='w-full border-b border-gray-300'></div>
+        </div>
+        <div className='relative flex justify-center'>
+          <span className='bg-grey-100 px-4 text-sm text-foreground-muted'>
+            {t('common.playground')}
+          </span>
+        </div>
+      </div>
     </>
   )
 }
