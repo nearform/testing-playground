@@ -20,9 +20,9 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
         className={`mt-6 rounded-2xl p-6 min-h-48 ${
           Number(rating) >= 2
             ? Number(rating) >= 3
-              ? 'bg-yellow-100'
-              : 'bg-red-100'
-            : 'bg-green-100'
+              ? 'bg-yellow-100 hover:bg-yellow-400'
+              : 'bg-red-100  hover:bg-red-400'
+            : 'bg-green-100  hover:bg-green-400'
         }`}
       >
         <div className='font-semibold'>{title}</div>
