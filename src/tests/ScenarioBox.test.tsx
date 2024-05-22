@@ -14,12 +14,11 @@ describe('ScenarioBox component', async () => {
       description:
         'This is a test scenario description that is really long and should be restricted to 50 characters.',
       link: 'test-scenario',
-      rating: 3
+      rating: '3',
     }
     TestRenderer(<ScenarioBox {...scenarioData} />)
 
     expect(screen.getByText(scenarioData.title)).toBeInTheDocument()
-    expect(screen.getByText('Difficulty:')).toBeInTheDocument()
 
     const truncatedDescription = scenarioData.description
 

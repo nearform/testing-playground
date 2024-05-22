@@ -1,8 +1,4 @@
-import { Circle } from '@mui/icons-material'
-import { Box, Rating, Tooltip, Typography } from '@mui/material'
-import { red, orange, green } from '@mui/material/colors'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 interface ScenarioBoxProps {
@@ -18,85 +14,22 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
   link,
   rating,
 }) => {
-  const { t } = useTranslation()
-
   return (
-    <Link to={`/${link}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <Box
-        sx={{
-          border: 1,
-          borderColor: 'primary.main',
-          borderRadius: 2,
-          padding: 2,
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-          minHeight: '240px',
-        }}
-        data-testid={`${link}-input`}
+    <Link to={`/${link}`}>
+      <div
+        className={`mt-6 rounded-2xl p-6 min-h-48 ${
+          Number(rating) >= 2
+            ? Number(rating) >= 3
+              ? 'bg-yellow-100'
+              : 'bg-red-100'
+            : 'bg-green-100'
+        }`}
       >
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            flex: '0 0 auto',
-          }}
-        >
-          <Typography variant='h6' gutterBottom>
-            {title}
-          </Typography>
-        </Box>
-        <Box sx={{ flex: '0 0 auto' }}>
-          <Typography variant='body2' paragraph>
-            {t('common.difficulty')}:
-          </Typography>
-          <Rating
-            name='read-only'
-            value={Number(rating)}
-            icon={<Circle fontSize='small' />}
-            emptyIcon={<Circle fontSize='small' />}
-            max={3}
-            readOnly
-            sx={{
-              color:
-                Number(rating) >= 2
-                  ? Number(rating) >= 3
-                    ? red[300]
-                    : orange[300]
-                  : green[300],
-            }}
-          />
-        </Box>
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            flex: '1 0 auto',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
-        >
-          <Tooltip title={description} arrow>
-            <Typography
-              variant='body2'
-              paragraph
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-              }}
-            >
-              {description}
-            </Typography>
-          </Tooltip>
-        </Box>
-      </Box>
+        <div className='font-semibold'>{title}</div>
+        <div className='text-foreground-muted text-sm text-primary-900'>
+          {description}
+        </div>
+      </div>
     </Link>
   )
 }
