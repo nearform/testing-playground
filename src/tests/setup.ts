@@ -8,3 +8,14 @@ expect.extend(matchers)
 afterEach(() => {
   cleanup()
 })
+
+// Required, due to Nearform Quantum dependencies
+class ResizeObserver {
+  constructor(callback) {
+    this.callback = callback
+  }
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+global.ResizeObserver = ResizeObserver

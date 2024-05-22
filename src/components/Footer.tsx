@@ -1,17 +1,13 @@
-import { Link, Typography } from '@mui/material'
-import * as React from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 function Footer(): JSX.Element {
   const { t } = useTranslation()
   return (
-    <Typography variant='body2' color='text.secondary' align='center'>
-      {t('common.copyright')}
-      <Link color='inherit' href='https://nearform.com/'>
-        {t('common.company')}
-      </Link>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
+    <footer className='flex flex-col h-full justify-end py-8 text-sm text-foreground-muted text-center mt-16'>
+      &copy; Copyright {new Date().getFullYear()} {t('site.company')} Ltd. All
+      Rights Reserved.
+    </footer>
   )
 }
 

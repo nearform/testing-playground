@@ -1,31 +1,33 @@
-import { useTheme } from '@mui/material'
-import MenuItem from '@mui/material/MenuItem'
-import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@nearform/quantum'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function LanguageSelector (): JSX.Element {
+function LanguageSelector(): JSX.Element {
   const { i18n } = useTranslation()
-  const theme = useTheme()
 
-  const handleChangeLanguage = async (
-    event: SelectChangeEvent<string>
-  ): Promise<void> => {
-    const newLanguage = event.target.value
-    await i18n.changeLanguage(newLanguage)
+  const handleChangeLanguage = (selectedLanguage: string) => {
+    i18n.changeLanguage(selectedLanguage)
   }
 
   return (
-    <Select
-      value={i18n.language}
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onChange={handleChangeLanguage}
-      sx={{ color: theme.palette.secondary.contrastText, minWidth: '240px' }}
-    >
-      <MenuItem value='en'>English</MenuItem>
-      <MenuItem value='fr'>Français</MenuItem>
-      <MenuItem value='ptBr'>Português (Brasil)</MenuItem>
-    </Select>
+    <div className='relative inline-block text-left'>
+      <Select value={i18n.language} onValueChange={handleChangeLanguage}>
+        <SelectTrigger>
+          <SelectValue placeholder='English' />
+        </SelectTrigger>
+        <SelectContent side='top' className='overflow-visible'>
+          <SelectItem value='en'>English</SelectItem>
+          <SelectItem value='fr'>Français</SelectItem>
+          <SelectItem value='ptBr'>Português (Brasil)</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   )
 }
 

@@ -1,10 +1,11 @@
 {
-  "common": {
+  "site": {
     "company": "NearForm",
-    "copyright": "Copyright © ",
+    "title": "Testing Playground"
+  },
+  "common": {
     "learn-more": "Learn More",
     "search": "Search...",
-    "title": "Testing Playground",
     "difficulty": "Difficulty",
     "select-difficulty": "Select Difficulty",
     "all": "All",
