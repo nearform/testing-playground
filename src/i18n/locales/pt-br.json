@@ -1,10 +1,12 @@
 {
-  "common": {
+  "site": {
     "company": "NearForm",
+    "title": "Playground de Testes"
+  },
+  "common": {
     "copyright": "Direitos autorais © ",
     "learn-more": "Saiba mais",
     "search": "Pesquisar...",
-    "title": "Playground de Testes",
     "difficulty": "Dificuldade",
     "select-difficulty": "Selecione a Dificuldade",
     "all": "Todos",

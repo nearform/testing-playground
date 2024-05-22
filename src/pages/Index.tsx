@@ -2,12 +2,11 @@ import ClearIcon from '@mui/icons-material/Clear'
 import {
   Box,
   IconButton,
-  Typography,
   TextField,
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
 } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,28 +19,28 @@ const transformLink = (link: string): string => {
   return link.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 
-export default function Index (): JSX.Element {
+export default function Index(): JSX.Element {
   const { t } = useTranslation()
 
   // Get all scenario components from the Scenario module
   const scenarioComponents = Object.values(Scenario)
 
   // Generate scenarioData dynamically
-  const scenarioData = scenarioComponents.map((ScenarioComponent, index) => {
+  const scenarioData = scenarioComponents.map((ScenarioComponent) => {
     const scenarioName = ScenarioComponent.name ?? 'UnknownScenario'
     const link = transformLink(scenarioName)
     return {
       title: t(`scenarios.${link}.title`),
       description: t(`scenarios.${link}.description`),
       link,
-      rating: parseInt(t(`scenarios.${link}.rating`))
+      rating: parseInt(t(`scenarios.${link}.rating`)),
     }
   })
 
   // State for search term and selected difficulty
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(
-    null
+    null,
   )
 
   // Filtered scenarioData based on search term and selected difficulty
@@ -64,13 +63,10 @@ export default function Index (): JSX.Element {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            mb: 2
+            mb: 2,
           }}
         >
-          <Typography variant='h4' component='h1'>
-            {t('common.title')}
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box>
             <TextField
               label={t('common.search')}
               variant='outlined'
@@ -90,7 +86,7 @@ export default function Index (): JSX.Element {
                   >
                     <ClearIcon fontSize='inherit' />
                   </IconButton>
-                )
+                ),
               }}
             />
             <FormControl>
@@ -103,7 +99,7 @@ export default function Index (): JSX.Element {
                 value={selectedDifficulty ?? 0}
                 onChange={(e) => {
                   setSelectedDifficulty(
-                    e.target.value === 0 ? null : Number(e.target.value)
+                    e.target.value === 0 ? null : Number(e.target.value),
                   )
                 }}
                 sx={{ minWidth: '240px', ml: 1 }}
