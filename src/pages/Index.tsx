@@ -88,15 +88,15 @@ export default function Index(): JSX.Element {
               </SelectItem>
               <SelectItem value='1' data-testid='select-difficulty-easy'>
                 {t('common.easy')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-green-200 rounded-full float-right'></div>
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-green-300 rounded-full float-right'></div>
               </SelectItem>
               <SelectItem value='2' data-testid='select-difficulty-medium'>
                 {t('common.medium')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-yellow-200 rounded-full float-right'></div>
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-yellow-300 rounded-full float-right'></div>
               </SelectItem>
               <SelectItem value='3' data-testid='select-difficulty-hard'>
                 {t('common.hard')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-red-200 rounded-full float-right'></div>
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-red-300 rounded-full float-right'></div>
               </SelectItem>
             </SelectContent>
           </Select>
