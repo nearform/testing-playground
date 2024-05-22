@@ -88,6 +88,13 @@
       "upload-button": "Enviar",
       "upload-success": "Arquivo \"{{ filename }}\" enviado com sucesso!"
     },
+    "file-download": {
+      "title": "Download de Arquivo",
+      "description": "Utilize os componentes comuns do navegador para baixar um arquivo.",
+      "information": "Lorem ipsum",
+      "rating": "2",
+      "download": "Baixar Arquivo"
+    },
     "login-form": {
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",

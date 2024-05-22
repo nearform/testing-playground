@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development vite",
     "build": "tsc && vite build",
     "preview": "NODE_ENV=development vite preview",
-    "prepare": "husky install",
+    "prepare": "husky",
     "test": "vitest"
   },
   "lint-staged": {
@@ -45,7 +45,7 @@
     "eslint-plugin-n": "^16.3.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
-    "husky": "^8.0.3",
+    "husky": "^9.0.11",
     "jsdom": "^22.1.0",
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.38",
