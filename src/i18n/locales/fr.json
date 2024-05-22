@@ -12,7 +12,8 @@
     "all": "Tous",
     "easy": "Facile",
     "medium": "Moyen",
-    "hard": "Difficile"
+    "hard": "Difficile",
+    "playground": "Cour de récréation"
   },
   "navigation": {
     "back": "Retour",

@@ -11,7 +11,8 @@
     "all": "All",
     "easy": "Easy",
     "medium": "Medium",
-    "hard": "Hard"
+    "hard": "Hard",
+    "playground": "Playground"
   },
   "navigation": {
     "back": "Back",

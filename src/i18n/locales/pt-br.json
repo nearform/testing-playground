@@ -12,7 +12,8 @@
     "all": "Todos",
     "easy": "Fácil",
     "medium": "Médio",
-    "hard": "Difícil"
+    "hard": "Difícil",
+    "playground": "Recreio"
   },
   "navigation": {
     "back": "Voltar",
