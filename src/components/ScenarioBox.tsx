@@ -9,14 +9,14 @@ interface ScenarioBoxProps {
   title: string
   description: string
   link: string
-  rating: number
+  rating: string
 }
 
 const ScenarioBox: React.FC<ScenarioBoxProps> = ({
   title,
   description,
   link,
-  rating
+  rating,
 }) => {
   const { t } = useTranslation()
 
@@ -34,7 +34,7 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          minHeight: '240px'
+          minHeight: '240px',
         }}
         data-testid={`${link}-input`}
       >
@@ -42,7 +42,7 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
           sx={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            flex: '0 0 auto'
+            flex: '0 0 auto',
           }}
         >
           <Typography variant='h6' gutterBottom>
@@ -55,18 +55,18 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
           </Typography>
           <Rating
             name='read-only'
-            value={rating}
+            value={Number(rating)}
             icon={<Circle fontSize='small' />}
             emptyIcon={<Circle fontSize='small' />}
             max={3}
             readOnly
             sx={{
               color:
-                rating >= 2
-                  ? rating >= 3
+                Number(rating) >= 2
+                  ? Number(rating) >= 3
                     ? red[300]
                     : orange[300]
-                  : green[300]
+                  : green[300],
             }}
           />
         </Box>
@@ -77,7 +77,7 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
             flex: '1 0 auto',
             display: 'flex',
             justifyContent: 'flex-end',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
           }}
         >
           <Tooltip title={description} arrow>
@@ -89,7 +89,7 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical'
+                WebkitBoxOrient: 'vertical',
               }}
             >
               {description}

@@ -1,19 +1,17 @@
-import ClearIcon from '@mui/icons-material/Clear'
-import {
-  Box,
-  IconButton,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
+import {
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@nearform/quantum'
 
 const transformLink = (link: string): string => {
   return link.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
@@ -33,13 +31,13 @@ export default function Index(): JSX.Element {
       title: t(`scenarios.${link}.title`),
       description: t(`scenarios.${link}.description`),
       link,
-      rating: parseInt(t(`scenarios.${link}.rating`)),
+      rating: t(`scenarios.${link}.rating`),
     }
   })
 
   // State for search term and selected difficulty
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
     null,
   )
 
@@ -50,87 +48,62 @@ export default function Index(): JSX.Element {
       data.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     const matchesDifficulty =
-      selectedDifficulty === null || selectedDifficulty === data.rating
+      selectedDifficulty === null ||
+      selectedDifficulty === '0' ||
+      selectedDifficulty === data.rating
 
     return matchesSearchTerm && matchesDifficulty
   })
 
   return (
     <Layout>
-      <Box sx={{ my: 4 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            mb: 2,
-          }}
-        >
-          <Box>
-            <TextField
-              label={t('common.search')}
-              variant='outlined'
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value)
-              }}
-              sx={{ minWidth: '220px' }}
-              data-testid='search-input'
-              InputProps={{
-                endAdornment: searchTerm.length > 0 && (
-                  <IconButton
-                    size='small'
-                    onClick={() => {
-                      setSearchTerm('')
-                    }}
-                  >
-                    <ClearIcon fontSize='inherit' />
-                  </IconButton>
-                ),
-              }}
-            />
-            <FormControl>
-              <InputLabel id='select-difficulty-label' sx={{ ml: 1 }}>
-                {t('common.select-difficulty')}
-              </InputLabel>
-              <Select
-                labelId='select-difficulty-label'
-                label='select-difficulty'
-                value={selectedDifficulty ?? 0}
-                onChange={(e) => {
-                  setSelectedDifficulty(
-                    e.target.value === 0 ? null : Number(e.target.value),
-                  )
-                }}
-                sx={{ minWidth: '240px', ml: 1 }}
-                data-testid='select-difficulty'
-              >
-                <MenuItem value={0} data-testid='select-difficulty-all'>
-                  {t('common.all')}
-                </MenuItem>
-                <MenuItem value={1} data-testid='select-difficulty-easy'>
-                  {t('common.easy')}
-                </MenuItem>
-                <MenuItem value={2} data-testid='select-difficulty-medium'>
-                  {t('common.medium')}
-                </MenuItem>
-                <MenuItem value={3} data-testid='select-difficulty-hard'>
-                  {t('common.hard')}
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
-        <Box
-          display='grid'
-          gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
-          gap={2}
-        >
-          {filteredScenarioData.map((data, index) => (
-            <ScenarioBox key={index} {...data} />
-          ))}
-        </Box>
-      </Box>
+      <div className='flex justify-center'>
+        <div className='w-60 mb-4'>
+          <Input
+            placeholder={t('common.search')}
+            variant='primary'
+            onChange={(event) => {
+              const { value } = event.target as HTMLInputElement
+              setSearchTerm(value)
+            }}
+            type='search'
+            onClear={() => {
+              setSearchTerm('')
+            }}
+          />
+        </div>
+        <div className='w-60 ml-2'>
+          <Select
+            onValueChange={(value) => {
+              setSelectedDifficulty(value === '' ? null : value)
+            }}
+            data-testid='select-difficulty'
+          >
+            <SelectTrigger size='lg'>
+              <SelectValue placeholder={t('common.select-difficulty')} />
+            </SelectTrigger>
+            <SelectContent side='top' className='overflow-visible'>
+              <SelectItem value='0' data-testid='select-difficulty-all'>
+                {t('common.all')}
+              </SelectItem>
+              <SelectItem value='1' data-testid='select-difficulty-easy'>
+                {t('common.easy')}
+              </SelectItem>
+              <SelectItem value='2' data-testid='select-difficulty-medium'>
+                {t('common.medium')}
+              </SelectItem>
+              <SelectItem value='3' data-testid='select-difficulty-hard'>
+                {t('common.hard')}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-2'>
+        {filteredScenarioData.map((data, index) => (
+          <ScenarioBox key={index} {...data} />
+        ))}
+      </div>
     </Layout>
   )
 }

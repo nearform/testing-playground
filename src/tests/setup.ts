@@ -11,7 +11,8 @@ afterEach(() => {
 
 // Required, due to Nearform Quantum dependencies
 class ResizeObserver {
-  constructor(callback) {
+  [x: string]: unknown
+  constructor(callback: unknown) {
     this.callback = callback
   }
   observe() {}
