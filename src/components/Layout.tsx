@@ -10,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <div className='px-4 py-4'>{children}</div>
+      {children}
       <Footer />
     </>
   )

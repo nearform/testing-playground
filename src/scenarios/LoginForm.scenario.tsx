@@ -57,78 +57,82 @@ const LoginForm = (): JSX.Element => {
         title={t('scenarios.login-form.title')}
         description={t('scenarios.login-form.description')}
         information={t('scenarios.login-form.information')}
-      />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
       >
-        {!isLoggedIn && (
-          <>
-            <TextField
-              label={t('scenarios.login-form.username')}
-              variant='outlined'
-              margin='normal'
-              fullWidth
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value)
-              }}
-              data-testid='username'
-            />
-            <TextField
-              label={t('scenarios.login-form.password')}
-              variant='outlined'
-              margin='normal'
-              fullWidth
-              type='password'
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value)
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleLogin()
-                }
-              }}
-              data-testid='password'
-            />
-            {error.length > 0 && (
-              <Typography color='error' data-testid='error-invalid-credentials'>
-                {error}
-              </Typography>
-            )}
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={handleLogin}
-              sx={{ mt: '16px' }}
-              data-testid='login-button'
-            >
-              {t('scenarios.login-form.login-button')}
-            </Button>
-          </>
-        )}
-        {isLoggedIn && (
-          <>
-            <Alert severity='success' data-testid='logged-in-success'>
-              {t('scenarios.login-form.logged-in-message')}
-            </Alert>
-            <Button
-              variant='outlined'
-              color='primary'
-              onClick={handleLogout}
-              sx={{ mt: '16px' }}
-              data-testid='logout-button'
-            >
-              {t('scenarios.login-form.logout-button')}
-            </Button>
-          </>
-        )}
-      </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {!isLoggedIn && (
+            <>
+              <TextField
+                label={t('scenarios.login-form.username')}
+                variant='outlined'
+                margin='normal'
+                fullWidth
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value)
+                }}
+                data-testid='username'
+              />
+              <TextField
+                label={t('scenarios.login-form.password')}
+                variant='outlined'
+                margin='normal'
+                fullWidth
+                type='password'
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleLogin()
+                  }
+                }}
+                data-testid='password'
+              />
+              {error.length > 0 && (
+                <Typography
+                  color='error'
+                  data-testid='error-invalid-credentials'
+                >
+                  {error}
+                </Typography>
+              )}
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleLogin}
+                sx={{ mt: '16px' }}
+                data-testid='login-button'
+              >
+                {t('scenarios.login-form.login-button')}
+              </Button>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <Alert severity='success' data-testid='logged-in-success'>
+                {t('scenarios.login-form.logged-in-message')}
+              </Alert>
+              <Button
+                variant='outlined'
+                color='primary'
+                onClick={handleLogout}
+                sx={{ mt: '16px' }}
+                data-testid='logout-button'
+              >
+                {t('scenarios.login-form.logout-button')}
+              </Button>
+            </>
+          )}
+        </Box>
+      </PageSetup>
     </Layout>
   )
 }

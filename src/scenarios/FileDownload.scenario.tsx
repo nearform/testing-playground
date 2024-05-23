@@ -45,10 +45,11 @@ const FileDownload: React.FC = (): JSX.Element => {
         title={t('scenarios.file-download.title')}
         description={t('scenarios.file-download.description')}
         information={t('scenarios.file-download.information')}
-      />
-      <Box>
-        <DownloadButton onClick={handleDownload} />
-      </Box>
+      >
+        <Box>
+          <DownloadButton onClick={handleDownload} />
+        </Box>
+      </PageSetup>
     </Layout>
   )
 }

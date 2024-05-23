@@ -70,7 +70,7 @@ const SliderWithInput: React.FC = () => {
   }
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const newValue = Number(event.target.value)
     setInputValue((prevValue) => {
@@ -117,14 +117,15 @@ const SliderPage: React.FC = () => {
       <PageSetup
         title={t('scenarios.slider-page.title')}
         description={t('scenarios.slider-page.description')}
-      />
-      <Box>
-        <BasicSlider />
-        <Divider sx={{ mt: 4, mb: 4 }} />
-        <RangeSlider />
-        <Divider sx={{ mt: 4, mb: 4 }} />
-        <SliderWithInput />
-      </Box>
+      >
+        <Box>
+          <BasicSlider />
+          <Divider sx={{ mt: 4, mb: 4 }} />
+          <RangeSlider />
+          <Divider sx={{ mt: 4, mb: 4 }} />
+          <SliderWithInput />
+        </Box>
+      </PageSetup>
     </Layout>
   )
 }

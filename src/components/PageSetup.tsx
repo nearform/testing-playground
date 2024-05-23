@@ -1,15 +1,17 @@
+import React from 'react'
 import ReactHtmlParser from 'html-react-parser'
-import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 interface PageSetupProps {
+  children: React.ReactNode
   title: string
   description: string
   information?: string
 }
 
 const PageSetup: React.FC<PageSetupProps> = ({
+  children,
   title,
   description,
   information,
@@ -17,9 +19,9 @@ const PageSetup: React.FC<PageSetupProps> = ({
   const { t } = useTranslation()
 
   return (
-    <>
-      <div className='flex justify-between items-center'>
-        <h1 className='text-2xl mb-4'>{title}</h1>
+    <div className='px-4 py-4'>
+      <header className='flex justify-between items-center mb-4'>
+        <h1 className='text-2xl'>{title}</h1>
         <Link
           to='/'
           data-testid={t('navigation.back').toLowerCase()}
@@ -27,20 +29,20 @@ const PageSetup: React.FC<PageSetupProps> = ({
         >
           &lt; {t('navigation.back_to_main_page')}
         </Link>
-      </div>
-      <div>
+      </header>
+      <section className='mb-4'>
         <h6 className='text-l'>{t('scenarios.description')}</h6>
         <p className='mb-4 text-sm text-foreground-muted'>
           {ReactHtmlParser(t(description))}
         </p>
-      </div>
-      {information != null && (
-        <div>
+      </section>
+      {information && (
+        <section className='mb-4'>
           <h6 className='text-l'>{t('scenarios.information')}</h6>
-          <p className='mb-4 text-foreground-muted'>
+          <p className='text-sm text-foreground-muted'>
             {ReactHtmlParser(t(information))}
           </p>
-        </div>
+        </section>
       )}
       <div className='relative py-4 mb-8'>
         <div className='absolute inset-0 flex items-center'>
@@ -52,7 +54,8 @@ const PageSetup: React.FC<PageSetupProps> = ({
           </span>
         </div>
       </div>
-    </>
+      <main>{children}</main>
+    </div>
   )
 }
 

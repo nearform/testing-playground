@@ -7,9 +7,9 @@ import {
   TextareaAutosize,
   Button,
   InputAdornment,
-  IconButton
+  IconButton,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
@@ -30,7 +30,7 @@ const InputField: React.FC<InputFieldProps> = ({
   type,
   value,
   onChange,
-  readOnly = false
+  readOnly = false,
 }) => {
   const { t } = useTranslation()
   return (
@@ -44,8 +44,7 @@ const InputField: React.FC<InputFieldProps> = ({
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.input')}:
             </Typography>
-            {type === 'textarea'
-              ? (
+            {type === 'textarea' ? (
               <TextareaAutosize
                 value={value}
                 onChange={
@@ -55,8 +54,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 style={{ width: '100%' }}
                 data-testid='textarea-input'
               />
-                )
-              : (
+            ) : (
               <TextField
                 type={type}
                 value={value}
@@ -72,17 +70,19 @@ const InputField: React.FC<InputFieldProps> = ({
                         <IconButton
                           edge='end'
                           onClick={() => {
-                            onChange({ target: { value: '' } } as any)
+                            onChange({ target: { value: '' } } as ChangeEvent<
+                              HTMLInputElement | HTMLTextAreaElement
+                            >)
                           }}
                         >
                           <ClearIcon data-testid='clear-icon' />
                         </IconButton>
                       )}
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
-                )}
+            )}
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -90,8 +90,7 @@ const InputField: React.FC<InputFieldProps> = ({
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.output')}:
             </Typography>
-            {type === 'textarea'
-              ? (
+            {type === 'textarea' ? (
               <TextareaAutosize
                 value={value}
                 onChange={
@@ -100,8 +99,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 minRows={3}
                 style={{ width: '100%' }}
               />
-                )
-              : (
+            ) : (
               <TextField
                 value={value}
                 InputProps={{ readOnly }}
@@ -109,7 +107,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 variant='outlined'
                 sx={{ width: '100%' }}
               />
-                )}
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -124,17 +122,17 @@ const VariousInputs: React.FC = (): JSX.Element => {
     password: '',
     number: '',
     date: '',
-    textarea: ''
+    textarea: '',
   })
 
   const handleChange =
     (type: string) =>
-      (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setInputValues({
-          ...inputValues,
-          [type]: event.target.value
-        })
-      }
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setInputValues({
+        ...inputValues,
+        [type]: event.target.value,
+      })
+    }
 
   const handleClearAll = (): void => {
     setInputValues({
@@ -142,12 +140,12 @@ const VariousInputs: React.FC = (): JSX.Element => {
       password: '',
       number: '',
       date: '',
-      textarea: ''
+      textarea: '',
     })
   }
 
   const inputTypes: Array<
-  'text' | 'password' | 'number' | 'date' | 'textarea'
+    'text' | 'password' | 'number' | 'date' | 'textarea'
   > = ['text', 'password', 'number', 'date', 'textarea']
 
   return (
@@ -155,25 +153,26 @@ const VariousInputs: React.FC = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.various-inputs.title')}
         description={t('scenarios.various-inputs.description')}
-      />
-      <Button
-        variant='contained'
-        color='secondary'
-        onClick={handleClearAll}
-        sx={{ mt: 2 }}
       >
-        {t('scenarios.various-inputs.clear-all')}
-      </Button>
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={handleClearAll}
+          sx={{ mt: 2 }}
+        >
+          {t('scenarios.various-inputs.clear-all')}
+        </Button>
 
-      {inputTypes.map((type) => (
-        <InputField
-          key={type}
-          type={type}
-          label={t(`scenarios.various-inputs.${type}`)}
-          value={inputValues[type]}
-          onChange={handleChange(type)}
-        />
-      ))}
+        {inputTypes.map((type) => (
+          <InputField
+            key={type}
+            type={type}
+            label={t(`scenarios.various-inputs.${type}`)}
+            value={inputValues[type]}
+            onChange={handleChange(type)}
+          />
+        ))}
+      </PageSetup>
     </Layout>
   )
 }
