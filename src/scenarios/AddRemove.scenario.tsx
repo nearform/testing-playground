@@ -20,7 +20,7 @@ const AddRemove = (): JSX.Element => {
 
   const location = useLocation()
   const initialElementsParam = new URLSearchParams(location.search).get(
-    'initialElements'
+    'initialElements',
   )
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const AddRemove = (): JSX.Element => {
         setNextIndex(initialElementsCount - 1)
         sessionStorage.setItem(
           'nextIndex',
-          (initialElementsCount - 1).toString()
+          (initialElementsCount - 1).toString(),
         )
         setElements(Array.from({ length: initialElementsCount }, (_, i) => i))
       }
@@ -54,7 +54,7 @@ const AddRemove = (): JSX.Element => {
   const removeElement = (indexToRemove: number): void => {
     setElements((prevElements) => {
       const newElements = prevElements.filter(
-        (element) => element !== indexToRemove
+        (element) => element !== indexToRemove,
       )
       if (newElements.length === 0) {
         setNextIndex(0)
@@ -72,12 +72,12 @@ const AddRemove = (): JSX.Element => {
 
   const ElementComponent = ({
     index,
-    removeElement
+    removeElement,
   }: {
     index: number
     removeElement: () => void
   }): JSX.Element => {
-    const { t: elementT } = useTranslation()
+    const { t } = useTranslation()
 
     return (
       <>
@@ -87,7 +87,7 @@ const AddRemove = (): JSX.Element => {
           onClick={removeElement}
           data-testid={`remove-element-${index + 1}`}
         >
-          {elementT('scenarios.add-remove.remove-element')} {index + 1}
+          {t('scenarios.add-remove.remove-element')} {index + 1}
         </Button>
       </>
     )
@@ -99,41 +99,42 @@ const AddRemove = (): JSX.Element => {
         title={t('scenarios.add-remove.title')}
         description={t('scenarios.add-remove.description')}
         information={t('scenarios.add-remove.information')}
-      />
-      <Box display='flex' mb={4}>
-        <Button
-          variant='contained'
-          onClick={addElement}
-          data-testid='add-element'
-          sx={{ mr: 2 }}
-        >
-          {t('scenarios.add-remove.add-element')}
-        </Button>
-        <Button
-          variant='contained'
-          onClick={clearStorage}
-          data-testid='clear-storage'
-          color='secondary'
-        >
-          {t('scenarios.add-remove.clear-storage')}
-        </Button>
-      </Box>
-      <Box
-        display='grid'
-        gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
-        gap={2}
       >
-        {elements.map((element, index) => (
-          <div key={index}>
-            <ElementComponent
-              index={element}
-              removeElement={() => {
-                removeElement(element)
-              }}
-            />
-          </div>
-        ))}
-      </Box>
+        <Box display='flex'>
+          <Button
+            variant='contained'
+            onClick={addElement}
+            data-testid='add-element'
+            sx={{ mr: 2 }}
+          >
+            {t('scenarios.add-remove.add-element')}
+          </Button>
+          <Button
+            variant='contained'
+            onClick={clearStorage}
+            data-testid='clear-storage'
+            color='secondary'
+          >
+            {t('scenarios.add-remove.clear-storage')}
+          </Button>
+        </Box>
+        <Box
+          display='grid'
+          gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
+          gap={2}
+        >
+          {elements.map((element, index) => (
+            <div key={index}>
+              <ElementComponent
+                index={element}
+                removeElement={() => {
+                  removeElement(element)
+                }}
+              />
+            </div>
+          ))}
+        </Box>
+      </PageSetup>
     </Layout>
   )
 }

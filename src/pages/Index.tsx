@@ -57,8 +57,8 @@ export default function Index(): JSX.Element {
 
   return (
     <Layout>
-      <div className='flex justify-center'>
-        <div className='w-60 mb-4'>
+      <div className='flex justify-center bg-background border-t-2 border-grey-200'>
+        <div className='w-60 mb-4 mt-4'>
           <Input
             placeholder={t('common.search')}
             variant='primary'
@@ -70,21 +70,25 @@ export default function Index(): JSX.Element {
             onClear={() => {
               setSearchTerm('')
             }}
+            className='h-7'
           />
         </div>
-        <div className='w-60 ml-2'>
+        <div className='w-60 ml-2 mt-4'>
           <Select
             onValueChange={(value) => {
               setSelectedDifficulty(value === '' ? null : value)
             }}
             data-testid='select-difficulty'
           >
-            <SelectTrigger size='lg'>
+            <SelectTrigger size='lg' className='h-14'>
               <SelectValue placeholder={t('common.select-difficulty')} />
             </SelectTrigger>
             <SelectContent side='top' className='overflow-visible'>
               <SelectItem value='0' data-testid='select-difficulty-all'>
                 {t('common.all')}
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-red-300 rounded-full float-right'></div>
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-yellow-300 rounded-full float-right'></div>
+                <div className='mt-1.5 ml-2 w-2 h-2 bg-green-300 rounded-full float-right'></div>
               </SelectItem>
               <SelectItem value='1' data-testid='select-difficulty-easy'>
                 {t('common.easy')}

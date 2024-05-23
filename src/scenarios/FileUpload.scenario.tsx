@@ -5,7 +5,7 @@ import {
   LinearProgress,
   Typography,
   Alert,
-  type AlertColor
+  type AlertColor,
 } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,11 +22,11 @@ const FileUpload = (): JSX.Element => {
     severity: AlertColor
   }>({
     text: '',
-    severity: 'info'
+    severity: 'info',
   })
 
   const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     if (event.target.files != null && event.target.files.length > 0) {
       setFile(event.target.files[0])
@@ -42,10 +42,10 @@ const FileUpload = (): JSX.Element => {
         setUploading(false)
         setUploadMessage({
           text: t('scenarios.file-upload.upload-success', { filename }),
-          severity: 'success'
+          severity: 'success',
         })
       },
-      Math.floor(Math.random() * (max - min + 1) + min)
+      Math.floor(Math.random() * (max - min + 1) + min),
     )
   }
 
@@ -56,7 +56,7 @@ const FileUpload = (): JSX.Element => {
     } else {
       setUploadMessage({
         text: t('scenarios.file-upload.please-select-file'),
-        severity: 'error'
+        severity: 'error',
       })
     }
   }
@@ -67,62 +67,63 @@ const FileUpload = (): JSX.Element => {
         title={t('scenarios.file-upload.title')}
         description={t('scenarios.file-upload.description')}
         information={t('scenarios.file-upload.information')}
-      />
-      <Box>
-        <input
-          type='file'
-          onChange={handleFileChange}
-          id='icon-button-file'
-          style={{ display: 'none' }}
-          data-testid='select-file'
-        />
-        <label htmlFor='icon-button-file'>
-          <Button
-            variant='outlined'
-            component='span'
-            sx={{ mr: 4 }}
-            startIcon={<CloudUploadIcon />}
-          >
-            {t('scenarios.file-upload.select-file')}
-          </Button>
-        </label>
-        {file != null && (
-          <>
-            <Typography
-              variant='body1'
-              sx={{ mt: 2 }}
-              data-testid='selected-file-name'
+      >
+        <Box>
+          <input
+            type='file'
+            onChange={handleFileChange}
+            id='icon-button-file'
+            style={{ display: 'none' }}
+            data-testid='select-file'
+          />
+          <label htmlFor='icon-button-file'>
+            <Button
+              variant='outlined'
+              component='span'
+              sx={{ mr: 4 }}
+              startIcon={<CloudUploadIcon />}
             >
-              {t('scenarios.file-upload.selected-file', {
-                filename: file.name
-              })}
-            </Typography>
-            <Box sx={{ marginLeft: 'auto', mt: 2 }}>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleUpload}
-                disabled={uploading}
-                data-testid='upload-button'
+              {t('scenarios.file-upload.select-file')}
+            </Button>
+          </label>
+          {file != null && (
+            <>
+              <Typography
+                variant='body1'
+                sx={{ mt: 2 }}
+                data-testid='selected-file-name'
               >
-                {t('scenarios.file-upload.upload-button')}
-              </Button>
-            </Box>
-          </>
-        )}
-        {uploading && <LinearProgress sx={{ mt: 2 }} />}
-        {uploadMessage.text.length > 0 && (
-          <>
-            <Alert
-              severity={uploadMessage.severity}
-              sx={{ p: 2, mt: 2 }}
-              data-testid='upload-message'
-            >
-              {uploadMessage.text}
-            </Alert>
-          </>
-        )}
-      </Box>
+                {t('scenarios.file-upload.selected-file', {
+                  filename: file.name,
+                })}
+              </Typography>
+              <Box sx={{ marginLeft: 'auto', mt: 2 }}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={handleUpload}
+                  disabled={uploading}
+                  data-testid='upload-button'
+                >
+                  {t('scenarios.file-upload.upload-button')}
+                </Button>
+              </Box>
+            </>
+          )}
+          {uploading && <LinearProgress sx={{ mt: 2 }} />}
+          {uploadMessage.text.length > 0 && (
+            <>
+              <Alert
+                severity={uploadMessage.severity}
+                sx={{ p: 2, mt: 2 }}
+                data-testid='upload-message'
+              >
+                {uploadMessage.text}
+              </Alert>
+            </>
+          )}
+        </Box>
+      </PageSetup>
     </Layout>
   )
 }
