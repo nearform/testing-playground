@@ -21,7 +21,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
-    "@nearform/quantum": "^1.1.2",
+    "@nearform/quantum": "^1.2.0",
     "html-react-parser": "^5.1.10",
     "react": "latest",
     "react-dom": "latest",
