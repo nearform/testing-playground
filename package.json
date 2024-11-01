@@ -35,7 +35,7 @@
     "@types/node": "^22.8.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
     "@vitejs/plugin-react": "latest",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.53.0",
