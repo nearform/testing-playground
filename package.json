@@ -1,12 +1,12 @@
 {
   "name": "testing-playground",
-  "homepage": "/testing-playground/#",
+  "homepage": "https://nearform.github.io/testing-playground",
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "NODE_ENV=development vite",
+    "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "NODE_ENV=development vite preview",
+    "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest"
   },
