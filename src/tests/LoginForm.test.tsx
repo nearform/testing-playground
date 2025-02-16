@@ -33,11 +33,11 @@ describe('LoginForm component', () => {
     // Enter valid credentials and click login
     fireEvent.change(
       screen.getByTestId('username').querySelector('input') as Element,
-      { target: { value: 'admin' } }
+      { target: { value: 'admin' } },
     )
     fireEvent.change(
       screen.getByTestId('password').querySelector('input') as Element,
-      { target: { value: 'Passw0rd!' } }
+      { target: { value: 'Passw0rd!' } },
     )
     fireEvent.click(screen.getByTestId('login-button'))
 
@@ -58,18 +58,18 @@ describe('LoginForm component', () => {
     // Enter invalid credentials and click login
     fireEvent.change(
       screen.getByTestId('username').querySelector('input') as Element,
-      { target: { value: 'invalidUser' } }
+      { target: { value: 'invalidUser' } },
     )
     fireEvent.change(
       screen.getByTestId('password').querySelector('input') as Element,
-      { target: { value: 'invalidPassword' } }
+      { target: { value: 'invalidPassword' } },
     )
     fireEvent.click(screen.getByTestId('login-button'))
 
     // Wait for the error message to appear
     await waitFor(() => {
       expect(
-        screen.getByTestId('error-invalid-credentials')
+        screen.getByTestId('error-invalid-credentials'),
       ).toBeInTheDocument()
     })
   })
@@ -80,11 +80,11 @@ describe('LoginForm component', () => {
     // Log in first
     fireEvent.change(
       screen.getByTestId('username').querySelector('input') as Element,
-      { target: { value: 'admin' } }
+      { target: { value: 'admin' } },
     )
     fireEvent.change(
       screen.getByTestId('password').querySelector('input') as Element,
-      { target: { value: 'Passw0rd!' } }
+      { target: { value: 'Passw0rd!' } },
     )
     fireEvent.click(screen.getByTestId('login-button'))
 
@@ -99,10 +99,10 @@ describe('LoginForm component', () => {
 
     // Ensure login form is rendered after logout
     expect(
-      screen.getByTestId('username').querySelector('input') as Element
+      screen.getByTestId('username').querySelector('input') as Element,
     ).toBeInTheDocument()
     expect(
-      screen.getByTestId('password').querySelector('input') as Element
+      screen.getByTestId('password').querySelector('input') as Element,
     ).toBeInTheDocument()
     expect(screen.getByTestId('login-button')).toBeInTheDocument()
 

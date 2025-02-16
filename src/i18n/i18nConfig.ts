@@ -10,7 +10,7 @@ const getSavedLanguage = (): string => localStorage.getItem('language') ?? 'en'
 const resources = {
   en: { translation: enTranslation },
   fr: { translation: frTranslation },
-  ptBr: { translation: ptBrTranslation }
+  ptBr: { translation: ptBrTranslation },
 }
 
 i18n
@@ -18,7 +18,7 @@ i18n
   .init({
     interpolation: { escapeValue: false },
     lng: getSavedLanguage(),
-    resources
+    resources,
   })
   .catch((e) => {
     console.log(e)

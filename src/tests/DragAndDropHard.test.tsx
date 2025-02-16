@@ -20,7 +20,7 @@ describe('DragAndDropHard component', () => {
     TestRenderer(<DragAndDropHard />)
     // Get the first draggable square with data-testid starting with 'draggable-'
     const firstDraggable = screen.getByTestId(
-      (id: string) => id.startsWith('draggable-') && id.endsWith('-1')
+      (id: string) => id.startsWith('draggable-') && id.endsWith('-1'),
     )
     // Determine the drop target based on the shape of the first draggable square
     const dropTargetTestId = (firstDraggable
@@ -32,18 +32,18 @@ describe('DragAndDropHard component', () => {
     await act(async () => {
       fireEvent.dragStart(firstDraggable, {
         dataTransfer: {
-          setData: vi.fn()
-        }
+          setData: vi.fn(),
+        },
       })
       fireEvent.drop(dropTarget, {
         dataTransfer: {
-          getData: vi.fn(() => '1')
-        }
+          getData: vi.fn(() => '1'),
+        },
       })
     })
     await waitFor(() => {
       expect(screen.getByTestId('total-count')).toHaveTextContent(
-        'Total Correct: 1'
+        'Total Correct: 1',
       )
     })
   })

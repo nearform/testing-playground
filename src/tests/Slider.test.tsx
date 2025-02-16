@@ -57,7 +57,7 @@ describe('Slider component', () => {
     fireEvent.change(sliderInput, { target: { value: '75' } })
     await waitFor(() => {
       expect(
-        screen.getByTestId('input-slider-text').querySelector('input')
+        screen.getByTestId('input-slider-text').querySelector('input'),
       ).toHaveValue(75)
     })
   })

@@ -17,16 +17,16 @@ describe('DragAndDrop component', () => {
 
     // Mock dataTransfer for drag start
     fireEvent.dragStart(draggableBox, {
-      dataTransfer: { setData: vi.fn() }
+      dataTransfer: { setData: vi.fn() },
     })
 
     // Mock dataTransfer for drop
     fireEvent.drop(dropTarget, {
-      dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') }
+      dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') },
     })
 
     expect(screen.getByTestId('total-drops')).toHaveTextContent(
-      'Total Drops: 1'
+      'Total Drops: 1',
     )
   })
 
@@ -36,14 +36,14 @@ describe('DragAndDrop component', () => {
     const dropTarget = screen.getByTestId('drop-target')
     for (let i = 0; i < 3; i++) {
       fireEvent.dragStart(draggableBox, {
-        dataTransfer: { setData: vi.fn() }
+        dataTransfer: { setData: vi.fn() },
       })
       fireEvent.drop(dropTarget, {
-        dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') }
+        dataTransfer: { getData: vi.fn().mockReturnValue('smallBox') },
       })
     }
     expect(screen.getByTestId('total-drops')).toHaveTextContent(
-      'Total Drops: 3'
+      'Total Drops: 3',
     )
   })
 })

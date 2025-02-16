@@ -28,7 +28,7 @@ describe('FileDownload component', () => {
         if (tagName === 'a') {
           const anchor = originalCreateElement(tagName)
           Object.defineProperty(anchor, 'click', {
-            value: linkClickMock
+            value: linkClickMock,
           })
           return anchor
         }
@@ -45,6 +45,6 @@ describe('FileDownload component', () => {
 
       vi.restoreAllMocks()
     },
-    { timeout: 10000 }
+    { timeout: 10000 },
   )
 })
