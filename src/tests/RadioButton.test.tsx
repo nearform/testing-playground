@@ -32,7 +32,7 @@ describe('RadioButton component', () => {
 
     const secondRadioFirstButton = screen.getByRole('radio', { name: 'Purple' })
     const secondRadioSecondButton = screen.getByRole('radio', {
-      name: 'Orange'
+      name: 'Orange',
     })
 
     fireEvent.click(secondRadioFirstButton)

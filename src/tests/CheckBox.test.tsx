@@ -15,7 +15,7 @@ describe('CheckBox component', () => {
     expect(screen.getByTestId('checked').querySelector('input')).toBeChecked()
     fireEvent.click(screen.getByTestId('checked'))
     expect(
-      screen.getByTestId('checked').querySelector('input')
+      screen.getByTestId('checked').querySelector('input'),
     ).not.toBeChecked()
   })
 
@@ -40,7 +40,7 @@ describe('CheckBox component', () => {
     fireEvent.click(screen.getAllByTestId('child')[0])
     expect(screen.getByTestId('parent').querySelector('input')).toHaveAttribute(
       'data-indeterminate',
-      'true'
+      'true',
     )
   })
 })

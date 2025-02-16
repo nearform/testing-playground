@@ -32,7 +32,7 @@ describe('Notification component', () => {
       () => {
         expect(screen.queryByTestId('notification-error')).toBeNull()
       },
-      { timeout: 6000 } // Notification displays for 6 seconds
+      { timeout: 6000 }, // Notification displays for 6 seconds
     )
   }, 10000)
 })

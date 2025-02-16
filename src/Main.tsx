@@ -20,6 +20,6 @@ if (rootElement !== null) {
           </HashRouter>
         </ThemeProvider>
       </I18nextProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
   )
 }

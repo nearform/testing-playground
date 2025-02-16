@@ -4,22 +4,22 @@ import { createTheme } from '@mui/material/styles'
 const Theme = createTheme({
   palette: {
     primary: {
-      main: '#00E5A4'
+      main: '#00E5A4',
     },
     secondary: {
       main: '#5630FF',
-      contrastText: '#FFFFFF'
+      contrastText: '#FFFFFF',
     },
     error: {
-      main: red.A400
+      main: red.A400,
     },
     background: {
-      default: '#FFFFFF'
-    }
+      default: '#FFFFFF',
+    },
   },
   typography: {
-    fontFamily: 'Inter, sans-serif'
-  }
+    fontFamily: 'Inter, sans-serif',
+  },
 })
 
 export default Theme

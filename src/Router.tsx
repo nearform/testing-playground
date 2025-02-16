@@ -8,7 +8,7 @@ import * as Scenario from './scenarios/Index'
 // to dynamically generate the routes
 const scenarioComponents = Object.values(Scenario)
 
-function Router (): JSX.Element {
+function Router(): JSX.Element {
   return (
     <Routes>
       <Route path='/' element={<Index />} />

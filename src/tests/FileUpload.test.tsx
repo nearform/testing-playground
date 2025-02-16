@@ -20,7 +20,7 @@ describe('FileUpload component', () => {
       // Select a file
       await userEvent.upload(
         fileInput,
-        new File(['hello'], 'hello.png', { type: 'image/png' })
+        new File(['hello'], 'hello.png', { type: 'image/png' }),
       )
       // Click the upload button
       const uploadButton = screen.getByTestId('upload-button')
@@ -29,12 +29,12 @@ describe('FileUpload component', () => {
       await waitFor(
         () => {
           expect(
-            screen.getByText(/File "hello.png" uploaded successfully!/)
+            screen.getByText(/File "hello.png" uploaded successfully!/),
           ).toBeInTheDocument()
         },
-        { timeout: 10000 }
+        { timeout: 10000 },
       )
     },
-    { timeout: 12000 }
+    { timeout: 12000 },
   )
 })
