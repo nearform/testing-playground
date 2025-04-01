@@ -22,7 +22,7 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@nearform/quantum": "^1.2.0",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.21",
     "html-react-parser": "^5.2.2",
     "postcss": "^8.5.2",
     "react": "latest",
