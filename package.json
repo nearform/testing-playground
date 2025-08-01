@@ -39,7 +39,7 @@
     "@types/node": "^22.8.6",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@vitejs/plugin-react": "latest",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "9.1.0",
