@@ -23,7 +23,7 @@
     "@mui/material": "latest",
     "@nearform/quantum": "^1.2.0",
     "autoprefixer": "^10.4.21",
-    "html-react-parser": "^5.2.2",
+    "html-react-parser": "^5.2.11",
     "postcss": "^8.5.4",
     "react": "latest",
     "react-dom": "latest",
