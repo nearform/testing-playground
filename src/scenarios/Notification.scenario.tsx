@@ -41,7 +41,11 @@ const Notification = (): JSX.Element => {
     }, 6000)
   }
 
-  const handleClose = (): void => {
+  const handleClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ): void => {
+    if (reason === 'clickaway') return
     setNotification(null)
   }
 
@@ -54,7 +58,7 @@ const Notification = (): JSX.Element => {
       >
         <Grid container spacing={2}>
           {notificationTypes.map(({ key, label }) => (
-            <Grid item xs={3} key={key}>
+            <Grid size={3} key={key}>
               <Button
                 variant='contained'
                 color={key as NotificationSeverity}

@@ -65,8 +65,7 @@ const DragAndDrop = (): JSX.Element => {
           {/* Larger drop target grid on the right */}
           <Grid
             container
-            item
-            xs={6}
+            size={6}
             justifyContent='center'
             alignItems='center'
             onDragOver={handleDragOver}
