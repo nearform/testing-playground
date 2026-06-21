@@ -46,7 +46,7 @@ describe('RadioButton component', () => {
 
   it('disables the last radio button in the first group', () => {
     TestRenderer(<RadioButton />)
-    const fourthRadioButton = screen.getByTestId('radio-button-group-1-4')
-    expect(fourthRadioButton).toHaveAttribute('aria-disabled', 'true')
+    const fourthRadioButton = screen.getByRole('radio', { name: 'White' })
+    expect(fourthRadioButton).toBeDisabled()
   })
 })
