@@ -5,7 +5,13 @@ import enTranslation from './locales/en.json'
 import frTranslation from './locales/fr.json'
 import ptBrTranslation from './locales/pt-br.json'
 
-const getSavedLanguage = (): string => localStorage.getItem('language') ?? 'en'
+const getSavedLanguage = (): string => {
+  try {
+    return localStorage.getItem('language') ?? 'en'
+  } catch {
+    return 'en'
+  }
+}
 
 const resources = {
   en: { translation: enTranslation },

@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material/styles'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'

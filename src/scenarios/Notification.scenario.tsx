@@ -1,4 +1,11 @@
-import { Button, Snackbar, Alert, Grid, AlertTitle } from '@mui/material'
+import {
+  Button,
+  Snackbar,
+  Alert,
+  Grid,
+  AlertTitle,
+  type SnackbarCloseReason,
+} from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -41,7 +48,11 @@ const Notification = (): JSX.Element => {
     }, 6000)
   }
 
-  const handleClose = (): void => {
+  const handleClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ): void => {
+    if (reason === 'clickaway') return
     setNotification(null)
   }
 
@@ -54,7 +65,7 @@ const Notification = (): JSX.Element => {
       >
         <Grid container spacing={2}>
           {notificationTypes.map(({ key, label }) => (
-            <Grid item xs={3} key={key}>
+            <Grid size={3} key={key}>
               <Button
                 variant='contained'
                 color={key as NotificationSeverity}

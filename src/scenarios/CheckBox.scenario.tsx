@@ -64,7 +64,7 @@ const CheckBox = (): JSX.Element => {
         information={t('scenarios.check-box.information')}
       >
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid size={4}>
             <Typography variant='body2'>
               {t('scenarios.check-box.scenario-form')}:
             </Typography>
@@ -95,7 +95,7 @@ const CheckBox = (): JSX.Element => {
               </FormGroup>
             </FormControl>
           </Grid>
-          <Grid item>
+          <Grid>
             <Typography variant='body2'>
               {t('scenarios.check-box.scenario-icons')}:
             </Typography>

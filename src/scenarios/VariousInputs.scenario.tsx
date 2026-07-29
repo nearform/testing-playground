@@ -39,7 +39,7 @@ const InputField: React.FC<InputFieldProps> = ({
         {label}
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.input')}:
@@ -85,7 +85,7 @@ const InputField: React.FC<InputFieldProps> = ({
             )}
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.output')}:
