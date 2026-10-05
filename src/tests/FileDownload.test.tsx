@@ -12,39 +12,35 @@ describe('FileDownload component', () => {
     sessionStorage.clear()
   })
 
-  it(
-    'triggers file download on button click',
-    async () => {
-      TestRenderer(<FileDownload />)
+  it('triggers file download on button click', async () => {
+    TestRenderer(<FileDownload />)
 
-      const createObjectURLMock = vi.fn(() => 'blob:url')
-      const revokeObjectURLMock = vi.fn()
-      global.URL.createObjectURL = createObjectURLMock
-      global.URL.revokeObjectURL = revokeObjectURLMock
+    const createObjectURLMock = vi.fn(() => 'blob:url')
+    const revokeObjectURLMock = vi.fn()
+    global.URL.createObjectURL = createObjectURLMock
+    global.URL.revokeObjectURL = revokeObjectURLMock
 
-      const linkClickMock = vi.fn()
-      const originalCreateElement = document.createElement.bind(document)
-      vi.spyOn(document, 'createElement').mockImplementation((tagName) => {
-        if (tagName === 'a') {
-          const anchor = originalCreateElement(tagName)
-          Object.defineProperty(anchor, 'click', {
-            value: linkClickMock,
-          })
-          return anchor
-        }
-        return originalCreateElement(tagName)
-      })
+    const linkClickMock = vi.fn()
+    const originalCreateElement = document.createElement.bind(document)
+    vi.spyOn(document, 'createElement').mockImplementation((tagName) => {
+      if (tagName === 'a') {
+        const anchor = originalCreateElement(tagName)
+        Object.defineProperty(anchor, 'click', {
+          value: linkClickMock,
+        })
+        return anchor
+      }
+      return originalCreateElement(tagName)
+    })
 
-      const downloadButton = screen.getByText('Download File')
-      await userEvent.click(downloadButton)
+    const downloadButton = screen.getByText('Download File')
+    await userEvent.click(downloadButton)
 
-      await waitFor(() => {
-        expect(createObjectURLMock).toHaveBeenCalled()
-        expect(linkClickMock).toHaveBeenCalled()
-      })
+    await waitFor(() => {
+      expect(createObjectURLMock).toHaveBeenCalled()
+      expect(linkClickMock).toHaveBeenCalled()
+    })
 
-      vi.restoreAllMocks()
-    },
-    { timeout: 10000 },
-  )
+    vi.restoreAllMocks()
+  }, 10000)
 })
