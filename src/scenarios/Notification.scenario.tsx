@@ -87,7 +87,6 @@ const Notification = (): JSX.Element => {
           autoHideDuration={6000}
           onClose={handleClose}
           data-testid={`notification-${notification?.severity}`}
-          ClickAwayListenerProps={{ onClickAway: () => null }}
         >
           <Alert
             onClose={handleClose}

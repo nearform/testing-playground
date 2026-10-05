@@ -91,9 +91,11 @@ const SliderWithInput: React.FC = () => {
           type='number'
           value={inputValue}
           onChange={handleInputChange}
-          inputProps={{ min: 1, max: 100 }}
           sx={{ width: '80px', ml: 'auto' }}
           data-testid='input-slider-text'
+          slotProps={{
+            htmlInput: { min: 1, max: 100 },
+          }}
         />
       </Box>
       <Slider
