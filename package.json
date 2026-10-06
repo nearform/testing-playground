@@ -19,8 +19,8 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
     "@nearform/quantum": "^1.2.0",
     "autoprefixer": "^10.6.1",
     "html-react-parser": "^5.2.11",

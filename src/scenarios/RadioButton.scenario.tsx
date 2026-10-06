@@ -39,7 +39,7 @@ const RadioButton = (): JSX.Element => {
   const renderSecondRadioButtons = (): React.ReactNode => {
     if (firstRadioValue in secondRadioOptions) {
       return (
-        <Grid item>
+        <Grid>
           <Typography variant='body2'>
             {t('scenarios.radio-button.second-set')}:
           </Typography>
@@ -73,7 +73,7 @@ const RadioButton = (): JSX.Element => {
         information={t('scenarios.radio-button.information')}
       >
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             <Typography variant='body2'>
               {t('scenarios.radio-button.first-set')}:
             </Typography>

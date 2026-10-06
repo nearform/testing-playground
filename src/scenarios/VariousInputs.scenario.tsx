@@ -39,7 +39,7 @@ const InputField: React.FC<InputFieldProps> = ({
         {label}
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.input')}:
@@ -62,30 +62,32 @@ const InputField: React.FC<InputFieldProps> = ({
                   onChange as React.ChangeEventHandler<HTMLInputElement>
                 }
                 sx={{ width: '80%' }}
-                inputProps={{ 'data-testid': `${type}-input` }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      {value.length > 0 && (
-                        <IconButton
-                          edge='end'
-                          onClick={() => {
-                            onChange({ target: { value: '' } } as ChangeEvent<
-                              HTMLInputElement | HTMLTextAreaElement
-                            >)
-                          }}
-                        >
-                          <ClearIcon data-testid='clear-icon' />
-                        </IconButton>
-                      )}
-                    </InputAdornment>
-                  ),
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        {value.length > 0 && (
+                          <IconButton
+                            edge='end'
+                            onClick={() => {
+                              onChange({ target: { value: '' } } as ChangeEvent<
+                                HTMLInputElement | HTMLTextAreaElement
+                              >)
+                            }}
+                          >
+                            <ClearIcon data-testid='clear-icon' />
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    ),
+                  },
+                  htmlInput: { 'data-testid': `${type}-input` },
                 }}
               />
             )}
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
             <Typography variant='body1' sx={{ mr: 2 }}>
               {t('scenarios.various-inputs.output')}:
@@ -102,10 +104,12 @@ const InputField: React.FC<InputFieldProps> = ({
             ) : (
               <TextField
                 value={value}
-                InputProps={{ readOnly }}
                 fullWidth
                 variant='outlined'
                 sx={{ width: '100%' }}
+                slotProps={{
+                  input: { readOnly },
+                }}
               />
             )}
           </Box>
