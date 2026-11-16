@@ -96,6 +96,55 @@
       "rating": "2",
       "download": "Baixar Arquivo"
     },
+    "form-validation": {
+      "title": "Validação de Formulário",
+      "description": "Um formulário de cadastro com campos validados, para verificar as mensagens de erro exibidas para valores em formato incorreto.",
+      "information": "Os erros aparecem ao sair de um campo e ao enviar o formulário. Telefone e site são opcionais, mas devem ser válidos se preenchidos. A idade deve ser um número inteiro entre 18 e 120. A senha precisa de pelo menos 8 caracteres com uma letra maiúscula, uma minúscula e um número.",
+      "rating": "2",
+      "submit-button": "Enviar",
+      "reset-button": "Limpar",
+      "error-summary_one": "Corrija o erro abaixo.",
+      "error-summary_other": "Corrija os {{count}} erros abaixo.",
+      "success": "Obrigado {{name}}, o formulário foi enviado com sucesso!",
+      "fields": {
+        "full-name": "Nome Completo",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "age": "Idade",
+        "website": "Site",
+        "password": "Senha",
+        "confirm-password": "Confirmar Senha"
+      },
+      "hints": {
+        "full-name": "Apenas letras, espaços, hífens e apóstrofos",
+        "email": "ex. nome@exemplo.com",
+        "phone": "Opcional, 10 a 15 dígitos, pode começar com +",
+        "age": "Entre 18 e 120",
+        "website": "Opcional, deve começar com http:// ou https://",
+        "password": "Pelo menos 8 caracteres com maiúscula, minúscula e número",
+        "confirm-password": "Digite sua senha novamente"
+      },
+      "errors": {
+        "full-name-required": "O nome completo é obrigatório",
+        "full-name-too-short": "O nome completo deve ter pelo menos 2 caracteres",
+        "full-name-invalid": "O nome completo só pode conter letras, espaços, hífens e apóstrofos",
+        "email-required": "O e-mail é obrigatório",
+        "email-invalid": "Informe um endereço de e-mail válido",
+        "phone-invalid": "O telefone só pode conter dígitos, espaços e um + inicial",
+        "phone-length": "O telefone deve conter entre 10 e 15 dígitos",
+        "age-required": "A idade é obrigatória",
+        "age-not-number": "A idade deve ser um número inteiro",
+        "age-range": "A idade deve estar entre 18 e 120",
+        "website-invalid": "Informe uma URL válida começando com http:// ou https://",
+        "password-required": "A senha é obrigatória",
+        "password-too-short": "A senha deve ter pelo menos 8 caracteres",
+        "password-uppercase": "A senha deve conter uma letra maiúscula",
+        "password-lowercase": "A senha deve conter uma letra minúscula",
+        "password-number": "A senha deve conter um número",
+        "confirm-password-required": "Confirme sua senha",
+        "confirm-password-mismatch": "As senhas não coincidem"
+      }
+    },
     "login-form": {
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",

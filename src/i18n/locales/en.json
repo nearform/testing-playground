@@ -95,6 +95,55 @@
       "rating": "2",
       "download": "Download File"
     },
+    "form-validation": {
+      "title": "Form Validation",
+      "description": "A registration form whose inputs are validated, so you can check the error messages shown for incorrectly formatted values.",
+      "information": "Errors appear when you leave a field and when you submit the form. Phone and website are optional but must be valid if filled in. Age must be a whole number between 18 and 120. The password needs at least 8 characters with an uppercase letter, a lowercase letter and a number.",
+      "rating": "2",
+      "submit-button": "Submit",
+      "reset-button": "Reset",
+      "error-summary_one": "Please fix the {{count}} error below.",
+      "error-summary_other": "Please fix the {{count}} errors below.",
+      "success": "Thanks {{name}}, the form was submitted successfully!",
+      "fields": {
+        "full-name": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "age": "Age",
+        "website": "Website",
+        "password": "Password",
+        "confirm-password": "Confirm Password"
+      },
+      "hints": {
+        "full-name": "Letters, spaces, hyphens and apostrophes only",
+        "email": "e.g. name@example.com",
+        "phone": "Optional, 10 to 15 digits, may start with +",
+        "age": "Between 18 and 120",
+        "website": "Optional, must start with http:// or https://",
+        "password": "At least 8 characters with upper, lower case and a number",
+        "confirm-password": "Re-enter your password"
+      },
+      "errors": {
+        "full-name-required": "Full name is required",
+        "full-name-too-short": "Full name must be at least 2 characters",
+        "full-name-invalid": "Full name can only contain letters, spaces, hyphens and apostrophes",
+        "email-required": "Email is required",
+        "email-invalid": "Please enter a valid email address",
+        "phone-invalid": "Phone number can only contain digits, spaces and a leading +",
+        "phone-length": "Phone number must contain between 10 and 15 digits",
+        "age-required": "Age is required",
+        "age-not-number": "Age must be a whole number",
+        "age-range": "Age must be between 18 and 120",
+        "website-invalid": "Please enter a valid URL starting with http:// or https://",
+        "password-required": "Password is required",
+        "password-too-short": "Password must be at least 8 characters",
+        "password-uppercase": "Password must contain an uppercase letter",
+        "password-lowercase": "Password must contain a lowercase letter",
+        "password-number": "Password must contain a number",
+        "confirm-password-required": "Please confirm your password",
+        "confirm-password-mismatch": "Passwords do not match"
+      }
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
