@@ -17,13 +17,21 @@ interface FieldConfig {
   testId: string
   type: string
   required: boolean
+  // Hints which on-screen keyboard mobile browsers should show
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
 }
 
 const FIELDS: FieldConfig[] = [
   { name: 'fullName', testId: 'full-name', type: 'text', required: true },
   { name: 'email', testId: 'email', type: 'email', required: true },
   { name: 'phone', testId: 'phone', type: 'tel', required: false },
-  { name: 'age', testId: 'age', type: 'text', required: true },
+  {
+    name: 'age',
+    testId: 'age',
+    type: 'text',
+    required: true,
+    inputMode: 'numeric',
+  },
   { name: 'website', testId: 'website', type: 'url', required: false },
   { name: 'password', testId: 'password', type: 'password', required: true },
   {
@@ -147,7 +155,7 @@ const FormValidation = (): JSX.Element => {
               })}
             </Alert>
           )}
-          {FIELDS.map(({ name, testId, type, required }) => {
+          {FIELDS.map(({ name, testId, type, required, inputMode }) => {
             const error = touched[name] ? errors[name] : undefined
             const hint = t(`scenarios.form-validation.hints.${testId}`)
             return (
@@ -175,8 +183,11 @@ const FormValidation = (): JSX.Element => {
                   handleBlur(name)
                 }}
                 slotProps={{
-                  htmlInput: { 'data-testid': testId },
-                  // The helper text is an error message or a hint, each with its own test id
+                  htmlInput: { 'data-testid': testId, inputMode },
+                  // The helper text is an error message or a hint, each with
+                  // its own test id. MUI's FormHelperText slot props don't
+                  // declare `data-*` attributes, so the object is cast to
+                  // satisfy TypeScript; MUI still forwards it to the DOM.
                   formHelperText: {
                     'data-testid':
                       error !== undefined

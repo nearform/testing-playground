@@ -37,7 +37,13 @@ export const MIN_AGE = 18
 export const MAX_AGE = 120
 export const MIN_PASSWORD_LENGTH = 8
 
-const NAME_PATTERN = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u
+// Letters may carry combining marks (\p{M}) so decomposed accents are accepted
+const NAME_PATTERN = /^(?:\p{L}\p{M}*)+(?:[ '-](?:\p{L}\p{M}*)+)*$/u
+// Top-level domain: at least two letters (e.g. `.io`), or the punycode form
+// `new URL` gives internationalised TLDs (e.g. `.рф` becomes `xn--p1ai`)
+const TLD_PATTERN = /^(?:\p{L}{2,}|xn--[a-z0-9-]+)$/u
+// `new URL` has already rejected out-of-range octets by the time this runs
+const IPV4_PATTERN = /^\d{1,3}(?:\.\d{1,3}){3}$/
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const PHONE_PATTERN = /^\+?[0-9 ]+$/
 const INTEGER_PATTERN = /^-?\d+$/
@@ -45,9 +51,15 @@ const INTEGER_PATTERN = /^-?\d+$/
 const isValidUrl = (value: string): boolean => {
   try {
     const url = new URL(value)
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return false
+    if (IPV4_PATTERN.test(url.hostname)) return true
+    // Require a dotted hostname with no empty labels (rejects `example.`,
+    // `.com`, `a..com`) that ends in an alphabetic top-level domain
+    const labels = url.hostname.split('.')
     return (
-      (url.protocol === 'http:' || url.protocol === 'https:') &&
-      url.hostname.includes('.')
+      labels.length >= 2 &&
+      labels.every((label) => label !== '') &&
+      TLD_PATTERN.test(labels[labels.length - 1])
     )
   } catch {
     return false
@@ -61,11 +73,14 @@ export const validateField = (
   const value = values[field].trim()
 
   switch (field) {
-    case 'fullName':
-      if (value === '') return 'full-name-required'
-      if (value.length < 2) return 'full-name-too-short'
-      if (!NAME_PATTERN.test(value)) return 'full-name-invalid'
+    case 'fullName': {
+      // NFC-normalise so `e` + combining accent counts as a single `é`
+      const name = value.normalize('NFC')
+      if (name === '') return 'full-name-required'
+      if (name.length < 2) return 'full-name-too-short'
+      if (!NAME_PATTERN.test(name)) return 'full-name-invalid'
       return undefined
+    }
 
     case 'email':
       if (value === '') return 'email-required'

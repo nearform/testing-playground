@@ -40,6 +40,12 @@ describe('FormValidation scenario', () => {
     expect(screen.queryByTestId('form-error-summary')).toBeNull()
   })
 
+  it('asks mobile browsers for a numeric keypad on the age field', () => {
+    TestRenderer(<FormValidation />)
+
+    expect(screen.getByTestId('age')).toHaveAttribute('inputmode', 'numeric')
+  })
+
   it('shows a format error when leaving a field with an invalid value', async () => {
     const user = renderForm()
 
