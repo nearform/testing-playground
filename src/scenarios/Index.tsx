@@ -1,4 +1,5 @@
 export { default as AddRemove } from './AddRemove.scenario'
+export { default as Autocomplete } from './Autocomplete.scenario'
 export { default as CheckBox } from './CheckBox.scenario'
 export { default as DragAndDropHard } from './DragAndDropHard.scenario'
 export { default as DragAndDrop } from './DragAndDrop.scenario'
