@@ -4,6 +4,7 @@ import {
   DIFFICULTY_STYLES,
   type Difficulty,
   difficultyOf,
+  matchesDifficulty,
 } from '../utils/difficulty'
 
 describe('difficultyOf', () => {
@@ -21,6 +22,23 @@ describe('difficultyOf', () => {
   })
 })
 
+describe('matchesDifficulty', () => {
+  it.each([
+    { selected: null, rating: '3', expected: true }, // nothing chosen yet
+    { selected: '0', rating: '1', expected: true }, // "All"
+    { selected: '2', rating: '2', expected: true },
+    { selected: '2', rating: '2.5', expected: true }, // still a medium card
+    { selected: '1', rating: '', expected: true }, // missing rating shows as easy
+    { selected: '2', rating: '1.9', expected: false }, // just below medium
+    { selected: '2', rating: '3', expected: false }, // hard threshold
+  ])(
+    'includes a $rating-rated scenario for a filter of $selected: $expected',
+    ({ selected, rating, expected }) => {
+      expect(matchesDifficulty(selected, rating)).toBe(expected)
+    },
+  )
+})
+
 describe('DIFFICULTY_STYLES', () => {
   const shadeOf = (className: string, prefix: string): string | undefined =>
     new RegExp(`(?:^|\\s)${prefix}-([a-z]+-\\d+)(?:\\s|$)`).exec(className)?.[1]
@@ -34,6 +52,15 @@ describe('DIFFICULTY_STYLES', () => {
       // Guard against both lookups failing and comparing undefined to itself
       expect(dotShade).toMatch(/^[a-z]+-\d+$/)
       expect(shadeOf(ring, 'dark:ring')).toBe(dotShade)
+    },
+  )
+
+  it.each(Object.keys(DIFFICULTY_STYLES) as Difficulty[])(
+    'gives the %s ring a width, so it shows without extra classes',
+    (difficulty) => {
+      const classes = DIFFICULTY_STYLES[difficulty].ring.split(' ')
+
+      expect(classes).toContain('dark:ring-1')
     },
   )
 })

@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
-import { DIFFICULTY_STYLES, type Difficulty } from '../utils/difficulty'
+import {
+  DIFFICULTY_STYLES,
+  type Difficulty,
+  matchesDifficulty,
+} from '../utils/difficulty'
 import {
   Input,
   Select,
@@ -58,12 +62,9 @@ export default function Index(): JSX.Element {
       data.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       data.description.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesDifficulty =
-      selectedDifficulty === null ||
-      selectedDifficulty === '0' ||
-      selectedDifficulty === data.rating
-
-    return matchesSearchTerm && matchesDifficulty
+    return (
+      matchesSearchTerm && matchesDifficulty(selectedDifficulty, data.rating)
+    )
   })
 
   return (

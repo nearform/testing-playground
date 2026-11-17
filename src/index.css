@@ -37,9 +37,17 @@
    4.8:1 and 3.6:1. Quantum exposes no token or class hook for the track, so
    this matches Radix's markup: the first child of a slider root, the one
    whose thumbs carry role="slider". It is a stopgap until Quantum's track
-   colour is fixed upstream (nearform/quantum#1122). The Slider tests read
-   this rule and fail if it stops matching each track. */
-/* slider-track-contrast */
-[data-orientation]:has(> * > [role='slider']) > [data-orientation]:first-child {
-  background-color: --theme(--color-grey-500);
+   colour is fixed upstream (nearform/quantum#1122).
+
+   It sits in the utilities layer, beside Quantum's own track classes, so
+   it does not outrank every utility the way an unlayered rule would. It
+   still wins over them because its selector is more specific (0,4,0 against
+   0,2,0 for dark:bg-grey-600). The Slider tests read this rule, check it is
+   in that layer and fail if it stops matching each track. */
+@layer utilities {
+  /* slider-track-contrast */
+  [data-orientation]:has(> * > [role='slider'])
+    > [data-orientation]:first-child {
+    background-color: --theme(--color-grey-500);
+  }
 }

@@ -24,7 +24,7 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
       className='block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current'
     >
       <div
-        className={`h-full rounded-2xl p-6 min-h-48 transition-colors dark:ring-1 dark:ring-inset ${styles.card} ${styles.ring}`}
+        className={`h-full rounded-2xl p-6 min-h-48 transition-colors ${styles.card} ${styles.ring}`}
       >
         <div className='font-semibold'>{title}</div>
         <div className='mt-1 text-sm text-foreground-muted dark:text-foreground-muted-dark'>

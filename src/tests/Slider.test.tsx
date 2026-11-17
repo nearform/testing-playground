@@ -15,15 +15,20 @@ const readoutIn = (containerTestId: string, text: string): HTMLElement =>
 
 // index.css lifts the slider track's contrast with a rule tied to Quantum's
 // Radix markup. jsdom does not apply the stylesheet, so read the rule from it
-// to check it still exists, still sets grey-500 and matches the tracks.
+// to check it still exists, still sets grey-500 and matches the tracks. The
+// pattern only matches the rule as the content of `@layer utilities`, where it
+// sits beside the Quantum classes it has to outrank.
 const trackRule = (): { selector: string; body: string } => {
-  const rule = /\/\* slider-track-contrast \*\/\s*([^{]+)\{([^}]*)\}/.exec(
-    stylesheet,
-  )
+  const rule =
+    /@layer utilities\s*\{\s*\/\* slider-track-contrast \*\/\s*([^{]+)\{([^}]*)\}\s*\}/.exec(
+      stylesheet,
+    )
   if (rule === null) {
-    throw new Error('index.css has no slider-track-contrast rule')
+    throw new Error(
+      'index.css has no slider-track-contrast rule in @layer utilities',
+    )
   }
-  return { selector: rule[1].trim(), body: rule[2] }
+  return { selector: rule[1].replace(/\s+/g, ' ').trim(), body: rule[2] }
 }
 
 describe('Slider component', () => {
@@ -92,9 +97,12 @@ describe('Slider component', () => {
 
     const tracks = [...document.querySelectorAll<HTMLElement>(selector)]
 
-    // One match per slider, each a direct child of the slider root, and
+    // One match per slider, each a direct child of that slider's root, and
     // nothing else on the page
-    expect(tracks.map((track) => track.parentElement)).toEqual(sliders)
+    expect(tracks).toHaveLength(sliders.length)
+    tracks.forEach((track, index) => {
+      expect(track.parentElement).toBe(sliders[index])
+    })
     for (const track of tracks) {
       // A track wraps the filled range, never the thumbs
       expect(track.querySelector('[data-orientation]')).not.toBeNull()

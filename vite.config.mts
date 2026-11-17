@@ -11,8 +11,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     globals: true,
-    // Vitest stubs stylesheets as empty modules; let index.css load so tests
-    // can read its source with a ?raw import
-    css: { include: [/\/src\/index\.css(\?|$)/] },
+    // Vitest stubs stylesheets as empty modules. Let the ?raw import of
+    // index.css through so tests can read its source; a plain import still
+    // gets the stub, so no test compiles Tailwind
+    css: { include: [/\/src\/index\.css\?raw$/] },
   },
 })
