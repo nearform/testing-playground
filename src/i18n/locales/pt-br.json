@@ -303,6 +303,39 @@
         "prompt-cancel": "Você cancelou o prompt"
       }
     },
+    "key-presses": {
+      "title": "Pressionamento de teclas",
+      "description": "Interaja com a página pressionando teclas do teclado.",
+      "information": "Tudo nesta página é controlado pelo teclado, então os testes precisam enviar pressionamentos de teclas em vez de clicar ou digitar texto. O leitor de teclas mostra a última tecla pressionada na sua caixa de texto, com sua chave (key), seu código e as teclas modificadoras mantidas junto, além das últimas teclas pressionadas. O contador só muda quando está com o foco: as setas para cima e para baixo (ou direita e esquerda) o alteram em 1, segurar Shift o altera em 10, Home e End vão para os valores mínimo e máximo e Esc o volta ao valor inicial. O controle de segurar só confirma se Espaço for mantido pressionado por um segundo inteiro; soltar antes não conta, e segurar uma tecla repete seu evento keydown, então cada repetição precisa ser ignorada. Propositalmente, não há alternativa com o mouse.",
+      "reader": {
+        "title": "Leitor de teclas",
+        "label": "Pressione qualquer tecla nesta caixa",
+        "none": "Nenhuma tecla pressionada ainda",
+        "pressed": "Você pressionou: {{key}}",
+        "key": "Chave",
+        "code": "Código",
+        "modifiers": "Mantida com",
+        "no-modifiers": "Nada",
+        "history": "Teclas recentes:",
+        "clear": "Limpar"
+      },
+      "counter": {
+        "title": "Contador",
+        "label": "Contador",
+        "instructions": "Coloque o foco no contador e use as setas para alterá-lo. Segure Shift para mudar de 10 em 10. Home e End vão para 0 e 100, e Esc o volta para 50."
+      },
+      "hold": {
+        "title": "Segure para confirmar",
+        "label": "Segure Espaço para confirmar",
+        "instructions": "Coloque o foco na caixa abaixo e segure Espaço por {{seconds}} segundo para confirmar.",
+        "state": {
+          "idle": "Não confirmado",
+          "holding": "Continue segurando…",
+          "confirmed": "Confirmado",
+          "released-early": "Soltou cedo demais, tente novamente"
+        }
+      }
+    },
     "login-form": {
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",

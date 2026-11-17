@@ -302,6 +302,39 @@
         "prompt-cancel": "You cancelled the prompt"
       }
     },
+    "key-presses": {
+      "title": "Key Presses",
+      "description": "Interact with the page by pressing keys on the keyboard.",
+      "information": "Everything on this page is driven by the keyboard, so tests have to send key presses rather than click or type text. The key reader shows the last key pressed in its text box, with its key and code and any modifier keys held with it, plus the last few keys pressed. The counter only changes while it has focus: the up and down (or right and left) arrow keys move it by 1, holding Shift moves it by 10, Home and End jump to the lowest and highest values and Escape puts it back where it started. The hold control only confirms if Space is held down for a whole second; letting go sooner does not count, and holding a key down repeats its keydown event, so each repeat has to be ignored. There is no mouse alternative on purpose.",
+      "reader": {
+        "title": "Key reader",
+        "label": "Press any key in this box",
+        "none": "No key pressed yet",
+        "pressed": "You pressed: {{key}}",
+        "key": "Key",
+        "code": "Code",
+        "modifiers": "Held with",
+        "no-modifiers": "Nothing",
+        "history": "Recent keys:",
+        "clear": "Clear"
+      },
+      "counter": {
+        "title": "Counter",
+        "label": "Counter",
+        "instructions": "Focus the counter, then use the arrow keys to change it. Hold Shift to move in steps of 10. Home and End jump to 0 and 100, and Escape resets it to 50."
+      },
+      "hold": {
+        "title": "Hold to confirm",
+        "label": "Hold Space to confirm",
+        "instructions": "Focus the box below and hold Space down for {{seconds}} second to confirm.",
+        "state": {
+          "idle": "Not confirmed",
+          "holding": "Keep holding…",
+          "confirmed": "Confirmed",
+          "released-early": "Released too early, try again"
+        }
+      }
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
