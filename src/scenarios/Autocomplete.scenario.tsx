@@ -391,7 +391,10 @@ const Autocomplete = (): JSX.Element => {
               label={t('scenarios.autocomplete.city.label')}
               placeholder={t('scenarios.autocomplete.city.placeholder')}
               query={cityQuery}
-              suggestions={cityResults}
+              // Once chosen, the city is its own only suggestion (as the
+              // country box lists the chosen country), so reopening the list
+              // shows it instead of an empty "No matches"
+              suggestions={city === null ? cityResults : [city]}
               message={cityMessage()}
               onQueryChange={(query) => {
                 setCityQuery(query)

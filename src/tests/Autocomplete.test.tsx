@@ -327,5 +327,18 @@ describe('Autocomplete scenario', () => {
         'Selected: Zürich',
       )
     })
+
+    it('lists the chosen city, not "No matches", when the list is reopened', async () => {
+      renderWithFakeTimers()
+      typeCity('zur')
+      await wait(SEARCH_DEBOUNCE + FAST_RESPONSE)
+      fireEvent.click(screen.getByRole('option', { name: 'Zürich' }))
+
+      fireEvent.keyDown(cityInput(), { key: 'ArrowDown' })
+
+      expect(cityInput()).toHaveAttribute('aria-expanded', 'true')
+      expect(suggestions('city')).toEqual(['Zürich'])
+      expect(screen.queryByTestId('city-message')).not.toBeInTheDocument()
+    })
   })
 })
