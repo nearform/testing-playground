@@ -1,4 +1,4 @@
-import { Button, Input } from '@nearform/quantum'
+import { Button, FieldError, Input } from '@nearform/quantum'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -101,12 +101,9 @@ const LoginForm = (): JSX.Element => {
                 />
               </div>
               {error.length > 0 && (
-                <p
-                  className='text-feedback-error dark:text-feedback-error-dark'
-                  data-testid='error-invalid-credentials'
-                >
+                <FieldError data-testid='error-invalid-credentials'>
                   {error}
-                </p>
+                </FieldError>
               )}
               <Button
                 variant='primary'

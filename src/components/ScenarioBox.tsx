@@ -1,7 +1,14 @@
+import {
+  Badge,
+  CardDescription,
+  CardTitle,
+  cardVariants,
+} from '@nearform/quantum'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { DIFFICULTY_STYLES, type Difficulty } from '../utils/difficulty'
+import { DIFFICULTY_BADGE_VARIANT, type Difficulty } from '../utils/difficulty'
 
 interface ScenarioBoxProps {
   title: string
@@ -16,21 +23,23 @@ const ScenarioBox: React.FC<ScenarioBoxProps> = ({
   link,
   difficulty,
 }) => {
-  const styles = DIFFICULTY_STYLES[difficulty]
+  const { t } = useTranslation()
 
+  // The link wears Quantum's interactive card styling itself, so the whole
+  // card is one focusable target with Quantum's hover and focus ring
   return (
     <Link
       to={`/${link}`}
-      className='block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current'
+      className={cardVariants({
+        interactive: true,
+        className: 'flex flex-col items-start gap-2 p-4',
+      })}
     >
-      <div
-        className={`h-full rounded-2xl p-6 min-h-48 transition-colors ${styles.card} ${styles.ring}`}
-      >
-        <div className='font-semibold'>{title}</div>
-        <div className='mt-1 text-sm text-foreground-muted dark:text-foreground-muted-dark'>
-          {description}
-        </div>
-      </div>
+      <Badge variant={DIFFICULTY_BADGE_VARIANT[difficulty]} size='sm' dot>
+        {t(`common.${difficulty}`)}
+      </Badge>
+      <CardTitle>{title}</CardTitle>
+      <CardDescription>{description}</CardDescription>
     </Link>
   )
 }

@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
-import {
-  DIFFICULTY_STYLES,
-  type Difficulty,
-  type DifficultyFilter,
-  matchesDifficulty,
-} from '../utils/difficulty'
+import { type DifficultyFilter, matchesDifficulty } from '../utils/difficulty'
 import {
   Input,
   Select,
@@ -18,20 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@nearform/quantum'
-
-// A span, as the dots sit inside the <span> Quantum's SelectItem wraps its
-// text in, and hidden from assistive tech: the label beside them already
-// names the difficulty
-const DifficultyDot = ({
-  difficulty,
-}: {
-  difficulty: Difficulty
-}): JSX.Element => (
-  <span
-    aria-hidden='true'
-    className={`mt-1.5 ml-2 w-2 h-2 rounded-full float-right ${DIFFICULTY_STYLES[difficulty].dot}`}
-  />
-)
 
 const transformLink = (link: string): string => {
   return link.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
@@ -74,7 +55,7 @@ export default function Index(): JSX.Element {
 
   return (
     <Layout>
-      <div className='flex flex-wrap justify-center gap-2 bg-background border-t-2 border-grey-200 px-4 py-4 dark:bg-background-surface-dark dark:border-grey-800'>
+      <div className='flex flex-wrap justify-center gap-2 p-4'>
         <div className='w-60'>
           <Input
             placeholder={t('common.search')}
@@ -103,30 +84,24 @@ export default function Index(): JSX.Element {
             <SelectTrigger size='lg'>
               <SelectValue placeholder={t('common.select-difficulty')} />
             </SelectTrigger>
-            <SelectContent side='top' className='overflow-visible'>
+            <SelectContent>
               <SelectItem value='all' data-testid='select-difficulty-all'>
                 {t('common.all')}
-                <DifficultyDot difficulty='hard' />
-                <DifficultyDot difficulty='medium' />
-                <DifficultyDot difficulty='easy' />
               </SelectItem>
               <SelectItem value='easy' data-testid='select-difficulty-easy'>
                 {t('common.easy')}
-                <DifficultyDot difficulty='easy' />
               </SelectItem>
               <SelectItem value='medium' data-testid='select-difficulty-medium'>
                 {t('common.medium')}
-                <DifficultyDot difficulty='medium' />
               </SelectItem>
               <SelectItem value='hard' data-testid='select-difficulty-hard'>
                 {t('common.hard')}
-                <DifficultyDot difficulty='hard' />
               </SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
-      <div className='grid grid-cols-1 gap-4 px-4 pt-6 sm:grid-cols-2 md:grid-cols-3 md:px-8 lg:grid-cols-4 xl:grid-cols-6'>
+      <div className='grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 md:px-8 lg:grid-cols-4 xl:grid-cols-6'>
         {filteredScenarioData.map((data) => (
           // Keyed by link so filtering never hands one card's element to
           // another scenario

@@ -1,4 +1,12 @@
-import { BsX, Button, Input, Textarea } from '@nearform/quantum'
+import {
+  BsX,
+  Button,
+  CardTitle,
+  FormGroup,
+  Input,
+  Label,
+  Textarea,
+} from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -62,19 +70,19 @@ const InputField: React.FC<InputFieldProps> = ({
     )
 
   return (
-    <div className='my-4 flex flex-col'>
-      <h2 className='mb-2 text-lg font-semibold'>{label}</h2>
+    <section className='flex flex-col gap-2'>
+      <CardTitle>{label}</CardTitle>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-        <div className='ml-4 flex items-center gap-4'>
-          <span>{t('scenarios.various-inputs.input')}:</span>
-          <div className='flex-1'>{renderField(false)}</div>
-        </div>
-        <div className='ml-4 flex items-center gap-4'>
-          <span>{t('scenarios.various-inputs.output')}:</span>
-          <div className='flex-1'>{renderField(true)}</div>
-        </div>
+        <FormGroup orientation='horizontal'>
+          <Label>{t('scenarios.various-inputs.input')}</Label>
+          {renderField(false)}
+        </FormGroup>
+        <FormGroup orientation='horizontal'>
+          <Label>{t('scenarios.various-inputs.output')}</Label>
+          {renderField(true)}
+        </FormGroup>
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -119,15 +127,17 @@ const VariousInputs: React.FC = (): JSX.Element => {
           {t('scenarios.various-inputs.clear-all')}
         </Button>
 
-        {inputTypes.map((type) => (
-          <InputField
-            key={type}
-            type={type}
-            label={t(`scenarios.various-inputs.${type}`)}
-            value={inputValues[type]}
-            onChange={handleChange(type)}
-          />
-        ))}
+        <div className='mt-6 flex flex-col gap-6'>
+          {inputTypes.map((type) => (
+            <InputField
+              key={type}
+              type={type}
+              label={t(`scenarios.various-inputs.${type}`)}
+              value={inputValues[type]}
+              onChange={handleChange(type)}
+            />
+          ))}
+        </div>
       </PageSetup>
     </Layout>
   )

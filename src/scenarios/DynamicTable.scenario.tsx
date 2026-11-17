@@ -1,4 +1,5 @@
 import {
+  Notice,
   Table,
   TableBody,
   TableCell,
@@ -147,13 +148,14 @@ const DynamicTable = (): JSX.Element => {
             ))}
           </TableBody>
         </Table>
-        <p
-          className='mt-8 bg-green-300 text-center text-grey-900'
+        <Notice
+          variant='success'
+          className='mt-8'
           data-testid='target-scenario'
         >
           {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}
           {findCpuPercentage(tableData, randomScenario?.name ?? '')}
-        </p>
+        </Notice>
       </PageSetup>
     </Layout>
   )

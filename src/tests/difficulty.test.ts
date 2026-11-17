@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
-  DIFFICULTY_STYLES,
-  type Difficulty,
+  DIFFICULTY_BADGE_VARIANT,
   matchesDifficulty,
 } from '../utils/difficulty'
 
@@ -21,28 +20,10 @@ describe('matchesDifficulty', () => {
   )
 })
 
-describe('DIFFICULTY_STYLES', () => {
-  const shadeOf = (className: string, prefix: string): string | undefined =>
-    new RegExp(`(?:^|\\s)${prefix}-([a-z]+-\\d+)(?:\\s|$)`).exec(className)?.[1]
+describe('DIFFICULTY_BADGE_VARIANT', () => {
+  it('gives each difficulty its own badge colour', () => {
+    const variants = Object.values(DIFFICULTY_BADGE_VARIANT)
 
-  it.each(Object.keys(DIFFICULTY_STYLES) as Difficulty[])(
-    "rings %s cards in the same shade as that difficulty's filter dot",
-    (difficulty) => {
-      const { ring, dot } = DIFFICULTY_STYLES[difficulty]
-      const dotShade = shadeOf(dot, 'bg')
-
-      // Guard against both lookups failing and comparing undefined to itself
-      expect(dotShade).toMatch(/^[a-z]+-\d+$/)
-      expect(shadeOf(ring, 'dark:ring')).toBe(dotShade)
-    },
-  )
-
-  it.each(Object.keys(DIFFICULTY_STYLES) as Difficulty[])(
-    'gives the %s ring a width, so it shows without extra classes',
-    (difficulty) => {
-      const classes = DIFFICULTY_STYLES[difficulty].ring.split(' ')
-
-      expect(classes).toContain('dark:ring-1')
-    },
-  )
+    expect(new Set(variants).size).toBe(variants.length)
+  })
 })
