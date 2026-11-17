@@ -15,7 +15,8 @@ describe('difficultyOf', () => {
     { rating: '2.9', expected: 'medium' }, // just below hard
     { rating: '3', expected: 'hard' }, // hard threshold
     { rating: '4', expected: 'hard' },
-    { rating: '', expected: 'easy' }, // missing translation
+    // A missing translation comes back from i18next as its key path
+    { rating: 'scenarios.new-scenario.rating', expected: 'easy' },
     { rating: 'unrated', expected: 'easy' },
   ])('treats a rating of "$rating" as $expected', ({ rating, expected }) => {
     expect(difficultyOf(rating)).toBe(expected)
@@ -28,7 +29,8 @@ describe('matchesDifficulty', () => {
     { selected: '0', rating: '1', expected: true }, // "All"
     { selected: '2', rating: '2', expected: true },
     { selected: '2', rating: '2.5', expected: true }, // still a medium card
-    { selected: '1', rating: '', expected: true }, // missing rating shows as easy
+    // An unrated scenario (i18next returns the key path) shows as easy
+    { selected: '1', rating: 'scenarios.new-scenario.rating', expected: true },
     { selected: '2', rating: '1.9', expected: false }, // just below medium
     { selected: '2', rating: '3', expected: false }, // hard threshold
   ])(
