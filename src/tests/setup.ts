@@ -36,7 +36,7 @@ const makeStorageMock = (): Storage => {
 }
 
 if (typeof localStorage === 'undefined') {
-  Object.defineProperty(global, 'localStorage', {
+  Object.defineProperty(globalThis, 'localStorage', {
     value: makeStorageMock(),
     configurable: true,
     writable: true,
@@ -44,7 +44,7 @@ if (typeof localStorage === 'undefined') {
 }
 
 if (typeof sessionStorage === 'undefined') {
-  Object.defineProperty(global, 'sessionStorage', {
+  Object.defineProperty(globalThis, 'sessionStorage', {
     value: makeStorageMock(),
     configurable: true,
     writable: true,
@@ -61,7 +61,7 @@ class ResizeObserver {
   unobserve() {}
   disconnect() {}
 }
-global.ResizeObserver = ResizeObserver
+globalThis.ResizeObserver = ResizeObserver
 
 // jsdom has no matchMedia; Quantum's ThemeToggle reads the system colour
 // scheme through it. Report light mode unless a test overrides it.

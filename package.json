@@ -41,7 +41,7 @@
     "lint-staged": "^15.5.1",
     "oxlint": "^1.94.0",
     "prettier": "3.9.10",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vite": "latest",
     "vitest": "^4.1.12"
   }

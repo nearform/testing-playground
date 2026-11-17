@@ -17,8 +17,8 @@ describe('FileDownload component', () => {
 
     const createObjectURLMock = vi.fn(() => 'blob:url')
     const revokeObjectURLMock = vi.fn()
-    global.URL.createObjectURL = createObjectURLMock
-    global.URL.revokeObjectURL = revokeObjectURLMock
+    globalThis.URL.createObjectURL = createObjectURLMock
+    globalThis.URL.revokeObjectURL = revokeObjectURLMock
 
     const linkClickMock = vi.fn()
     const originalCreateElement = document.createElement.bind(document)
