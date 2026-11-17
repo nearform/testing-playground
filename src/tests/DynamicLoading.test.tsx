@@ -3,6 +3,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from './TestRenderer'
+import i18n from '../i18n/i18nConfig'
 import DynamicLoading, {
   MAX_DELAY,
   MIN_DELAY,
@@ -127,6 +128,25 @@ describe('DynamicLoading scenario', () => {
       expect(screen.getByTestId('enable-message')).toHaveTextContent(
         "It's disabled!",
       )
+    })
+    it('shows the message in the new language after a language switch', async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Enable' }))
+      await wait(DELAY)
+
+      try {
+        await act(async () => {
+          await i18n.changeLanguage('fr')
+        })
+
+        expect(screen.getByTestId('enable-message')).toHaveTextContent(
+          'Il est activé !',
+        )
+      } finally {
+        await act(async () => {
+          await i18n.changeLanguage('en')
+        })
+        localStorage.removeItem('language')
+      }
     })
   })
 

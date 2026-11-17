@@ -134,27 +134,24 @@ const EnabledAfterDelay = (): JSX.Element => {
   const delay = useDelay()
   const [enabled, setEnabled] = useState(false)
   const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
+  // The key rather than the text, so the message follows a language switch
+  const [messageKey, setMessageKey] = useState<string | null>(null)
 
   const toggle = (): void => {
     const next = !enabled
     setBusy(true)
-    setMessage(
-      t(
-        next
-          ? 'scenarios.dynamic-loading.enable.enabling'
-          : 'scenarios.dynamic-loading.enable.disabling',
-      ),
+    setMessageKey(
+      next
+        ? 'scenarios.dynamic-loading.enable.enabling'
+        : 'scenarios.dynamic-loading.enable.disabling',
     )
     delay(() => {
       setEnabled(next)
       setBusy(false)
-      setMessage(
-        t(
-          next
-            ? 'scenarios.dynamic-loading.enable.enabled'
-            : 'scenarios.dynamic-loading.enable.disabled',
-        ),
+      setMessageKey(
+        next
+          ? 'scenarios.dynamic-loading.enable.enabled'
+          : 'scenarios.dynamic-loading.enable.disabled',
       )
     }, randomDelay())
   }
@@ -181,9 +178,9 @@ const EnabledAfterDelay = (): JSX.Element => {
         )}
       </Button>
       {busy && <Spinner id='enable' />}
-      {message !== null && (
+      {messageKey !== null && (
         <p aria-live='polite' data-testid='enable-message'>
-          {message}
+          {t(messageKey)}
         </p>
       )}
     </Section>
@@ -197,7 +194,8 @@ const RemovedAndAdded = (): JSX.Element => {
   const delay = useDelay()
   const [present, setPresent] = useState(true)
   const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
+  // The key rather than the text, so the message follows a language switch
+  const [messageKey, setMessageKey] = useState<string | null>(null)
   // Changes every time the checkbox comes back, so React builds a new node
   // instead of reusing the old one
   const [generation, setGeneration] = useState(0)
@@ -205,17 +203,15 @@ const RemovedAndAdded = (): JSX.Element => {
   const toggle = (): void => {
     const next = !present
     setBusy(true)
-    setMessage(null)
+    setMessageKey(null)
     delay(() => {
       if (next) setGeneration((value) => value + 1)
       setPresent(next)
       setBusy(false)
-      setMessage(
-        t(
-          next
-            ? 'scenarios.dynamic-loading.remove.added'
-            : 'scenarios.dynamic-loading.remove.removed',
-        ),
+      setMessageKey(
+        next
+          ? 'scenarios.dynamic-loading.remove.added'
+          : 'scenarios.dynamic-loading.remove.removed',
       )
     }, randomDelay())
   }
@@ -240,9 +236,9 @@ const RemovedAndAdded = (): JSX.Element => {
         )}
       </Button>
       {busy && <Spinner id='remove' />}
-      {message !== null && (
+      {messageKey !== null && (
         <p aria-live='polite' data-testid='remove-message'>
-          {message}
+          {t(messageKey)}
         </p>
       )}
     </Section>
