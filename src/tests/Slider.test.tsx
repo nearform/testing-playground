@@ -1,3 +1,7 @@
+/// <reference types="node" />
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
 import { fireEvent, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
@@ -11,6 +15,18 @@ const thumbsOf = (testId: string): HTMLElement[] =>
 
 const readoutIn = (containerTestId: string, text: string): HTMLElement =>
   within(screen.getByTestId(containerTestId)).getByText(text)
+
+// index.css lifts the slider track's contrast with a selector tied to
+// Quantum's Radix markup. jsdom does not apply the stylesheet, so read the
+// selector from it to check the rule still exists and matches the tracks.
+const trackSelector = (): string => {
+  const css = readFileSync(resolve(__dirname, '../index.css'), 'utf8')
+  const rule = /\/\* slider-track-contrast \*\/\s*([^{]+)\{/.exec(css)
+  if (rule === null) {
+    throw new Error('index.css has no slider-track-contrast rule')
+  }
+  return rule[1].trim()
+}
 
 describe('Slider component', () => {
   it('can change Basic Slider value', async () => {
@@ -67,5 +83,23 @@ describe('Slider component', () => {
     fireEvent.change(input, { target: { value: '250' } })
 
     expect(input).toHaveValue(100)
+  })
+
+  it('lets the track contrast rule in index.css reach every slider track', () => {
+    TestRenderer(<Slider />)
+    const sliders = ['basic-slider', 'range-slider', 'input-slider'].map(
+      (testId) => screen.getByTestId(testId),
+    )
+
+    const tracks = [...document.querySelectorAll<HTMLElement>(trackSelector())]
+
+    // One match per slider, each a direct child of the slider root, and
+    // nothing else on the page
+    expect(tracks.map((track) => track.parentElement)).toEqual(sliders)
+    for (const track of tracks) {
+      // A track wraps the filled range, never the thumbs
+      expect(track.querySelector('[data-orientation]')).not.toBeNull()
+      expect(within(track).queryAllByRole('slider')).toHaveLength(0)
+    }
   })
 })

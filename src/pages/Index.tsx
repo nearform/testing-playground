@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
+import { DIFFICULTY_STYLES, type Difficulty } from '../utils/difficulty'
 import {
   Input,
   Select,
@@ -12,6 +13,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@nearform/quantum'
+
+const DifficultyDot = ({
+  difficulty,
+}: {
+  difficulty: Difficulty
+}): JSX.Element => (
+  <div
+    className={`mt-1.5 ml-2 w-2 h-2 rounded-full float-right ${DIFFICULTY_STYLES[difficulty].dot}`}
+  ></div>
+)
 
 const transformLink = (link: string): string => {
   return link.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
@@ -87,21 +98,21 @@ export default function Index(): JSX.Element {
             <SelectContent side='top' className='overflow-visible'>
               <SelectItem value='0' data-testid='select-difficulty-all'>
                 {t('common.all')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-red-300 rounded-full float-right'></div>
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-yellow-300 rounded-full float-right'></div>
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-green-300 rounded-full float-right'></div>
+                <DifficultyDot difficulty='hard' />
+                <DifficultyDot difficulty='medium' />
+                <DifficultyDot difficulty='easy' />
               </SelectItem>
               <SelectItem value='1' data-testid='select-difficulty-easy'>
                 {t('common.easy')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-green-300 rounded-full float-right'></div>
+                <DifficultyDot difficulty='easy' />
               </SelectItem>
               <SelectItem value='2' data-testid='select-difficulty-medium'>
                 {t('common.medium')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-yellow-300 rounded-full float-right'></div>
+                <DifficultyDot difficulty='medium' />
               </SelectItem>
               <SelectItem value='3' data-testid='select-difficulty-hard'>
                 {t('common.hard')}
-                <div className='mt-1.5 ml-2 w-2 h-2 bg-red-300 rounded-full float-right'></div>
+                <DifficultyDot difficulty='hard' />
               </SelectItem>
             </SelectContent>
           </Select>

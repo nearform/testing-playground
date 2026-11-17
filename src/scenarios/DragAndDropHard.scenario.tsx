@@ -48,7 +48,9 @@ const DropTarget = ({
       onDrop={(e) => {
         onDrop(e)
       }}
-      className={`m-2.5 h-[100px] w-[100px] cursor-pointer bg-grey-200 shadow dark:bg-grey-700 transition-colors duration-300 ${
+      // The fill alone is under 3:1 on either surface, so the dashed outline
+      // (4.8:1 light, 6.9:1 dark) marks out the drop zone
+      className={`m-2.5 h-[100px] w-[100px] cursor-pointer border-2 border-dashed border-grey-500 bg-grey-200 shadow dark:border-grey-400 dark:bg-grey-700 transition-colors duration-300 ${
         shape === 'circle' ? 'rounded-full' : 'rounded-none'
       }`}
       data-testid={`drop-${shape}`}
