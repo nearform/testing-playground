@@ -12,19 +12,23 @@
    them, not only form controls. In this app that also lightens the select
    menus' outline and separators, the Dynamic Table border and row dividers,
    and the outlines of Toast and Notice (our Alert). The DEFAULT (light)
-   tokens are untouched. */
+   tokens are untouched.
+
+   The upstream fix is nearform/quantum#1122. Once a Quantum release carries
+   it, this block and the slider rule below can go. Controls keep the same
+   colours; only the dividers listed above return to Quantum's grey-700. */
 @theme {
-  /* Input, textarea and select outlines, table and menu dividers: 3.6:1 */
+  /* Input, textarea and select outlines, table and menu dividers: 3.6:1.
+     Upstream moves the field outlines onto border-dark instead */
   --color-border-subtle-dark: --theme(--color-grey-500);
-  /* Checkbox, radio and outline borders: 3.5:1. Quantum also fills checked
-     checkboxes and radios with this token under a white tick or dot, so it
-     is only a step lighter (brandMidnight-50 20% of the way to -30) to keep
-     that glyph at 5:1. Quantum has no token in between */
-  --color-border-dark: #606f92;
+  /* Checkbox, radio and outline borders: 3.6:1, and at least 3:1 on every
+     dark surface. Quantum also fills checked checkboxes and radios with this
+     token under a white tick or dot, which grey-500 keeps at 4.8:1 */
+  --color-border-dark: --theme(--color-grey-500);
   /* Secondary button outline, kept in step with the controls above. Its
      hover outline (#0c3d60, 1.6:1) would all but vanish, so hovering
      lightens it to brandMidnight-30 (6.8:1) instead */
-  --color-button-secondary-border-dark: #606f92;
+  --color-button-secondary-border-dark: --theme(--color-grey-500);
   --color-button-secondary-border-hover-dark: --theme(--color-brandMidnight-30);
 }
 
@@ -33,8 +37,8 @@
    4.8:1 and 3.6:1. Quantum exposes no token or class hook for the track, so
    this matches Radix's markup: the first child of a slider root, the one
    whose thumbs carry role="slider". It is a stopgap until Quantum's track
-   colour is fixed upstream. The Slider tests read this selector and fail if
-   it stops matching each track. */
+   colour is fixed upstream (nearform/quantum#1122). The Slider tests read
+   this rule and fail if it stops matching each track. */
 /* slider-track-contrast */
 [data-orientation]:has(> * > [role='slider']) > [data-orientation]:first-child {
   background-color: --theme(--color-grey-500);
