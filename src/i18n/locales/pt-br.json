@@ -266,6 +266,45 @@
         "chose": "{{name}} escolhido"
       }
     },
+    "iframes": {
+      "title": "IFrames",
+      "description": "Formulários, frames aninhados e um editor de texto rico dentro de iframes, então você precisa entrar em um frame para alcançá-los.",
+      "information": "Tudo dentro de um iframe pertence a um documento separado, então seletores executados na página não o encontram: os testes precisam entrar no frame primeiro e sair dele de novo para verificar qualquer coisa na página. O formulário envia sua mensagem para a página fora do frame. O contador fica dentro de um frame que está dentro de outro frame, então são necessárias duas trocas para alcançá-lo. O editor de texto rico funciona como muitos editores WYSIWYG clássicos: o texto editado é o corpo de um frame, enquanto a barra de ferramentas, a contagem de palavras e o HTML ficam na página ao redor, então um teste precisa alternar entre os dois.",
+      "form": {
+        "title": "Formulário em um frame",
+        "description": "Envie um nome de um formulário dentro de um frame para a página ao redor.",
+        "frame-title": "Frame do formulário",
+        "label": "Seu nome",
+        "button": "Enviar",
+        "error": "Por favor, insira um nome",
+        "no-message": "Nenhuma mensagem do frame ainda",
+        "message": "O frame diz: Olá, {{name}}!"
+      },
+      "nested": {
+        "title": "Frames aninhados",
+        "description": "Um contador dentro de um frame que está dentro de outro frame.",
+        "outer-title": "Frame externo",
+        "inner-title": "Frame interno",
+        "outer-text": "Frame externo",
+        "inner-text": "Frame interno",
+        "button": "Adicionar um"
+      },
+      "editor": {
+        "title": "Editor de texto rico",
+        "description": "Digite no frame do editor e formate o texto selecionado com a barra de ferramentas fora dele.",
+        "frame-title": "Editor de texto rico",
+        "label": "Conteúdo do editor",
+        "toolbar": "Formatação",
+        "initial": "Selecione parte deste texto e deixe-a em negrito.",
+        "bold": "Negrito",
+        "italic": "Itálico",
+        "underline": "Sublinhado",
+        "clear": "Limpar",
+        "words_one": "{{count}} palavra",
+        "words_other": "{{count}} palavras",
+        "html": "HTML"
+      }
+    },
     "infinite-scroll": {
       "title": "Rolagem infinita",
       "description": "Uma lista que carrega novos itens sempre que você chega ao final da página.",

@@ -266,6 +266,45 @@
         "chose": "{{name}} choisi"
       }
     },
+    "iframes": {
+      "title": "IFrames",
+      "description": "Des formulaires, des cadres imbriqués et un éditeur de texte enrichi placés dans des iframes : il faut basculer dans un cadre pour les atteindre.",
+      "information": "Tout ce qui se trouve dans une iframe appartient à un document distinct, donc les sélecteurs exécutés sur la page ne le trouvent pas : les tests doivent d'abord basculer dans le cadre, puis en ressortir pour vérifier quoi que ce soit sur la page. Le formulaire envoie son message à la page, en dehors du cadre. Le compteur se trouve dans un cadre lui-même placé dans un autre cadre, il faut donc deux bascules pour l'atteindre. L'éditeur de texte enrichi fonctionne comme de nombreux éditeurs WYSIWYG classiques : le texte modifié est le corps d'un cadre, tandis que la barre d'outils, le nombre de mots et le HTML sont sur la page autour, ce qui oblige un test à passer de l'un à l'autre.",
+      "form": {
+        "title": "Formulaire dans un cadre",
+        "description": "Envoyez un nom depuis un formulaire dans un cadre vers la page qui l'entoure.",
+        "frame-title": "Cadre du formulaire",
+        "label": "Votre nom",
+        "button": "Envoyer",
+        "error": "Veuillez saisir un nom",
+        "no-message": "Aucun message du cadre pour l'instant",
+        "message": "Le cadre dit : Bonjour, {{name}} !"
+      },
+      "nested": {
+        "title": "Cadres imbriqués",
+        "description": "Un compteur dans un cadre qui se trouve lui-même dans un autre cadre.",
+        "outer-title": "Cadre extérieur",
+        "inner-title": "Cadre intérieur",
+        "outer-text": "Cadre extérieur",
+        "inner-text": "Cadre intérieur",
+        "button": "Ajouter un"
+      },
+      "editor": {
+        "title": "Éditeur de texte enrichi",
+        "description": "Saisissez du texte dans le cadre de l'éditeur, puis mettez en forme la sélection avec la barre d'outils à l'extérieur.",
+        "frame-title": "Éditeur de texte enrichi",
+        "label": "Contenu de l'éditeur",
+        "toolbar": "Mise en forme",
+        "initial": "Sélectionnez une partie de ce texte et mettez-la en gras.",
+        "bold": "Gras",
+        "italic": "Italique",
+        "underline": "Souligné",
+        "clear": "Effacer",
+        "words_one": "{{count}} mot",
+        "words_other": "{{count}} mots",
+        "html": "HTML"
+      }
+    },
     "infinite-scroll": {
       "title": "Défilement infini",
       "description": "Une liste qui charge de nouveaux éléments chaque fois que vous atteignez le bas de la page.",
