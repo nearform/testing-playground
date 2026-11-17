@@ -517,6 +517,33 @@
         "status_other": "Bouton caché cliqué {{count}} fois"
       }
     },
+    "sortable-table": {
+      "title": "Tableau triable",
+      "description": "Triez un tableau en cliquant sur les en-têtes de ses colonnes.",
+      "information": "Cliquez sur l'en-tête d'une colonne pour trier selon celle-ci : le premier clic trie par ordre croissant, le deuxième par ordre décroissant et le troisième remet les lignes dans leur ordre d'origine. L'en-tête de la colonne triée indique le sens du tri dans son attribut aria-sort, les autres en-têtes n'en ont pas ; la colonne E-mail ne peut pas être triée. Les valeurs sont choisies pour piéger un tri naïf : les salaires et le nombre de projets sont mal triés comme du texte, les dates d'arrivée sont affichées au format de votre langue, un nom commence par une lettre accentuée et plusieurs personnes partagent un service (elles gardent leur ordre d'origine en cas d'égalité). Le prestataire n'a pas de salaire et est toujours trié en dernier, quel que soit le sens du tri. Le tri actuel est affiché sous le tableau.",
+      "columns": {
+        "name": "Nom",
+        "department": "Service",
+        "started": "Date d'arrivée",
+        "projects": "Projets",
+        "salary": "Salaire",
+        "email": "E-mail"
+      },
+      "departments": {
+        "engineering": "Ingénierie",
+        "design": "Design",
+        "sales": "Ventes",
+        "support": "Assistance",
+        "marketing": "Marketing"
+      },
+      "no-salary": "Prestataire",
+      "status": {
+        "unsorted": "Non trié",
+        "asc": "Trié par {{column}}, ordre croissant",
+        "desc": "Trié par {{column}}, ordre décroissant"
+      },
+      "reset": "Réinitialiser le tri"
+    },
     "slider-page": {
       "title": "Curseurs",
       "description": "Une gamme de curseurs avec lesquels interagir.",
