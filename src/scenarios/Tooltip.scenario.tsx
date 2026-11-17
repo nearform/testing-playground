@@ -1,12 +1,4 @@
-import { Delete } from '@mui/icons-material'
-import {
-  Button,
-  IconButton,
-  Link,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { BsTrash, Button, IconButton, Link, Tooltip } from '@nearform/quantum'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -23,32 +15,29 @@ const TooltipPage = (): JSX.Element => {
         description={t('scenarios.tooltip-page.description')}
         information={t('scenarios.tooltip-page.information')}
       >
-        <Stack
-          direction='column'
-          justifyContent='center'
-          alignItems='center'
-          spacing={6}
-        >
+        <div className='flex flex-col items-center justify-center gap-12'>
           <Tooltip
-            title={t('scenarios.tooltip-page.no-permission')}
-            arrow
-            placement='right'
+            content={t('scenarios.tooltip-page.no-permission')}
+            side='right'
           >
-            <span data-testid='delete-button'>
-              <IconButton disabled>
-                <Delete />
-              </IconButton>
+            {/* Disabled buttons do not fire pointer events, so the wrapper
+                is the tooltip trigger */}
+            <span data-testid='delete-button' className='inline-flex'>
+              <IconButton
+                disabled
+                label={t('scenarios.tooltip-page.delete')}
+                icon={<BsTrash />}
+              />
             </span>
           </Tooltip>
 
           <Tooltip
-            arrow
-            placement='right'
-            title={
+            side='right'
+            content={
               <>
                 {t('scenarios.tooltip-page.more-information-msg')}{' '}
                 <Link
-                  color='inherit'
+                  className='text-inherit'
                   href='https://github.com/nearform/testing-playground'
                 >
                   {'Testing Playground'}
@@ -56,22 +45,24 @@ const TooltipPage = (): JSX.Element => {
               </>
             }
           >
-            <Button variant='outlined' data-testid='more-info-button'>
+            <Button variant='secondary' data-testid='more-info-button'>
               {t('scenarios.tooltip-page.more-information')}
             </Button>
           </Tooltip>
 
           <Tooltip
-            title={t('scenarios.tooltip-page.really-long-text')}
-            arrow
-            placement='right'
-            sx={{ width: '10rem' }}
+            content={
+              <span className='block max-w-xs'>
+                {t('scenarios.tooltip-page.really-long-text')}
+              </span>
+            }
+            side='right'
           >
-            <Typography noWrap data-testid='text'>
+            <p className='w-40 truncate' data-testid='text'>
               {t('scenarios.tooltip-page.really-long-text')}
-            </Typography>
+            </p>
           </Tooltip>
-        </Stack>
+        </div>
       </PageSetup>
     </Layout>
   )

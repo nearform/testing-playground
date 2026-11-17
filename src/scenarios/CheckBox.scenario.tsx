@@ -1,134 +1,165 @@
 import {
-  Bookmark,
-  BookmarkBorder,
-  Favorite,
-  FavoriteBorder,
-} from '@mui/icons-material'
-import {
-  Box,
+  BsBookmark,
+  BsBookmarkFill,
+  BsHeart,
+  BsHeartFill,
   Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  Grid,
-  Typography,
-} from '@mui/material'
+  ControlLabel,
+  IconButton,
+} from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 
+type CheckedState = boolean | 'indeterminate'
+
+interface IconCheckboxProps {
+  testId: string
+  label: string
+  icon: JSX.Element
+  checkedIcon: JSX.Element
+}
+
+// A checkbox drawn as an icon: an IconButton that keeps checkbox semantics
+const IconCheckbox = ({
+  testId,
+  label,
+  icon,
+  checkedIcon,
+}: IconCheckboxProps): JSX.Element => {
+  const [checked, setChecked] = useState(false)
+
+  return (
+    <IconButton
+      role='checkbox'
+      aria-checked={checked}
+      label={label}
+      variant='tertiary'
+      shape='circle'
+      icon={checked ? checkedIcon : icon}
+      onClick={() => {
+        setChecked((value) => !value)
+      }}
+      data-testid={testId}
+    />
+  )
+}
+
 const CheckBox = (): JSX.Element => {
   const { t } = useTranslation()
   const [checked, setChecked] = useState([false, false, false])
 
-  const handleRequired = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setChecked([checked[0], checked[1], event.target.checked])
+  const handleRequired = (value: CheckedState): void => {
+    setChecked([checked[0], checked[1], value === true])
   }
 
-  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setChecked([event.target.checked, event.target.checked])
+  const handleParent = (value: CheckedState): void => {
+    setChecked([value === true, value === true, checked[2]])
   }
 
-  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setChecked([event.target.checked, checked[1]])
+  const handleChild1 = (value: CheckedState): void => {
+    setChecked([value === true, checked[1], checked[2]])
   }
 
-  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setChecked([checked[0], event.target.checked])
+  const handleChild2 = (value: CheckedState): void => {
+    setChecked([checked[0], value === true, checked[2]])
   }
 
-  const children = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-      <FormControlLabel
-        data-testid='child'
-        label={t('scenarios.check-box.child')}
-        control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-      />
-      <FormControlLabel
-        data-testid='child'
-        label={t('scenarios.check-box.child')}
-        control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-      />
-    </Box>
-  )
+  const parentChecked: CheckedState =
+    checked[0] && checked[1]
+      ? true
+      : checked[0] !== checked[1]
+        ? 'indeterminate'
+        : false
 
   return (
     <Layout>
       <PageSetup
         title={t('scenarios.check-box.title')}
         description={t('scenarios.check-box.description')}
-        information={t('scenarios.check-box.information')}
       >
-        <Grid container spacing={2}>
-          <Grid size={4}>
-            <Typography variant='body2'>
-              {t('scenarios.check-box.scenario-form')}:
-            </Typography>
-            <FormControl required error={!checked[2]}>
-              <FormGroup>
-                <FormControlLabel
-                  data-testid='checked'
-                  control={<Checkbox defaultChecked />}
-                  label={t('scenarios.check-box.checked')}
-                />
-                <FormControlLabel
-                  data-testid='disabled'
-                  disabled
-                  control={<Checkbox />}
-                  label={t('scenarios.check-box.disabled')}
-                />
-                <FormControlLabel
-                  data-testid='required'
-                  required
-                  control={<Checkbox onChange={handleRequired} />}
-                  label={t('scenarios.check-box.required')}
-                />
-                {!checked[2] && (
-                  <FormHelperText data-testid='required-message'>
-                    {t('scenarios.check-box.required-message')}
-                  </FormHelperText>
-                )}
-              </FormGroup>
-            </FormControl>
-          </Grid>
-          <Grid>
-            <Typography variant='body2'>
-              {t('scenarios.check-box.scenario-icons')}:
-            </Typography>
-            <Checkbox
-              data-testid='favorite'
-              icon={<FavoriteBorder />}
-              checkedIcon={<Favorite />}
-            />
-            <Checkbox
-              data-testid='bookmark'
-              icon={<BookmarkBorder />}
-              checkedIcon={<Bookmark />}
-            />
-          </Grid>
-        </Grid>
-
-        <Divider sx={{ mt: 4, mb: 4 }} />
-        <Typography variant='body2'>
-          {t('scenarios.check-box.scenario-tree')}:
-        </Typography>
-        <div>
-          <FormControlLabel
-            data-testid='parent'
-            label={t('scenarios.check-box.parent')}
-            control={
+        <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
+          <div className='flex flex-col gap-3'>
+            <p className='text-sm'>{t('scenarios.check-box.scenario-form')}:</p>
+            <ControlLabel label={t('scenarios.check-box.checked')}>
+              <Checkbox defaultChecked data-testid='checked' />
+            </ControlLabel>
+            <ControlLabel label={t('scenarios.check-box.disabled')}>
+              <Checkbox disabled data-testid='disabled' />
+            </ControlLabel>
+            <ControlLabel label={`${t('scenarios.check-box.required')} *`}>
               <Checkbox
-                checked={checked[0] && checked[1]}
-                indeterminate={checked[0] !== checked[1]}
-                onChange={handleChange1}
+                required
+                checked={checked[2]}
+                onCheckedChange={handleRequired}
+                aria-invalid={!checked[2]}
+                aria-describedby={
+                  checked[2] ? undefined : 'required-checkbox-message'
+                }
+                data-testid='required'
               />
-            }
-          />
-          {children}
+            </ControlLabel>
+            {!checked[2] && (
+              <p
+                id='required-checkbox-message'
+                className='text-xs font-medium text-feedback-error dark:text-feedback-error-dark'
+                data-testid='required-message'
+              >
+                {t('scenarios.check-box.required-message')}
+              </p>
+            )}
+          </div>
+          <div className='flex flex-col gap-3'>
+            <p className='text-sm'>
+              {t('scenarios.check-box.scenario-icons')}:
+            </p>
+            <div className='flex gap-2'>
+              <IconCheckbox
+                testId='favorite'
+                label={t('scenarios.check-box.favorite')}
+                icon={<BsHeart />}
+                checkedIcon={<BsHeartFill />}
+              />
+              <IconCheckbox
+                testId='bookmark'
+                label={t('scenarios.check-box.bookmark')}
+                icon={<BsBookmark />}
+                checkedIcon={<BsBookmarkFill />}
+              />
+            </div>
+          </div>
+        </div>
+
+        <hr className='my-8 border-grey-300 dark:border-grey-700' />
+        <p className='mb-3 text-sm'>
+          {t('scenarios.check-box.scenario-tree')}:
+        </p>
+        <div className='flex flex-col gap-3'>
+          <ControlLabel label={t('scenarios.check-box.parent')}>
+            <Checkbox
+              checked={parentChecked}
+              onCheckedChange={handleParent}
+              data-testid='parent'
+            />
+          </ControlLabel>
+          <div className='ml-6 flex flex-col gap-3'>
+            <ControlLabel label={t('scenarios.check-box.child')}>
+              <Checkbox
+                checked={checked[0]}
+                onCheckedChange={handleChild1}
+                data-testid='child'
+              />
+            </ControlLabel>
+            <ControlLabel label={t('scenarios.check-box.child')}>
+              <Checkbox
+                checked={checked[1]}
+                onCheckedChange={handleChild2}
+                data-testid='child'
+              />
+            </ControlLabel>
+          </div>
         </div>
       </PageSetup>
     </Layout>

@@ -43,7 +43,9 @@
       "scenario-icons": "Scenario with checkbox as icons",
       "scenario-tree": "Scenario with tree selection",
       "parent": "Parent",
-      "child": "Child"
+      "child": "Child",
+      "favorite": "Favorite",
+      "bookmark": "Bookmark"
     },
     "drag-and-drop": {
       "title": "Drag and Drop",
@@ -56,7 +58,7 @@
       "total-drops": "Total Drops"
     },
     "drag-and-drop-hard": {
-      "title": "Drag and Drop",
+      "title": "Drag and Drop (Hard)",
       "description": "Drag the appropriate smaller shapes onto the larger shape.",
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
       "rating": "3",
@@ -94,6 +96,55 @@
       "information": "Lorem ipsum",
       "rating": "2",
       "download": "Download File"
+    },
+    "form-validation": {
+      "title": "Form Validation",
+      "description": "A registration form whose inputs are validated, so you can check the error messages shown for incorrectly formatted values.",
+      "information": "Errors appear when you leave a field and when you submit the form. Phone and website are optional but must be valid if filled in. Age must be a whole number between 18 and 120. The password needs at least 8 characters with an uppercase letter, a lowercase letter and a number.",
+      "rating": "2",
+      "submit-button": "Submit",
+      "reset-button": "Reset",
+      "error-summary_one": "Please fix the {{count}} error below.",
+      "error-summary_other": "Please fix the {{count}} errors below.",
+      "success": "Thanks {{name}}, the form was submitted successfully!",
+      "fields": {
+        "full-name": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "age": "Age",
+        "website": "Website",
+        "password": "Password",
+        "confirm-password": "Confirm Password"
+      },
+      "hints": {
+        "full-name": "Letters, spaces, hyphens and apostrophes only",
+        "email": "e.g. name@example.com",
+        "phone": "Optional, 10 to 15 digits, may start with +",
+        "age": "Between 18 and 120",
+        "website": "Optional, must start with http:// or https://",
+        "password": "At least 8 characters with upper, lower case and a number",
+        "confirm-password": "Re-enter your password"
+      },
+      "errors": {
+        "full-name-required": "Full name is required",
+        "full-name-too-short": "Full name must be at least 2 characters",
+        "full-name-invalid": "Full name can only contain letters, spaces, hyphens and apostrophes",
+        "email-required": "Email is required",
+        "email-invalid": "Please enter a valid email address",
+        "phone-invalid": "Phone number can only contain digits, spaces and a leading +",
+        "phone-length": "Phone number must contain between 10 and 15 digits",
+        "age-required": "Age is required",
+        "age-not-number": "Age must be a whole number",
+        "age-range": "Age must be between 18 and 120",
+        "website-invalid": "Please enter a valid URL starting with http:// or https://",
+        "password-required": "Password is required",
+        "password-too-short": "Password must be at least 8 characters",
+        "password-uppercase": "Password must contain an uppercase letter",
+        "password-lowercase": "Password must contain a lowercase letter",
+        "password-number": "Password must contain a number",
+        "confirm-password-required": "Please confirm your password",
+        "confirm-password-mismatch": "Passwords do not match"
+      }
     },
     "login-form": {
       "title": "Login Form",
@@ -145,6 +196,43 @@
         "third": "Green"
       }
     },
+    "shadow-dom": {
+      "title": "Shadow DOM",
+      "description": "Elements hidden inside open, nested and closed shadow roots, so you can check how your tools reach into the shadow DOM.",
+      "information": "Regular selectors stop at a shadow root boundary. The open shadow root can be pierced by most tools, the nested example needs two hops, the slotted content lives in the light DOM even though it is shown inside a shadow root, and the closed shadow root cannot be reached through host.shadowRoot at all.",
+      "rating": "3",
+      "open": {
+        "title": "Open shadow root",
+        "description": "A small form rendered inside an open shadow root.",
+        "label": "Your name",
+        "button": "Greet",
+        "greeting": "Hello, {{name}}!",
+        "error": "Please enter a name"
+      },
+      "nested": {
+        "title": "Nested shadow roots",
+        "description": "A counter inside a shadow root that is itself inside another shadow root.",
+        "outer-text": "Outer shadow root",
+        "inner-text": "Inner shadow root",
+        "increment": "Increment",
+        "decrement": "Decrement"
+      },
+      "slot": {
+        "title": "Slotted content",
+        "description": "Light DOM content projected into a shadow root through a slot.",
+        "shadow-text": "Shadow root with a slot",
+        "button": "Click me",
+        "status_one": "Slotted button clicked {{count}} time",
+        "status_other": "Slotted button clicked {{count}} times"
+      },
+      "closed": {
+        "title": "Closed shadow root",
+        "description": "A button inside a closed shadow root. Only the result below is in the light DOM.",
+        "button": "Hidden button",
+        "status_one": "Hidden button clicked {{count}} time",
+        "status_other": "Hidden button clicked {{count}} times"
+      }
+    },
     "tooltip-page": {
       "title": "Tooltips",
       "description": "A set of tooltips to test against.",
@@ -153,7 +241,8 @@
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
-      "really-long-text": "A really really long text example"
+      "really-long-text": "A really really long text example",
+      "delete": "Delete"
     },
     "slider-page": {
       "title": "Sliders",

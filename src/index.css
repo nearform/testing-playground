@@ -1,3 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@nearform/quantum/tailwind-plugin';
+@source '../node_modules/@nearform/quantum';
+@custom-variant dark (&:is(.dark, .dark *));

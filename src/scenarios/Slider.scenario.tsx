@@ -1,113 +1,119 @@
-import { Box, Divider, Slider, Typography, TextField } from '@mui/material'
+import { Input, Slider } from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { HIDE_CLEAR_BUTTON } from '../utils/inputClassNames'
+
+const MIN = 1
+const MAX = 100
+
+const SliderValue = ({
+  testId,
+  children,
+}: {
+  testId: string
+  children: React.ReactNode
+}): JSX.Element => (
+  <span
+    className='min-w-[3ch] text-right text-sm font-semibold tabular-nums'
+    data-testid={testId}
+  >
+    {children}
+  </span>
+)
 
 const BasicSlider: React.FC = () => {
   const { t } = useTranslation()
-  const [basicValue, setBasicValue] = useState<number>(0)
-
-  const handleBasicChange = (_: Event, newValue: number | number[]): void => {
-    setBasicValue(newValue as number)
-  }
+  const [basicValue, setBasicValue] = useState<number>(MIN)
 
   return (
-    <Box>
-      <Typography gutterBottom>
-        {t('scenarios.slider-page.basic-slider')}
-      </Typography>
+    <div className='flex items-end gap-4'>
       <Slider
-        value={basicValue}
-        onChange={(_, newValue) => {
-          handleBasicChange(_, newValue as number)
+        label={t('scenarios.slider-page.basic-slider')}
+        value={[basicValue]}
+        onValueChange={([value]) => {
+          setBasicValue(value)
         }}
-        valueLabelDisplay='auto'
-        min={1}
-        max={100}
+        min={MIN}
+        max={MAX}
         data-testid='basic-slider'
       />
-    </Box>
+      <SliderValue testId='basic-slider-value'>{basicValue}</SliderValue>
+    </div>
   )
 }
 
 const RangeSlider: React.FC = () => {
   const { t } = useTranslation()
-
-  const [rangeValue, setRangeValue] = useState<number[]>([0, 25])
-  const handleRangeChange = (_: Event, newValue: number | number[]): void => {
-    setRangeValue(newValue as number[])
-  }
+  const [rangeValue, setRangeValue] = useState<number[]>([MIN, 25])
 
   return (
-    <Box>
-      <Typography gutterBottom>
-        {t('scenarios.slider-page.range-slider')}
-      </Typography>
+    <div className='flex items-end gap-4'>
       <Slider
+        label={t('scenarios.slider-page.range-slider')}
         value={rangeValue}
-        onChange={(_, newValue) => {
-          handleRangeChange(_, newValue as number[])
-        }}
-        valueLabelDisplay='auto'
-        min={1}
-        max={100}
-        disableSwap={true}
+        onValueChange={setRangeValue}
+        min={MIN}
+        max={MAX}
+        minStepsBetweenThumbs={0}
         data-testid='range-slider'
       />
-    </Box>
+      <span className='flex shrink-0 gap-1 text-sm'>
+        <SliderValue testId='range-slider-min'>{rangeValue[0]}</SliderValue>
+        <span aria-hidden='true'>–</span>
+        <SliderValue testId='range-slider-max'>{rangeValue[1]}</SliderValue>
+      </span>
+    </div>
   )
 }
 
 const SliderWithInput: React.FC = () => {
   const { t } = useTranslation()
+  const [inputValue, setInputValue] = useState<number>(MIN)
 
-  const [inputValue, setInputValue] = useState<number>(0)
-
-  const handleSliderChange = (_: Event, newValue: number | number[]): void => {
-    setInputValue(newValue as number)
-  }
-
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
+  const handleInputChange: React.FormEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    const newValue = Number(event.target.value)
+    const newValue = Number(event.currentTarget.value)
     setInputValue((prevValue) => {
-      const clampedValue = Math.min(100, Math.max(1, newValue))
+      const clampedValue = Math.min(MAX, Math.max(MIN, newValue))
       return isNaN(clampedValue) ? prevValue : clampedValue
     })
   }
 
   return (
-    <>
-      <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-        <Typography gutterBottom>
-          {t('scenarios.slider-page.slider-with-input')}
-        </Typography>
-        <TextField
-          label={t('scenarios.slider-page.value')}
-          variant='outlined'
+    <div className='flex items-end gap-4'>
+      <Slider
+        label={t('scenarios.slider-page.slider-with-input')}
+        value={[inputValue]}
+        onValueChange={([value]) => {
+          setInputValue(value)
+        }}
+        min={MIN}
+        max={MAX}
+        data-testid='input-slider'
+      />
+      <div className='w-32 shrink-0'>
+        <Input
+          labelText={t('scenarios.slider-page.value')}
+          variant='primary'
+          size='sm'
           type='number'
           value={inputValue}
           onChange={handleInputChange}
-          sx={{ width: '80px', ml: 'auto' }}
-          data-testid='input-slider-text'
-          slotProps={{
-            htmlInput: { min: 1, max: 100 },
+          // The value is always set, so there is never anything to clear
+          onClear={() => {
+            setInputValue(MIN)
           }}
+          formClassName={HIDE_CLEAR_BUTTON}
+          min={MIN}
+          max={MAX}
+          data-testid='input-slider-text'
         />
-      </Box>
-      <Slider
-        value={inputValue}
-        onChange={handleSliderChange}
-        valueLabelDisplay='auto'
-        min={1}
-        max={100}
-        sx={{ mr: 4 }}
-        data-testid='input-slider'
-      />
-    </>
+      </div>
+    </div>
   )
 }
 
@@ -120,13 +126,13 @@ const SliderPage: React.FC = () => {
         title={t('scenarios.slider-page.title')}
         description={t('scenarios.slider-page.description')}
       >
-        <Box>
+        <div className='flex flex-col'>
           <BasicSlider />
-          <Divider sx={{ mt: 4, mb: 4 }} />
+          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <RangeSlider />
-          <Divider sx={{ mt: 4, mb: 4 }} />
+          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <SliderWithInput />
-        </Box>
+        </div>
       </PageSetup>
     </Layout>
   )

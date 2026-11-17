@@ -44,7 +44,9 @@
       "scenario-icons": "Checkbox comme des icônes",
       "scenario-tree": "Sélection d'arbre",
       "parent": "Père",
-      "child": "Fils"
+      "child": "Fils",
+      "favorite": "Favori",
+      "bookmark": "Marque-page"
     },
     "drag-and-drop": {
       "title": "Glisser-déposer",
@@ -57,7 +59,7 @@
       "total-drops": "Total des dépôts"
     },
     "drag-and-drop-hard": {
-      "title": "Glisser-déposer",
+      "title": "Glisser-déposer (difficile)",
       "description": "Faites glisser les formes plus petites appropriées sur la forme plus grande.",
       "information": "Un dépôt correct entraînera le passage de la forme au vert, sinon la forme passera au jaune. Note : les formes changent à chaque rechargement de la page",
       "rating": "3",
@@ -95,6 +97,55 @@
       "information": "Lorem ipsum",
       "rating": "2",
       "download": "Télécharger le Fichier"
+    },
+    "form-validation": {
+      "title": "Validation de formulaire",
+      "description": "Un formulaire d'inscription dont les champs sont validés, afin de vérifier les messages d'erreur affichés pour des valeurs mal formatées.",
+      "information": "Les erreurs apparaissent lorsque vous quittez un champ et lorsque vous soumettez le formulaire. Le téléphone et le site web sont facultatifs mais doivent être valides s'ils sont renseignés. L'âge doit être un nombre entier entre 18 et 120. Le mot de passe doit contenir au moins 8 caractères avec une majuscule, une minuscule et un chiffre.",
+      "rating": "2",
+      "submit-button": "Envoyer",
+      "reset-button": "Réinitialiser",
+      "error-summary_one": "Veuillez corriger l'erreur ci-dessous.",
+      "error-summary_other": "Veuillez corriger les {{count}} erreurs ci-dessous.",
+      "success": "Merci {{name}}, le formulaire a été envoyé avec succès !",
+      "fields": {
+        "full-name": "Nom complet",
+        "email": "E-mail",
+        "phone": "Numéro de téléphone",
+        "age": "Âge",
+        "website": "Site web",
+        "password": "Mot de passe",
+        "confirm-password": "Confirmer le mot de passe"
+      },
+      "hints": {
+        "full-name": "Lettres, espaces, traits d'union et apostrophes uniquement",
+        "email": "ex. nom@exemple.com",
+        "phone": "Facultatif, 10 à 15 chiffres, peut commencer par +",
+        "age": "Entre 18 et 120",
+        "website": "Facultatif, doit commencer par http:// ou https://",
+        "password": "Au moins 8 caractères avec majuscule, minuscule et chiffre",
+        "confirm-password": "Saisissez à nouveau votre mot de passe"
+      },
+      "errors": {
+        "full-name-required": "Le nom complet est obligatoire",
+        "full-name-too-short": "Le nom complet doit contenir au moins 2 caractères",
+        "full-name-invalid": "Le nom complet ne peut contenir que des lettres, des espaces, des traits d'union et des apostrophes",
+        "email-required": "L'e-mail est obligatoire",
+        "email-invalid": "Veuillez saisir une adresse e-mail valide",
+        "phone-invalid": "Le numéro de téléphone ne peut contenir que des chiffres, des espaces et un + initial",
+        "phone-length": "Le numéro de téléphone doit contenir entre 10 et 15 chiffres",
+        "age-required": "L'âge est obligatoire",
+        "age-not-number": "L'âge doit être un nombre entier",
+        "age-range": "L'âge doit être compris entre 18 et 120",
+        "website-invalid": "Veuillez saisir une URL valide commençant par http:// ou https://",
+        "password-required": "Le mot de passe est obligatoire",
+        "password-too-short": "Le mot de passe doit contenir au moins 8 caractères",
+        "password-uppercase": "Le mot de passe doit contenir une majuscule",
+        "password-lowercase": "Le mot de passe doit contenir une minuscule",
+        "password-number": "Le mot de passe doit contenir un chiffre",
+        "confirm-password-required": "Veuillez confirmer votre mot de passe",
+        "confirm-password-mismatch": "Les mots de passe ne correspondent pas"
+      }
     },
     "login-form": {
       "title": "Formulaire de connexion",
@@ -146,6 +197,43 @@
         "third": "Vert"
       }
     },
+    "shadow-dom": {
+      "title": "Shadow DOM",
+      "description": "Des éléments cachés dans des shadow roots ouvertes, imbriquées et fermées, pour vérifier comment vos outils accèdent au shadow DOM.",
+      "information": "Les sélecteurs classiques s'arrêtent à la frontière d'une shadow root. La shadow root ouverte peut être traversée par la plupart des outils, l'exemple imbriqué nécessite deux étapes, le contenu inséré dans le slot reste dans le light DOM même s'il est affiché dans une shadow root, et la shadow root fermée n'est pas accessible via host.shadowRoot.",
+      "rating": "3",
+      "open": {
+        "title": "Shadow root ouverte",
+        "description": "Un petit formulaire affiché dans une shadow root ouverte.",
+        "label": "Votre nom",
+        "button": "Saluer",
+        "greeting": "Bonjour, {{name}} !",
+        "error": "Veuillez saisir un nom"
+      },
+      "nested": {
+        "title": "Shadow roots imbriquées",
+        "description": "Un compteur dans une shadow root elle-même placée dans une autre shadow root.",
+        "outer-text": "Shadow root externe",
+        "inner-text": "Shadow root interne",
+        "increment": "Incrémenter",
+        "decrement": "Décrémenter"
+      },
+      "slot": {
+        "title": "Contenu inséré (slot)",
+        "description": "Du contenu du light DOM projeté dans une shadow root via un slot.",
+        "shadow-text": "Shadow root avec un slot",
+        "button": "Cliquez-moi",
+        "status_one": "Bouton du slot cliqué {{count}} fois",
+        "status_other": "Bouton du slot cliqué {{count}} fois"
+      },
+      "closed": {
+        "title": "Shadow root fermée",
+        "description": "Un bouton dans une shadow root fermée. Seul le résultat ci-dessous est dans le light DOM.",
+        "button": "Bouton caché",
+        "status_one": "Bouton caché cliqué {{count}} fois",
+        "status_other": "Bouton caché cliqué {{count}} fois"
+      }
+    },
     "slider-page": {
       "title": "Curseurs",
       "description": "Une gamme de curseurs avec lesquels interagir.",
@@ -163,7 +251,8 @@
       "no-permission": "Vous n'avez pas la permission de faire ça",
       "more-information": "Plus d'informations",
       "more-information-msg": "Pour plus d'informations, cliquez ici:",
-      "really-long-text": "Un exemple de texte vraiment très long"
+      "really-long-text": "Un exemple de texte vraiment très long",
+      "delete": "Supprimer"
     },
     "various-inputs": {
       "title": "Diverses entrées",
