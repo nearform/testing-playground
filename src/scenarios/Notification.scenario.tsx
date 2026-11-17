@@ -3,8 +3,8 @@ import {
   type ButtonProps,
   Toast,
   ToastClose,
-  ToastDescription,
   ToastProvider,
+  ToastTitle,
   ToastViewport,
 } from '@nearform/quantum'
 import React, { useState } from 'react'
@@ -105,9 +105,7 @@ const Notification = (): JSX.Element => {
               }}
               data-testid={`notification-${notification.severity}`}
             >
-              <ToastDescription className='col-start-2 row-start-1 text-inherit'>
-                {notification.message}
-              </ToastDescription>
+              <ToastTitle>{notification.message}</ToastTitle>
               <ToastClose />
             </Toast>
           )}

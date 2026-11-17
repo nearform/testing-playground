@@ -3,8 +3,10 @@ import {
   BsBookmarkFill,
   BsHeart,
   BsHeartFill,
+  CardTitle,
   Checkbox,
   ControlLabel,
+  FieldError,
   IconButton,
 } from '@nearform/quantum'
 import React, { useState } from 'react'
@@ -83,7 +85,7 @@ const CheckBox = (): JSX.Element => {
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <div className='flex flex-col gap-3'>
-            <p className='text-sm'>{t('scenarios.check-box.scenario-form')}:</p>
+            <CardTitle>{t('scenarios.check-box.scenario-form')}</CardTitle>
             <ControlLabel label={t('scenarios.check-box.checked')}>
               <Checkbox defaultChecked data-testid='checked' />
             </ControlLabel>
@@ -103,19 +105,16 @@ const CheckBox = (): JSX.Element => {
               />
             </ControlLabel>
             {!checked[2] && (
-              <p
+              <FieldError
                 id='required-checkbox-message'
-                className='text-xs font-medium text-feedback-error dark:text-feedback-error-dark'
                 data-testid='required-message'
               >
                 {t('scenarios.check-box.required-message')}
-              </p>
+              </FieldError>
             )}
           </div>
           <div className='flex flex-col gap-3'>
-            <p className='text-sm'>
-              {t('scenarios.check-box.scenario-icons')}:
-            </p>
+            <CardTitle>{t('scenarios.check-box.scenario-icons')}</CardTitle>
             <div className='flex gap-2'>
               <IconCheckbox
                 testId='favorite'
@@ -131,35 +130,31 @@ const CheckBox = (): JSX.Element => {
               />
             </div>
           </div>
-        </div>
-
-        <hr className='my-8 border-grey-300 dark:border-grey-700' />
-        <p className='mb-3 text-sm'>
-          {t('scenarios.check-box.scenario-tree')}:
-        </p>
-        <div className='flex flex-col gap-3'>
-          <ControlLabel label={t('scenarios.check-box.parent')}>
-            <Checkbox
-              checked={parentChecked}
-              onCheckedChange={handleParent}
-              data-testid='parent'
-            />
-          </ControlLabel>
-          <div className='ml-6 flex flex-col gap-3'>
-            <ControlLabel label={t('scenarios.check-box.child')}>
+          <div className='flex flex-col gap-3'>
+            <CardTitle>{t('scenarios.check-box.scenario-tree')}</CardTitle>
+            <ControlLabel label={t('scenarios.check-box.parent')}>
               <Checkbox
-                checked={checked[0]}
-                onCheckedChange={handleChild1}
-                data-testid='child'
+                checked={parentChecked}
+                onCheckedChange={handleParent}
+                data-testid='parent'
               />
             </ControlLabel>
-            <ControlLabel label={t('scenarios.check-box.child')}>
-              <Checkbox
-                checked={checked[1]}
-                onCheckedChange={handleChild2}
-                data-testid='child'
-              />
-            </ControlLabel>
+            <div className='ml-6 flex flex-col gap-3'>
+              <ControlLabel label={t('scenarios.check-box.child')}>
+                <Checkbox
+                  checked={checked[0]}
+                  onCheckedChange={handleChild1}
+                  data-testid='child'
+                />
+              </ControlLabel>
+              <ControlLabel label={t('scenarios.check-box.child')}>
+                <Checkbox
+                  checked={checked[1]}
+                  onCheckedChange={handleChild2}
+                  data-testid='child'
+                />
+              </ControlLabel>
+            </div>
           </div>
         </div>
       </PageSetup>

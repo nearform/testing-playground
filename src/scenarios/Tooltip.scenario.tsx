@@ -38,7 +38,7 @@ const TooltipPage = (): JSX.Element => {
               <>
                 {t('scenarios.tooltip-page.more-information-msg')}{' '}
                 <Link
-                  className='text-inherit'
+                  variant='inline'
                   href='https://github.com/nearform/testing-playground'
                 >
                   {'Testing Playground'}
@@ -53,6 +53,8 @@ const TooltipPage = (): JSX.Element => {
 
           <Tooltip
             content={
+              // Quantum's tooltip has no width of its own, so cap it here or
+              // the long text runs across the page on one line
               <span className='block max-w-xs'>
                 {t('scenarios.tooltip-page.really-long-text')}
               </span>

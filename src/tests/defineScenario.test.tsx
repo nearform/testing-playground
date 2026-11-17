@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import * as Scenario from '../scenarios/Index'
 import { defineScenario } from '../utils/defineScenario'
-import { DIFFICULTY_STYLES } from '../utils/difficulty'
+import { DIFFICULTY_BADGE_VARIANT } from '../utils/difficulty'
 
 describe('defineScenario', () => {
   it('returns the same component, so its name still gives the route', () => {
@@ -20,7 +20,9 @@ describe('registered scenarios', () => {
   it.each(Object.entries(Scenario))(
     '%s declares a known difficulty',
     (_name, component) => {
-      expect(Object.keys(DIFFICULTY_STYLES)).toContain(component.difficulty)
+      expect(Object.keys(DIFFICULTY_BADGE_VARIANT)).toContain(
+        component.difficulty,
+      )
     },
   )
 })

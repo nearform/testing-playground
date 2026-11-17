@@ -31,4 +31,17 @@ describe('ScenarioBox component', async () => {
     // Assert that the tooltip with the full description is present
     expect(screen.getByText(scenarioData.description)).toBeInTheDocument()
   })
+
+  it('labels the card with its difficulty', () => {
+    TestRenderer(
+      <ScenarioBox
+        title='Test Scenario'
+        description='A description'
+        link='test-scenario'
+        difficulty='medium'
+      />,
+    )
+
+    expect(screen.getByRole('link')).toHaveTextContent('Medium')
+  })
 })

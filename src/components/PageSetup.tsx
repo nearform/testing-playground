@@ -1,7 +1,15 @@
+import {
+  BackLink,
+  Card,
+  CardDescription,
+  CardTitle,
+  PageHeader,
+  PageHeaderTitle,
+} from '@nearform/quantum'
 import React from 'react'
 import ReactHtmlParser from 'html-react-parser'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { useHref } from 'react-router-dom'
 
 interface PageSetupProps {
   children: React.ReactNode
@@ -17,47 +25,37 @@ const PageSetup: React.FC<PageSetupProps> = ({
   information,
 }) => {
   const { t } = useTranslation()
+  // A router-aware href ('#/' under the HashRouter), so the plain anchor
+  // BackLink renders navigates within the app
+  const homeHref = useHref('/')
 
   return (
-    <div className='px-4 py-4'>
-      <header className='flex justify-between items-center mb-4'>
-        <h1 className='text-2xl'>{title}</h1>
-        <Link
-          to='/'
+    <div className='flex flex-col gap-4 p-4'>
+      <PageHeader>
+        <PageHeaderTitle>{title}</PageHeaderTitle>
+        <BackLink
+          href={homeHref}
           data-testid={t('navigation.back').toLowerCase()}
-          className='text-foreground-muted text-sm dark:text-foreground-muted-dark'
         >
-          &lt; {t('navigation.back_to_main_page')}
-        </Link>
-      </header>
-      <section className='mb-4'>
-        <h2 className='text-lg font-medium'>{t('scenarios.description')}</h2>
-        <p className='mb-4 text-sm text-foreground-muted dark:text-foreground-muted-dark'>
-          {ReactHtmlParser(t(description))}
-        </p>
-      </section>
-      {information && (
-        <section className='mb-4'>
-          <h2 className='text-lg font-medium'>{t('scenarios.information')}</h2>
-          <p className='text-sm text-foreground-muted dark:text-foreground-muted-dark'>
-            {ReactHtmlParser(t(information))}
-          </p>
+          {t('navigation.back_to_main_page')}
+        </BackLink>
+      </PageHeader>
+      <Card className='flex flex-col gap-4'>
+        <section>
+          <CardTitle>{t('scenarios.description')}</CardTitle>
+          <CardDescription>{ReactHtmlParser(t(description))}</CardDescription>
         </section>
-      )}
-      <div className='relative py-4 mb-8'>
-        <div className='absolute inset-0 flex items-center'>
-          <div className='w-full border-b border-grey-300 dark:border-grey-700'></div>
-        </div>
-        <div className='relative flex justify-center'>
-          <span className='bg-background-alt px-4 text-sm text-foreground-muted dark:bg-background-dark dark:text-foreground-muted-dark'>
-            {t('common.playground')}
-          </span>
-        </div>
-      </div>
+        {information && (
+          <section>
+            <CardTitle>{t('scenarios.information')}</CardTitle>
+            <CardDescription>{ReactHtmlParser(t(information))}</CardDescription>
+          </section>
+        )}
+      </Card>
       {/* Quantum draws controls for a surface: on the page background
           their fill and borders all but disappear */}
-      <main className='rounded-2xl bg-background-surface p-6 shadow-sm dark:bg-background-surface-dark'>
-        {children}
+      <main aria-label={t('common.playground')}>
+        <Card>{children}</Card>
       </main>
     </div>
   )

@@ -9,13 +9,15 @@ import ShadowHost from '../components/ShadowHost'
 import { defineScenario } from '../utils/defineScenario'
 
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
-// reach inside a shadow root, so the shadow content carries its own styles.
-// Custom properties do inherit through the boundary, so the theme-dependent
-// colours come from SHADOW_THEME on a light DOM ancestor.
+// reach inside a shadow root, so the shadow content needs a stylesheet of its
+// own: this is the one place the app keeps hand-written CSS. Its colours are
+// still Quantum's, passed in from SHADOW_THEME on a light DOM ancestor, as
+// custom properties inherit through the shadow boundary where classes (and
+// Quantum's `dark:` variant) cannot.
 const SHADOW_STYLES = `
   :host { display: block; }
   .card {
-    border: 2px dashed var(--shadow-accent, #6b4fbb);
+    border: 2px dashed var(--shadow-accent);
     border-radius: 8px;
     padding: 12px;
     font-family: inherit;
@@ -33,24 +35,25 @@ const SHADOW_STYLES = `
   button {
     padding: 6px 12px;
     font-size: 0.875rem;
-    color: var(--shadow-on-accent, #fff);
-    background: var(--shadow-accent, #6b4fbb);
+    color: var(--shadow-on-accent);
+    background: var(--shadow-accent);
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   .output { margin: 8px 0 0; min-height: 1.5em; }
-  .error { color: var(--shadow-error, #d32f2f); }
+  .error { color: var(--shadow-error); }
   .count { min-width: 2ch; text-align: center; font-weight: bold; }
 `
 
-// On the dark surface the light-theme purple accent (2.9:1) and red error
-// text (3.5:1) are too dim. Dark mode switches the accent, used for the card
-// borders and button fill, to Quantum's purple-400 (7:1) with grey-900 button
-// text (7:1), and errors to feedback-error-dark (10:1).
+// Quantum's tokens for each theme: the fill and text colours of its primary
+// button uses, and its feedback error colour
 const SHADOW_THEME = [
-  'dark:[--shadow-accent:--theme(--color-purple-400)]',
-  'dark:[--shadow-on-accent:--theme(--color-grey-900)]',
+  '[--shadow-accent:--theme(--color-button-primary)]',
+  '[--shadow-on-accent:--theme(--color-foreground-inverse)]',
+  '[--shadow-error:--theme(--color-feedback-error)]',
+  'dark:[--shadow-accent:--theme(--color-button-primary-dark)]',
+  'dark:[--shadow-on-accent:--theme(--color-foreground-inverse-dark)]',
   'dark:[--shadow-error:--theme(--color-feedback-error-dark)]',
 ].join(' ')
 

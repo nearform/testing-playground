@@ -104,11 +104,9 @@ const SliderPage: React.FC = () => {
         title={t('scenarios.slider-page.title')}
         description={t('scenarios.slider-page.description')}
       >
-        <div className='flex flex-col'>
+        <div className='flex flex-col gap-12'>
           <BasicSlider />
-          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <RangeSlider />
-          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <SliderWithInput />
         </div>
       </PageSetup>

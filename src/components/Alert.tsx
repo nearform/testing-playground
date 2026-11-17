@@ -7,15 +7,8 @@ interface AlertProps extends Omit<NoticeProps, 'variant'> {
   severity: AlertSeverity
 }
 
-const Alert = ({ severity, className, ...props }: AlertProps): JSX.Element => (
-  <Notice
-    variant={severity}
-    data-severity={severity}
-    className={['justify-start rounded-lg px-4', className]
-      .filter(Boolean)
-      .join(' ')}
-    {...props}
-  />
+const Alert = ({ severity, ...props }: AlertProps): JSX.Element => (
+  <Notice variant={severity} data-severity={severity} {...props} />
 )
 
 export default Alert

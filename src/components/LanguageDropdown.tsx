@@ -16,18 +16,16 @@ function LanguageSelector(): JSX.Element {
   }
 
   return (
-    <div className='relative inline-block text-left'>
-      <Select value={i18n.language} onValueChange={handleChangeLanguage}>
-        <SelectTrigger>
-          <SelectValue placeholder='English' />
-        </SelectTrigger>
-        <SelectContent side='top' className='overflow-visible'>
-          <SelectItem value='en'>English</SelectItem>
-          <SelectItem value='fr'>Français</SelectItem>
-          <SelectItem value='ptBr'>Português (Brasil)</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
+    <Select value={i18n.language} onValueChange={handleChangeLanguage}>
+      <SelectTrigger>
+        <SelectValue placeholder='English' />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value='en'>English</SelectItem>
+        <SelectItem value='fr'>Français</SelectItem>
+        <SelectItem value='ptBr'>Português (Brasil)</SelectItem>
+      </SelectContent>
+    </Select>
   )
 }
 
