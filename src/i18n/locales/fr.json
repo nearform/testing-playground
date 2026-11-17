@@ -195,6 +195,43 @@
         "third": "Vert"
       }
     },
+    "shadow-dom": {
+      "title": "Shadow DOM",
+      "description": "Des éléments cachés dans des shadow roots ouvertes, imbriquées et fermées, pour vérifier comment vos outils accèdent au shadow DOM.",
+      "information": "Les sélecteurs classiques s'arrêtent à la frontière d'une shadow root. La shadow root ouverte peut être traversée par la plupart des outils, l'exemple imbriqué nécessite deux étapes, le contenu inséré dans le slot reste dans le light DOM même s'il est affiché dans une shadow root, et la shadow root fermée n'est pas accessible via host.shadowRoot.",
+      "rating": "3",
+      "open": {
+        "title": "Shadow root ouverte",
+        "description": "Un petit formulaire affiché dans une shadow root ouverte.",
+        "label": "Votre nom",
+        "button": "Saluer",
+        "greeting": "Bonjour, {{name}} !",
+        "error": "Veuillez saisir un nom"
+      },
+      "nested": {
+        "title": "Shadow roots imbriquées",
+        "description": "Un compteur dans une shadow root elle-même placée dans une autre shadow root.",
+        "outer-text": "Shadow root externe",
+        "inner-text": "Shadow root interne",
+        "increment": "Incrémenter",
+        "decrement": "Décrémenter"
+      },
+      "slot": {
+        "title": "Contenu inséré (slot)",
+        "description": "Du contenu du light DOM projeté dans une shadow root via un slot.",
+        "shadow-text": "Shadow root avec un slot",
+        "button": "Cliquez-moi",
+        "status_one": "Bouton du slot cliqué {{count}} fois",
+        "status_other": "Bouton du slot cliqué {{count}} fois"
+      },
+      "closed": {
+        "title": "Shadow root fermée",
+        "description": "Un bouton dans une shadow root fermée. Seul le résultat ci-dessous est dans le light DOM.",
+        "button": "Bouton caché",
+        "status_one": "Bouton caché cliqué {{count}} fois",
+        "status_other": "Bouton caché cliqué {{count}} fois"
+      }
+    },
     "slider-page": {
       "title": "Curseurs",
       "description": "Une gamme de curseurs avec lesquels interagir.",
