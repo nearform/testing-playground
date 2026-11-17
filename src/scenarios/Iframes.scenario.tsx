@@ -86,8 +86,37 @@ const FRAME_CLASSES =
 export const EDITOR_COMMANDS = ['bold', 'italic', 'underline'] as const
 type EditorCommand = (typeof EDITOR_COMMANDS)[number]
 
-const countWords = (text: string): number =>
-  text.split(/\s+/).filter((word) => word !== '').length
+// Elements that start a new line in the editor, and so end the word before them
+const LINE_BREAKING_ELEMENTS = new Set([
+  'BR',
+  'P',
+  'DIV',
+  'LI',
+  'BLOCKQUOTE',
+  'PRE',
+  'H1',
+  'H2',
+  'H3',
+  'H4',
+  'H5',
+  'H6',
+])
+
+// textContent runs separate lines together (`<p>Hello</p><p>world</p>` reads
+// as "Helloworld"), so put a space wherever a line breaks. Inline formatting
+// adds nothing, keeping `Hel<b>lo</b>` one word.
+const editorText = (node: Node): string => {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return node.textContent ?? ''
+  }
+  const text = Array.from(node.childNodes, editorText).join('')
+  return LINE_BREAKING_ELEMENTS.has(node.nodeName) ? ` ${text} ` : text
+}
+
+const countWords = (body: Node): number =>
+  editorText(body)
+    .split(/\s+/)
+    .filter((word) => word !== '').length
 
 interface SectionProps {
   testId: string
@@ -203,7 +232,7 @@ const RichTextEditor = (): JSX.Element => {
 
   const readContent = (body: HTMLElement): void => {
     setHtml(body.innerHTML)
-    setWords(countWords(body.textContent ?? ''))
+    setWords(countWords(body))
   }
 
   const handleLoad = (): void => {

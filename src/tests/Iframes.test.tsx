@@ -152,6 +152,27 @@ describe('Iframes scenario', () => {
       )
     })
 
+    it.each([
+      { html: '<p>Hello</p><p>world</p>', words: '2 words', as: 'paragraphs' },
+      {
+        html: '<div>Hello</div><div>world</div>',
+        words: '2 words',
+        as: 'divs',
+      },
+      { html: '<p>Hello<br>world</p>', words: '2 words', as: 'a line break' },
+      { html: '<p>Hel<b>lo</b></p>', words: '1 word', as: 'inline formatting' },
+    ])('counts words split by $as correctly', async ({ html, words }) => {
+      TestRenderer(<Iframes />)
+      const body = await loadedBody(editorFrame())
+
+      body.innerHTML = html
+      fireEvent.input(body)
+
+      expect(screen.getByTestId('editor-word-count')).toHaveTextContent(
+        new RegExp(`^${words}$`),
+      )
+    })
+
     it.each(['bold', 'italic', 'underline'])(
       'formats the selection in the frame with %s from the toolbar outside it',
       async (command) => {
