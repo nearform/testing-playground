@@ -250,7 +250,7 @@
     "slider-page": {
       "title": "Curseurs",
       "description": "Une gamme de curseurs avec lesquels interagir.",
-      "rating": "3",
+      "rating": "2",
       "basic-slider": "Curseur de base",
       "range-slider": "Curseur avec Plage",
       "slider-with-input": "Curseur avec entrée",

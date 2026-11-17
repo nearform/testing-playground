@@ -9,15 +9,16 @@ import ShadowHost from '../components/ShadowHost'
 
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content carries its own styles.
+// Custom properties do inherit through the boundary, so the theme-dependent
+// colours come from SHADOW_THEME on a light DOM ancestor.
 const SHADOW_STYLES = `
   :host { display: block; }
   .card {
-    border: 2px dashed #6b4fbb;
+    border: 2px dashed var(--shadow-accent, #6b4fbb);
     border-radius: 8px;
     padding: 12px;
     font-family: inherit;
   }
-  .card .card { margin-top: 12px; border-color: #e5007e; }
   .label { display: block; font-size: 0.875rem; margin-bottom: 4px; }
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   input {
@@ -31,16 +32,26 @@ const SHADOW_STYLES = `
   button {
     padding: 6px 12px;
     font-size: 0.875rem;
-    color: #fff;
-    background: #6b4fbb;
+    color: var(--shadow-on-accent, #fff);
+    background: var(--shadow-accent, #6b4fbb);
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   .output { margin: 8px 0 0; min-height: 1.5em; }
-  .error { color: #d32f2f; }
+  .error { color: var(--shadow-error, #d32f2f); }
   .count { min-width: 2ch; text-align: center; font-weight: bold; }
 `
+
+// On the dark surface the light-theme purple accent (2.9:1) and red error
+// text (3.5:1) are too dim. Dark mode switches the accent, used for the card
+// borders and button fill, to Quantum's purple-400 (7:1) with grey-900 button
+// text (7:1), and errors to feedback-error-dark (10:1).
+const SHADOW_THEME = [
+  'dark:[--shadow-accent:--theme(--color-purple-400)]',
+  'dark:[--shadow-on-accent:--theme(--color-grey-900)]',
+  'dark:[--shadow-error:--theme(--color-feedback-error-dark)]',
+].join(' ')
 
 interface SectionProps {
   testId: string
@@ -162,7 +173,9 @@ const ShadowDom = (): JSX.Element => {
         description={t('scenarios.shadow-dom.description')}
         information={t('scenarios.shadow-dom.information')}
       >
-        <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+        <div
+          className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${SHADOW_THEME}`}
+        >
           <Section
             testId='open-section'
             title={t('scenarios.shadow-dom.open.title')}
