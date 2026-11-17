@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const DragAndDrop = (): JSX.Element => {
   const { t } = useTranslation()
@@ -84,4 +85,4 @@ const DragAndDrop = (): JSX.Element => {
   )
 }
 
-export default DragAndDrop
+export default defineScenario(DragAndDrop, { difficulty: 'medium' })

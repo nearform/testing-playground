@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { DIFFICULTY_STYLES, difficultyOf } from '../utils/difficulty'
+import { DIFFICULTY_STYLES, type Difficulty } from '../utils/difficulty'
 
 interface ScenarioBoxProps {
   title: string
   description: string
   link: string
-  rating: string
+  difficulty: Difficulty
 }
 
 const ScenarioBox: React.FC<ScenarioBoxProps> = ({
   title,
   description,
   link,
-  rating,
+  difficulty,
 }) => {
-  const styles = DIFFICULTY_STYLES[difficultyOf(rating)]
+  const styles = DIFFICULTY_STYLES[difficulty]
 
   return (
     <Link

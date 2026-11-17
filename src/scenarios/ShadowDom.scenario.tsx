@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import ShadowHost from '../components/ShadowHost'
+import { defineScenario } from '../utils/defineScenario'
 
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content carries its own styles.
@@ -286,4 +287,4 @@ const ShadowDom = (): JSX.Element => {
   )
 }
 
-export default ShadowDom
+export default defineScenario(ShadowDom, { difficulty: 'hard' })

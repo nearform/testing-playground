@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const MIN = 1
 const MAX = 100
@@ -115,4 +116,4 @@ const SliderPage: React.FC = () => {
   )
 }
 
-export default SliderPage
+export default defineScenario(SliderPage, { difficulty: 'medium' })

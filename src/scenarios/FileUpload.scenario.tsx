@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const FileUpload = (): JSX.Element => {
   const { t } = useTranslation()
@@ -124,4 +125,4 @@ const FileUpload = (): JSX.Element => {
   )
 }
 
-export default FileUpload
+export default defineScenario(FileUpload, { difficulty: 'medium' })

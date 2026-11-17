@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 interface InputFieldProps {
   label: string
@@ -132,4 +133,4 @@ const VariousInputs: React.FC = (): JSX.Element => {
   )
 }
 
-export default VariousInputs
+export default defineScenario(VariousInputs, { difficulty: 'easy' })

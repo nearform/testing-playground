@@ -7,6 +7,7 @@ import * as Scenario from '../scenarios/Index'
 import {
   DIFFICULTY_STYLES,
   type Difficulty,
+  type DifficultyFilter,
   matchesDifficulty,
 } from '../utils/difficulty'
 import {
@@ -50,15 +51,14 @@ export default function Index(): JSX.Element {
       title: t(`scenarios.${link}.title`),
       description: t(`scenarios.${link}.description`),
       link,
-      rating: t(`scenarios.${link}.rating`),
+      difficulty: ScenarioComponent.difficulty,
     }
   })
 
   // State for search term and selected difficulty
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
-    null,
-  )
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<DifficultyFilter | null>(null)
 
   // Filtered scenarioData based on search term and selected difficulty
   const filteredScenarioData = scenarioData.filter((data) => {
@@ -67,7 +67,8 @@ export default function Index(): JSX.Element {
       data.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     return (
-      matchesSearchTerm && matchesDifficulty(selectedDifficulty, data.rating)
+      matchesSearchTerm &&
+      matchesDifficulty(selectedDifficulty, data.difficulty)
     )
   })
 
@@ -93,7 +94,9 @@ export default function Index(): JSX.Element {
         <div className='w-60'>
           <Select
             onValueChange={(value) => {
-              setSelectedDifficulty(value === '' ? null : value)
+              setSelectedDifficulty(
+                value === '' ? null : (value as DifficultyFilter),
+              )
             }}
             data-testid='select-difficulty'
           >
@@ -101,21 +104,21 @@ export default function Index(): JSX.Element {
               <SelectValue placeholder={t('common.select-difficulty')} />
             </SelectTrigger>
             <SelectContent side='top' className='overflow-visible'>
-              <SelectItem value='0' data-testid='select-difficulty-all'>
+              <SelectItem value='all' data-testid='select-difficulty-all'>
                 {t('common.all')}
                 <DifficultyDot difficulty='hard' />
                 <DifficultyDot difficulty='medium' />
                 <DifficultyDot difficulty='easy' />
               </SelectItem>
-              <SelectItem value='1' data-testid='select-difficulty-easy'>
+              <SelectItem value='easy' data-testid='select-difficulty-easy'>
                 {t('common.easy')}
                 <DifficultyDot difficulty='easy' />
               </SelectItem>
-              <SelectItem value='2' data-testid='select-difficulty-medium'>
+              <SelectItem value='medium' data-testid='select-difficulty-medium'>
                 {t('common.medium')}
                 <DifficultyDot difficulty='medium' />
               </SelectItem>
-              <SelectItem value='3' data-testid='select-difficulty-hard'>
+              <SelectItem value='hard' data-testid='select-difficulty-hard'>
                 {t('common.hard')}
                 <DifficultyDot difficulty='hard' />
               </SelectItem>
