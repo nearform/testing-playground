@@ -181,6 +181,51 @@
         "confirm-password-mismatch": "Passwords do not match"
       }
     },
+    "geolocation": {
+      "title": "Geolocation",
+      "description": "Find the browser's location, then follow it as it moves.",
+      "information": "The browser asks for permission before sharing its location, and that prompt is not part of the page, so grant (or deny) the geolocation permission and set a fake location in your test framework before clicking. \"Get my location\" reads the position once; \"Start watching\" keeps following it, so change the fake location and the page will update. The coordinates, their accuracy and the nearest of a few well known cities are shown underneath. If permission is denied, the position cannot be found or it takes too long, an error explains why.",
+      "button": {
+        "get-location": "Get my location",
+        "start-watching": "Start watching",
+        "stop-watching": "Stop watching"
+      },
+      "status": {
+        "title": "Status",
+        "idle": "Your location has not been requested yet",
+        "locating": "Finding your location...",
+        "located": "Location found"
+      },
+      "errors": {
+        "permission-denied": "Permission to access your location was denied",
+        "position-unavailable": "Your location could not be determined",
+        "timeout": "Finding your location took too long",
+        "unsupported": "Geolocation is not supported by this browser",
+        "unknown": "An unknown error occurred while finding your location"
+      },
+      "watch-updates_one": "Watching your location: {{count}} update received",
+      "watch-updates_other": "Watching your location: {{count}} updates received",
+      "details": {
+        "title": "Your location",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "accuracy": "Accuracy",
+        "nearest-city": "Nearest city",
+        "distance": "Distance to city",
+        "metres": "{{value}} m",
+        "kilometres": "{{value}} km"
+      },
+      "cities": {
+        "london": "London",
+        "dublin": "Dublin",
+        "paris": "Paris",
+        "lisbon": "Lisbon",
+        "new-york": "New York",
+        "sao-paulo": "São Paulo",
+        "tokyo": "Tokyo",
+        "sydney": "Sydney"
+      }
+    },
     "infinite-scroll": {
       "title": "Infinite Scroll",
       "description": "A list that keeps loading new items every time you reach the bottom of the page.",
