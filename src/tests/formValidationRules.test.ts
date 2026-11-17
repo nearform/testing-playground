@@ -96,6 +96,12 @@ describe('validateField', () => {
     { website: 'http://a..com', expected: 'website-invalid' },
     { website: 'http://example.c', expected: 'website-invalid' },
     { website: 'http://192.168.0.1', expected: undefined },
+    // `new URL` expands shorthand IPv4 (`1.2.3` -> `1.2.0.3`, `0x7f.1` -> `127.0.0.1`),
+    // so these are intentionally accepted as IP hosts
+    { website: 'http://1.2.3', expected: undefined },
+    { website: 'http://0x7f.1', expected: undefined },
+    // A fully qualified trailing dot leaves an empty last label, so it is rejected
+    { website: 'https://example.com.', expected: 'website-invalid' },
     { website: 'https://sub.example.co.uk', expected: undefined },
     { website: 'https://пример.рф', expected: undefined }, // IDN, punycode TLD
     { website: 'http://example.com/path?q=1', expected: undefined },
