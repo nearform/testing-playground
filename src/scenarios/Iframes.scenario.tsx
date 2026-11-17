@@ -1,6 +1,6 @@
 import { Button, Card, CardDescription, CardTitle } from '@nearform/quantum'
 import type { ReactNode } from 'react'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import FrameHost, {
@@ -245,7 +245,6 @@ const RichTextEditor = (): JSX.Element => {
     body.setAttribute('contenteditable', 'true')
     body.setAttribute('role', 'textbox')
     body.setAttribute('aria-multiline', 'true')
-    body.setAttribute('aria-label', t('scenarios.iframes.editor.label'))
     body.setAttribute('data-testid', 'editor-body')
     // The body is edited by the browser, not React, so listen for its changes.
     // The listener goes when the frame does, as the body is its document's.
@@ -258,6 +257,16 @@ const RichTextEditor = (): JSX.Element => {
     readContent(body)
     setEditorDocument(frameDocument)
   }
+
+  // The body is outside React's reach, so its accessible name is set here, and
+  // again whenever the language changes (which gives a new `t`). The starting
+  // text is left alone: once loaded it is the user's content.
+  useEffect(() => {
+    editorDocument?.body.setAttribute(
+      'aria-label',
+      t('scenarios.iframes.editor.label'),
+    )
+  }, [editorDocument, t])
 
   const format = (command: EditorCommand): void => {
     if (editorDocument === null) return

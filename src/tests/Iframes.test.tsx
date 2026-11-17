@@ -1,9 +1,10 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from './TestRenderer'
+import i18n from '../i18n/i18nConfig'
 import Iframes from '../scenarios/Iframes.scenario'
 
 type Queries = ReturnType<typeof within>
@@ -120,7 +121,7 @@ describe('Iframes scenario', () => {
 
       // The editor is the frame's body itself, so look it up from its document
       expect(
-        within(body.parentElement as HTMLElement).getByRole('textbox', {
+        await within(body.parentElement as HTMLElement).findByRole('textbox', {
           name: 'Editor content',
         }),
       ).toBe(body)
@@ -150,6 +151,31 @@ describe('Iframes scenario', () => {
       expect(screen.getByTestId('editor-html')).toHaveTextContent(
         '<p>Hello <strong>world</strong></p>',
       )
+    })
+
+    it('renames the editor when the language changes', async () => {
+      TestRenderer(<Iframes />)
+      const body = await loadedBody(editorFrame())
+      const frameRoot = within(body.parentElement as HTMLElement)
+      await frameRoot.findByRole('textbox', { name: 'Editor content' })
+
+      try {
+        // The language dropdown switches language in place, without a reload
+        await act(async () => {
+          await i18n.changeLanguage('fr')
+        })
+
+        expect(
+          await frameRoot.findByRole('textbox', {
+            name: "Contenu de l'éditeur",
+          }),
+        ).toBe(body)
+      } finally {
+        await act(async () => {
+          await i18n.changeLanguage('en')
+        })
+        localStorage.removeItem('language')
+      }
     })
 
     it.each([
