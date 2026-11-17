@@ -1,15 +1,5 @@
-import ClearIcon from '@mui/icons-material/Clear'
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  TextareaAutosize,
-  Button,
-  InputAdornment,
-  IconButton,
-} from '@mui/material'
-import React, { ChangeEvent, useState } from 'react'
+import { BsX, Button, Input, Textarea } from '@nearform/quantum'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
@@ -19,10 +9,7 @@ interface InputFieldProps {
   label: string
   type: 'text' | 'password' | 'number' | 'date' | 'textarea'
   value: string
-  onChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void
-  readOnly?: boolean
+  onChange: (value: string) => void
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -30,92 +17,63 @@ const InputField: React.FC<InputFieldProps> = ({
   type,
   value,
   onChange,
-  readOnly = false,
 }) => {
   const { t } = useTranslation()
+  const hasValue = value.length > 0
+  const clear = (): void => {
+    onChange('')
+  }
+
+  const renderField = (isOutput: boolean): JSX.Element =>
+    type === 'textarea' ? (
+      <Textarea
+        variant='primary'
+        value={value}
+        onChange={(e) => {
+          onChange(e.currentTarget.value)
+        }}
+        rows={3}
+        className='w-full'
+        data-testid={isOutput ? undefined : 'textarea-input'}
+      />
+    ) : (
+      <Input
+        variant='primary'
+        type={isOutput ? 'text' : type}
+        value={value}
+        readOnly={isOutput}
+        onChange={(e) => {
+          onChange(e.currentTarget.value)
+        }}
+        onClear={clear}
+        clearLabel={`${t('scenarios.various-inputs.clear-all')}: ${label}`}
+        // The clear button only shows once the field has a value
+        formClassName={
+          isOutput || !hasValue ? 'w-full [&>button]:hidden' : 'w-full'
+        }
+        rightSideChild={
+          !isOutput && hasValue ? (
+            <BsX aria-hidden='true' data-testid='clear-icon' />
+          ) : undefined
+        }
+        data-testid={isOutput ? undefined : `${type}-input`}
+      />
+    )
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2, mb: 2 }}>
-      <Typography variant='h6' sx={{ mr: 2 }}>
-        {label}
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid size={6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-            <Typography variant='body1' sx={{ mr: 2 }}>
-              {t('scenarios.various-inputs.input')}:
-            </Typography>
-            {type === 'textarea' ? (
-              <TextareaAutosize
-                value={value}
-                onChange={
-                  onChange as React.ChangeEventHandler<HTMLTextAreaElement>
-                }
-                minRows={3}
-                style={{ width: '100%' }}
-                data-testid='textarea-input'
-              />
-            ) : (
-              <TextField
-                type={type}
-                value={value}
-                onChange={
-                  onChange as React.ChangeEventHandler<HTMLInputElement>
-                }
-                sx={{ width: '80%' }}
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        {value.length > 0 && (
-                          <IconButton
-                            edge='end'
-                            onClick={() => {
-                              onChange({ target: { value: '' } } as ChangeEvent<
-                                HTMLInputElement | HTMLTextAreaElement
-                              >)
-                            }}
-                          >
-                            <ClearIcon data-testid='clear-icon' />
-                          </IconButton>
-                        )}
-                      </InputAdornment>
-                    ),
-                  },
-                  htmlInput: { 'data-testid': `${type}-input` },
-                }}
-              />
-            )}
-          </Box>
-        </Grid>
-        <Grid size={6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-            <Typography variant='body1' sx={{ mr: 2 }}>
-              {t('scenarios.various-inputs.output')}:
-            </Typography>
-            {type === 'textarea' ? (
-              <TextareaAutosize
-                value={value}
-                onChange={
-                  onChange as React.ChangeEventHandler<HTMLTextAreaElement>
-                }
-                minRows={3}
-                style={{ width: '100%' }}
-              />
-            ) : (
-              <TextField
-                value={value}
-                fullWidth
-                variant='outlined'
-                sx={{ width: '100%' }}
-                slotProps={{
-                  input: { readOnly },
-                }}
-              />
-            )}
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+    <div className='my-4 flex flex-col'>
+      <h2 className='mb-2 text-lg font-semibold'>{label}</h2>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+        <div className='ml-4 flex items-center gap-4'>
+          <span>{t('scenarios.various-inputs.input')}:</span>
+          <div className='flex-1'>{renderField(false)}</div>
+        </div>
+        <div className='ml-4 flex items-center gap-4'>
+          <span>{t('scenarios.various-inputs.output')}:</span>
+          <div className='flex-1'>{renderField(true)}</div>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -129,14 +87,12 @@ const VariousInputs: React.FC = (): JSX.Element => {
     textarea: '',
   })
 
-  const handleChange =
-    (type: string) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setInputValues({
-        ...inputValues,
-        [type]: event.target.value,
-      })
-    }
+  const handleChange = (type: string) => (value: string) => {
+    setInputValues((prev) => ({
+      ...prev,
+      [type]: value,
+    }))
+  }
 
   const handleClearAll = (): void => {
     setInputValues({
@@ -158,12 +114,7 @@ const VariousInputs: React.FC = (): JSX.Element => {
         title={t('scenarios.various-inputs.title')}
         description={t('scenarios.various-inputs.description')}
       >
-        <Button
-          variant='contained'
-          color='secondary'
-          onClick={handleClearAll}
-          sx={{ mt: 2 }}
-        >
+        <Button variant='secondary' onClick={handleClearAll}>
           {t('scenarios.various-inputs.clear-all')}
         </Button>
 

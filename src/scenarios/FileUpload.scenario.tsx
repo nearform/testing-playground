@@ -1,15 +1,8 @@
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import {
-  Box,
-  Button,
-  LinearProgress,
-  Typography,
-  Alert,
-  type AlertColor,
-} from '@mui/material'
+import { BsCloudUpload, Button } from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 
@@ -19,7 +12,7 @@ const FileUpload = (): JSX.Element => {
   const [uploading, setUploading] = useState(false)
   const [uploadMessage, setUploadMessage] = useState<{
     text: string
-    severity: AlertColor
+    severity: AlertSeverity
   }>({
     text: '',
     severity: 'info',
@@ -68,61 +61,59 @@ const FileUpload = (): JSX.Element => {
         description={t('scenarios.file-upload.description')}
         information={t('scenarios.file-upload.information')}
       >
-        <Box>
+        <div className='flex flex-col items-start gap-4'>
           <input
             type='file'
             onChange={handleFileChange}
             id='icon-button-file'
-            style={{ display: 'none' }}
+            className='hidden'
             data-testid='select-file'
           />
-          <label htmlFor='icon-button-file'>
-            <Button
-              variant='outlined'
-              component='span'
-              sx={{ mr: 4 }}
-              startIcon={<CloudUploadIcon />}
-            >
+          <Button
+            asChild
+            variant='secondary'
+            leftSideChild={<BsCloudUpload aria-hidden='true' />}
+          >
+            <label htmlFor='icon-button-file' className='cursor-pointer'>
               {t('scenarios.file-upload.select-file')}
-            </Button>
-          </label>
+            </label>
+          </Button>
           {file != null && (
             <>
-              <Typography
-                variant='body1'
-                sx={{ mt: 2 }}
-                data-testid='selected-file-name'
-              >
+              <p data-testid='selected-file-name'>
                 {t('scenarios.file-upload.selected-file', {
                   filename: file.name,
                 })}
-              </Typography>
-              <Box sx={{ marginLeft: 'auto', mt: 2 }}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleUpload}
-                  disabled={uploading}
-                  data-testid='upload-button'
-                >
-                  {t('scenarios.file-upload.upload-button')}
-                </Button>
-              </Box>
-            </>
-          )}
-          {uploading && <LinearProgress sx={{ mt: 2 }} />}
-          {uploadMessage.text.length > 0 && (
-            <>
-              <Alert
-                severity={uploadMessage.severity}
-                sx={{ p: 2, mt: 2 }}
-                data-testid='upload-message'
+              </p>
+              <Button
+                variant='primary'
+                onClick={handleUpload}
+                disabled={uploading}
+                data-testid='upload-button'
               >
-                {uploadMessage.text}
-              </Alert>
+                {t('scenarios.file-upload.upload-button')}
+              </Button>
             </>
           )}
-        </Box>
+          {uploading && (
+            <div
+              role='progressbar'
+              aria-label={t('scenarios.file-upload.upload-button')}
+              data-testid='upload-progress'
+              className='h-1 w-full overflow-hidden rounded-full bg-grey-200'
+            >
+              <div className='h-full w-1/3 animate-pulse rounded-full bg-accent' />
+            </div>
+          )}
+          {uploadMessage.text.length > 0 && (
+            <Alert
+              severity={uploadMessage.severity}
+              data-testid='upload-message'
+            >
+              {uploadMessage.text}
+            </Alert>
+          )}
+        </div>
       </PageSetup>
     </Layout>
   )

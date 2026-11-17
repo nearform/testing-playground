@@ -1,5 +1,3 @@
-import { Paper, Grid, Typography, type Theme } from '@mui/material'
-import { type SxProps } from '@mui/system'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -30,12 +28,6 @@ const DragAndDrop = (): JSX.Element => {
     }
   }
 
-  const commonPaperStyles: SxProps<Theme> = {
-    cursor: 'pointer',
-    textAlign: 'center',
-    lineHeight: '50px',
-  }
-
   return (
     <Layout>
       <PageSetup
@@ -43,82 +35,50 @@ const DragAndDrop = (): JSX.Element => {
         description={t('scenarios.drag-and-drop.description')}
         information={t('scenarios.drag-and-drop.information')}
       >
-        <Grid container justifyContent='center' alignItems='center'>
+        <div className='flex items-center justify-center'>
           {/* Small draggable box on the left */}
-          <Paper
+          <div
             draggable
             onDragStart={handleDragStart}
-            sx={{
-              ...commonPaperStyles,
-              width: '50px',
-              height: '50px',
-              backgroundColor: 'red',
-              margin: '10px',
-            }}
+            className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-sm shadow'
             data-testid='draggable-box'
           >
-            <Typography variant='body2'>
-              {t('scenarios.drag-and-drop.drag-me')}!
-            </Typography>
-          </Paper>
+            {t('scenarios.drag-and-drop.drag-me')}!
+          </div>
 
           {/* Larger drop target grid on the right */}
-          <Grid
-            container
-            size={6}
-            justifyContent='center'
-            alignItems='center'
+          <div
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            sx={{
-              border: '2px dashed #333',
-              padding: '10px',
-              minHeight: '200px',
-            }}
+            className='flex min-h-[200px] w-1/2 flex-wrap items-center justify-center border-2 border-dashed border-grey-800 p-2.5'
           >
             {/* Render "Drop Here" if the grid is empty */}
-            <Paper
-              sx={{
-                ...commonPaperStyles,
-                width: '100%',
-                height: '100%',
-                backgroundColor: grid.length === 0 ? 'lightgray' : undefined,
-                border: grid.length === 0 ? '1px dashed #333' : undefined,
-                cursor: grid.length === 0 ? 'pointer' : undefined,
-                textAlign: grid.length === 0 ? 'center' : undefined,
-                lineHeight: grid.length === 0 ? '200px' : undefined,
-              }}
+            <div
+              className={
+                grid.length === 0
+                  ? 'h-full w-full cursor-pointer rounded border border-dashed border-grey-800 bg-grey-200 text-center leading-[200px] shadow'
+                  : 'w-full'
+              }
               data-testid='drop-target'
             >
               {grid.length === 0 && t('scenarios.drag-and-drop.drop-here')}
-            </Paper>
+            </div>
 
             {/* Render placeholder boxes in the grid */}
             {grid.map((boxId) => (
-              <Paper
+              <div
                 key={boxId}
-                sx={{
-                  ...commonPaperStyles,
-                  width: '50px',
-                  height: '50px',
-                  backgroundColor: 'yellow',
-                  border: '1px solid #333',
-                  margin: '10px',
-                }}
+                className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-center text-sm shadow'
               >
-                <Typography variant='body2'>{boxId}</Typography>
-              </Paper>
+                {boxId}
+              </div>
             ))}
-          </Grid>
-        </Grid>
+          </div>
+        </div>
 
-        <Typography
-          align='center'
-          sx={{ marginTop: '10px' }}
-          data-testid='total-drops'
-        >
+        <p className='mt-2.5 text-center' data-testid='total-drops'>
           {t('scenarios.drag-and-drop.total-drops')}: {dropCount}
-        </Typography>
+        </p>
       </PageSetup>
     </Layout>
   )

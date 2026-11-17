@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Button } from '@nearform/quantum'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
@@ -82,8 +82,7 @@ const AddRemove = (): JSX.Element => {
     return (
       <>
         <Button
-          variant='contained'
-          color='error'
+          variant='danger'
           onClick={removeElement}
           data-testid={`remove-element-${index + 1}`}
         >
@@ -100,29 +99,23 @@ const AddRemove = (): JSX.Element => {
         description={t('scenarios.add-remove.description')}
         information={t('scenarios.add-remove.information')}
       >
-        <Box display='flex'>
+        <div className='flex gap-4 mb-4'>
           <Button
-            variant='contained'
+            variant='primary'
             onClick={addElement}
             data-testid='add-element'
-            sx={{ mr: 2 }}
           >
             {t('scenarios.add-remove.add-element')}
           </Button>
           <Button
-            variant='contained'
+            variant='secondary'
             onClick={clearStorage}
             data-testid='clear-storage'
-            color='secondary'
           >
             {t('scenarios.add-remove.clear-storage')}
           </Button>
-        </Box>
-        <Box
-          display='grid'
-          gridTemplateColumns='repeat(auto-fill, minmax(200px, 1fr))'
-          gap={2}
-        >
+        </div>
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4'>
           {elements.map((element, index) => (
             <div key={index}>
               <ElementComponent
@@ -133,7 +126,7 @@ const AddRemove = (): JSX.Element => {
               />
             </div>
           ))}
-        </Box>
+        </div>
       </PageSetup>
     </Layout>
   )

@@ -1,4 +1,3 @@
-import { Paper, Grid, Box, Container } from '@mui/material'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -19,23 +18,16 @@ const DraggableShape = ({
   onDragStart: (e: React.DragEvent, id: number) => void
 }): JSX.Element => {
   return (
-    <Paper
+    <div
       key={shape.id}
       draggable
       onDragStart={(e) => {
         onDragStart(e, shape.id)
       }}
-      sx={{
-        width: '50px',
-        height: '50px',
-        backgroundColor: shape.color,
-        borderRadius: shape.shape === 'circle' ? '50%' : '0%',
-        textAlign: 'center',
-        lineHeight: '50px',
-        margin: '10px',
-        cursor: 'grab',
-        transition: 'background-color 0.3s ease',
-      }}
+      className={`m-2.5 h-[50px] w-[50px] cursor-grab shadow transition-colors duration-300 ${
+        shape.shape === 'circle' ? 'rounded-full' : 'rounded-none'
+      }`}
+      style={{ backgroundColor: shape.color }}
       data-testid={`draggable-${shape.shape}-${shape.id}`}
     />
   )
@@ -49,24 +41,16 @@ const DropTarget = ({
   onDrop: (e: React.DragEvent) => void
 }): JSX.Element => {
   return (
-    <Paper
+    <div
       onDragOver={(e) => {
         onDrop(e)
       }}
       onDrop={(e) => {
         onDrop(e)
       }}
-      sx={{
-        width: '100px',
-        height: '100px',
-        backgroundColor: 'lightgray',
-        borderRadius: shape === 'circle' ? '50%' : '0%',
-        textAlign: 'center',
-        lineHeight: '100px',
-        margin: '10px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
-      }}
+      className={`m-2.5 h-[100px] w-[100px] cursor-pointer bg-grey-200 shadow transition-colors duration-300 ${
+        shape === 'circle' ? 'rounded-full' : 'rounded-none'
+      }`}
       data-testid={`drop-${shape}`}
     />
   )
@@ -139,8 +123,8 @@ const DragAndDropHard = (): JSX.Element => {
         description={t('scenarios.drag-and-drop-hard.description')}
         information={t('scenarios.drag-and-drop-hard.information')}
       >
-        <Container>
-          <Grid container justifyContent='center' alignItems='center'>
+        <div className='mx-auto max-w-6xl'>
+          <div className='flex flex-wrap items-center justify-center'>
             {shapes.map((shape) => (
               <DraggableShape
                 key={shape.id}
@@ -148,13 +132,8 @@ const DragAndDropHard = (): JSX.Element => {
                 onDragStart={handleDragStart}
               />
             ))}
-          </Grid>
-          <Grid
-            container
-            justifyContent='center'
-            alignItems='center'
-            marginTop={2}
-          >
+          </div>
+          <div className='mt-4 flex flex-wrap items-center justify-center'>
             <DropTarget
               shape='circle'
               onDrop={(e) => {
@@ -167,12 +146,12 @@ const DragAndDropHard = (): JSX.Element => {
                 handleDrop(e, 'square')
               }}
             />
-          </Grid>
-          <Box marginTop={2} textAlign='center' data-testid='total-count'>
+          </div>
+          <div className='mt-4 text-center' data-testid='total-count'>
             {t('scenarios.drag-and-drop-hard.total-correct')}:{' '}
             {totalCorrectCount}
-          </Box>
-        </Container>
+          </div>
+        </div>
       </PageSetup>
     </Layout>
   )

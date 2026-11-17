@@ -1,26 +1,48 @@
 import {
   Button,
-  Snackbar,
-  Alert,
-  Grid,
-  AlertTitle,
-  type SnackbarCloseReason,
-} from '@mui/material'
+  type ButtonProps,
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastViewport,
+} from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 
-type NotificationType = { message: string; severity: string } | null
+const NOTIFICATION_DURATION = 6000
 
-type NotificationSeverity = 'success' | 'info' | 'warning' | 'error'
+type NotificationType = { message: string; severity: AlertSeverity } | null
 
-const notificationTypes = [
-  { key: 'success', label: 'scenarios.notification.type.success' },
-  { key: 'info', label: 'scenarios.notification.type.info' },
-  { key: 'warning', label: 'scenarios.notification.type.warning' },
-  { key: 'error', label: 'scenarios.notification.type.error' },
+const notificationTypes: Array<{
+  key: AlertSeverity
+  label: string
+  variant: ButtonProps['variant']
+}> = [
+  {
+    key: 'success',
+    label: 'scenarios.notification.type.success',
+    variant: 'success',
+  },
+  {
+    key: 'info',
+    label: 'scenarios.notification.type.info',
+    variant: 'primary',
+  },
+  {
+    key: 'warning',
+    label: 'scenarios.notification.type.warning',
+    variant: 'tertiary',
+  },
+  {
+    key: 'error',
+    label: 'scenarios.notification.type.error',
+    variant: 'danger',
+  },
 ]
 
 const Notification = (): JSX.Element => {
@@ -29,7 +51,7 @@ const Notification = (): JSX.Element => {
   const [alert, setAlert] = useState<NotificationType>(null)
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false)
 
-  const generateNotification = (severity: NotificationSeverity): void => {
+  const generateNotification = (severity: AlertSeverity): void => {
     const messages = {
       success: t('scenarios.notification.messages.success'),
       info: t('scenarios.notification.messages.info'),
@@ -45,15 +67,7 @@ const Notification = (): JSX.Element => {
     setTimeout(() => {
       setIsAlertVisible(false)
       setAlert(null)
-    }, 6000)
-  }
-
-  const handleClose = (
-    _event?: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason,
-  ): void => {
-    if (reason === 'clickaway') return
-    setNotification(null)
+    }, NOTIFICATION_DURATION)
   }
 
   return (
@@ -63,47 +77,49 @@ const Notification = (): JSX.Element => {
         description={t('scenarios.notification.description')}
         information={t('scenarios.notification.information')}
       >
-        <Grid container spacing={2}>
-          {notificationTypes.map(({ key, label }) => (
-            <Grid size={3} key={key}>
+        <ToastProvider duration={NOTIFICATION_DURATION}>
+          <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+            {notificationTypes.map(({ key, label, variant }) => (
               <Button
-                variant='contained'
-                color={key as NotificationSeverity}
-                fullWidth
+                key={key}
+                variant={variant}
+                className='w-full'
                 onClick={() => {
-                  generateNotification(key as NotificationSeverity)
+                  generateNotification(key)
                 }}
                 data-testid={`button-${key}`}
                 disabled={isAlertVisible}
               >
                 {t(label)}
               </Button>
-            </Grid>
-          ))}
-        </Grid>
+            ))}
+          </div>
 
-        <Snackbar
-          open={!(notification == null)}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          data-testid={`notification-${notification?.severity}`}
-        >
-          <Alert
-            onClose={handleClose}
-            severity={notification?.severity as NotificationSeverity}
-            sx={{ width: '100%' }}
-          >
-            {notification?.message}
-          </Alert>
-        </Snackbar>
+          {notification != null && (
+            <Toast
+              open
+              variant={notification.severity}
+              onOpenChange={(open) => {
+                if (!open) setNotification(null)
+              }}
+              data-testid={`notification-${notification.severity}`}
+            >
+              <ToastDescription className='col-start-2 row-start-1 text-inherit'>
+                {notification.message}
+              </ToastDescription>
+              <ToastClose />
+            </Toast>
+          )}
+          <ToastViewport />
+        </ToastProvider>
 
         {alert != null && (
           <Alert
-            severity={alert.severity as NotificationSeverity}
-            sx={{ mt: 4 }}
+            severity={alert.severity}
+            title={alert.severity.toLocaleUpperCase()}
+            className='mt-8'
             data-testid={`message-${alert.severity}`}
           >
-            <AlertTitle>{alert.severity.toLocaleUpperCase()}</AlertTitle>
             {alert.message}
           </Alert>
         )}

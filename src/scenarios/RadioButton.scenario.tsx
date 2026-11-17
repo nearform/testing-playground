@@ -1,10 +1,4 @@
-import {
-  Grid,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Typography,
-} from '@mui/material'
+import { Radio, RadioGroup } from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -15,10 +9,8 @@ const RadioButton = (): JSX.Element => {
   const { t } = useTranslation()
   const [firstRadioValue, setFirstRadioValue] = useState('')
 
-  const handleFirstRadioChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    setFirstRadioValue(event.target.value)
+  const handleFirstRadioChange = (value: string): void => {
+    setFirstRadioValue(value)
   }
 
   const secondRadioOptions = {
@@ -39,27 +31,20 @@ const RadioButton = (): JSX.Element => {
   const renderSecondRadioButtons = (): React.ReactNode => {
     if (firstRadioValue in secondRadioOptions) {
       return (
-        <Grid>
-          <Typography variant='body2'>
-            {t('scenarios.radio-button.second-set')}:
-          </Typography>
-          <RadioGroup
-            aria-labelledby='radio-button-group-2-label'
-            defaultValue=''
-            data-testid='radio-button-group-2'
-          >
-            {secondRadioOptions[firstRadioValue].map((label, index) => (
-              <FormControlLabel
-                key={index}
-                value={label.toLowerCase()}
-                control={
-                  <Radio data-testid={`radio-button-group-2-${index + 1}`} />
-                }
-                label={label}
-              />
-            ))}
-          </RadioGroup>
-        </Grid>
+        <RadioGroup
+          legend={`${t('scenarios.radio-button.second-set')}:`}
+          defaultValue=''
+          data-testid='radio-button-group-2'
+        >
+          {secondRadioOptions[firstRadioValue].map((label, index) => (
+            <Radio
+              key={index}
+              value={label.toLowerCase()}
+              label={label}
+              data-testid={`radio-button-group-2-${index + 1}`}
+            />
+          ))}
+        </RadioGroup>
       )
     }
     return null
@@ -72,38 +57,26 @@ const RadioButton = (): JSX.Element => {
         description={t('scenarios.radio-button.description')}
         information={t('scenarios.radio-button.information')}
       >
-        <Grid container spacing={2}>
-          <Grid>
-            <Typography variant='body2'>
-              {t('scenarios.radio-button.first-set')}:
-            </Typography>
-            <RadioGroup
-              aria-labelledby='radio-button-group-1-label'
-              defaultValue=''
-              value={firstRadioValue}
-              onChange={handleFirstRadioChange}
-              data-testid='radio-button-group-1'
-            >
-              {['first', 'second', 'third', 'fourth'].map((value, index) => (
-                <FormControlLabel
-                  key={value}
-                  value={t(
-                    `scenarios.radio-button.first.${value.toLowerCase()}`,
-                  )}
-                  control={
-                    <Radio data-testid={`radio-button-group-1-${index + 1}`} />
-                  }
-                  label={t(
-                    `scenarios.radio-button.first.${value.toLowerCase()}`,
-                  )}
-                  // Disable the last radio button
-                  disabled={index === 3}
-                />
-              ))}
-            </RadioGroup>
-          </Grid>
+        <div className='flex flex-wrap gap-12'>
+          <RadioGroup
+            legend={`${t('scenarios.radio-button.first-set')}:`}
+            value={firstRadioValue}
+            onValueChange={handleFirstRadioChange}
+            data-testid='radio-button-group-1'
+          >
+            {['first', 'second', 'third', 'fourth'].map((value, index) => (
+              <Radio
+                key={value}
+                value={t(`scenarios.radio-button.first.${value}`)}
+                label={t(`scenarios.radio-button.first.${value}`)}
+                data-testid={`radio-button-group-1-${index + 1}`}
+                // Disable the last radio button
+                disabled={index === 3}
+              />
+            ))}
+          </RadioGroup>
           {renderSecondRadioButtons()}
-        </Grid>
+        </div>
       </PageSetup>
     </Layout>
   )
