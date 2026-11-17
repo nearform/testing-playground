@@ -147,6 +147,19 @@
         "confirm-password-mismatch": "Les mots de passe ne correspondent pas"
       }
     },
+    "infinite-scroll": {
+      "title": "Défilement infini",
+      "description": "Une liste qui charge de nouveaux éléments chaque fois que vous atteignez le bas de la page.",
+      "information": "Faites défiler jusqu'à la fin de la liste pour charger le lot suivant de 10 éléments. Un indicateur de chargement s'affiche un instant avant l'apparition des nouveaux éléments, et la liste ne se termine jamais : attendez donc les nouveaux éléments plutôt que la fin de la liste.",
+      "rating": "2",
+      "feed-label": "Fil infini",
+      "count_one": "{{count}} élément affiché",
+      "count_other": "{{count}} éléments affichés",
+      "item-title": "Élément {{number}}",
+      "item-description": "Ceci est le contenu de l'élément {{number}}. Continuez à faire défiler pour en charger davantage.",
+      "batch": "Lot {{batch}}",
+      "loading": "Chargement d'autres éléments..."
+    },
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
