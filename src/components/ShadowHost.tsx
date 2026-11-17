@@ -8,6 +8,7 @@ const shadowRoots = new WeakMap<Element, ShadowRoot>()
 
 interface ShadowHostProps {
   testId: string
+  // Fixed once the root is attached; changing it after mount has no effect
   mode?: ShadowRootMode
   // CSS that only applies inside the shadow root
   styles?: string

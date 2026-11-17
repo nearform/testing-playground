@@ -106,9 +106,9 @@ describe('ShadowDom scenario', () => {
     )
 
     // Only the code that attached a closed root holds a reference to it
-    const closedRoot = attachShadow.mock.results.find(
-      (_, i) => attachShadow.mock.instances[i] === host,
-    )?.value as ShadowRoot
+    const callIndex = attachShadow.mock.contexts.indexOf(host)
+    expect(callIndex).toBeGreaterThanOrEqual(0)
+    const closedRoot = attachShadow.mock.results[callIndex].value as ShadowRoot
     await user.click(
       within(closedRoot as unknown as HTMLElement).getByTestId(
         'closed-shadow-button',
