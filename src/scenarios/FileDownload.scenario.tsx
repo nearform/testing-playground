@@ -1,5 +1,4 @@
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload'
-import { Box, Button } from '@mui/material'
+import { BsCloudDownload, Button } from '@nearform/quantum'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -11,9 +10,8 @@ const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
 
   return (
     <Button
-      variant='outlined'
-      color='primary'
-      startIcon={<CloudDownloadIcon />}
+      variant='secondary'
+      leftSideChild={<BsCloudDownload aria-hidden='true' />}
       onClick={onClick}
     >
       {t('scenarios.file-download.download')}
@@ -46,9 +44,9 @@ const FileDownload: React.FC = (): JSX.Element => {
         description={t('scenarios.file-download.description')}
         information={t('scenarios.file-download.information')}
       >
-        <Box>
+        <div>
           <DownloadButton onClick={handleDownload} />
-        </Box>
+        </div>
       </PageSetup>
     </Layout>
   )

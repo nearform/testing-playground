@@ -43,7 +43,9 @@
       "scenario-icons": "Scenario with checkbox as icons",
       "scenario-tree": "Scenario with tree selection",
       "parent": "Parent",
-      "child": "Child"
+      "child": "Child",
+      "favorite": "Favorite",
+      "bookmark": "Bookmark"
     },
     "drag-and-drop": {
       "title": "Drag and Drop",
@@ -56,7 +58,7 @@
       "total-drops": "Total Drops"
     },
     "drag-and-drop-hard": {
-      "title": "Drag and Drop",
+      "title": "Drag and Drop (Hard)",
       "description": "Drag the appropriate smaller shapes onto the larger shape.",
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
       "rating": "3",
@@ -239,7 +241,8 @@
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
-      "really-long-text": "A really really long text example"
+      "really-long-text": "A really really long text example",
+      "delete": "Delete"
     },
     "slider-page": {
       "title": "Sliders",

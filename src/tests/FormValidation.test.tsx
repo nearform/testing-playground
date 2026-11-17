@@ -72,7 +72,7 @@ describe('FormValidation scenario', () => {
     await user.type(age, '42')
 
     expect(screen.queryByTestId('age-error')).toBeNull()
-    expect(age).toHaveAttribute('aria-invalid', 'false')
+    expect(age).not.toHaveAttribute('aria-invalid', 'true')
   })
 
   it('lists every invalid field when an empty form is submitted', async () => {

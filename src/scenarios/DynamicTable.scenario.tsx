@@ -1,12 +1,11 @@
 import {
-  Box,
   Table,
-  TableHead,
-  TableRow,
-  TableCell,
   TableBody,
-  Typography,
-} from '@mui/material'
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nearform/quantum'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -105,26 +104,26 @@ const DynamicTable = (): JSX.Element => {
         description={t('scenarios.dynamic-table.description')}
         information={t('scenarios.dynamic-table.information')}
       >
-        <Table data-testid='dynamic-table'>
-          <TableHead>
+        <Table data-testid='dynamic-table' bordered className='w-full'>
+          <TableHeader>
             <TableRow>
-              <TableCell data-testid='dynamic-table-name-header'>
+              <TableHead data-testid='dynamic-table-name-header'>
                 {t('scenarios.dynamic-table.name')}
-              </TableCell>
-              <TableCell data-testid='dynamic-table-cpu-header'>
+              </TableHead>
+              <TableHead data-testid='dynamic-table-cpu-header'>
                 {t('scenarios.dynamic-table.cpu')}
-              </TableCell>
-              <TableCell data-testid='dynamic-table-memory-header'>
+              </TableHead>
+              <TableHead data-testid='dynamic-table-memory-header'>
                 {t('scenarios.dynamic-table.memory')}
-              </TableCell>
-              <TableCell data-testid='dynamic-table-network-header'>
+              </TableHead>
+              <TableHead data-testid='dynamic-table-network-header'>
                 {t('scenarios.dynamic-table.network')}
-              </TableCell>
-              <TableCell data-testid='dynamic-table-disk-header'>
+              </TableHead>
+              <TableHead data-testid='dynamic-table-disk-header'>
                 {t('scenarios.dynamic-table.disk')}
-              </TableCell>
+              </TableHead>
             </TableRow>
-          </TableHead>
+          </TableHeader>
           <TableBody>
             {tableData.map((row, index) => (
               <TableRow data-testid={`dynamic-table-row-${index}`} key={index}>
@@ -147,15 +146,13 @@ const DynamicTable = (): JSX.Element => {
             ))}
           </TableBody>
         </Table>
-        <Box>
-          <Typography
-            sx={{ mt: 4, backgroundColor: 'yellowgreen', textAlign: 'center' }}
-            data-testid='target-scenario'
-          >
-            {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}
-            {findCpuPercentage(tableData, randomScenario?.name ?? '')}
-          </Typography>
-        </Box>
+        <p
+          className='mt-8 bg-green-300 text-center text-grey-900'
+          data-testid='target-scenario'
+        >
+          {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}
+          {findCpuPercentage(tableData, randomScenario?.name ?? '')}
+        </p>
       </PageSetup>
     </Layout>
   )

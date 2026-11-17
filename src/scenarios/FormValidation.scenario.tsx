@@ -1,7 +1,15 @@
-import { Alert, Box, Button, TextField } from '@mui/material'
+import {
+  Button,
+  FieldDescription,
+  FieldError,
+  FormGroup,
+  Input,
+  Label,
+} from '@nearform/quantum'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import type { FormErrors, FormField, FormValues } from '../utils/formValidation'
@@ -11,6 +19,7 @@ import {
   validateField,
   validateForm,
 } from '../utils/formValidation'
+import { hideClearWhenEmpty } from '../utils/inputClassNames'
 
 interface FieldConfig {
   name: FormField
@@ -125,17 +134,11 @@ const FormValidation = (): JSX.Element => {
         description={t('scenarios.form-validation.description')}
         information={t('scenarios.form-validation.information')}
       >
-        <Box
-          component='form'
+        <form
           noValidate
           onSubmit={handleSubmit}
           data-testid='validation-form'
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: 600,
-            mx: 'auto',
-          }}
+          className='mx-auto flex max-w-xl flex-col gap-4'
         >
           {submitAttempted && errorCount > 0 && (
             <Alert
@@ -157,67 +160,60 @@ const FormValidation = (): JSX.Element => {
           )}
           {FIELDS.map(({ name, testId, type, required, inputMode }) => {
             const error = touched[name] ? errors[name] : undefined
-            const hint = t(`scenarios.form-validation.hints.${testId}`)
+            const errorText =
+              error !== undefined
+                ? t(`scenarios.form-validation.errors.${error}`)
+                : undefined
             return (
-              <TextField
+              <FormGroup
                 key={name}
-                id={testId}
-                name={name}
-                label={t(`scenarios.form-validation.fields.${testId}`)}
-                type={type}
                 required={required}
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                value={values[name]}
-                error={error !== undefined}
-                helperText={
-                  error !== undefined
-                    ? t(`scenarios.form-validation.errors.${error}`)
-                    : hint
-                }
-                onChange={(e) => {
-                  handleChange(name, e.target.value)
-                }}
-                onBlur={() => {
-                  handleBlur(name)
-                }}
-                slotProps={{
-                  htmlInput: { 'data-testid': testId, inputMode },
-                  // The helper text is an error message or a hint, each with
-                  // its own test id. MUI's FormHelperText slot props don't
-                  // declare `data-*` attributes, so the object is cast to
-                  // satisfy TypeScript; MUI still forwards it to the DOM.
-                  formHelperText: {
-                    'data-testid':
-                      error !== undefined
-                        ? `${testId}-error`
-                        : `${testId}-hint`,
-                  } as Record<string, string>,
-                }}
-              />
+                description={t(`scenarios.form-validation.hints.${testId}`)}
+                error={errorText}
+              >
+                <Label>
+                  {t(`scenarios.form-validation.fields.${testId}`)}
+                  {required && ' *'}
+                </Label>
+                <Input
+                  id={testId}
+                  name={name}
+                  type={type}
+                  variant={error !== undefined ? 'error' : 'primary'}
+                  inputMode={inputMode}
+                  value={values[name]}
+                  onChange={(e) => {
+                    handleChange(name, e.currentTarget.value)
+                  }}
+                  onBlur={() => {
+                    handleBlur(name)
+                  }}
+                  onClear={() => {
+                    handleChange(name, '')
+                  }}
+                  formClassName={hideClearWhenEmpty(values[name])}
+                  data-testid={testId}
+                />
+                {/* Only one of the two renders: the error replaces the hint */}
+                <FieldDescription data-testid={`${testId}-hint`} />
+                <FieldError data-testid={`${testId}-error`} />
+              </FormGroup>
             )
           })}
-          <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              data-testid='submit-button'
-            >
+          <div className='mt-2 flex gap-4'>
+            <Button type='submit' variant='primary' data-testid='submit-button'>
               {t('scenarios.form-validation.submit-button')}
             </Button>
             <Button
               type='button'
-              variant='outlined'
-              color='primary'
+              variant='secondary'
               onClick={handleReset}
               data-testid='reset-button'
             >
               {t('scenarios.form-validation.reset-button')}
             </Button>
-          </Box>
-        </Box>
+          </div>
+        </form>
       </PageSetup>
     </Layout>
   )

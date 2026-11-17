@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
+import { hideClearWhenEmpty } from '../utils/inputClassNames'
 import {
   Input,
   Select,
@@ -57,8 +58,8 @@ export default function Index(): JSX.Element {
 
   return (
     <Layout>
-      <div className='flex justify-center bg-background border-t-2 border-grey-200'>
-        <div className='w-60 mb-4 mt-4'>
+      <div className='flex flex-wrap justify-center gap-2 bg-background border-t-2 border-grey-200 px-4 py-4 dark:bg-background-surface-dark dark:border-grey-800'>
+        <div className='w-60'>
           <Input
             placeholder={t('common.search')}
             variant='primary'
@@ -67,20 +68,21 @@ export default function Index(): JSX.Element {
               setSearchTerm(value)
             }}
             type='search'
+            value={searchTerm}
             onClear={() => {
               setSearchTerm('')
             }}
-            className='h-7'
+            formClassName={hideClearWhenEmpty(searchTerm)}
           />
         </div>
-        <div className='w-60 ml-2 mt-4'>
+        <div className='w-60'>
           <Select
             onValueChange={(value) => {
               setSelectedDifficulty(value === '' ? null : value)
             }}
             data-testid='select-difficulty'
           >
-            <SelectTrigger size='lg' className='h-14'>
+            <SelectTrigger size='lg'>
               <SelectValue placeholder={t('common.select-difficulty')} />
             </SelectTrigger>
             <SelectContent side='top' className='overflow-visible'>
@@ -106,7 +108,7 @@ export default function Index(): JSX.Element {
           </Select>
         </div>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-8 gap-2'>
+      <div className='grid grid-cols-1 gap-4 px-4 pt-6 sm:grid-cols-2 md:grid-cols-3 md:px-8 lg:grid-cols-4 xl:grid-cols-6'>
         {filteredScenarioData.map((data, index) => (
           <ScenarioBox key={index} {...data} />
         ))}

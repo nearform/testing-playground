@@ -1,64 +1,66 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import TestRenderer from './TestRenderer'
 import Slider from '../scenarios/Slider.scenario'
 
+const thumbsOf = (testId: string): HTMLElement[] =>
+  within(screen.getByTestId(testId)).getAllByRole('slider')
+
 describe('Slider component', () => {
   it('can change Basic Slider value', async () => {
+    const user = userEvent.setup()
     TestRenderer(<Slider />)
-    const sliderContainer = screen.getByTestId('basic-slider')
-    const hiddenInput = sliderContainer.querySelector('input[type="range"]')
-    if (hiddenInput !== null) {
-      fireEvent.change(hiddenInput, { target: { value: '99' } })
-      await waitFor(() => {
-        expect(screen.getByText('99')).toBeInTheDocument()
-      })
-    } else {
-      console.warn('Hidden input not found within the slider container')
-    }
+    const [thumb] = thumbsOf('basic-slider')
+
+    thumb.focus()
+    await user.keyboard('{End}')
+
+    expect(thumb).toHaveAttribute('aria-valuenow', '100')
+    expect(screen.getByTestId('basic-slider-value')).toHaveTextContent('100')
+
+    await user.keyboard('{ArrowLeft}')
+
+    expect(screen.getByTestId('basic-slider-value')).toHaveTextContent('99')
   })
 
   it('can change Range Slider value', async () => {
+    const user = userEvent.setup()
     TestRenderer(<Slider />)
-    const sliderContainer = screen.getByTestId('range-slider')
-    const hiddenInputs = sliderContainer.querySelectorAll('input[type="range"]')
-    if (hiddenInputs.length === 2) {
-      const [handle1, handle2] = hiddenInputs
-      // Move the second one first, as the initial value of the second is 25
-      fireEvent.change(handle2, { target: { value: '66' } })
-      fireEvent.change(handle1, { target: { value: '33' } })
-      await waitFor(() => {
-        expect(screen.getByText('33')).toBeInTheDocument()
-        expect(screen.getByText('66')).toBeInTheDocument()
-      })
-    } else {
-      console.warn('Hidden input not found within the slider container')
-    }
+    const [minThumb, maxThumb] = thumbsOf('range-slider')
+
+    maxThumb.focus()
+    await user.keyboard('{End}')
+    minThumb.focus()
+    await user.keyboard('{ArrowRight}{ArrowRight}')
+
+    expect(screen.getByTestId('range-slider-min')).toHaveTextContent('3')
+    expect(screen.getByTestId('range-slider-max')).toHaveTextContent('100')
   })
 
-  it('renders SliderWithInput component', async () => {
+  it('keeps the slider and its number input in sync', async () => {
+    const user = userEvent.setup()
     TestRenderer(<Slider />)
-    const slider = screen
-      .getByTestId('input-slider')
-      .querySelector('input[type="range"]')
-    if (slider !== null) {
-      fireEvent.change(slider, { target: { value: '41' } })
-      await waitFor(() => {
-        expect(screen.getByText('41')).toBeInTheDocument()
-      })
-    } else {
-      console.warn('Hidden input not found within the slider container')
-    }
-    const sliderInput = screen
-      .getByTestId('input-slider-text')
-      .querySelector('input') as HTMLInputElement
-    fireEvent.change(sliderInput, { target: { value: '75' } })
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('input-slider-text').querySelector('input'),
-      ).toHaveValue(75)
-    })
+    const [thumb] = thumbsOf('input-slider')
+    const input = screen.getByTestId('input-slider-text')
+
+    thumb.focus()
+    await user.keyboard('{End}')
+    expect(input).toHaveValue(100)
+
+    fireEvent.change(input, { target: { value: '75' } })
+    expect(input).toHaveValue(75)
+    expect(thumb).toHaveAttribute('aria-valuenow', '75')
+  })
+
+  it('clamps the number input to the slider range', () => {
+    TestRenderer(<Slider />)
+    const input = screen.getByTestId('input-slider-text')
+
+    fireEvent.change(input, { target: { value: '250' } })
+
+    expect(input).toHaveValue(100)
   })
 })

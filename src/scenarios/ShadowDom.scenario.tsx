@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, Typography } from '@mui/material'
+import { Button, Card, CardDescription, CardTitle } from '@nearform/quantum'
 import type { ReactNode } from 'react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +7,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import ShadowHost from '../components/ShadowHost'
 
-// Page styles (MUI/emotion) are injected into the document head and do not
+// Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content carries its own styles.
 const SHADOW_STYLES = `
   :host { display: block; }
@@ -15,12 +15,19 @@ const SHADOW_STYLES = `
     border: 2px dashed #6b4fbb;
     border-radius: 8px;
     padding: 12px;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-family: inherit;
   }
   .card .card { margin-top: 12px; border-color: #e5007e; }
   .label { display: block; font-size: 0.875rem; margin-bottom: 4px; }
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  input { padding: 6px 8px; font-size: 1rem; }
+  input {
+    padding: 6px 8px;
+    font-size: 1rem;
+    color: inherit;
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+  }
   button {
     padding: 6px 12px;
     font-size: 0.875rem;
@@ -48,17 +55,11 @@ const Section = ({
   description,
   children,
 }: SectionProps): JSX.Element => (
-  <Grid size={{ xs: 12, md: 6 }}>
-    <Paper variant='outlined' sx={{ p: 2, height: '100%' }}>
-      <Typography variant='h6' component='h2' data-testid={`${testId}-title`}>
-        {title}
-      </Typography>
-      <Typography variant='body2' sx={{ mb: 2 }}>
-        {description}
-      </Typography>
-      {children}
-    </Paper>
-  </Grid>
+  <Card variant='outline' className='h-full'>
+    <CardTitle data-testid={`${testId}-title`}>{title}</CardTitle>
+    <CardDescription className='mb-4'>{description}</CardDescription>
+    {children}
+  </Card>
 )
 
 const OpenShadowForm = (): JSX.Element => {
@@ -161,7 +162,7 @@ const ShadowDom = (): JSX.Element => {
         description={t('scenarios.shadow-dom.description')}
         information={t('scenarios.shadow-dom.information')}
       >
-        <Grid container spacing={3}>
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
           <Section
             testId='open-section'
             title={t('scenarios.shadow-dom.open.title')}
@@ -215,10 +216,10 @@ const ShadowDom = (): JSX.Element => {
               }
             >
               {/* Light DOM children, projected into the shadow root's <slot> */}
-              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+              <div className='flex items-center gap-4'>
                 <Button
-                  variant='contained'
-                  size='small'
+                  variant='primary'
+                  size='sm'
                   data-testid='slotted-button'
                   onClick={() => {
                     setSlottedClicks((c) => c + 1)
@@ -226,12 +227,12 @@ const ShadowDom = (): JSX.Element => {
                 >
                   {t('scenarios.shadow-dom.slot.button')}
                 </Button>
-                <Typography variant='body2' data-testid='slotted-status'>
+                <p className='text-sm' data-testid='slotted-status'>
                   {t('scenarios.shadow-dom.slot.status', {
                     count: slottedClicks,
                   })}
-                </Typography>
-              </Box>
+                </p>
+              </div>
             </ShadowHost>
           </Section>
 
@@ -258,16 +259,15 @@ const ShadowDom = (): JSX.Element => {
                 </div>
               }
             />
-            <Typography
-              variant='body2'
-              sx={{ mt: 1 }}
+            <p
+              className='mt-2 text-sm'
               data-testid='closed-shadow-status'
               role='status'
             >
               {t('scenarios.shadow-dom.closed.status', { count: closedClicks })}
-            </Typography>
+            </p>
           </Section>
-        </Grid>
+        </div>
       </PageSetup>
     </Layout>
   )

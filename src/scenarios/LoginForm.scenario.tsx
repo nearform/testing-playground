@@ -1,9 +1,11 @@
-import { Alert, Box, TextField, Button, Typography } from '@mui/material'
+import { Button, Input } from '@nearform/quantum'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { hideClearWhenEmpty } from '../utils/inputClassNames'
 
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
@@ -58,57 +60,57 @@ const LoginForm = (): JSX.Element => {
         description={t('scenarios.login-form.description')}
         information={t('scenarios.login-form.information')}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className='mx-auto flex max-w-xl flex-col items-center justify-center gap-4'>
           {!isLoggedIn && (
             <>
-              <TextField
-                label={t('scenarios.login-form.username')}
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value)
-                }}
-                data-testid='username'
-              />
-              <TextField
-                label={t('scenarios.login-form.password')}
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                type='password'
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleLogin()
-                  }
-                }}
-                data-testid='password'
-              />
+              <div className='w-full'>
+                <Input
+                  labelText={t('scenarios.login-form.username')}
+                  variant='primary'
+                  type='text'
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.currentTarget.value)
+                  }}
+                  onClear={() => {
+                    setUsername('')
+                  }}
+                  formClassName={hideClearWhenEmpty(username)}
+                  data-testid='username'
+                />
+              </div>
+              <div className='w-full'>
+                <Input
+                  labelText={t('scenarios.login-form.password')}
+                  variant='primary'
+                  type='password'
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.currentTarget.value)
+                  }}
+                  onClear={() => {
+                    setPassword('')
+                  }}
+                  formClassName={hideClearWhenEmpty(password)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleLogin()
+                    }
+                  }}
+                  data-testid='password'
+                />
+              </div>
               {error.length > 0 && (
-                <Typography
-                  color='error'
+                <p
+                  className='text-feedback-error dark:text-feedback-error-dark'
                   data-testid='error-invalid-credentials'
                 >
                   {error}
-                </Typography>
+                </p>
               )}
               <Button
-                variant='contained'
-                color='primary'
+                variant='primary'
                 onClick={handleLogin}
-                sx={{ mt: '16px' }}
                 data-testid='login-button'
               >
                 {t('scenarios.login-form.login-button')}
@@ -121,17 +123,15 @@ const LoginForm = (): JSX.Element => {
                 {t('scenarios.login-form.logged-in-message')}
               </Alert>
               <Button
-                variant='outlined'
-                color='primary'
+                variant='secondary'
                 onClick={handleLogout}
-                sx={{ mt: '16px' }}
                 data-testid='logout-button'
               >
                 {t('scenarios.login-form.logout-button')}
               </Button>
             </>
           )}
-        </Box>
+        </div>
       </PageSetup>
     </Layout>
   )
