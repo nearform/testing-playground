@@ -124,6 +124,47 @@
         "none": "Nothing selected"
       }
     },
+    "dynamic-loading": {
+      "title": "Dynamic Loading",
+      "description": "Elements that appear, disappear and change state after a random delay.",
+      "information": "Each section changes the page after a random delay of between {{min}} and {{max}} seconds, picked again every time, so a fixed sleep is sometimes too short and always slower than needed: wait for the condition you actually need instead. The first section adds an element to the DOM only once its spinner finishes, so it cannot be found before then. The second has its element in the DOM from the start but hidden with <code>display: none</code>, so it is <em>present</em> long before it is <em>visible</em>. The third has an input that is disabled until the async step finishes, and clicking it while disabled does nothing. The fourth removes its checkbox and later adds a brand new one, so a reference to the old element goes stale and has to be looked up again. The last shows \"Loading...\" and then \"Still loading...\" before its final text, so waiting only for \"Loading...\" to go away is not enough: wait for the text you expect.",
+      "start": "Start",
+      "loading": "Loading",
+      "rendered": {
+        "title": "Element added after loading",
+        "result": "Hello World!"
+      },
+      "hidden": {
+        "title": "Hidden element shown after loading",
+        "result": "Now you see me!"
+      },
+      "enable": {
+        "title": "Enabled after a delay",
+        "label": "Message",
+        "enable": "Enable",
+        "disable": "Disable",
+        "enabling": "Enabling…",
+        "disabling": "Disabling…",
+        "enabled": "It's enabled!",
+        "disabled": "It's disabled!"
+      },
+      "remove": {
+        "title": "Removed and added again",
+        "checkbox": "A checkbox",
+        "remove": "Remove",
+        "add": "Add",
+        "removed": "It's gone!",
+        "added": "It's back!"
+      },
+      "text": {
+        "title": "Text that changes",
+        "load": "Load data",
+        "idle": "Nothing loaded yet",
+        "loading": "Loading...",
+        "processing": "Still loading...",
+        "done": "Data loaded: 42 records"
+      }
+    },
     "dynamic-table": {
       "title": "Dynamic Table",
       "description": "Find the data within the green bar within the table.",
