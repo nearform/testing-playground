@@ -8,22 +8,26 @@ import PageSetup from '../components/PageSetup'
 const MIN = 1
 const MAX = 100
 
+// Quantum's value readout can't take a test id, so the container gives tests
+// a stable element to search inside for it
 const BasicSlider: React.FC = () => {
   const { t } = useTranslation()
   const [basicValue, setBasicValue] = useState<number>(MIN)
 
   return (
-    <Slider
-      label={t('scenarios.slider-page.basic-slider')}
-      value={[basicValue]}
-      onValueChange={([value]) => {
-        setBasicValue(value)
-      }}
-      min={MIN}
-      max={MAX}
-      showValue
-      data-testid='basic-slider'
-    />
+    <div data-testid='basic-slider-container'>
+      <Slider
+        label={t('scenarios.slider-page.basic-slider')}
+        value={[basicValue]}
+        onValueChange={([value]) => {
+          setBasicValue(value)
+        }}
+        min={MIN}
+        max={MAX}
+        showValue
+        data-testid='basic-slider'
+      />
+    </div>
   )
 }
 
@@ -32,16 +36,18 @@ const RangeSlider: React.FC = () => {
   const [rangeValue, setRangeValue] = useState<number[]>([MIN, 25])
 
   return (
-    <Slider
-      label={t('scenarios.slider-page.range-slider')}
-      value={rangeValue}
-      onValueChange={setRangeValue}
-      min={MIN}
-      max={MAX}
-      minStepsBetweenThumbs={0}
-      showValue
-      data-testid='range-slider'
-    />
+    <div data-testid='range-slider-container'>
+      <Slider
+        label={t('scenarios.slider-page.range-slider')}
+        value={rangeValue}
+        onValueChange={setRangeValue}
+        min={MIN}
+        max={MAX}
+        minStepsBetweenThumbs={0}
+        showValue
+        data-testid='range-slider'
+      />
+    </div>
   )
 }
 

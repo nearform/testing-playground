@@ -9,6 +9,9 @@ import Slider from '../scenarios/Slider.scenario'
 const thumbsOf = (testId: string): HTMLElement[] =>
   within(screen.getByTestId(testId)).getAllByRole('slider')
 
+const readoutIn = (containerTestId: string, text: string): HTMLElement =>
+  within(screen.getByTestId(containerTestId)).getByText(text)
+
 describe('Slider component', () => {
   it('can change Basic Slider value', async () => {
     const user = userEvent.setup()
@@ -19,12 +22,12 @@ describe('Slider component', () => {
     await user.keyboard('{End}')
 
     expect(thumb).toHaveAttribute('aria-valuenow', '100')
-    expect(screen.getByText('100')).toBeInTheDocument()
+    expect(readoutIn('basic-slider-container', '100')).toBeVisible()
 
     await user.keyboard('{ArrowLeft}')
 
     expect(thumb).toHaveAttribute('aria-valuenow', '99')
-    expect(screen.getByText('99')).toBeInTheDocument()
+    expect(readoutIn('basic-slider-container', '99')).toBeVisible()
   })
 
   it('can change Range Slider value', async () => {
@@ -39,7 +42,7 @@ describe('Slider component', () => {
 
     expect(minThumb).toHaveAttribute('aria-valuenow', '3')
     expect(maxThumb).toHaveAttribute('aria-valuenow', '100')
-    expect(screen.getByText('3 – 100')).toBeInTheDocument()
+    expect(readoutIn('range-slider-container', '3 – 100')).toBeVisible()
   })
 
   it('keeps the slider and its number input in sync', async () => {
