@@ -147,6 +147,19 @@
         "confirm-password-mismatch": "As senhas não coincidem"
       }
     },
+    "infinite-scroll": {
+      "title": "Rolagem infinita",
+      "description": "Uma lista que carrega novos itens sempre que você chega ao final da página.",
+      "information": "Role até o final da lista para carregar o próximo lote de 10 itens. Um indicador de carregamento aparece por um instante antes dos novos itens, e a lista nunca termina, então espere pelos novos itens em vez de esperar pelo fim da lista.",
+      "rating": "2",
+      "feed-label": "Feed infinito",
+      "count_one": "Exibindo {{count}} item",
+      "count_other": "Exibindo {{count}} itens",
+      "item-title": "Item {{number}}",
+      "item-description": "Este é o conteúdo do item {{number}}. Continue rolando para carregar mais.",
+      "batch": "Lote {{batch}}",
+      "loading": "Carregando mais itens..."
+    },
     "login-form": {
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",

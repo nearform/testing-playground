@@ -146,6 +146,19 @@
         "confirm-password-mismatch": "Passwords do not match"
       }
     },
+    "infinite-scroll": {
+      "title": "Infinite Scroll",
+      "description": "A list that keeps loading new items every time you reach the bottom of the page.",
+      "information": "Scroll to the end of the list to load the next batch of 10 items. A loading indicator is shown for a moment before the new items appear, and the feed never runs out, so wait for the new items rather than for the end of the list.",
+      "rating": "2",
+      "feed-label": "Infinite feed",
+      "count_one": "Showing {{count}} item",
+      "count_other": "Showing {{count}} items",
+      "item-title": "Item {{number}}",
+      "item-description": "This is the content of item {{number}}. Keep scrolling to load more.",
+      "batch": "Batch {{batch}}",
+      "loading": "Loading more items..."
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
