@@ -35,9 +35,9 @@ export const difficultyOf = (rating: string): Difficulty => {
   return 'easy'
 }
 
-// The difficulty filter's value is '0' for every scenario, otherwise a rating
-// ('1' to '3'). Both sides go through difficultyOf so the filter always agrees
-// with the colour a card is given.
+// The difficulty filter's value is a rating ('1' to '3'), or '0' to show every
+// scenario. Both sides go through difficultyOf so the filter always agrees with
+// the colour a card is given.
 export const matchesDifficulty = (
   selected: string | null,
   rating: string,
