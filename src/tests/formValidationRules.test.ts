@@ -45,6 +45,10 @@ describe('validateField', () => {
     { fullName: 'Ada 99', expected: 'full-name-invalid' },
     { fullName: 'Ada--Lovelace', expected: 'full-name-invalid' },
     { fullName: 'José Álvarez', expected: undefined },
+    // Decomposed (NFD) accents: letter followed by a combining mark
+    { fullName: 'Jose\u0301 A\u0301lvarez', expected: undefined },
+    { fullName: 'E\u0301', expected: 'full-name-too-short' }, // NFC: single 'É'
+    { fullName: '\u0301Ada', expected: 'full-name-invalid' }, // leading lone mark
   ])('validates full name "$fullName"', ({ fullName, expected }) => {
     expect(validateField('fullName', withValue({ fullName }))).toBe(expected)
   })
@@ -87,6 +91,19 @@ describe('validateField', () => {
     { website: 'example.com', expected: 'website-invalid' },
     { website: 'ftp://example.com', expected: 'website-invalid' },
     { website: 'http://localhost', expected: 'website-invalid' },
+    { website: 'http://example.', expected: 'website-invalid' },
+    { website: 'http://.com', expected: 'website-invalid' },
+    { website: 'http://a..com', expected: 'website-invalid' },
+    { website: 'http://example.c', expected: 'website-invalid' },
+    { website: 'http://192.168.0.1', expected: undefined },
+    // `new URL` expands shorthand IPv4 (`1.2.3` -> `1.2.0.3`, `0x7f.1` -> `127.0.0.1`),
+    // so these are intentionally accepted as IP hosts
+    { website: 'http://1.2.3', expected: undefined },
+    { website: 'http://0x7f.1', expected: undefined },
+    // A fully qualified trailing dot leaves an empty last label, so it is rejected
+    { website: 'https://example.com.', expected: 'website-invalid' },
+    { website: 'https://sub.example.co.uk', expected: undefined },
+    { website: 'https://пример.рф', expected: undefined }, // IDN, punycode TLD
     { website: 'http://example.com/path?q=1', expected: undefined },
   ])('validates website "$website"', ({ website, expected }) => {
     expect(validateField('website', withValue({ website }))).toBe(expected)
