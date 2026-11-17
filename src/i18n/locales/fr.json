@@ -303,6 +303,39 @@
         "prompt-cancel": "Vous avez annulé la saisie"
       }
     },
+    "key-presses": {
+      "title": "Appuis sur les touches",
+      "description": "Interagissez avec la page en appuyant sur les touches du clavier.",
+      "information": "Tout sur cette page est piloté par le clavier : les tests doivent donc envoyer des appuis sur les touches plutôt que cliquer ou saisir du texte. Le lecteur de touches affiche la dernière touche appuyée dans sa zone de texte, avec sa clé (key), son code et les touches de modification maintenues, ainsi que les dernières touches appuyées. Le compteur ne change que lorsqu'il a le focus : les flèches haut et bas (ou droite et gauche) le modifient de 1, maintenir Maj le modifie de 10, Début et Fin vont aux valeurs minimale et maximale et Échap le remet à sa valeur de départ. Le contrôle de maintien ne confirme que si Espace est maintenue enfoncée pendant une seconde entière ; relâcher plus tôt ne compte pas, et maintenir une touche répète son événement keydown, donc chaque répétition doit être ignorée. Il n'y a volontairement aucune alternative à la souris.",
+      "reader": {
+        "title": "Lecteur de touches",
+        "label": "Appuyez sur une touche dans cette zone",
+        "none": "Aucune touche appuyée pour l'instant",
+        "pressed": "Vous avez appuyé sur : {{key}}",
+        "key": "Clé",
+        "code": "Code",
+        "modifiers": "Maintenue avec",
+        "no-modifiers": "Rien",
+        "history": "Touches récentes :",
+        "clear": "Effacer"
+      },
+      "counter": {
+        "title": "Compteur",
+        "label": "Compteur",
+        "instructions": "Donnez le focus au compteur, puis utilisez les flèches pour le modifier. Maintenez Maj pour avancer par pas de 10. Début et Fin vont à 0 et 100, et Échap le remet à 50."
+      },
+      "hold": {
+        "title": "Maintenir pour confirmer",
+        "label": "Maintenez Espace pour confirmer",
+        "instructions": "Donnez le focus à la zone ci-dessous et maintenez Espace enfoncée pendant {{seconds}} seconde pour confirmer.",
+        "state": {
+          "idle": "Non confirmé",
+          "holding": "Continuez à maintenir…",
+          "confirmed": "Confirmé",
+          "released-early": "Relâchée trop tôt, réessayez"
+        }
+      }
+    },
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
