@@ -226,6 +226,45 @@
         "sydney": "Sydney"
       }
     },
+    "hovers": {
+      "title": "Hovers",
+      "description": "Interact with elements that only appear while the mouse is over something.",
+      "information": "Everything on this page only shows up while the mouse pointer rests on something, so tests have to hover first. The details on each profile card are not in the DOM at all until the card is hovered. The buttons on each file are always in the DOM but stay invisible until their row is hovered, so a test that clicks them straight away will be told they are not visible. The menu opens its submenus a moment after an item is hovered and closes a moment after the pointer leaves it, so move through it the way a person would. The last thing you did is shown underneath.",
+      "profiles": {
+        "title": "Profiles",
+        "view": "View profile",
+        "roles": {
+          "tester": "Tester",
+          "developer": "Developer",
+          "designer": "Designer"
+        }
+      },
+      "files": {
+        "title": "Files",
+        "open": "Open",
+        "open-label": "Open {{name}}",
+        "delete": "Delete",
+        "delete-label": "Delete {{name}}",
+        "empty": "There are no files left. Reload the page to get them back."
+      },
+      "menu": {
+        "title": "Menu",
+        "products": "Products",
+        "laptops": "Laptops",
+        "phones": "Phones",
+        "android": "Android",
+        "ios": "iOS",
+        "tablets": "Tablets"
+      },
+      "result": {
+        "title": "Last action",
+        "none": "Nothing yet",
+        "viewed": "Viewed the profile of {{name}}",
+        "opened": "Opened {{name}}",
+        "deleted": "Deleted {{name}}",
+        "chose": "Chose {{name}}"
+      }
+    },
     "infinite-scroll": {
       "title": "Infinite Scroll",
       "description": "A list that keeps loading new items every time you reach the bottom of the page.",
