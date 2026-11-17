@@ -143,6 +143,11 @@ const Geolocation = (): JSX.Element => {
     }
     watchIdRef.current = null
     setWatchId(null)
+    // Nothing is pending once the watch ends, so a watch stopped before any
+    // position arrived goes back to idle; a located or error state is kept
+    setStatus((current) =>
+      current.state === 'locating' ? { state: 'idle' } : current,
+    )
   }
 
   const watching = watchId !== null

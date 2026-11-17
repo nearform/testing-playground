@@ -163,6 +163,35 @@ describe('Geolocation scenario', () => {
       expect(screen.getByTestId('button-get-location')).toBeEnabled()
     })
 
+    it('goes back to idle when watching stops before any position arrives', () => {
+      TestRenderer(<Geolocation />)
+      const watchButton = screen.getByTestId('button-watch-location')
+
+      fireEvent.click(watchButton)
+      fireEvent.click(watchButton)
+
+      const status = screen.getByTestId('status')
+      expect(status).toHaveAttribute('data-state', 'idle')
+      expect(status).toHaveTextContent(
+        'Your location has not been requested yet',
+      )
+    })
+
+    it('keeps the last location when watching stops', () => {
+      TestRenderer(<Geolocation />)
+      const watchButton = screen.getByTestId('button-watch-location')
+
+      fireEvent.click(watchButton)
+      fake.succeed(london)
+      fireEvent.click(watchButton)
+
+      expect(screen.getByTestId('status')).toHaveAttribute(
+        'data-state',
+        'located',
+      )
+      expect(screen.getByTestId('nearest-city')).toHaveTextContent('London')
+    })
+
     it('stops watching when the page is left', () => {
       const { unmount } = TestRenderer(<Geolocation />)
 
