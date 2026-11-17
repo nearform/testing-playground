@@ -386,6 +386,65 @@
       "username": "Nome de Usuário",
       "password": "Senha"
     },
+    "multiple-windows": {
+      "title": "Múltiplas janelas",
+      "description": "Links e botões que abrem novas abas e janelas pop-up, para as quais os testes precisam alternar e depois voltar.",
+      "information": "Cada aba ou janela tem seu próprio documento, então um teste só vê aquela em que está focado: ele precisa esperar pela nova janela, alternar para ela e voltar para a original depois. Cada janela define seu próprio título de documento para diferenciá-la. O pop-up envia uma mensagem de volta para a janela que o abriu e depois se fecha, enquanto a página acompanha se ele ainda está aberto. Os dois links de janela nomeada abrem na mesma janela, então clicar no segundo a reutiliza em vez de abrir outra.",
+      "new-tab": {
+        "title": "Nova aba",
+        "description": "Um link que abre uma página em uma nova aba.",
+        "link": "Abrir uma nova aba"
+      },
+      "named": {
+        "title": "Janela nomeada",
+        "description": "Os dois links abrem em uma janela com o mesmo nome, então o segundo clique reutiliza a janela aberta pelo primeiro.",
+        "named-one-link": "Abrir a página um",
+        "named-two-link": "Abrir a página dois",
+        "none": "Nenhuma página aberta ainda",
+        "last": "Última aberta: {{page}}"
+      },
+      "popup": {
+        "title": "Janela pop-up",
+        "description": "Abra uma janela pop-up, envie uma mensagem dela para esta página e veja-a fechar.",
+        "open": "Abrir pop-up",
+        "close": "Fechar pop-up",
+        "status": {
+          "not-opened": "O pop-up não foi aberto",
+          "open": "O pop-up está aberto",
+          "closed": "O pop-up está fechado",
+          "blocked": "O pop-up foi bloqueado pelo navegador"
+        },
+        "messages": "Mensagens do pop-up",
+        "no-messages": "Nenhuma mensagem ainda"
+      },
+      "windows": {
+        "new-tab": {
+          "document-title": "Nova aba | Testing Playground",
+          "heading": "Nova aba",
+          "text": "Esta página abriu em uma nova aba. Volte para a janela original para continuar."
+        },
+        "popup": {
+          "document-title": "Janela pop-up | Testing Playground",
+          "heading": "Janela pop-up",
+          "text": "Envie uma mensagem para a janela que abriu este pop-up. O pop-up fecha depois de enviá-la.",
+          "label": "Mensagem",
+          "button": "Enviar e fechar",
+          "error": "Por favor, digite uma mensagem",
+          "sent": "Mensagem enviada",
+          "no-opener": "Esta janela não foi aberta pelo cenário Múltiplas janelas, então não há para onde enviar uma mensagem."
+        },
+        "named-one": {
+          "document-title": "Página um | Testing Playground",
+          "heading": "Página um",
+          "text": "Esta é a página um da janela nomeada."
+        },
+        "named-two": {
+          "document-title": "Página dois | Testing Playground",
+          "heading": "Página dois",
+          "text": "Esta é a página dois da janela nomeada."
+        }
+      }
+    },
     "notification": {
       "title": "Notificação",
       "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",

@@ -385,6 +385,65 @@
       "username": "Username",
       "password": "Password"
     },
+    "multiple-windows": {
+      "title": "Multiple Windows",
+      "description": "Links and buttons that open new tabs and popup windows, which tests have to switch to and back from.",
+      "information": "Every tab or window has a document of its own, so a test only sees the one it is focused on: it has to wait for the new window, switch to it, and switch back to the original afterwards. Each window sets its own document title to tell it apart. The popup sends a message back to the window that opened it, then closes itself, while the page keeps track of whether it is still open. The two named-window links both open in the same window, so clicking the second reuses it instead of opening another.",
+      "new-tab": {
+        "title": "New tab",
+        "description": "A link that opens a page in a new tab.",
+        "link": "Open a new tab"
+      },
+      "named": {
+        "title": "Named window",
+        "description": "Both links open in a window with the same name, so the second click reuses the window the first one opened.",
+        "named-one-link": "Open page one",
+        "named-two-link": "Open page two",
+        "none": "No page opened yet",
+        "last": "Last opened: {{page}}"
+      },
+      "popup": {
+        "title": "Popup window",
+        "description": "Open a popup window, send a message from it back to this page, and see it close.",
+        "open": "Open popup",
+        "close": "Close popup",
+        "status": {
+          "not-opened": "The popup has not been opened",
+          "open": "The popup is open",
+          "closed": "The popup is closed",
+          "blocked": "The popup was blocked by the browser"
+        },
+        "messages": "Messages from the popup",
+        "no-messages": "No messages yet"
+      },
+      "windows": {
+        "new-tab": {
+          "document-title": "New Tab | Testing Playground",
+          "heading": "New tab",
+          "text": "This page opened in a new tab. Switch back to the original window to carry on."
+        },
+        "popup": {
+          "document-title": "Popup Window | Testing Playground",
+          "heading": "Popup window",
+          "text": "Send a message to the window that opened this popup. The popup closes once it has sent it.",
+          "label": "Message",
+          "button": "Send and close",
+          "error": "Please enter a message",
+          "sent": "Message sent",
+          "no-opener": "This window was not opened from the Multiple Windows scenario, so there is nowhere to send a message."
+        },
+        "named-one": {
+          "document-title": "Page One | Testing Playground",
+          "heading": "Page one",
+          "text": "This is page one of the named window."
+        },
+        "named-two": {
+          "document-title": "Page Two | Testing Playground",
+          "heading": "Page two",
+          "text": "This is page two of the named window."
+        }
+      }
+    },
     "notification": {
       "title": "Notification",
       "description": "Check alerts that are sent as a popup and also part of the main page.",
