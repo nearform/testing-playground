@@ -110,6 +110,8 @@ const Geolocation = (): JSX.Element => {
   }
 
   const onError = (error: GeolocationPositionError): void => {
+    // Drop any earlier fix, so an error is never shown next to stale details
+    setCoords(null)
     setStatus({ state: 'error', key: errorKeys[error.code] ?? 'unknown' })
   }
 

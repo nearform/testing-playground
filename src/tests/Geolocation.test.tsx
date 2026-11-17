@@ -131,6 +131,23 @@ describe('Geolocation scenario', () => {
       expect(status).toHaveAttribute('data-severity', 'error')
     })
 
+    it('clears the previous location when a later request fails', () => {
+      TestRenderer(<Geolocation />)
+      const getLocation = screen.getByTestId('button-get-location')
+
+      fireEvent.click(getLocation)
+      fake.succeed(london)
+      fireEvent.click(getLocation)
+      fake.fail(1)
+
+      expect(screen.getByTestId('status')).toHaveAttribute(
+        'data-state',
+        'error',
+      )
+      expect(screen.queryByTestId('latitude')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('nearest-city')).not.toBeInTheDocument()
+    })
+
     it('follows the location while watching and counts the updates', () => {
       TestRenderer(<Geolocation />)
 
