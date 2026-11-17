@@ -19,7 +19,6 @@ const SHADOW_STYLES = `
     padding: 12px;
     font-family: inherit;
   }
-  .card .card { margin-top: 12px; border-color: #e5007e; }
   .label { display: block; font-size: 0.875rem; margin-bottom: 4px; }
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   input {

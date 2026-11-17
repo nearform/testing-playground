@@ -100,8 +100,11 @@ const FileUpload = (): JSX.Element => {
               role='progressbar'
               aria-label={t('scenarios.file-upload.upload-button')}
               data-testid='upload-progress'
-              // grey-500 keeps the track 3:1 or more on both surfaces
-              className='h-1 w-full overflow-hidden rounded-full bg-grey-500'
+              // The bar only signals activity, so its track carries no
+              // information and stays light. A darker track would leave the
+              // pulsing bar below 3:1 against it at half opacity; on this one
+              // it stays at 3.4:1 or more in both themes
+              className='h-1 w-full overflow-hidden rounded-full bg-grey-200 dark:bg-grey-700'
             >
               <div className='h-full w-1/3 animate-pulse rounded-full bg-accent dark:bg-accent-dark' />
             </div>

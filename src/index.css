@@ -16,13 +16,15 @@
 @theme {
   /* Input, textarea and select outlines, table and menu dividers: 3.6:1 */
   --color-border-subtle-dark: --theme(--color-grey-500);
-  /* Checkbox, radio and outline borders: a lighter brand midnight, 4.6:1.
-     Quantum has no token between brandMidnight-50 and -30 */
-  --color-border-dark: #7383a8;
+  /* Checkbox, radio and outline borders: 3.5:1. Quantum also fills checked
+     checkboxes and radios with this token under a white tick or dot, so it
+     is only a step lighter (brandMidnight-50 20% of the way to -30) to keep
+     that glyph at 5:1. Quantum has no token in between */
+  --color-border-dark: #606f92;
   /* Secondary button outline, kept in step with the controls above. Its
      hover outline (#0c3d60, 1.6:1) would all but vanish, so hovering
      lightens it to brandMidnight-30 (6.8:1) instead */
-  --color-button-secondary-border-dark: #7383a8;
+  --color-button-secondary-border-dark: #606f92;
   --color-button-secondary-border-hover-dark: --theme(--color-brandMidnight-30);
 }
 

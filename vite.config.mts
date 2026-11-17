@@ -11,5 +11,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     globals: true,
+    // Vitest stubs stylesheets as empty modules; let index.css load so tests
+    // can read its source with a ?raw import
+    css: { include: [/\/src\/index\.css(\?|$)/] },
   },
 })

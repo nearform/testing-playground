@@ -1,13 +1,10 @@
-/// <reference types="node" />
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-
 import { fireEvent, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import TestRenderer from './TestRenderer'
+import stylesheet from '../index.css?raw'
 import Slider from '../scenarios/Slider.scenario'
 
 const thumbsOf = (testId: string): HTMLElement[] =>
@@ -16,16 +13,17 @@ const thumbsOf = (testId: string): HTMLElement[] =>
 const readoutIn = (containerTestId: string, text: string): HTMLElement =>
   within(screen.getByTestId(containerTestId)).getByText(text)
 
-// index.css lifts the slider track's contrast with a selector tied to
-// Quantum's Radix markup. jsdom does not apply the stylesheet, so read the
-// selector from it to check the rule still exists and matches the tracks.
-const trackSelector = (): string => {
-  const css = readFileSync(resolve(__dirname, '../index.css'), 'utf8')
-  const rule = /\/\* slider-track-contrast \*\/\s*([^{]+)\{/.exec(css)
+// index.css lifts the slider track's contrast with a rule tied to Quantum's
+// Radix markup. jsdom does not apply the stylesheet, so read the rule from it
+// to check it still exists, still sets grey-500 and matches the tracks.
+const trackRule = (): { selector: string; body: string } => {
+  const rule = /\/\* slider-track-contrast \*\/\s*([^{]+)\{([^}]*)\}/.exec(
+    stylesheet,
+  )
   if (rule === null) {
     throw new Error('index.css has no slider-track-contrast rule')
   }
-  return rule[1].trim()
+  return { selector: rule[1].trim(), body: rule[2] }
 }
 
 describe('Slider component', () => {
@@ -86,12 +84,13 @@ describe('Slider component', () => {
   })
 
   it('lets the track contrast rule in index.css reach every slider track', () => {
+    const { selector, body } = trackRule()
     TestRenderer(<Slider />)
     const sliders = ['basic-slider', 'range-slider', 'input-slider'].map(
       (testId) => screen.getByTestId(testId),
     )
 
-    const tracks = [...document.querySelectorAll<HTMLElement>(trackSelector())]
+    const tracks = [...document.querySelectorAll<HTMLElement>(selector)]
 
     // One match per slider, each a direct child of the slider root, and
     // nothing else on the page
@@ -101,5 +100,7 @@ describe('Slider component', () => {
       expect(track.querySelector('[data-orientation]')).not.toBeNull()
       expect(within(track).queryAllByRole('slider')).toHaveLength(0)
     }
+    // grey-500 is what lifts the track to 3:1 on both themes' surfaces
+    expect(body).toMatch(/background-color:\s*--theme\(--color-grey-500\);/)
   })
 })
