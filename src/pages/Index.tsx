@@ -18,14 +18,18 @@ import {
   SelectValue,
 } from '@nearform/quantum'
 
+// A span, as the dots sit inside the <span> Quantum's SelectItem wraps its
+// text in, and hidden from assistive tech: the label beside them already
+// names the difficulty
 const DifficultyDot = ({
   difficulty,
 }: {
   difficulty: Difficulty
 }): JSX.Element => (
-  <div
+  <span
+    aria-hidden='true'
     className={`mt-1.5 ml-2 w-2 h-2 rounded-full float-right ${DIFFICULTY_STYLES[difficulty].dot}`}
-  ></div>
+  />
 )
 
 const transformLink = (link: string): string => {
@@ -120,8 +124,10 @@ export default function Index(): JSX.Element {
         </div>
       </div>
       <div className='grid grid-cols-1 gap-4 px-4 pt-6 sm:grid-cols-2 md:grid-cols-3 md:px-8 lg:grid-cols-4 xl:grid-cols-6'>
-        {filteredScenarioData.map((data, index) => (
-          <ScenarioBox key={index} {...data} />
+        {filteredScenarioData.map((data) => (
+          // Keyed by link so filtering never hands one card's element to
+          // another scenario
+          <ScenarioBox key={data.link} {...data} />
         ))}
       </div>
     </Layout>
