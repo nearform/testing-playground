@@ -125,6 +125,47 @@
         "none": "Nada selecionado"
       }
     },
+    "dynamic-loading": {
+      "title": "Carregamento dinâmico",
+      "description": "Elementos que aparecem, desaparecem e mudam de estado após um atraso aleatório.",
+      "information": "Cada seção altera a página após um atraso aleatório entre {{min}} e {{max}} segundos, sorteado novamente a cada vez, então uma pausa fixa às vezes é curta demais e sempre mais lenta do que o necessário: espere pela condição de que você realmente precisa. A primeira seção só adiciona seu elemento ao DOM quando o indicador de carregamento termina, então ele não pode ser encontrado antes disso. A segunda tem seu elemento no DOM desde o início, mas oculto com <code>display: none</code>, então ele está <em>presente</em> muito antes de estar <em>visível</em>. A terceira tem um campo desativado até que a etapa assíncrona termine, e clicar nele enquanto está desativado não faz nada. A quarta remove sua caixa de seleção e depois adiciona uma totalmente nova, então uma referência ao elemento antigo fica obsoleta e precisa ser buscada novamente. A última mostra \"Carregando...\" e depois \"Ainda carregando...\" antes do texto final, então esperar apenas que \"Carregando...\" desapareça não basta: espere pelo texto esperado.",
+      "start": "Iniciar",
+      "loading": "Carregando",
+      "rendered": {
+        "title": "Elemento adicionado após o carregamento",
+        "result": "Olá, mundo!"
+      },
+      "hidden": {
+        "title": "Elemento oculto exibido após o carregamento",
+        "result": "Agora você me vê!"
+      },
+      "enable": {
+        "title": "Ativado após um atraso",
+        "label": "Mensagem",
+        "enable": "Ativar",
+        "disable": "Desativar",
+        "enabling": "Ativando…",
+        "disabling": "Desativando…",
+        "enabled": "Está ativado!",
+        "disabled": "Está desativado!"
+      },
+      "remove": {
+        "title": "Removido e adicionado novamente",
+        "checkbox": "Uma caixa de seleção",
+        "remove": "Remover",
+        "add": "Adicionar",
+        "removed": "Sumiu!",
+        "added": "Voltou!"
+      },
+      "text": {
+        "title": "Texto que muda",
+        "load": "Carregar dados",
+        "idle": "Nada carregado ainda",
+        "loading": "Carregando...",
+        "processing": "Ainda carregando...",
+        "done": "Dados carregados: 42 registros"
+      }
+    },
     "dynamic-table": {
       "title": "Tabela Dinâmica",
       "description": "Encontre os dados na barra verde dentro da tabela.",
