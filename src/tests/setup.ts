@@ -7,6 +7,9 @@ expect.extend(matchers)
 
 afterEach(() => {
   cleanup()
+  // The theme toggle writes to <html> and localStorage; keep tests independent
+  document.documentElement.classList.remove('dark')
+  localStorage.removeItem('theme')
 })
 
 // Node.js 22+ exposes a native localStorage/sessionStorage getter that returns
@@ -33,7 +36,7 @@ const makeStorageMock = (): Storage => {
 }
 
 if (typeof localStorage === 'undefined') {
-  Object.defineProperty(global, 'localStorage', {
+  Object.defineProperty(globalThis, 'localStorage', {
     value: makeStorageMock(),
     configurable: true,
     writable: true,
@@ -41,7 +44,7 @@ if (typeof localStorage === 'undefined') {
 }
 
 if (typeof sessionStorage === 'undefined') {
-  Object.defineProperty(global, 'sessionStorage', {
+  Object.defineProperty(globalThis, 'sessionStorage', {
     value: makeStorageMock(),
     configurable: true,
     writable: true,
@@ -58,4 +61,24 @@ class ResizeObserver {
   unobserve() {}
   disconnect() {}
 }
-global.ResizeObserver = ResizeObserver
+globalThis.ResizeObserver = ResizeObserver
+
+// jsdom has no matchMedia; Quantum's ThemeToggle reads the system colour
+// scheme through it. Report light mode unless a test overrides it.
+if (typeof window.matchMedia !== 'function') {
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    writable: true,
+    value: (query: string): MediaQueryList =>
+      ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        addListener: () => {},
+        removeListener: () => {},
+        dispatchEvent: () => false,
+      }) as MediaQueryList,
+  })
+}
