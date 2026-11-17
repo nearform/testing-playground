@@ -4,44 +4,26 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
-import { HIDE_CLEAR_BUTTON } from '../utils/inputClassNames'
 
 const MIN = 1
 const MAX = 100
-
-const SliderValue = ({
-  testId,
-  children,
-}: {
-  testId: string
-  children: React.ReactNode
-}): JSX.Element => (
-  <span
-    className='min-w-[3ch] text-right text-sm font-semibold tabular-nums'
-    data-testid={testId}
-  >
-    {children}
-  </span>
-)
 
 const BasicSlider: React.FC = () => {
   const { t } = useTranslation()
   const [basicValue, setBasicValue] = useState<number>(MIN)
 
   return (
-    <div className='flex items-end gap-4'>
-      <Slider
-        label={t('scenarios.slider-page.basic-slider')}
-        value={[basicValue]}
-        onValueChange={([value]) => {
-          setBasicValue(value)
-        }}
-        min={MIN}
-        max={MAX}
-        data-testid='basic-slider'
-      />
-      <SliderValue testId='basic-slider-value'>{basicValue}</SliderValue>
-    </div>
+    <Slider
+      label={t('scenarios.slider-page.basic-slider')}
+      value={[basicValue]}
+      onValueChange={([value]) => {
+        setBasicValue(value)
+      }}
+      min={MIN}
+      max={MAX}
+      showValue
+      data-testid='basic-slider'
+    />
   )
 }
 
@@ -50,22 +32,16 @@ const RangeSlider: React.FC = () => {
   const [rangeValue, setRangeValue] = useState<number[]>([MIN, 25])
 
   return (
-    <div className='flex items-end gap-4'>
-      <Slider
-        label={t('scenarios.slider-page.range-slider')}
-        value={rangeValue}
-        onValueChange={setRangeValue}
-        min={MIN}
-        max={MAX}
-        minStepsBetweenThumbs={0}
-        data-testid='range-slider'
-      />
-      <span className='flex shrink-0 gap-1 text-sm'>
-        <SliderValue testId='range-slider-min'>{rangeValue[0]}</SliderValue>
-        <span aria-hidden='true'>–</span>
-        <SliderValue testId='range-slider-max'>{rangeValue[1]}</SliderValue>
-      </span>
-    </div>
+    <Slider
+      label={t('scenarios.slider-page.range-slider')}
+      value={rangeValue}
+      onValueChange={setRangeValue}
+      min={MIN}
+      max={MAX}
+      minStepsBetweenThumbs={0}
+      showValue
+      data-testid='range-slider'
+    />
   )
 }
 
@@ -103,11 +79,6 @@ const SliderWithInput: React.FC = () => {
           type='number'
           value={inputValue}
           onChange={handleInputChange}
-          // The value is always set, so there is never anything to clear
-          onClear={() => {
-            setInputValue(MIN)
-          }}
-          formClassName={HIDE_CLEAR_BUTTON}
           min={MIN}
           max={MAX}
           data-testid='input-slider-text'

@@ -9,7 +9,7 @@ import Header from '../components/Header'
 const root = document.documentElement
 
 afterEach(() => {
-  vi.restoreAllMocks()
+  vi.unstubAllGlobals()
 })
 
 describe('Header theme toggle', () => {
@@ -49,7 +49,8 @@ describe('Header theme toggle', () => {
   })
 
   it('follows the system colour scheme when nothing is saved', () => {
-    vi.spyOn(window, 'matchMedia').mockImplementation(
+    vi.stubGlobal(
+      'matchMedia',
       (query: string) =>
         ({
           matches: query === '(prefers-color-scheme: dark)',

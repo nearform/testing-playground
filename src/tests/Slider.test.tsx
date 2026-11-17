@@ -19,11 +19,12 @@ describe('Slider component', () => {
     await user.keyboard('{End}')
 
     expect(thumb).toHaveAttribute('aria-valuenow', '100')
-    expect(screen.getByTestId('basic-slider-value')).toHaveTextContent('100')
+    expect(screen.getByText('100')).toBeInTheDocument()
 
     await user.keyboard('{ArrowLeft}')
 
-    expect(screen.getByTestId('basic-slider-value')).toHaveTextContent('99')
+    expect(thumb).toHaveAttribute('aria-valuenow', '99')
+    expect(screen.getByText('99')).toBeInTheDocument()
   })
 
   it('can change Range Slider value', async () => {
@@ -36,8 +37,9 @@ describe('Slider component', () => {
     minThumb.focus()
     await user.keyboard('{ArrowRight}{ArrowRight}')
 
-    expect(screen.getByTestId('range-slider-min')).toHaveTextContent('3')
-    expect(screen.getByTestId('range-slider-max')).toHaveTextContent('100')
+    expect(minThumb).toHaveAttribute('aria-valuenow', '3')
+    expect(maxThumb).toHaveAttribute('aria-valuenow', '100')
+    expect(screen.getByText('3 – 100')).toBeInTheDocument()
   })
 
   it('keeps the slider and its number input in sync', async () => {

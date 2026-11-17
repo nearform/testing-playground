@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
 import * as Scenario from '../scenarios/Index'
-import { hideClearWhenEmpty } from '../utils/inputClassNames'
 import {
   Input,
   Select,
@@ -72,7 +71,7 @@ export default function Index(): JSX.Element {
             onClear={() => {
               setSearchTerm('')
             }}
-            formClassName={hideClearWhenEmpty(searchTerm)}
+            clearable='auto'
           />
         </div>
         <div className='w-60'>

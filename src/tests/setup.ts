@@ -62,23 +62,3 @@ class ResizeObserver {
   disconnect() {}
 }
 globalThis.ResizeObserver = ResizeObserver
-
-// jsdom has no matchMedia; Quantum's ThemeToggle reads the system colour
-// scheme through it. Report light mode unless a test overrides it.
-if (typeof window.matchMedia !== 'function') {
-  Object.defineProperty(window, 'matchMedia', {
-    configurable: true,
-    writable: true,
-    value: (query: string): MediaQueryList =>
-      ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        addListener: () => {},
-        removeListener: () => {},
-        dispatchEvent: () => false,
-      }) as MediaQueryList,
-  })
-}
