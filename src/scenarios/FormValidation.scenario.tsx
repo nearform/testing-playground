@@ -19,6 +19,7 @@ import {
   validateField,
   validateForm,
 } from '../utils/formValidation'
+import { defineScenario } from '../utils/defineScenario'
 
 interface FieldConfig {
   name: FormField
@@ -218,4 +219,4 @@ const FormValidation = (): JSX.Element => {
   )
 }
 
-export default FormValidation
+export default defineScenario(FormValidation, { difficulty: 'medium' })

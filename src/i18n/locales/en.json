@@ -26,7 +26,6 @@
       "title": "Add/Remove",
       "description": "Dynamically add and remove elements from the page",
       "information": "As well as being able to dynamically add and remove elements from the page, you can also add `?initialElements=X` onto the url to generate elements on load.",
-      "rating": "1",
       "add-element": "Add Element",
       "clear-storage": "Clear Storage",
       "remove-element": "Remove Element"
@@ -34,7 +33,6 @@
     "check-box": {
       "title": "Checkbox",
       "description": "A set of checkbox scenarios to test against.",
-      "rating": "1",
       "scenario-form": "Scenario within a form",
       "checked": "Checked",
       "required": "Required",
@@ -51,7 +49,6 @@
       "title": "Drag and Drop",
       "description": "Drag elements from one side of the page and drop them on the other side.",
       "information": "You able to drag an infinite amount of the red boxes and drop them on the grey box.",
-      "rating": "2",
       "box": "Box",
       "drag-me": "Drag Me",
       "drop-here": "Drop Here",
@@ -61,14 +58,12 @@
       "title": "Drag and Drop (Hard)",
       "description": "Drag the appropriate smaller shapes onto the larger shape.",
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
-      "rating": "3",
       "total-correct": "Total Correct"
     },
     "dynamic-table": {
       "title": "Dynamic Table",
       "description": "Find the data within the green bar within the table.",
       "information": "Note: the table data refreshes on a reload.",
-      "rating": "3",
       "name": "Name",
       "cpu": "CPU",
       "memory": "Memory",
@@ -83,7 +78,6 @@
       "title": "File Upload",
       "description": "Using common browser components, upload a file.",
       "information": "The upload can be anywhere between 1-10 seconds regardless of size as the upload function is mocked.",
-      "rating": "2",
       "please-select-file": "Please select a file.",
       "select-file": "Select File",
       "selected-file": "File: \"{{ filename }}\"",
@@ -94,14 +88,12 @@
       "title": "File Download",
       "description": "Using common browser components, download a file.",
       "information": "Lorem ipsum",
-      "rating": "2",
       "download": "Download File"
     },
     "form-validation": {
       "title": "Form Validation",
       "description": "A registration form whose inputs are validated, so you can check the error messages shown for incorrectly formatted values.",
       "information": "Errors appear when you leave a field and when you submit the form. Phone and website are optional but must be valid if filled in. Age must be a whole number between 18 and 120. The password needs at least 8 characters with an uppercase letter, a lowercase letter and a number.",
-      "rating": "2",
       "submit-button": "Submit",
       "reset-button": "Reset",
       "error-summary_one": "Please fix the {{count}} error below.",
@@ -150,7 +142,6 @@
       "title": "Infinite Scroll",
       "description": "A list that keeps loading new items every time you reach the bottom of the page.",
       "information": "Scroll to the end of the list to load the next batch of 10 items. A loading indicator is shown for a moment before the new items appear, and the feed never runs out, so wait for the new items rather than for the end of the list.",
-      "rating": "2",
       "feed-label": "Infinite feed",
       "count_one": "Showing {{count}} item",
       "count_other": "Showing {{count}} items",
@@ -163,7 +154,6 @@
       "title": "Login Form",
       "description": "A typical login form with username and password.",
       "information": "The username is '<strong>admin</strong>' and the password is '<strong>Passw0rd!</strong>'.",
-      "rating": "1",
       "logged-in-message": "You are currently logged in!",
       "invalid-credentials": "The credentials you have provided are invalid",
       "login-button": "Login",
@@ -175,7 +165,6 @@
       "title": "Notification",
       "description": "Check alerts that are sent as a popup and also part of the main page.",
       "information": "Click on any of the buttons to trigger a notification that is of that type. The popup stays visible for 6 seconds.",
-      "rating": "2",
       "generate-notification": "Generate Notification",
       "type": {
         "success": "Success",
@@ -194,7 +183,6 @@
       "title": "Radio Button",
       "description": "A set of radio buttons to check against.",
       "information": "Depending on the first radio button clicked, a second set will appear and change based on the first one clicked.",
-      "rating": "1",
       "first-set": "Primary Colours",
       "second-set": "Secondary Colours",
       "first": {
@@ -213,7 +201,6 @@
       "title": "Shadow DOM",
       "description": "Elements hidden inside open, nested and closed shadow roots, so you can check how your tools reach into the shadow DOM.",
       "information": "Regular selectors stop at a shadow root boundary. The open shadow root can be pierced by most tools, the nested example needs two hops, the slotted content lives in the light DOM even though it is shown inside a shadow root, and the closed shadow root cannot be reached through host.shadowRoot at all.",
-      "rating": "3",
       "open": {
         "title": "Open shadow root",
         "description": "A small form rendered inside an open shadow root.",
@@ -250,7 +237,6 @@
       "title": "Tooltips",
       "description": "A set of tooltips to test against.",
       "information": "Hover over the elements in this page to view the tooltips.",
-      "rating": "1",
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
@@ -260,7 +246,6 @@
     "slider-page": {
       "title": "Sliders",
       "description": "A range of sliders for you to interact with.",
-      "rating": "2",
       "basic-slider": "Basic Slider",
       "range-slider": "Slider with Range",
       "slider-with-input": "Slider with input",
@@ -269,7 +254,6 @@
     "various-inputs": {
       "title": "Various Inputs",
       "description": "There are all the different types of HTML inputs this page with an output that can be used to verify",
-      "rating": "1",
       "input": "Input",
       "output": "Output",
       "text": "Text",

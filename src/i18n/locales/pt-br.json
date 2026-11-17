@@ -27,7 +27,6 @@
       "title": "Adicionar/Remover",
       "description": "Adicione e remova dinamicamente elementos da página",
       "information": "Além de poder adicionar e remover dinamicamente elementos da página, você também pode adicionar `?initialElements=X` à URL para gerar elementos no carregamento.",
-      "rating": "1",
       "add-element": "Adicionar Elemento",
       "clear-storage": "Limpar Armazenamento",
       "remove-element": "Remover Elemento"
@@ -35,7 +34,6 @@
     "check-box": {
       "title": "Checkbox",
       "description": "Cenários para testes utilizando checkbox.",
-      "rating": "1",
       "scenario-form": "Formulário com campo obrigatório",
       "checked": "Selecionado",
       "required": "Obrigatório",
@@ -52,7 +50,6 @@
       "title": "Arrastar e Soltar",
       "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
       "information": "Você pode arrastar uma quantidade infinita de caixas vermelhas e soltá-las na caixa cinza.",
-      "rating": "2",
       "box": "Caixa",
       "drag-me": "Arraste-me",
       "drop-here": "Solte aqui",
@@ -62,14 +59,12 @@
       "title": "Arrastar e Soltar (Difícil)",
       "description": "Arraste as formas menores apropriadas para a forma maior.",
       "information": "Um soltar correto resultará na forma ficando verde, caso contrário, a forma ficará amarela. Observação: as formas mudam a cada recarregamento.",
-      "rating": "3",
       "total-correct": "Total Correto"
     },
     "dynamic-table": {
       "title": "Tabela Dinâmica",
       "description": "Encontre os dados na barra verde dentro da tabela.",
       "information": "Observação: os dados da tabela se atualizam a cada recarregamento.",
-      "rating": "3",
       "name": "Nome",
       "cpu": "CPU",
       "memory": "Memória",
@@ -84,7 +79,6 @@
       "title": "Upload de Arquivo",
       "description": "Usando componentes comuns do navegador, faça o upload de um arquivo.",
       "information": "O upload pode levar de 1 a 10 segundos, independentemente do tamanho, pois a função de upload é simulada.",
-      "rating": "2",
       "please-select-file": "Por favor, selecione um arquivo.",
       "select-file": "Selecionar Arquivo",
       "selected-file": "Arquivo: \"{{ filename }}\"",
@@ -95,14 +89,12 @@
       "title": "Download de Arquivo",
       "description": "Utilize os componentes comuns do navegador para baixar um arquivo.",
       "information": "Lorem ipsum",
-      "rating": "2",
       "download": "Baixar Arquivo"
     },
     "form-validation": {
       "title": "Validação de Formulário",
       "description": "Um formulário de cadastro com campos validados, para verificar as mensagens de erro exibidas para valores em formato incorreto.",
       "information": "Os erros aparecem ao sair de um campo e ao enviar o formulário. Telefone e site são opcionais, mas devem ser válidos se preenchidos. A idade deve ser um número inteiro entre 18 e 120. A senha precisa de pelo menos 8 caracteres com uma letra maiúscula, uma minúscula e um número.",
-      "rating": "2",
       "submit-button": "Enviar",
       "reset-button": "Limpar",
       "error-summary_one": "Corrija o erro abaixo.",
@@ -151,7 +143,6 @@
       "title": "Rolagem infinita",
       "description": "Uma lista que carrega novos itens sempre que você chega ao final da página.",
       "information": "Role até o final da lista para carregar o próximo lote de 10 itens. Um indicador de carregamento aparece por um instante antes dos novos itens, e a lista nunca termina, então espere pelos novos itens em vez de esperar pelo fim da lista.",
-      "rating": "2",
       "feed-label": "Feed infinito",
       "count_one": "Exibindo {{count}} item",
       "count_other": "Exibindo {{count}} itens",
@@ -164,7 +155,6 @@
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",
       "information": "O nome de usuário é '<strong>admin</strong>' e a senha é '<strong>Passw0rd!</strong>'.",
-      "rating": "1",
       "logged-in-message": "Você está atualmente logado!",
       "invalid-credentials": "As credenciais fornecidas são inválidas",
       "login-button": "Login",
@@ -176,7 +166,6 @@
       "title": "Notificação",
       "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",
       "information": "Clique em qualquer um dos botões para acionar uma notificação desse tipo. O popup permanece visível por 6 segundos.",
-      "rating": "2",
       "generate-notification": "Gerar Notificação",
       "type": {
         "success": "Sucesso",
@@ -195,7 +184,6 @@
       "title": "Botão de Rádio",
       "description": "Um conjunto de botões de rádio para verificar.",
       "information": "Dependendo do primeiro botão de rádio clicado, um segundo conjunto aparecerá e mudará com base no primeiro clicado.",
-      "rating": "1",
       "first-set": "Cores Primárias",
       "second-set": "Cores Secundárias",
       "first": {
@@ -214,7 +202,6 @@
       "title": "Shadow DOM",
       "description": "Elementos escondidos dentro de shadow roots abertas, aninhadas e fechadas, para verificar como suas ferramentas acessam o shadow DOM.",
       "information": "Seletores comuns param na fronteira de uma shadow root. A shadow root aberta pode ser atravessada pela maioria das ferramentas, o exemplo aninhado exige dois passos, o conteúdo do slot fica no light DOM mesmo sendo exibido dentro de uma shadow root, e a shadow root fechada não pode ser acessada por host.shadowRoot.",
-      "rating": "3",
       "open": {
         "title": "Shadow root aberta",
         "description": "Um pequeno formulário renderizado dentro de uma shadow root aberta.",
@@ -250,7 +237,6 @@
     "slider-page": {
       "title": "Deslizadores",
       "description": "Uma variedade de deslizadores para interação.",
-      "rating": "2",
       "basic-slider": "Deslizador Básico",
       "range-slider": "Deslizador com Faixa",
       "slider-with-input": "Deslizador com Entrada",
@@ -260,7 +246,6 @@
       "title": "Tooltip",
       "description": "Cenários para testes utilizando tooltip.",
       "information": "Passe o mouse sobre os elementos desta página para ver o tooltip.",
-      "rating": "1",
       "no-permission": "Você não tem permissão para fazer isso",
       "more-information": "Mais informações",
       "more-information-msg": "Para mais informações, clique aqui:",
@@ -270,7 +255,6 @@
     "various-inputs": {
       "title": "Várias entradas",
       "description": "Todos os diferentes tipos de entradas HTML nesta página com uma saída que pode ser usada para verificar",
-      "rating": "1",
       "input": "Entrada",
       "output": "Saída",
       "text": "Texto",

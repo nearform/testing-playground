@@ -27,21 +27,11 @@ export const DIFFICULTY_STYLES: Record<
   },
 }
 
-// Scenario ratings come from the locale files as '1', '2' or '3'
-export const difficultyOf = (rating: string): Difficulty => {
-  const value = Number(rating)
-  if (value >= 3) return 'hard'
-  if (value >= 2) return 'medium'
-  return 'easy'
-}
+// The difficulty filter's value is a difficulty, or 'all' to show every
+// scenario. Nothing chosen yet (null) also shows every scenario.
+export type DifficultyFilter = Difficulty | 'all'
 
-// The difficulty filter's value is a rating ('1' to '3'), or '0' to show every
-// scenario. Both sides go through difficultyOf so the filter always agrees with
-// the colour a card is given.
 export const matchesDifficulty = (
-  selected: string | null,
-  rating: string,
-): boolean =>
-  selected === null ||
-  selected === '0' ||
-  difficultyOf(selected) === difficultyOf(rating)
+  selected: DifficultyFilter | null,
+  difficulty: Difficulty,
+): boolean => selected === null || selected === 'all' || selected === difficulty

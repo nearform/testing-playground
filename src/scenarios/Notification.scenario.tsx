@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const NOTIFICATION_DURATION = 6000
 
@@ -128,4 +129,4 @@ const Notification = (): JSX.Element => {
   )
 }
 
-export default Notification
+export default defineScenario(Notification, { difficulty: 'medium' })

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 export const BATCH_SIZE = 10
 // Long enough for a test to see the loading state before new items arrive
@@ -115,4 +116,4 @@ const InfiniteScroll = (): JSX.Element => {
   )
 }
 
-export default InfiniteScroll
+export default defineScenario(InfiniteScroll, { difficulty: 'medium' })

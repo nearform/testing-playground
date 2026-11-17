@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 interface Shape {
   id: number
@@ -159,4 +160,4 @@ const DragAndDropHard = (): JSX.Element => {
   )
 }
 
-export default DragAndDropHard
+export default defineScenario(DragAndDropHard, { difficulty: 'hard' })

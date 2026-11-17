@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const RadioButton = (): JSX.Element => {
   const { t } = useTranslation()
@@ -82,4 +83,4 @@ const RadioButton = (): JSX.Element => {
   )
 }
 
-export default RadioButton
+export default defineScenario(RadioButton, { difficulty: 'easy' })

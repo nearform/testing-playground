@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 interface TableDataItem {
   name: string
@@ -158,4 +159,4 @@ const DynamicTable = (): JSX.Element => {
   )
 }
 
-export default DynamicTable
+export default defineScenario(DynamicTable, { difficulty: 'hard' })

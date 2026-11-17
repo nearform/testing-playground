@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
@@ -136,4 +137,4 @@ const LoginForm = (): JSX.Element => {
   )
 }
 
-export default LoginForm
+export default defineScenario(LoginForm, { difficulty: 'easy' })

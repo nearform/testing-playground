@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const TooltipPage = (): JSX.Element => {
   const { t } = useTranslation()
@@ -68,4 +69,4 @@ const TooltipPage = (): JSX.Element => {
   )
 }
 
-export default TooltipPage
+export default defineScenario(TooltipPage, { difficulty: 'easy' })

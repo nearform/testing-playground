@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 type CheckedState = boolean | 'indeterminate'
 
@@ -166,4 +167,4 @@ const CheckBox = (): JSX.Element => {
   )
 }
 
-export default CheckBox
+export default defineScenario(CheckBox, { difficulty: 'easy' })

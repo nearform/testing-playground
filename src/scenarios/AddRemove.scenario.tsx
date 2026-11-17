@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
@@ -132,4 +133,4 @@ const AddRemove = (): JSX.Element => {
   )
 }
 
-export default AddRemove
+export default defineScenario(AddRemove, { difficulty: 'easy' })

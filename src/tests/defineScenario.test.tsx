@@ -1,0 +1,26 @@
+import { describe, expect, it } from 'vitest'
+
+import * as Scenario from '../scenarios/Index'
+import { defineScenario } from '../utils/defineScenario'
+import { DIFFICULTY_STYLES } from '../utils/difficulty'
+
+describe('defineScenario', () => {
+  it('returns the same component, so its name still gives the route', () => {
+    const LoginForm = (): JSX.Element => <div />
+
+    const scenario = defineScenario(LoginForm, { difficulty: 'easy' })
+
+    expect(scenario).toBe(LoginForm)
+    expect(scenario.name).toBe('LoginForm')
+    expect(scenario.difficulty).toBe('easy')
+  })
+})
+
+describe('registered scenarios', () => {
+  it.each(Object.entries(Scenario))(
+    '%s declares a known difficulty',
+    (_name, component) => {
+      expect(Object.keys(DIFFICULTY_STYLES)).toContain(component.difficulty)
+    },
+  )
+})

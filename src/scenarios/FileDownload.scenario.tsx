@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { defineScenario } from '../utils/defineScenario'
 
 const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = useTranslation()
@@ -52,4 +53,4 @@ const FileDownload: React.FC = (): JSX.Element => {
   )
 }
 
-export default FileDownload
+export default defineScenario(FileDownload, { difficulty: 'medium' })
