@@ -150,6 +150,31 @@
       "batch": "Batch {{batch}}",
       "loading": "Loading more items..."
     },
+    "js-alerts": {
+      "title": "JS Alerts",
+      "description": "Handle the browser's native alert, confirm and prompt dialogs, which are not part of the page.",
+      "information": "Each button opens one of the browser's built-in JavaScript dialogs. They are drawn by the browser rather than the page, so they cannot be found in the DOM: listen for the dialog, check its message, then accept or dismiss it (typing an answer into the prompt first). The result of your choice is shown on the page once the dialog closes.",
+      "button": {
+        "alert": "Open JS Alert",
+        "confirm": "Open JS Confirm",
+        "prompt": "Open JS Prompt"
+      },
+      "dialog": {
+        "alert": "I am a JS Alert",
+        "confirm": "Do you want to continue?",
+        "prompt": "What is your name?",
+        "prompt-default": "Tester"
+      },
+      "result": {
+        "title": "Result",
+        "alert": "You accepted the alert",
+        "confirm-ok": "You clicked OK",
+        "confirm-cancel": "You clicked Cancel",
+        "prompt-ok": "You entered: {{answer}}",
+        "prompt-empty": "You submitted an empty answer",
+        "prompt-cancel": "You cancelled the prompt"
+      }
+    },
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",

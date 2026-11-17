@@ -151,6 +151,31 @@
       "batch": "Lot {{batch}}",
       "loading": "Chargement d'autres éléments..."
     },
+    "js-alerts": {
+      "title": "Alertes JS",
+      "description": "Gérez les boîtes de dialogue natives alert, confirm et prompt du navigateur, qui ne font pas partie de la page.",
+      "information": "Chaque bouton ouvre l'une des boîtes de dialogue JavaScript intégrées au navigateur. Elles sont affichées par le navigateur et non par la page, elles sont donc introuvables dans le DOM : interceptez la boîte de dialogue, vérifiez son message, puis acceptez-la ou fermez-la (en saisissant d'abord une réponse dans le prompt). Le résultat de votre choix s'affiche sur la page une fois la boîte de dialogue fermée.",
+      "button": {
+        "alert": "Ouvrir l'alerte JS",
+        "confirm": "Ouvrir la confirmation JS",
+        "prompt": "Ouvrir la saisie JS"
+      },
+      "dialog": {
+        "alert": "Je suis une alerte JS",
+        "confirm": "Voulez-vous continuer ?",
+        "prompt": "Quel est votre nom ?",
+        "prompt-default": "Testeur"
+      },
+      "result": {
+        "title": "Résultat",
+        "alert": "Vous avez accepté l'alerte",
+        "confirm-ok": "Vous avez cliqué sur OK",
+        "confirm-cancel": "Vous avez cliqué sur Annuler",
+        "prompt-ok": "Vous avez saisi : {{answer}}",
+        "prompt-empty": "Vous avez envoyé une réponse vide",
+        "prompt-cancel": "Vous avez annulé la saisie"
+      }
+    },
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
