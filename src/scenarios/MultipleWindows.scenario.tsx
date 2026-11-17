@@ -184,7 +184,8 @@ const PopupSection = (): JSX.Element => {
         <p role='status' data-testid='popup-status'>
           {t(`scenarios.multiple-windows.popup.status.${status}`)}
         </p>
-        <div className='flex flex-col gap-1'>
+        {/* Always on the page, so the first message is announced too */}
+        <div className='flex flex-col gap-1' aria-live='polite'>
           <span className='text-sm'>
             {t('scenarios.multiple-windows.popup.messages')}
           </span>
@@ -195,7 +196,6 @@ const PopupSection = (): JSX.Element => {
           ) : (
             <ol
               className='list-inside list-decimal'
-              aria-live='polite'
               data-testid='popup-messages'
             >
               {messages.map((message, index) => (
