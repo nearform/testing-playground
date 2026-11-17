@@ -1,7 +1,7 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from './TestRenderer'
 import Hovers from '../scenarios/Hovers.scenario'
@@ -108,11 +108,38 @@ describe('Hovers scenario', () => {
       TestRenderer(<Hovers />)
 
       for (const file of ['report.pdf', 'notes.txt', 'photo.png']) {
+        await user.hover(screen.getByTestId(`file-${file}`))
         await user.click(screen.getByRole('button', { name: `Delete ${file}` }))
       }
 
       expect(screen.getByTestId('files-empty')).toHaveTextContent(
         'There are no files left',
+      )
+    })
+
+    it('lets keyboard users reveal and use the actions by tabbing to the row', async () => {
+      const user = userEvent.setup()
+      TestRenderer(<Hovers />)
+      const row = screen.getByTestId('file-notes.txt')
+
+      // Tab through the page until the row itself has focus
+      for (let i = 0; i < 20 && document.activeElement !== row; i++) {
+        await user.tab()
+      }
+      expect(row).toHaveFocus()
+      // Focusing the row is what reveals its (otherwise invisible) actions
+      expect(screen.getByTestId('file-notes.txt-actions')).toHaveClass(
+        'group-focus-within:visible',
+      )
+
+      await user.tab()
+      expect(
+        screen.getByRole('button', { name: 'Open notes.txt' }),
+      ).toHaveFocus()
+      await user.keyboard('{Enter}')
+
+      expect(screen.getByTestId('hovers-result')).toHaveTextContent(
+        'Opened notes.txt',
       )
     })
   })
@@ -132,17 +159,72 @@ describe('Hovers scenario', () => {
       expect(products).toHaveAttribute('aria-expanded', 'true')
     })
 
-    it('does not open the submenu if the pointer moves away first', async () => {
+    describe('with fake timers', () => {
+      afterEach(() => {
+        vi.useRealTimers()
+      })
+
+      // user-event waits on timers internally, so these drive the pointer
+      // with fireEvent instead
+      it('does not open the submenu if the pointer moves away first', () => {
+        vi.useFakeTimers()
+        TestRenderer(<Hovers />)
+        const products = screen.getByTestId('menu-products')
+
+        fireEvent.mouseEnter(products)
+        fireEvent.mouseLeave(products)
+        act(() => {
+          vi.advanceTimersByTime(1000)
+        })
+
+        expect(screen.queryByTestId('submenu-products')).not.toBeInTheDocument()
+      })
+
+      it('opens the submenu once the hover delay has passed', () => {
+        vi.useFakeTimers()
+        TestRenderer(<Hovers />)
+
+        fireEvent.mouseEnter(screen.getByTestId('menu-products'))
+        act(() => {
+          vi.advanceTimersByTime(199)
+        })
+        expect(screen.queryByTestId('submenu-products')).not.toBeInTheDocument()
+
+        act(() => {
+          vi.advanceTimersByTime(1)
+        })
+        expect(screen.getByTestId('submenu-products')).toBeInTheDocument()
+      })
+    })
+
+    it('opens the submenu straight away when the item is clicked', async () => {
       const user = userEvent.setup()
       TestRenderer(<Hovers />)
 
-      await user.hover(screen.getByTestId('menu-products'))
-      await user.unhover(screen.getByTestId('menu-products'))
+      await user.click(screen.getByTestId('menu-products'))
 
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      expect(screen.queryByTestId('submenu-products')).not.toBeInTheDocument()
+      expect(screen.getByTestId('submenu-products')).toBeInTheDocument()
+      expect(screen.getByTestId('menu-products')).toHaveAttribute(
+        'aria-expanded',
+        'true',
+      )
     })
 
+    it('can be used from the keyboard', async () => {
+      const user = userEvent.setup()
+      TestRenderer(<Hovers />)
+
+      screen.getByTestId('menu-products').focus()
+      await user.keyboard('{Enter}')
+      screen.getByTestId('menu-phones').focus()
+      await user.keyboard(' ')
+      screen.getByTestId('menu-android').focus()
+      await user.keyboard('{Enter}')
+
+      expect(screen.getByTestId('hovers-result')).toHaveTextContent(
+        'Chose Phones › Android',
+      )
+    })
     it('chooses an item from a nested submenu', async () => {
       const user = userEvent.setup()
       TestRenderer(<Hovers />)

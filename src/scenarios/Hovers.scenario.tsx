@@ -101,13 +101,16 @@ const Hovers = (): JSX.Element => {
           type='button'
           aria-haspopup={hasChildren ? 'true' : undefined}
           aria-expanded={hasChildren ? isOpen : undefined}
-          onClick={
-            hasChildren
-              ? undefined
-              : () => {
-                  chooseMenuItem(itemPath.slice(1))
-                }
-          }
+          onClick={() => {
+            if (hasChildren) {
+              // Clicking (or Enter/Space) opens the submenu straight away, so
+              // keyboard and touch users are not left out; hovering is delayed
+              clearMenuTimer()
+              setOpenMenus(itemPath)
+            } else {
+              chooseMenuItem(itemPath.slice(1))
+            }
+          }}
           className={[
             'flex w-full items-center justify-between gap-4 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm',
             'hover:bg-grey-200 dark:hover:bg-background-alt-dark',
@@ -199,14 +202,22 @@ const Hovers = (): JSX.Element => {
             ) : (
               <ul className='flex flex-col divide-y-2 divide-border rounded-lg border-2 border-border dark:divide-border-dark dark:border-border-dark'>
                 {files.map((file) => (
+                  // The row is focusable so keyboard users can reveal its
+                  // actions: invisible buttons cannot take focus themselves
                   <li
                     key={file}
-                    className='group flex items-center justify-between gap-4 px-4 py-2 hover:bg-grey-100 dark:hover:bg-background-alt-dark'
+                    tabIndex={0}
+                    className={[
+                      'group flex items-center justify-between gap-4 px-4 py-2',
+                      'hover:bg-grey-100 dark:hover:bg-background-alt-dark',
+                      'focus-visible:shadow-brandGreen focus-visible:outline-hidden dark:focus-visible:shadow-brandGreen10',
+                    ].join(' ')}
                     data-testid={`file-${file}`}
                   >
                     <span>{file}</span>
                     {/* Always in the DOM, but invisible until the row is
-                        hovered (or a button in it has keyboard focus) */}
+                        hovered or has keyboard focus (on itself or a button
+                        in it, so Tab can move on to the buttons) */}
                     <span
                       className='invisible flex gap-2 group-hover:visible group-focus-within:visible'
                       data-testid={`file-${file}-actions`}

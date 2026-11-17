@@ -230,7 +230,7 @@
     "hovers": {
       "title": "Passar o mouse",
       "description": "Interaja com elementos que só aparecem enquanto o mouse está sobre algo.",
-      "information": "Tudo nesta página só aparece enquanto o ponteiro do mouse está sobre algo, então os testes precisam passar o mouse primeiro. Os detalhes de cada cartão de perfil não estão no DOM até que o mouse passe sobre o cartão. Os botões de cada arquivo estão sempre no DOM, mas ficam invisíveis até que o mouse passe sobre a linha, então um teste que clicar neles diretamente será avisado de que não estão visíveis. O menu abre seus submenus um instante depois que o mouse para sobre um item e fecha um instante depois que o ponteiro sai dele, então percorra-o como uma pessoa faria. Sua última ação é exibida abaixo.",
+      "information": "Tudo nesta página só aparece enquanto o ponteiro do mouse está sobre algo, então os testes precisam passar o mouse primeiro. Os detalhes de cada cartão de perfil não estão no DOM até que o mouse passe sobre o cartão e, de propósito, não há outra forma de exibi-los. Os botões de cada arquivo estão sempre no DOM, mas ficam invisíveis até que o mouse passe sobre a linha, então um teste que clicar neles diretamente será avisado de que não estão visíveis; pelo teclado, também é possível exibi-los chegando à linha com Tab. O menu abre seus submenus um instante depois que o mouse para sobre um item e fecha um instante depois que o ponteiro sai dele, então percorra-o como uma pessoa faria; clicar em um item abre seu submenu imediatamente. Sua última ação é exibida abaixo.",
       "profiles": {
         "title": "Perfis",
         "view": "Ver perfil",
