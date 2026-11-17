@@ -104,7 +104,7 @@ const DynamicTable = (): JSX.Element => {
         description={t('scenarios.dynamic-table.description')}
         information={t('scenarios.dynamic-table.information')}
       >
-        <Table data-testid='dynamic-table' bordered>
+        <Table data-testid='dynamic-table' bordered className='w-full'>
           <TableHeader>
             <TableRow>
               <TableHead data-testid='dynamic-table-name-header'>

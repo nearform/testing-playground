@@ -19,6 +19,7 @@ import {
   validateField,
   validateForm,
 } from '../utils/formValidation'
+import { hideClearWhenEmpty } from '../utils/inputClassNames'
 
 interface FieldConfig {
   name: FormField
@@ -190,6 +191,7 @@ const FormValidation = (): JSX.Element => {
                   onClear={() => {
                     handleChange(name, '')
                   }}
+                  formClassName={hideClearWhenEmpty(values[name])}
                   data-testid={testId}
                 />
                 {/* Only one of the two renders: the error replaces the hint */}

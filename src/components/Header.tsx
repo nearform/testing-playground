@@ -9,7 +9,7 @@ function Header(): JSX.Element {
   const { t } = useTranslation()
 
   return (
-    <header className='w-full flex flex-col lg:flex-row justify-between items-center px-8 py-5 lg:px-12 bg-background'>
+    <header className='w-full flex flex-col gap-4 md:flex-row justify-between items-center px-8 py-5 lg:px-12 bg-background'>
       <div className='flex flex-row items-center gap-2 lg:gap-4'>
         <Link to='/'>
           <NFLogo className='hidden w-8 lg:w-40 lg:block lg:w-40 fill-button-primary' />

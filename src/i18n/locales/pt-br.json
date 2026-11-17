@@ -57,7 +57,7 @@
       "total-drops": "Total de Solturas"
     },
     "drag-and-drop-hard": {
-      "title": "Arrastar e Soltar",
+      "title": "Arrastar e Soltar (Difícil)",
       "description": "Arraste as formas menores apropriadas para a forma maior.",
       "information": "Um soltar correto resultará na forma ficando verde, caso contrário, a forma ficará amarela. Observação: as formas mudam a cada recarregamento.",
       "rating": "3",

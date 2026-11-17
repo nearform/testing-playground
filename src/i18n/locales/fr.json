@@ -57,7 +57,7 @@
       "total-drops": "Total des dépôts"
     },
     "drag-and-drop-hard": {
-      "title": "Glisser-déposer",
+      "title": "Glisser-déposer (difficile)",
       "description": "Faites glisser les formes plus petites appropriées sur la forme plus grande.",
       "information": "Un dépôt correct entraînera le passage de la forme au vert, sinon la forme passera au jaune. Note : les formes changent à chaque rechargement de la page",
       "rating": "3",

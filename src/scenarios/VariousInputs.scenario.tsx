@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { HIDE_CLEAR_BUTTON } from '../utils/inputClassNames'
 
 interface InputFieldProps {
   label: string
@@ -49,7 +50,7 @@ const InputField: React.FC<InputFieldProps> = ({
         clearLabel={`${t('scenarios.various-inputs.clear-all')}: ${label}`}
         // The clear button only shows once the field has a value
         formClassName={
-          isOutput || !hasValue ? 'w-full [&>button]:hidden' : 'w-full'
+          isOutput || !hasValue ? `w-full ${HIDE_CLEAR_BUTTON}` : 'w-full'
         }
         rightSideChild={
           !isOutput && hasValue ? (

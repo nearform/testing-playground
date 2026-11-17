@@ -15,7 +15,7 @@ const SHADOW_STYLES = `
     border: 2px dashed #6b4fbb;
     border-radius: 8px;
     padding: 12px;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-family: inherit;
   }
   .card .card { margin-top: 12px; border-color: #e5007e; }
   .label { display: block; font-size: 0.875rem; margin-bottom: 4px; }

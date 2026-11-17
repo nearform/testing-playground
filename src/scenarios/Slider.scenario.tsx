@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
+import { HIDE_CLEAR_BUTTON } from '../utils/inputClassNames'
 
 const MIN = 1
 const MAX = 100
@@ -102,9 +103,11 @@ const SliderWithInput: React.FC = () => {
           type='number'
           value={inputValue}
           onChange={handleInputChange}
+          // The value is always set, so there is never anything to clear
           onClear={() => {
             setInputValue(MIN)
           }}
+          formClassName={HIDE_CLEAR_BUTTON}
           min={MIN}
           max={MAX}
           data-testid='input-slider-text'

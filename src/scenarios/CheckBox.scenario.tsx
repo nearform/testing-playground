@@ -79,7 +79,6 @@ const CheckBox = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.check-box.title')}
         description={t('scenarios.check-box.description')}
-        information={t('scenarios.check-box.information')}
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <div className='flex flex-col gap-3'>

@@ -31,14 +31,14 @@ const PageSetup: React.FC<PageSetupProps> = ({
         </Link>
       </header>
       <section className='mb-4'>
-        <h6 className='text-l'>{t('scenarios.description')}</h6>
+        <h2 className='text-lg font-medium'>{t('scenarios.description')}</h2>
         <p className='mb-4 text-sm text-foreground-muted'>
           {ReactHtmlParser(t(description))}
         </p>
       </section>
       {information && (
         <section className='mb-4'>
-          <h6 className='text-l'>{t('scenarios.information')}</h6>
+          <h2 className='text-lg font-medium'>{t('scenarios.information')}</h2>
           <p className='text-sm text-foreground-muted'>
             {ReactHtmlParser(t(information))}
           </p>
@@ -46,15 +46,19 @@ const PageSetup: React.FC<PageSetupProps> = ({
       )}
       <div className='relative py-4 mb-8'>
         <div className='absolute inset-0 flex items-center'>
-          <div className='w-full border-b border-gray-300'></div>
+          <div className='w-full border-b border-grey-300'></div>
         </div>
         <div className='relative flex justify-center'>
-          <span className='bg-grey-100 px-4 text-sm text-foreground-muted'>
+          <span className='bg-background-alt px-4 text-sm text-foreground-muted'>
             {t('common.playground')}
           </span>
         </div>
       </div>
-      <main>{children}</main>
+      {/* Quantum draws controls for a white surface: on the grey page
+          background their fill and borders all but disappear */}
+      <main className='rounded-2xl bg-background p-6 shadow-sm dark:bg-background-dark'>
+        {children}
+      </main>
     </div>
   )
 }

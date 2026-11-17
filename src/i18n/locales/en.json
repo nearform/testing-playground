@@ -56,7 +56,7 @@
       "total-drops": "Total Drops"
     },
     "drag-and-drop-hard": {
-      "title": "Drag and Drop",
+      "title": "Drag and Drop (Hard)",
       "description": "Drag the appropriate smaller shapes onto the larger shape.",
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
       "rating": "3",

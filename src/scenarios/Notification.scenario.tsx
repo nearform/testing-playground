@@ -22,6 +22,7 @@ const notificationTypes: Array<{
   key: AlertSeverity
   label: string
   variant: ButtonProps['variant']
+  className?: string
 }> = [
   {
     key: 'success',
@@ -36,7 +37,10 @@ const notificationTypes: Array<{
   {
     key: 'warning',
     label: 'scenarios.notification.type.warning',
-    variant: 'tertiary',
+    // Quantum has no warning button, so tint the secondary one
+    variant: 'secondary',
+    className:
+      'border-feedback-warning bg-yellow-100 hover:bg-yellow-200 dark:border-feedback-warning-dark',
   },
   {
     key: 'error',
@@ -79,11 +83,11 @@ const Notification = (): JSX.Element => {
       >
         <ToastProvider duration={NOTIFICATION_DURATION}>
           <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-            {notificationTypes.map(({ key, label, variant }) => (
+            {notificationTypes.map(({ key, label, variant, className }) => (
               <Button
                 key={key}
                 variant={variant}
-                className='w-full'
+                className={['w-full', className].filter(Boolean).join(' ')}
                 onClick={() => {
                   generateNotification(key)
                 }}
