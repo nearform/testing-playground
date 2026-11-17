@@ -58,7 +58,7 @@ export default function Index(): JSX.Element {
 
   return (
     <Layout>
-      <div className='flex flex-wrap justify-center gap-2 bg-background border-t-2 border-grey-200 px-4 py-4'>
+      <div className='flex flex-wrap justify-center gap-2 bg-background border-t-2 border-grey-200 px-4 py-4 dark:bg-background-surface-dark dark:border-grey-800'>
         <div className='w-60'>
           <Input
             placeholder={t('common.search')}

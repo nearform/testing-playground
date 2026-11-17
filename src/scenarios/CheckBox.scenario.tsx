@@ -132,7 +132,7 @@ const CheckBox = (): JSX.Element => {
           </div>
         </div>
 
-        <hr className='my-8 border-grey-300' />
+        <hr className='my-8 border-grey-300 dark:border-grey-700' />
         <p className='mb-3 text-sm'>
           {t('scenarios.check-box.scenario-tree')}:
         </p>

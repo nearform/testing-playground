@@ -40,7 +40,7 @@ const DragAndDrop = (): JSX.Element => {
           <div
             draggable
             onDragStart={handleDragStart}
-            className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-sm shadow'
+            className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-grey-900 text-sm shadow'
             data-testid='draggable-box'
           >
             {t('scenarios.drag-and-drop.drag-me')}!
@@ -50,13 +50,13 @@ const DragAndDrop = (): JSX.Element => {
           <div
             onDragOver={handleDragOver}
             onDrop={handleDrop}
-            className='flex min-h-[200px] w-1/2 flex-wrap items-center justify-center border-2 border-dashed border-grey-800 p-2.5'
+            className='flex min-h-[200px] w-1/2 flex-wrap items-center justify-center border-2 border-dashed border-grey-800 p-2.5 dark:border-grey-300'
           >
             {/* Render "Drop Here" if the grid is empty */}
             <div
               className={
                 grid.length === 0
-                  ? 'h-full w-full cursor-pointer rounded border border-dashed border-grey-800 bg-grey-200 text-center leading-[200px] shadow'
+                  ? 'h-full w-full cursor-pointer rounded border border-dashed border-grey-800 bg-grey-200 text-center dark:border-grey-300 dark:bg-grey-700 leading-[200px] shadow'
                   : 'w-full'
               }
               data-testid='drop-target'
@@ -68,7 +68,7 @@ const DragAndDrop = (): JSX.Element => {
             {grid.map((boxId) => (
               <div
                 key={boxId}
-                className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-center text-sm shadow'
+                className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-grey-900 text-center text-sm shadow'
               >
                 {boxId}
               </div>

@@ -48,7 +48,7 @@ const DropTarget = ({
       onDrop={(e) => {
         onDrop(e)
       }}
-      className={`m-2.5 h-[100px] w-[100px] cursor-pointer bg-grey-200 shadow transition-colors duration-300 ${
+      className={`m-2.5 h-[100px] w-[100px] cursor-pointer bg-grey-200 shadow dark:bg-grey-700 transition-colors duration-300 ${
         shape === 'circle' ? 'rounded-full' : 'rounded-none'
       }`}
       data-testid={`drop-${shape}`}

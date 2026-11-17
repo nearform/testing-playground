@@ -100,9 +100,9 @@ const FileUpload = (): JSX.Element => {
               role='progressbar'
               aria-label={t('scenarios.file-upload.upload-button')}
               data-testid='upload-progress'
-              className='h-1 w-full overflow-hidden rounded-full bg-grey-200'
+              className='h-1 w-full overflow-hidden rounded-full bg-grey-200 dark:bg-grey-700'
             >
-              <div className='h-full w-1/3 animate-pulse rounded-full bg-accent' />
+              <div className='h-full w-1/3 animate-pulse rounded-full bg-accent dark:bg-accent-dark' />
             </div>
           )}
           {uploadMessage.text.length > 0 && (

@@ -147,7 +147,7 @@ const DynamicTable = (): JSX.Element => {
           </TableBody>
         </Table>
         <p
-          className='mt-8 bg-green-300 text-center'
+          className='mt-8 bg-green-300 text-center text-grey-900'
           data-testid='target-scenario'
         >
           {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}

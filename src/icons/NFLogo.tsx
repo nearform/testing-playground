@@ -8,7 +8,7 @@ const logoStyle1 = {
 }
 
 const logoStyle2 = {
-  fill: '#000e38',
+  fill: 'currentColor',
   strokeWidth: 0,
 }
 

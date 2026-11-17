@@ -40,7 +40,7 @@ const notificationTypes: Array<{
     // Quantum has no warning button, so tint the secondary one
     variant: 'secondary',
     className:
-      'border-feedback-warning bg-yellow-100 hover:bg-yellow-200 dark:border-feedback-warning-dark',
+      'border-feedback-warning bg-yellow-100 hover:bg-yellow-200 dark:border-feedback-warning-dark dark:bg-yellow-900/40 dark:hover:bg-yellow-900/70',
   },
   {
     key: 'error',

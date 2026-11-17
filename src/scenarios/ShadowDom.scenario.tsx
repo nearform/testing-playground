@@ -20,7 +20,14 @@ const SHADOW_STYLES = `
   .card .card { margin-top: 12px; border-color: #e5007e; }
   .label { display: block; font-size: 0.875rem; margin-bottom: 4px; }
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  input { padding: 6px 8px; font-size: 1rem; }
+  input {
+    padding: 6px 8px;
+    font-size: 1rem;
+    color: inherit;
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+  }
   button {
     padding: 6px 12px;
     font-size: 0.875rem;

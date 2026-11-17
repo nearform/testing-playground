@@ -128,9 +128,9 @@ const SliderPage: React.FC = () => {
       >
         <div className='flex flex-col'>
           <BasicSlider />
-          <hr className='my-8 border-grey-300' />
+          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <RangeSlider />
-          <hr className='my-8 border-grey-300' />
+          <hr className='my-8 border-grey-300 dark:border-grey-700' />
           <SliderWithInput />
         </div>
       </PageSetup>
