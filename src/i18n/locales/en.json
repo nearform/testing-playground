@@ -43,7 +43,9 @@
       "scenario-icons": "Scenario with checkbox as icons",
       "scenario-tree": "Scenario with tree selection",
       "parent": "Parent",
-      "child": "Child"
+      "child": "Child",
+      "favorite": "Favorite",
+      "bookmark": "Bookmark"
     },
     "drag-and-drop": {
       "title": "Drag and Drop",
@@ -239,7 +241,8 @@
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
-      "really-long-text": "A really really long text example"
+      "really-long-text": "A really really long text example",
+      "delete": "Delete"
     },
     "slider-page": {
       "title": "Sliders",

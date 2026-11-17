@@ -44,7 +44,9 @@
       "scenario-icons": "Checkbox comme des icônes",
       "scenario-tree": "Sélection d'arbre",
       "parent": "Père",
-      "child": "Fils"
+      "child": "Fils",
+      "favorite": "Favori",
+      "bookmark": "Marque-page"
     },
     "drag-and-drop": {
       "title": "Glisser-déposer",
@@ -249,7 +251,8 @@
       "no-permission": "Vous n'avez pas la permission de faire ça",
       "more-information": "Plus d'informations",
       "more-information-msg": "Pour plus d'informations, cliquez ici:",
-      "really-long-text": "Un exemple de texte vraiment très long"
+      "really-long-text": "Un exemple de texte vraiment très long",
+      "delete": "Supprimer"
     },
     "various-inputs": {
       "title": "Diverses entrées",

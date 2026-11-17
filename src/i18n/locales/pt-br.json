@@ -44,7 +44,9 @@
       "scenario-icons": "Checkbox como ícones",
       "scenario-tree": "Seleção em árvore",
       "parent": "Pai",
-      "child": "Filho"
+      "child": "Filho",
+      "favorite": "Favorito",
+      "bookmark": "Marcador"
     },
     "drag-and-drop": {
       "title": "Arrastar e Soltar",
@@ -249,7 +251,8 @@
       "no-permission": "Você não tem permissão para fazer isso",
       "more-information": "Mais informações",
       "more-information-msg": "Para mais informações, clique aqui:",
-      "really-long-text": "Um exemplo de texto realmente muito longo"
+      "really-long-text": "Um exemplo de texto realmente muito longo",
+      "delete": "Excluir"
     },
     "various-inputs": {
       "title": "Várias entradas",

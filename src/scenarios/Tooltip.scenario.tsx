@@ -23,7 +23,11 @@ const TooltipPage = (): JSX.Element => {
             {/* Disabled buttons do not fire pointer events, so the wrapper
                 is the tooltip trigger */}
             <span data-testid='delete-button' className='inline-flex'>
-              <IconButton disabled label='Delete' icon={<BsTrash />} />
+              <IconButton
+                disabled
+                label={t('scenarios.tooltip-page.delete')}
+                icon={<BsTrash />}
+              />
             </span>
           </Tooltip>
 

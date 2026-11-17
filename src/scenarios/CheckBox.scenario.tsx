@@ -118,13 +118,13 @@ const CheckBox = (): JSX.Element => {
             <div className='flex gap-2'>
               <IconCheckbox
                 testId='favorite'
-                label='Favorite'
+                label={t('scenarios.check-box.favorite')}
                 icon={<BsHeart />}
                 checkedIcon={<BsHeartFill />}
               />
               <IconCheckbox
                 testId='bookmark'
-                label='Bookmark'
+                label={t('scenarios.check-box.bookmark')}
                 icon={<BsBookmark />}
                 checkedIcon={<BsBookmarkFill />}
               />
