@@ -61,6 +61,49 @@
       "information": "Un dépôt correct entraînera le passage de la forme au vert, sinon la forme passera au jaune. Note : les formes changent à chaque rechargement de la page",
       "total-correct": "Total correct"
     },
+    "dropdown": {
+      "title": "Listes déroulantes",
+      "description": "Choisissez des options dans un select natif, une sélection multiple et une liste déroulante personnalisée.",
+      "information": "Il y a ici trois types de listes déroulantes. Les deux premières sont des éléments <code>&lt;select&gt;</code> natifs : la plupart des frameworks peuvent donc choisir une option directement par sa valeur ou son texte ; la deuxième permet de choisir plusieurs options à la fois. La troisième est une liste déroulante personnalisée construite avec des boutons et une liste : ce n'est pas un <code>&lt;select&gt;</code>, et ses options n'existent dans le DOM, à la fin de la page, que lorsqu'elle est ouverte. Cliquez dessus pour l'ouvrir, puis cliquez sur une option. Certaines options sont désactivées et ne peuvent pas être choisies. Vos choix actuels sont affichés en dessous.",
+      "native": {
+        "title": "Select natif",
+        "label": "Fruit",
+        "placeholder": "Choisissez un fruit"
+      },
+      "multi": {
+        "title": "Sélection multiple native",
+        "label": "Couleurs"
+      },
+      "custom": {
+        "title": "Liste déroulante personnalisée",
+        "label": "Pays",
+        "placeholder": "Choisissez un pays"
+      },
+      "fruits": {
+        "apple": "Pomme",
+        "banana": "Banane",
+        "cherry": "Cerise",
+        "durian": "Durian (en rupture de stock)"
+      },
+      "colours": {
+        "red": "Rouge",
+        "green": "Vert",
+        "blue": "Bleu",
+        "yellow": "Jaune",
+        "purple": "Violet"
+      },
+      "countries": {
+        "brazil": "Brésil",
+        "france": "France",
+        "ireland": "Irlande",
+        "portugal": "Portugal (indisponible)",
+        "united-kingdom": "Royaume-Uni"
+      },
+      "result": {
+        "title": "Sélection",
+        "none": "Aucune sélection"
+      }
+    },
     "dynamic-table": {
       "title": "Tableau dynamique",
       "description": "Trouvez les données dans la barre verte dans le tableau.",
