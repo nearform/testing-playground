@@ -60,6 +60,49 @@
       "information": "A correct drop will result in the shape turning green, otherwise the shape will turn yellow. Note: the shapes change on each reload",
       "total-correct": "Total Correct"
     },
+    "dropdown": {
+      "title": "Dropdown",
+      "description": "Pick options from a native select, a multi-select and a custom dropdown.",
+      "information": "There are three kinds of dropdown here. The first two are native <code>&lt;select&gt;</code> elements, so most frameworks can choose an option directly by its value or text; the second allows several options to be picked at once. The third is a custom dropdown built from buttons and a list: it is not a <code>&lt;select&gt;</code>, and its options only exist in the DOM, at the end of the page, while it is open, so click it to open it and then click an option. Some options are disabled and cannot be picked. Your current choices are shown underneath.",
+      "native": {
+        "title": "Native select",
+        "label": "Fruit",
+        "placeholder": "Choose a fruit"
+      },
+      "multi": {
+        "title": "Native multi-select",
+        "label": "Colours"
+      },
+      "custom": {
+        "title": "Custom dropdown",
+        "label": "Country",
+        "placeholder": "Choose a country"
+      },
+      "fruits": {
+        "apple": "Apple",
+        "banana": "Banana",
+        "cherry": "Cherry",
+        "durian": "Durian (out of stock)"
+      },
+      "colours": {
+        "red": "Red",
+        "green": "Green",
+        "blue": "Blue",
+        "yellow": "Yellow",
+        "purple": "Purple"
+      },
+      "countries": {
+        "brazil": "Brazil",
+        "france": "France",
+        "ireland": "Ireland",
+        "portugal": "Portugal (unavailable)",
+        "united-kingdom": "United Kingdom"
+      },
+      "result": {
+        "title": "Selected",
+        "none": "Nothing selected"
+      }
+    },
     "dynamic-table": {
       "title": "Dynamic Table",
       "description": "Find the data within the green bar within the table.",
