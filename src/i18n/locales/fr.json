@@ -30,6 +30,11 @@
     "load-error-body": "Une partie de la page n'a pas pu être téléchargée. Vérifiez votre connexion, ou le site vient peut-être d'être mis à jour : rechargez pour réessayer.",
     "reload": "Recharger la page"
   },
+  "not-found": {
+    "title": "Page introuvable",
+    "description": "Il n'y a aucune page à cette adresse. Le scénario a peut-être été renommé ou supprimé : retournez à la page principale pour voir ceux qui sont disponibles.",
+    "requested": "Adresse demandée :"
+  },
   "navigation": {
     "back_to_main_page": "Retour à la page principale"
   },

@@ -89,12 +89,17 @@ const sizeFormat = (locale: string): Intl.NumberFormat => {
   return format
 }
 
+// Rounded to one decimal place, as the size is shown
+const roundToTenth = (value: number): number => Math.round(value * 10) / 10
+
 // A file size in the largest unit that keeps it at 1 or more, with up to one
-// decimal place, in the given language
+// decimal place, in the given language. The unit is chosen after rounding, so
+// a size just under 1 MB shows as 1 MB rather than 1,024 KB.
 export const formatSize = (bytes: number, locale: string): FormattedSize => {
   const format = (value: number): string => sizeFormat(locale).format(value)
   if (bytes < 1024) return { value: format(bytes), unit: 'b' }
-  if (bytes < MAX_FILE_SIZE) return { value: format(bytes / 1024), unit: 'kb' }
+  const kilobytes = roundToTenth(bytes / 1024)
+  if (kilobytes < 1024) return { value: format(kilobytes), unit: 'kb' }
   return { value: format(bytes / MAX_FILE_SIZE), unit: 'mb' }
 }
 
