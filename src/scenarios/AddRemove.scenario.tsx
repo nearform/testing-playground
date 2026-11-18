@@ -26,13 +26,14 @@ export const loadInitialState = (search: string): InitialState => {
     storedElements !== null ? JSON.parse(storedElements) : []
 
   if (elements.length > 0) {
-    const storedIndex = sessionStorage.getItem('nextIndex')
+    // Never reuse a saved button's number, even if the saved index is stale
+    const afterSaved = Math.max(...elements) + 1
+    const storedIndex = parseInt(sessionStorage.getItem('nextIndex') ?? '', 10)
     return {
       elements,
-      nextIndex:
-        storedIndex !== null
-          ? parseInt(storedIndex, 10)
-          : Math.max(...elements) + 1,
+      nextIndex: isNaN(storedIndex)
+        ? afterSaved
+        : Math.max(storedIndex, afterSaved),
     }
   }
 
@@ -58,17 +59,17 @@ const AddRemove = (): JSX.Element => {
   const [elements, setElements] = useState<number[]>(initialState.elements)
   const [nextIndex, setNextIndex] = useState(initialState.nextIndex)
 
+  // Save both whenever they change, so they cannot fall out of step
   useEffect(() => {
-    // Save elements to sessionStorage whenever it changes
     sessionStorage.setItem('elements', JSON.stringify(elements))
   }, [elements])
 
+  useEffect(() => {
+    sessionStorage.setItem('nextIndex', nextIndex.toString())
+  }, [nextIndex])
+
   const addElement = (): void => {
-    setNextIndex((prevIndex) => {
-      const newIndex = prevIndex + 1
-      sessionStorage.setItem('nextIndex', newIndex.toString())
-      return newIndex
-    })
+    setNextIndex((prevIndex) => prevIndex + 1)
     setElements((prevElements) => [...prevElements, nextIndex])
   }
 
@@ -79,7 +80,6 @@ const AddRemove = (): JSX.Element => {
       )
       if (newElements.length === 0) {
         setNextIndex(0)
-        sessionStorage.setItem('nextIndex', '0')
       }
       return newElements
     })

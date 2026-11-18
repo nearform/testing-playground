@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { cleanup, fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -48,6 +48,17 @@ describe('AddRemove component', () => {
     fireEvent.click(removeFirstElementButton)
     const removeSecondElementButton = screen.getByTestId('remove-element-2')
     expect(removeSecondElementButton).toBeInTheDocument()
+  })
+
+  it("never reuses a saved button's number, even with a stale saved index", () => {
+    sessionStorage.setItem('elements', JSON.stringify([0, 1, 2]))
+    sessionStorage.setItem('nextIndex', '0')
+    TestRenderer(<AddRemove />)
+
+    fireEvent.click(screen.getByTestId('add-element'))
+
+    expect(screen.getAllByTestId('remove-element-4')).toHaveLength(1)
+    expect(screen.getAllByTestId('remove-element-1')).toHaveLength(1)
   })
 
   describe('with ?initialElements in the URL', () => {
@@ -112,6 +123,25 @@ describe('AddRemove component', () => {
         'remove-element-5',
       ])
     })
+
+    it('numbers the next button correctly after a reload', () => {
+      // Left over from an earlier visit in the same tab: one button was
+      // added and removed again
+      sessionStorage.setItem('elements', '[]')
+      sessionStorage.setItem('nextIndex', '0')
+      renderWithInitialElements(3)
+      cleanup()
+      renderWithInitialElements(3)
+
+      fireEvent.click(screen.getByTestId('add-element'))
+
+      expect(removeButtonIds()).toEqual([
+        'remove-element-1',
+        'remove-element-2',
+        'remove-element-3',
+        'remove-element-4',
+      ])
+    })
   })
 
   it('clears storage when the "Clear Storage" button is clicked', () => {
@@ -129,7 +159,7 @@ describe('AddRemove component', () => {
 
     // Check if storage is cleared
     expect(sessionStorage.getItem('elements')).toEqual('[]')
-    expect(sessionStorage.getItem('nextIndex')).toBeNull()
+    expect(sessionStorage.getItem('nextIndex')).toEqual('0')
 
     // Check if state is updated
     expect(removeElementButton).not.toBeInTheDocument()
