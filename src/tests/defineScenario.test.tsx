@@ -44,3 +44,32 @@ describe('registered scenarios', () => {
     expect(new Set(slugs).size).toBe(slugs.length)
   })
 })
+
+describe('scenario sources', () => {
+  const sources = import.meta.glob<string>('../scenarios/*.scenario.tsx', {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+  })
+  const modules = import.meta.glob<{ default: { slug: string } }>(
+    '../scenarios/*.scenario.tsx',
+    { eager: true },
+  )
+
+  it('finds every scenario file', () => {
+    expect(Object.keys(sources)).toHaveLength(Object.keys(Scenario).length)
+  })
+
+  // The slug is written once, so renaming it moves the route and the texts
+  // together rather than leaving the page showing raw keys
+  it.each(Object.entries(sources))(
+    '%s names its slug once and builds its text keys from it',
+    (path, source) => {
+      const declared = /^const SLUG = '([^']+)'$/m.exec(source)?.[1]
+
+      expect(declared).toBe(modules[path].default.slug)
+      expect(source).toContain('slug: SLUG,')
+      expect(source).not.toMatch(/['"`]scenarios\.[a-z]/)
+    },
+  )
+})

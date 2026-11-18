@@ -6,6 +6,9 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'slider-page'
+
 const MIN = 1
 const MAX = 100
 
@@ -18,7 +21,7 @@ const BasicSlider: React.FC = () => {
   return (
     <div data-testid='basic-slider-container'>
       <Slider
-        label={t('scenarios.slider-page.basic-slider')}
+        label={t(`scenarios.${SLUG}.basic-slider`)}
         value={[basicValue]}
         onValueChange={([value]) => {
           setBasicValue(value)
@@ -39,7 +42,7 @@ const RangeSlider: React.FC = () => {
   return (
     <div data-testid='range-slider-container'>
       <Slider
-        label={t('scenarios.slider-page.range-slider')}
+        label={t(`scenarios.${SLUG}.range-slider`)}
         value={rangeValue}
         onValueChange={setRangeValue}
         min={MIN}
@@ -69,7 +72,7 @@ const SliderWithInput: React.FC = () => {
   return (
     <div className='flex items-end gap-4'>
       <Slider
-        label={t('scenarios.slider-page.slider-with-input')}
+        label={t(`scenarios.${SLUG}.slider-with-input`)}
         value={[inputValue]}
         onValueChange={([value]) => {
           setInputValue(value)
@@ -80,7 +83,7 @@ const SliderWithInput: React.FC = () => {
       />
       <div className='w-32 shrink-0'>
         <Input
-          labelText={t('scenarios.slider-page.value')}
+          labelText={t(`scenarios.${SLUG}.value`)}
           variant='primary'
           size='sm'
           type='number'
@@ -101,8 +104,8 @@ const SliderPage: React.FC = () => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.slider-page.title')}
-        description={t('scenarios.slider-page.description')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
       >
         <div className='flex flex-col gap-12'>
           <BasicSlider />
@@ -115,6 +118,6 @@ const SliderPage: React.FC = () => {
 }
 
 export default defineScenario(SliderPage, {
-  slug: 'slider-page',
+  slug: SLUG,
   difficulty: 'medium',
 })

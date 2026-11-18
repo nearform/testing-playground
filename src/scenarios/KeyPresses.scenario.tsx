@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'key-presses'
+
 // How many of the most recent keys the key reader remembers
 const HISTORY_LENGTH = 10
 
@@ -110,18 +113,15 @@ const KeyPresses = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.key-presses.title')}
-        description={t('scenarios.key-presses.description')}
-        information={translateInformation(
-          t,
-          'scenarios.key-presses.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col gap-10'>
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.key-presses.reader.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.reader.title`)}</CardTitle>
             <label className='flex flex-col gap-2'>
-              {t('scenarios.key-presses.reader.label')}
+              {t(`scenarios.${SLUG}.reader.label`)}
               <Input
                 variant='primary'
                 type='text'
@@ -133,28 +133,28 @@ const KeyPresses = (): JSX.Element => {
             <div aria-live='polite' className='flex flex-col gap-1'>
               <p data-testid='key-reader-result'>
                 {lastKey === null
-                  ? t('scenarios.key-presses.reader.none')
-                  : t('scenarios.key-presses.reader.pressed', {
+                  ? t(`scenarios.${SLUG}.reader.none`)
+                  : t(`scenarios.${SLUG}.reader.pressed`, {
                       key: lastKey.key,
                     })}
               </p>
               {lastKey !== null && (
                 <dl className='grid grid-cols-[auto_1fr] gap-x-4 text-sm'>
-                  <dt>{t('scenarios.key-presses.reader.key')}</dt>
+                  <dt>{t(`scenarios.${SLUG}.reader.key`)}</dt>
                   <dd data-testid='key-reader-key'>{lastKey.key}</dd>
-                  <dt>{t('scenarios.key-presses.reader.code')}</dt>
+                  <dt>{t(`scenarios.${SLUG}.reader.code`)}</dt>
                   <dd data-testid='key-reader-code'>{lastKey.code}</dd>
-                  <dt>{t('scenarios.key-presses.reader.modifiers')}</dt>
+                  <dt>{t(`scenarios.${SLUG}.reader.modifiers`)}</dt>
                   <dd data-testid='key-reader-modifiers'>
                     {lastKey.modifiers.length === 0
-                      ? t('scenarios.key-presses.reader.no-modifiers')
+                      ? t(`scenarios.${SLUG}.reader.no-modifiers`)
                       : lastKey.modifiers.join(' + ')}
                   </dd>
                 </dl>
               )}
             </div>
             <div className='flex flex-wrap items-center gap-2'>
-              <span>{t('scenarios.key-presses.reader.history')}</span>
+              <span>{t(`scenarios.${SLUG}.reader.history`)}</span>
               <ol className='flex flex-wrap gap-1' data-testid='key-history'>
                 {history.map((key, index) => (
                   <li
@@ -167,20 +167,20 @@ const KeyPresses = (): JSX.Element => {
                 ))}
               </ol>
               <Button size='xs' variant='secondary' onClick={clearKeys}>
-                {t('scenarios.key-presses.reader.clear')}
+                {t(`scenarios.${SLUG}.reader.clear`)}
               </Button>
             </div>
           </section>
 
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.key-presses.counter.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.counter.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.key-presses.counter.instructions')}
+              {t(`scenarios.${SLUG}.counter.instructions`)}
             </p>
             <div
               role='spinbutton'
               tabIndex={0}
-              aria-label={t('scenarios.key-presses.counter.label')}
+              aria-label={t(`scenarios.${SLUG}.counter.label`)}
               aria-valuenow={counter}
               aria-valuemin={COUNTER_MIN}
               aria-valuemax={COUNTER_MAX}
@@ -197,9 +197,9 @@ const KeyPresses = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.key-presses.hold.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.hold.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.key-presses.hold.instructions', {
+              {t(`scenarios.${SLUG}.hold.instructions`, {
                 seconds: HOLD_DURATION / 1000,
               })}
             </p>
@@ -220,10 +220,10 @@ const KeyPresses = (): JSX.Element => {
               ].join(' ')}
               data-testid='hold-target'
             >
-              {t('scenarios.key-presses.hold.label')}
+              {t(`scenarios.${SLUG}.hold.label`)}
             </div>
             <p aria-live='polite' data-testid='hold-result'>
-              {t(`scenarios.key-presses.hold.state.${holdState}`)}
+              {t(`scenarios.${SLUG}.hold.state.${holdState}`)}
             </p>
           </section>
         </div>
@@ -233,6 +233,6 @@ const KeyPresses = (): JSX.Element => {
 }
 
 export default defineScenario(KeyPresses, {
-  slug: 'key-presses',
+  slug: SLUG,
   difficulty: 'medium',
 })

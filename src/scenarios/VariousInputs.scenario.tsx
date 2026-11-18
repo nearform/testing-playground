@@ -14,6 +14,9 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'various-inputs'
+
 interface InputFieldProps {
   label: string
   type: 'text' | 'password' | 'number' | 'date' | 'textarea'
@@ -56,7 +59,7 @@ const InputField: React.FC<InputFieldProps> = ({
         }}
         onClear={clear}
         clearable='auto'
-        clearLabel={`${t('scenarios.various-inputs.clear-all')}: ${label}`}
+        clearLabel={`${t(`scenarios.${SLUG}.clear-all`)}: ${label}`}
         formClassName='w-full'
         // Without a clear button Quantum shows this as decoration, so only
         // pass it while there is something to clear
@@ -74,11 +77,11 @@ const InputField: React.FC<InputFieldProps> = ({
       <CardTitle>{label}</CardTitle>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
         <FormGroup orientation='horizontal'>
-          <Label>{t('scenarios.various-inputs.input')}</Label>
+          <Label>{t(`scenarios.${SLUG}.input`)}</Label>
           {renderField(false)}
         </FormGroup>
         <FormGroup orientation='horizontal'>
-          <Label>{t('scenarios.various-inputs.output')}</Label>
+          <Label>{t(`scenarios.${SLUG}.output`)}</Label>
           {renderField(true)}
         </FormGroup>
       </div>
@@ -120,11 +123,11 @@ const VariousInputs: React.FC = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.various-inputs.title')}
-        description={t('scenarios.various-inputs.description')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
       >
         <Button variant='secondary' onClick={handleClearAll}>
-          {t('scenarios.various-inputs.clear-all')}
+          {t(`scenarios.${SLUG}.clear-all`)}
         </Button>
 
         <div className='mt-6 flex flex-col gap-6'>
@@ -132,7 +135,7 @@ const VariousInputs: React.FC = (): JSX.Element => {
             <InputField
               key={type}
               type={type}
-              label={t(`scenarios.various-inputs.${type}`)}
+              label={t(`scenarios.${SLUG}.${type}`)}
               value={inputValues[type]}
               onChange={handleChange(type)}
             />
@@ -144,6 +147,6 @@ const VariousInputs: React.FC = (): JSX.Element => {
 }
 
 export default defineScenario(VariousInputs, {
-  slug: 'various-inputs',
+  slug: SLUG,
   difficulty: 'easy',
 })

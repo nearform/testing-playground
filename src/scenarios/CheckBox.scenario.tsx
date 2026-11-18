@@ -16,6 +16,9 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'check-box'
+
 type CheckedState = boolean | 'indeterminate'
 
 interface IconCheckboxProps {
@@ -80,19 +83,19 @@ const CheckBox = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.check-box.title')}
-        description={t('scenarios.check-box.description')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <div className='flex flex-col gap-3'>
-            <CardTitle>{t('scenarios.check-box.scenario-form')}</CardTitle>
-            <ControlLabel label={t('scenarios.check-box.checked')}>
+            <CardTitle>{t(`scenarios.${SLUG}.scenario-form`)}</CardTitle>
+            <ControlLabel label={t(`scenarios.${SLUG}.checked`)}>
               <Checkbox defaultChecked data-testid='checked' />
             </ControlLabel>
-            <ControlLabel label={t('scenarios.check-box.disabled')}>
+            <ControlLabel label={t(`scenarios.${SLUG}.disabled`)}>
               <Checkbox disabled data-testid='disabled' />
             </ControlLabel>
-            <ControlLabel label={`${t('scenarios.check-box.required')} *`}>
+            <ControlLabel label={`${t(`scenarios.${SLUG}.required`)} *`}>
               <Checkbox
                 required
                 checked={checked[2]}
@@ -109,30 +112,30 @@ const CheckBox = (): JSX.Element => {
                 id='required-checkbox-message'
                 data-testid='required-message'
               >
-                {t('scenarios.check-box.required-message')}
+                {t(`scenarios.${SLUG}.required-message`)}
               </FieldError>
             )}
           </div>
           <div className='flex flex-col gap-3'>
-            <CardTitle>{t('scenarios.check-box.scenario-icons')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.scenario-icons`)}</CardTitle>
             <div className='flex gap-2'>
               <IconCheckbox
                 testId='favorite'
-                label={t('scenarios.check-box.favorite')}
+                label={t(`scenarios.${SLUG}.favorite`)}
                 icon={<BsHeart />}
                 checkedIcon={<BsHeartFill />}
               />
               <IconCheckbox
                 testId='bookmark'
-                label={t('scenarios.check-box.bookmark')}
+                label={t(`scenarios.${SLUG}.bookmark`)}
                 icon={<BsBookmark />}
                 checkedIcon={<BsBookmarkFill />}
               />
             </div>
           </div>
           <div className='flex flex-col gap-3'>
-            <CardTitle>{t('scenarios.check-box.scenario-tree')}</CardTitle>
-            <ControlLabel label={t('scenarios.check-box.parent')}>
+            <CardTitle>{t(`scenarios.${SLUG}.scenario-tree`)}</CardTitle>
+            <ControlLabel label={t(`scenarios.${SLUG}.parent`)}>
               <Checkbox
                 checked={parentChecked}
                 onCheckedChange={handleParent}
@@ -140,14 +143,14 @@ const CheckBox = (): JSX.Element => {
               />
             </ControlLabel>
             <div className='ml-6 flex flex-col gap-3'>
-              <ControlLabel label={t('scenarios.check-box.child')}>
+              <ControlLabel label={t(`scenarios.${SLUG}.child`)}>
                 <Checkbox
                   checked={checked[0]}
                   onCheckedChange={handleChild1}
                   data-testid='child'
                 />
               </ControlLabel>
-              <ControlLabel label={t('scenarios.check-box.child')}>
+              <ControlLabel label={t(`scenarios.${SLUG}.child`)}>
                 <Checkbox
                   checked={checked[1]}
                   onCheckedChange={handleChild2}
@@ -163,6 +166,6 @@ const CheckBox = (): JSX.Element => {
 }
 
 export default defineScenario(CheckBox, {
-  slug: 'check-box',
+  slug: SLUG,
   difficulty: 'easy',
 })

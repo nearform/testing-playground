@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'autocomplete'
+
 // How many characters the city search needs before it asks the server
 export const MIN_CITY_CHARACTERS = 2
 // How long typing has to pause before the city search asks the server
@@ -338,44 +341,40 @@ const Autocomplete = (): JSX.Element => {
   const cityMessage = (): string | undefined => {
     if (cityTerm === '') return undefined
     if (cityTerm.length < MIN_CITY_CHARACTERS)
-      return t('scenarios.autocomplete.city.too-short', {
+      return t(`scenarios.${SLUG}.city.too-short`, {
         count: MIN_CITY_CHARACTERS,
       })
-    if (cityLoading) return t('scenarios.autocomplete.city.loading')
-    return t('scenarios.autocomplete.no-matches')
+    if (cityLoading) return t(`scenarios.${SLUG}.city.loading`)
+    return t(`scenarios.${SLUG}.no-matches`)
   }
 
   const selection = (value: string | null): string =>
-    value ?? t('scenarios.autocomplete.nothing-selected')
+    value ?? t(`scenarios.${SLUG}.nothing-selected`)
 
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.autocomplete.title')}
-        description={t('scenarios.autocomplete.description')}
-        information={translateInformation(
-          t,
-          'scenarios.autocomplete.information',
-          {
-            min: MIN_CITY_CHARACTERS,
-            debounce: SEARCH_DEBOUNCE,
-            max: MAX_CITY_RESULTS,
-          },
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`, {
+          min: MIN_CITY_CHARACTERS,
+          debounce: SEARCH_DEBOUNCE,
+          max: MAX_CITY_RESULTS,
+        })}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.autocomplete.country.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.country.title`)}</CardTitle>
             <Combobox
               id='country'
-              label={t('scenarios.autocomplete.country.label')}
-              placeholder={t('scenarios.autocomplete.country.placeholder')}
+              label={t(`scenarios.${SLUG}.country.label`)}
+              placeholder={t(`scenarios.${SLUG}.country.placeholder`)}
               query={countryQuery}
               suggestions={countrySuggestions}
               message={
                 countryQuery.trim() === ''
                   ? undefined
-                  : t('scenarios.autocomplete.no-matches')
+                  : t(`scenarios.${SLUG}.no-matches`)
               }
               onQueryChange={(query) => {
                 setCountryQuery(query)
@@ -387,18 +386,18 @@ const Autocomplete = (): JSX.Element => {
               }}
             />
             <p aria-live='polite' data-testid='country-selected'>
-              {t('scenarios.autocomplete.selected', {
+              {t(`scenarios.${SLUG}.selected`, {
                 value: selection(country),
               })}
             </p>
           </section>
 
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.autocomplete.city.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.city.title`)}</CardTitle>
             <Combobox
               id='city'
-              label={t('scenarios.autocomplete.city.label')}
-              placeholder={t('scenarios.autocomplete.city.placeholder')}
+              label={t(`scenarios.${SLUG}.city.label`)}
+              placeholder={t(`scenarios.${SLUG}.city.placeholder`)}
               query={cityQuery}
               // Once chosen, the city is its own only suggestion (as the
               // country box lists the chosen country), so reopening the list
@@ -416,12 +415,12 @@ const Autocomplete = (): JSX.Element => {
               }}
             />
             <p aria-live='polite' data-testid='city-selected'>
-              {t('scenarios.autocomplete.selected', {
+              {t(`scenarios.${SLUG}.selected`, {
                 value: selection(city),
               })}
             </p>
             <Notice variant='warning' data-testid='city-slow-notice'>
-              {t('scenarios.autocomplete.city.slow-notice', {
+              {t(`scenarios.${SLUG}.city.slow-notice`, {
                 wait: SEARCH_DEBOUNCE + SLOW_RESPONSE,
               })}
             </Notice>
@@ -433,6 +432,6 @@ const Autocomplete = (): JSX.Element => {
 }
 
 export default defineScenario(Autocomplete, {
-  slug: 'autocomplete',
+  slug: SLUG,
   difficulty: 'hard',
 })

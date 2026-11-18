@@ -167,6 +167,27 @@ describe('Clipboard scenario', () => {
       expect(apiKey).toHaveAttribute('data-copied', 'false')
     })
 
+    it('leaves no timer behind when a copy finishes after the page is left', async () => {
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
+      const fake = installClipboard()
+      let finishCopy = (): void => {}
+      fake.clipboard.writeText.mockImplementation(
+        async () =>
+          await new Promise<void>((resolve) => {
+            finishCopy = resolve
+          }),
+      )
+      const { unmount } = TestRenderer(<Clipboard />)
+      await clickAndSettle('button-copy-snippet')
+
+      unmount()
+      await act(async () => {
+        finishCopy()
+      })
+
+      expect(vi.getTimerCount()).toBe(0)
+    })
+
     it('explains when permission to write is denied', async () => {
       const fake = installClipboard()
       fake.clipboard.writeText.mockRejectedValueOnce(denied())

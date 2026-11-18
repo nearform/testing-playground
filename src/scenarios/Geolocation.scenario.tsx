@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'geolocation'
+
 interface City {
   id: string
   latitude: number
@@ -169,17 +172,17 @@ const Geolocation = (): JSX.Element => {
           },
           {
             id: 'accuracy',
-            value: t('scenarios.geolocation.details.metres', {
+            value: t(`scenarios.${SLUG}.details.metres`, {
               value: Math.round(coords.accuracy),
             }),
           },
           {
             id: 'nearest-city',
-            value: t(`scenarios.geolocation.cities.${nearest.city.id}`),
+            value: t(`scenarios.${SLUG}.cities.${nearest.city.id}`),
           },
           {
             id: 'distance',
-            value: t('scenarios.geolocation.details.kilometres', {
+            value: t(`scenarios.${SLUG}.details.kilometres`, {
               value: Math.round(nearest.distance),
             }),
           },
@@ -188,18 +191,15 @@ const Geolocation = (): JSX.Element => {
 
   const statusMessage =
     status.state === 'error'
-      ? t(`scenarios.geolocation.errors.${status.key}`)
-      : t(`scenarios.geolocation.status.${status.state}`)
+      ? t(`scenarios.${SLUG}.errors.${status.key}`)
+      : t(`scenarios.${SLUG}.status.${status.state}`)
 
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.geolocation.title')}
-        description={t('scenarios.geolocation.description')}
-        information={translateInformation(
-          t,
-          'scenarios.geolocation.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           <Button
@@ -209,7 +209,7 @@ const Geolocation = (): JSX.Element => {
             disabled={!supported || watching}
             data-testid='button-get-location'
           >
-            {t('scenarios.geolocation.button.get-location')}
+            {t(`scenarios.${SLUG}.button.get-location`)}
           </Button>
           <Button
             variant='secondary'
@@ -221,8 +221,8 @@ const Geolocation = (): JSX.Element => {
           >
             {t(
               watching
-                ? 'scenarios.geolocation.button.stop-watching'
-                : 'scenarios.geolocation.button.start-watching',
+                ? `scenarios.${SLUG}.button.stop-watching`
+                : `scenarios.${SLUG}.button.start-watching`,
             )}
           </Button>
         </div>
@@ -230,7 +230,7 @@ const Geolocation = (): JSX.Element => {
         <div aria-live='polite' className='mt-8 flex flex-col gap-8'>
           <Alert
             severity={statusSeverity[status.state]}
-            title={t('scenarios.geolocation.status.title')}
+            title={t(`scenarios.${SLUG}.status.title`)}
             data-testid='status'
             data-state={status.state}
           >
@@ -239,18 +239,18 @@ const Geolocation = (): JSX.Element => {
 
           {watching && (
             <p data-testid='watch-updates'>
-              {t('scenarios.geolocation.watch-updates', { count: updates })}
+              {t(`scenarios.${SLUG}.watch-updates`, { count: updates })}
             </p>
           )}
 
           {details.length > 0 && (
             <section className='flex flex-col gap-2'>
-              <CardTitle>{t('scenarios.geolocation.details.title')}</CardTitle>
+              <CardTitle>{t(`scenarios.${SLUG}.details.title`)}</CardTitle>
               <dl className='grid grid-cols-[auto_1fr] gap-x-4 gap-y-1'>
                 {details.map(({ id, value }) => (
                   <React.Fragment key={id}>
                     <dt className='font-semibold'>
-                      {t(`scenarios.geolocation.details.${id}`)}
+                      {t(`scenarios.${SLUG}.details.${id}`)}
                     </dt>
                     <dd data-testid={id}>{value}</dd>
                   </React.Fragment>
@@ -265,6 +265,6 @@ const Geolocation = (): JSX.Element => {
 }
 
 export default defineScenario(Geolocation, {
-  slug: 'geolocation',
+  slug: SLUG,
   difficulty: 'medium',
 })

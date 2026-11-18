@@ -48,8 +48,15 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const PHONE_PATTERN = /^\+?[0-9 ]+$/
 const INTEGER_PATTERN = /^-?\d+$/
 
-export const MIN_PHONE_DIGITS = 10
-export const MAX_PHONE_DIGITS = 15
+const MIN_PHONE_DIGITS = 10
+const MAX_PHONE_DIGITS = 15
+
+// Passed to the phone hint and error texts, so they always state the limits
+// the rule applies
+export const PHONE_DIGIT_LIMITS = {
+  minDigits: MIN_PHONE_DIGITS,
+  maxDigits: MAX_PHONE_DIGITS,
+}
 
 // Shared with the multi-step form, so both scenarios accept the same input.
 // Both take a trimmed, non-empty value.

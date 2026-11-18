@@ -12,7 +12,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
-import { useLocale } from '../utils/locale'
+import { useNumberFormat } from '../utils/locale'
 import type { ChartLayout, Point, Size } from '../utils/canvas'
 import {
   barAt,
@@ -22,7 +22,10 @@ import {
   toSvgPoints,
 } from '../utils/canvas'
 
-const key = (path: string): string => `scenarios.canvas-and-svg.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'canvas-and-svg'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 // Everything is drawn at a fixed size, in fixed colours that do not follow the
 // light or dark theme, with no animation and nothing random, so the same
@@ -496,8 +499,8 @@ const DistrictMap = (): JSX.Element => {
   const frame = useRef<HTMLDivElement>(null)
   const [selected, setSelected] = useState<Region | null>(null)
   const [tooltip, setTooltip] = useState<Tooltip | null>(null)
-  const locale = useLocale()
-  const numbers = new Intl.NumberFormat(locale)
+  // Built once, not on every mouse move over the map
+  const numbers = useNumberFormat()
 
   const name = (region: Region): string => t(key(`map.regions.${region.id}`))
 
@@ -625,6 +628,6 @@ const CanvasAndSvg = (): JSX.Element => {
 }
 
 export default defineScenario(CanvasAndSvg, {
-  slug: 'canvas-and-svg',
+  slug: SLUG,
   difficulty: 'hard',
 })

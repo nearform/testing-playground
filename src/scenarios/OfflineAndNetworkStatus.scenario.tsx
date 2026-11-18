@@ -16,8 +16,10 @@ import {
   requestStatus,
 } from '../utils/networkStatus'
 
-const key = (name: string): string =>
-  `scenarios.offline-and-network-status.${name}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'offline-and-network-status'
+
+const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
 type ConnectionEventType =
   'loaded-online' | 'loaded-offline' | 'online' | 'offline'
@@ -429,6 +431,6 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
 }
 
 export default defineScenario(OfflineAndNetworkStatus, {
-  slug: 'offline-and-network-status',
+  slug: SLUG,
   difficulty: 'medium',
 })

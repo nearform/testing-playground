@@ -1071,7 +1071,7 @@
       "hints": {
         "full-name": "Lettres, espaces, traits d'union et apostrophes uniquement",
         "email": "ex. nom@exemple.com",
-        "phone": "Facultatif, 10 à 15 chiffres, peut commencer par +",
+        "phone": "Facultatif, {{minDigits}} à {{maxDigits}} chiffres, peut commencer par +",
         "age": "Entre 18 et 120",
         "website": "Facultatif, doit commencer par http:// ou https://",
         "password": "Au moins 8 caractères avec majuscule, minuscule et chiffre",
@@ -1084,7 +1084,7 @@
         "email-required": "L'e-mail est obligatoire",
         "email-invalid": "Veuillez saisir une adresse e-mail valide",
         "phone-invalid": "Le numéro de téléphone ne peut contenir que des chiffres, des espaces et un + initial",
-        "phone-length": "Le numéro de téléphone doit contenir entre 10 et 15 chiffres",
+        "phone-length": "Le numéro de téléphone doit contenir entre {{minDigits}} et {{maxDigits}} chiffres",
         "age-required": "L'âge est obligatoire",
         "age-not-number": "L'âge doit être un nombre entier",
         "age-range": "L'âge doit être compris entre 18 et 120",
@@ -1630,7 +1630,7 @@
         "country-required": "Veuillez choisir un pays",
         "phone-required": "Le numéro de téléphone est obligatoire pour être contacté par téléphone",
         "phone-invalid": "Le numéro de téléphone ne peut contenir que des chiffres, des espaces et un + initial",
-        "phone-length": "Le numéro de téléphone doit contenir entre 10 et 15 chiffres"
+        "phone-length": "Le numéro de téléphone doit contenir entre {{minDigits}} et {{maxDigits}} chiffres"
       }
     },
     "multiple-windows": {

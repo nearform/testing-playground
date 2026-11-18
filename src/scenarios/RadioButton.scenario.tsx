@@ -7,6 +7,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'radio-button'
+
 const RadioButton = (): JSX.Element => {
   const { t } = useTranslation()
   const [firstRadioValue, setFirstRadioValue] = useState('')
@@ -16,17 +19,17 @@ const RadioButton = (): JSX.Element => {
   }
 
   const secondRadioOptions = {
-    [t('scenarios.radio-button.first.first')]: [
-      t('scenarios.radio-button.second.first'),
-      t('scenarios.radio-button.second.second'),
+    [t(`scenarios.${SLUG}.first.first`)]: [
+      t(`scenarios.${SLUG}.second.first`),
+      t(`scenarios.${SLUG}.second.second`),
     ],
-    [t('scenarios.radio-button.first.second')]: [
-      t('scenarios.radio-button.second.first'),
-      t('scenarios.radio-button.second.third'),
+    [t(`scenarios.${SLUG}.first.second`)]: [
+      t(`scenarios.${SLUG}.second.first`),
+      t(`scenarios.${SLUG}.second.third`),
     ],
-    [t('scenarios.radio-button.first.third')]: [
-      t('scenarios.radio-button.second.second'),
-      t('scenarios.radio-button.second.third'),
+    [t(`scenarios.${SLUG}.first.third`)]: [
+      t(`scenarios.${SLUG}.second.second`),
+      t(`scenarios.${SLUG}.second.third`),
     ],
   }
 
@@ -34,7 +37,7 @@ const RadioButton = (): JSX.Element => {
     if (firstRadioValue in secondRadioOptions) {
       return (
         <RadioGroup
-          legend={`${t('scenarios.radio-button.second-set')}:`}
+          legend={`${t(`scenarios.${SLUG}.second-set`)}:`}
           defaultValue=''
           data-testid='radio-button-group-2'
         >
@@ -55,16 +58,13 @@ const RadioButton = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.radio-button.title')}
-        description={t('scenarios.radio-button.description')}
-        information={translateInformation(
-          t,
-          'scenarios.radio-button.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-wrap gap-12'>
           <RadioGroup
-            legend={`${t('scenarios.radio-button.first-set')}:`}
+            legend={`${t(`scenarios.${SLUG}.first-set`)}:`}
             value={firstRadioValue}
             onValueChange={handleFirstRadioChange}
             data-testid='radio-button-group-1'
@@ -72,8 +72,8 @@ const RadioButton = (): JSX.Element => {
             {['first', 'second', 'third', 'fourth'].map((value, index) => (
               <Radio
                 key={value}
-                value={t(`scenarios.radio-button.first.${value}`)}
-                label={t(`scenarios.radio-button.first.${value}`)}
+                value={t(`scenarios.${SLUG}.first.${value}`)}
+                label={t(`scenarios.${SLUG}.first.${value}`)}
                 data-testid={`radio-button-group-1-${index + 1}`}
                 // Disable the last radio button
                 disabled={index === 3}
@@ -88,6 +88,6 @@ const RadioButton = (): JSX.Element => {
 }
 
 export default defineScenario(RadioButton, {
-  slug: 'radio-button',
+  slug: SLUG,
   difficulty: 'easy',
 })

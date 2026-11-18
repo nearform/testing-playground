@@ -17,12 +17,15 @@ import {
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'clipboard'
+
 // Fixed values, so a test can compare what it reads back from the clipboard
 export const CODE_SNIPPET = 'npx playwright test --project=chromium'
 export const API_KEY = 'tp_live_7f3a9c2e5b8d4016a1e9'
 export const REFERENCE = 'TP-2026-0187-XK'
 
-const key = (name: string): string => `scenarios.clipboard.${name}`
+const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
 type CopyId = 'snippet' | 'api-key' | 'share-link'
 
@@ -61,10 +64,18 @@ const Clipboard = (): JSX.Element => {
       resetTimer.current = null
     }
   }
-  useEffect(() => clearResetTimer, [])
   // Copies can overlap while writeText is pending: only the latest one may
   // update the status, so an earlier one cannot overwrite it when it settles
   const latestCopy = useRef(0)
+  useEffect(
+    () => () => {
+      // A copy still pending when the page is left is ignored when it
+      // settles, so it cannot start a timer that is never cleared
+      latestCopy.current += 1
+      clearResetTimer()
+    },
+    [],
+  )
 
   const copy = async (id: CopyId, value: string): Promise<void> => {
     const attempt = ++latestCopy.current
@@ -457,6 +468,6 @@ const Clipboard = (): JSX.Element => {
 }
 
 export default defineScenario(Clipboard, {
-  slug: 'clipboard',
+  slug: SLUG,
   difficulty: 'medium',
 })

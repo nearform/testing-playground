@@ -32,10 +32,17 @@ export class HttpError extends Error {
 
 export class InvalidResponseError extends Error {
   constructor() {
-    super('The response was not valid JSON')
+    super('The response was not a service status')
     this.name = 'InvalidResponseError'
   }
 }
+
+export const isServiceStatus = (value: unknown): value is ServiceStatus =>
+  typeof value === 'object' &&
+  value !== null &&
+  (['service', 'status', 'message'] as const).every(
+    (field) => typeof (value as Record<string, unknown>)[field] === 'string',
+  )
 
 export const isOnline = (): boolean =>
   typeof navigator === 'undefined' || navigator.onLine !== false
@@ -53,20 +60,23 @@ export const classifyRequestError = (
 // fetch rejects (with a TypeError) when there is no network, and resolves for
 // any response the server sends, so an error status is turned into a
 // rejection here. The body is read before it is parsed, so a connection
-// dropped while reading stays a network error while a body that is not JSON
-// counts as the server's fault. no-store stops the browser answering from its
-// cache, which would hide that the network is down.
+// dropped while reading stays a network error, while a body that is not a
+// JSON service status counts as the server's fault. no-store stops the
+// browser answering from its cache, which would hide that the network is down.
 export const requestStatus = async (): Promise<ServiceStatus> => {
   const response = await fetch(STATUS_URL, { cache: 'no-store' })
   if (!response.ok) {
     throw new HttpError(response.status)
   }
   const body = await response.text()
+  let parsed: unknown
   try {
-    return JSON.parse(body) as ServiceStatus
+    parsed = JSON.parse(body)
   } catch {
     throw new InvalidResponseError()
   }
+  if (!isServiceStatus(parsed)) throw new InvalidResponseError()
+  return parsed
 }
 
 // A 24-hour HH:MM:SS time in the browser's time zone. It does not depend on

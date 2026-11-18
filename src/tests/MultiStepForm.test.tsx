@@ -175,6 +175,16 @@ describe('MultiStepForm scenario', () => {
     expect(screen.getByTestId('location')).toHaveTextContent('?step=personal')
   })
 
+  it('drops a return to review from a link that redirects to an earlier step', () => {
+    renderForm('?step=review&from=review')
+
+    expect(currentStep()).toBe('personal')
+    expect(screen.getByTestId('location')).toHaveTextContent(
+      /^\?step=personal$/,
+    )
+    expect(screen.getByTestId('next-button')).toHaveTextContent('Next')
+  })
+
   it('opens a deep-linked step when the earlier steps were saved as finished', () => {
     seedCompletedAddress()
 
@@ -201,6 +211,19 @@ describe('MultiStepForm scenario', () => {
     await user.click(screen.getByTestId('contact-method-phone'))
 
     expect(screen.getByTestId('phone')).toBeInTheDocument()
+  })
+
+  it('states the phone digit limits when the number is too short', async () => {
+    seedCompletedAddress()
+    const user = renderForm('?step=preferences')
+    await user.click(screen.getByTestId('contact-method-phone'))
+    await user.type(screen.getByTestId('phone'), '12345')
+
+    await user.click(screen.getByTestId('next-button'))
+
+    expect(
+      screen.getByText('Phone number must be between 10 and 15 digits'),
+    ).toBeInTheDocument()
   })
 
   it('shows a skipped optional step as skipped on the review', async () => {

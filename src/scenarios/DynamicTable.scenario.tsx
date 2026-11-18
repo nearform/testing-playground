@@ -15,6 +15,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'dynamic-table'
+
 interface TableDataItem {
   name: string
   cpu: string
@@ -72,10 +75,10 @@ function adjustValues(
 const DynamicTable = (): JSX.Element => {
   const { t } = useTranslation()
   const initialData: TableDataItem[] = [
-    generateRandomTableData(t('scenarios.dynamic-table.system')),
-    generateRandomTableData(t('scenarios.dynamic-table.chrome')),
-    generateRandomTableData(t('scenarios.dynamic-table.docker')),
-    generateRandomTableData(t('scenarios.dynamic-table.slack')),
+    generateRandomTableData(t(`scenarios.${SLUG}.system`)),
+    generateRandomTableData(t(`scenarios.${SLUG}.chrome`)),
+    generateRandomTableData(t(`scenarios.${SLUG}.docker`)),
+    generateRandomTableData(t(`scenarios.${SLUG}.slack`)),
   ]
 
   const [tableData, setTableData] = useState<TableDataItem[]>([])
@@ -103,30 +106,27 @@ const DynamicTable = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.dynamic-table.title')}
-        description={t('scenarios.dynamic-table.description')}
-        information={translateInformation(
-          t,
-          'scenarios.dynamic-table.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <Table data-testid='dynamic-table' bordered className='w-full'>
           <TableHeader>
             <TableRow>
               <TableHead data-testid='dynamic-table-name-header'>
-                {t('scenarios.dynamic-table.name')}
+                {t(`scenarios.${SLUG}.name`)}
               </TableHead>
               <TableHead data-testid='dynamic-table-cpu-header'>
-                {t('scenarios.dynamic-table.cpu')}
+                {t(`scenarios.${SLUG}.cpu`)}
               </TableHead>
               <TableHead data-testid='dynamic-table-memory-header'>
-                {t('scenarios.dynamic-table.memory')}
+                {t(`scenarios.${SLUG}.memory`)}
               </TableHead>
               <TableHead data-testid='dynamic-table-network-header'>
-                {t('scenarios.dynamic-table.network')}
+                {t(`scenarios.${SLUG}.network`)}
               </TableHead>
               <TableHead data-testid='dynamic-table-disk-header'>
-                {t('scenarios.dynamic-table.disk')}
+                {t(`scenarios.${SLUG}.disk`)}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -157,7 +157,7 @@ const DynamicTable = (): JSX.Element => {
           className='mt-8'
           data-testid='target-scenario'
         >
-          {randomScenario?.name} {t('scenarios.dynamic-table.cpu')}:{' '}
+          {randomScenario?.name} {t(`scenarios.${SLUG}.cpu`)}:{' '}
           {findCpuPercentage(tableData, randomScenario?.name ?? '')}
         </Notice>
       </PageSetup>
@@ -166,6 +166,6 @@ const DynamicTable = (): JSX.Element => {
 }
 
 export default defineScenario(DynamicTable, {
-  slug: 'dynamic-table',
+  slug: SLUG,
   difficulty: 'hard',
 })

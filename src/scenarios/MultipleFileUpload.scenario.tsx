@@ -26,7 +26,10 @@ import {
 import { translateInformation } from '../utils/information'
 import { useLocale } from '../utils/locale'
 
-const key = (path: string): string => `scenarios.multiple-file-upload.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'multiple-file-upload'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 interface Upload {
   id: number
@@ -409,6 +412,6 @@ const MultipleFileUpload = (): JSX.Element => {
 }
 
 export default defineScenario(MultipleFileUpload, {
-  slug: 'multiple-file-upload',
+  slug: SLUG,
   difficulty: 'medium',
 })

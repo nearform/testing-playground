@@ -7,30 +7,27 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'tooltip-page'
+
 const TooltipPage = (): JSX.Element => {
   const { t } = useTranslation()
 
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.tooltip-page.title')}
-        description={t('scenarios.tooltip-page.description')}
-        information={translateInformation(
-          t,
-          'scenarios.tooltip-page.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col items-center justify-center gap-12'>
-          <Tooltip
-            content={t('scenarios.tooltip-page.no-permission')}
-            side='right'
-          >
+          <Tooltip content={t(`scenarios.${SLUG}.no-permission`)} side='right'>
             {/* Disabled buttons do not fire pointer events, so the wrapper
                 is the tooltip trigger */}
             <span data-testid='delete-button' className='inline-flex'>
               <IconButton
                 disabled
-                label={t('scenarios.tooltip-page.delete')}
+                label={t(`scenarios.${SLUG}.delete`)}
                 icon={<BsTrash />}
               />
             </span>
@@ -40,7 +37,7 @@ const TooltipPage = (): JSX.Element => {
             side='right'
             content={
               <>
-                {t('scenarios.tooltip-page.more-information-msg')}{' '}
+                {t(`scenarios.${SLUG}.more-information-msg`)}{' '}
                 <Link
                   variant='inline'
                   href='https://github.com/nearform/testing-playground'
@@ -51,16 +48,16 @@ const TooltipPage = (): JSX.Element => {
             }
           >
             <Button variant='secondary' data-testid='more-info-button'>
-              {t('scenarios.tooltip-page.more-information')}
+              {t(`scenarios.${SLUG}.more-information`)}
             </Button>
           </Tooltip>
 
           <Tooltip
-            content={t('scenarios.tooltip-page.really-long-text')}
+            content={t(`scenarios.${SLUG}.really-long-text`)}
             side='right'
           >
             <p className='w-40 truncate' data-testid='text'>
-              {t('scenarios.tooltip-page.really-long-text')}
+              {t(`scenarios.${SLUG}.really-long-text`)}
             </p>
           </Tooltip>
         </div>
@@ -70,6 +67,6 @@ const TooltipPage = (): JSX.Element => {
 }
 
 export default defineScenario(TooltipPage, {
-  slug: 'tooltip-page',
+  slug: SLUG,
   difficulty: 'easy',
 })

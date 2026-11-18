@@ -22,8 +22,10 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
-const key = (path: string): string =>
-  `scenarios.accessibility-violations.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'accessibility-violations'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 // `#/accessibility-violations?version=fixed` opens the fixed version
 export const VERSION_PARAM = 'version'
@@ -527,6 +529,6 @@ const AccessibilityViolations = (): JSX.Element => {
 }
 
 export default defineScenario(AccessibilityViolations, {
-  slug: 'accessibility-violations',
+  slug: SLUG,
   difficulty: 'medium',
 })

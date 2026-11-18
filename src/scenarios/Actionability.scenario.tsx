@@ -8,7 +8,10 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
-const key = (path: string): string => `scenarios.actionability.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'actionability'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 // How long the transparent loading overlay covers its button
 export const OVERLAY_DELAY = 3000
@@ -367,6 +370,6 @@ const Actionability = (): JSX.Element => {
 }
 
 export default defineScenario(Actionability, {
-  slug: 'actionability',
+  slug: SLUG,
   difficulty: 'hard',
 })

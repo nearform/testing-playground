@@ -18,6 +18,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'multiple-windows'
+
 // The other windows are this same scenario, shown as a different view chosen
 // by the `window` query parameter (`#/multiple-windows?window=popup`)
 export const WINDOW_PARAM = 'window'
@@ -90,8 +93,8 @@ const NewTabSection = (): JSX.Element => {
   return (
     <Section
       testId='new-tab-section'
-      title={t('scenarios.multiple-windows.new-tab.title')}
-      description={t('scenarios.multiple-windows.new-tab.description')}
+      title={t(`scenarios.${SLUG}.new-tab.title`)}
+      description={t(`scenarios.${SLUG}.new-tab.description`)}
     >
       <Link
         href={href}
@@ -99,7 +102,7 @@ const NewTabSection = (): JSX.Element => {
         rel='noopener noreferrer'
         data-testid='new-tab-link'
       >
-        {t('scenarios.multiple-windows.new-tab.link')}
+        {t(`scenarios.${SLUG}.new-tab.link`)}
       </Link>
     </Section>
   )
@@ -165,13 +168,13 @@ const PopupSection = (): JSX.Element => {
   return (
     <Section
       testId='popup-section'
-      title={t('scenarios.multiple-windows.popup.title')}
-      description={t('scenarios.multiple-windows.popup.description')}
+      title={t(`scenarios.${SLUG}.popup.title`)}
+      description={t(`scenarios.${SLUG}.popup.description`)}
     >
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap gap-2'>
           <Button onClick={openPopup} data-testid='open-popup-button'>
-            {t('scenarios.multiple-windows.popup.open')}
+            {t(`scenarios.${SLUG}.popup.open`)}
           </Button>
           <Button
             variant='secondary'
@@ -179,20 +182,20 @@ const PopupSection = (): JSX.Element => {
             onClick={closePopup}
             data-testid='close-popup-button'
           >
-            {t('scenarios.multiple-windows.popup.close')}
+            {t(`scenarios.${SLUG}.popup.close`)}
           </Button>
         </div>
         <p role='status' data-testid='popup-status'>
-          {t(`scenarios.multiple-windows.popup.status.${status}`)}
+          {t(`scenarios.${SLUG}.popup.status.${status}`)}
         </p>
         {/* Always on the page, so the first message is announced too */}
         <div className='flex flex-col gap-1' aria-live='polite'>
           <span className='text-sm'>
-            {t('scenarios.multiple-windows.popup.messages')}
+            {t(`scenarios.${SLUG}.popup.messages`)}
           </span>
           {messages.length === 0 ? (
             <p data-testid='popup-no-messages'>
-              {t('scenarios.multiple-windows.popup.no-messages')}
+              {t(`scenarios.${SLUG}.popup.no-messages`)}
             </p>
           ) : (
             <ol
@@ -228,8 +231,8 @@ const NamedWindowSection = (): JSX.Element => {
   return (
     <Section
       testId='named-window-section'
-      title={t('scenarios.multiple-windows.named.title')}
-      description={t('scenarios.multiple-windows.named.description')}
+      title={t(`scenarios.${SLUG}.named.title`)}
+      description={t(`scenarios.${SLUG}.named.description`)}
     >
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap gap-4'>
@@ -243,17 +246,15 @@ const NamedWindowSection = (): JSX.Element => {
               }}
               data-testid={testId}
             >
-              {t(`scenarios.multiple-windows.named.${view}-link`)}
+              {t(`scenarios.${SLUG}.named.${view}-link`)}
             </Link>
           ))}
         </div>
         <p role='status' data-testid='named-window-last'>
           {lastOpened === null
-            ? t('scenarios.multiple-windows.named.none')
-            : t('scenarios.multiple-windows.named.last', {
-                page: t(
-                  `scenarios.multiple-windows.windows.${lastOpened}.heading`,
-                ),
+            ? t(`scenarios.${SLUG}.named.none`)
+            : t(`scenarios.${SLUG}.named.last`, {
+                page: t(`scenarios.${SLUG}.windows.${lastOpened}.heading`),
               })}
         </p>
       </div>
@@ -273,7 +274,7 @@ const PopupForm = (): JSX.Element => {
   if (opener === null) {
     return (
       <p role='alert' data-testid='popup-no-opener'>
-        {t('scenarios.multiple-windows.windows.popup.no-opener')}
+        {t(`scenarios.${SLUG}.windows.popup.no-opener`)}
       </p>
     )
   }
@@ -298,7 +299,7 @@ const PopupForm = (): JSX.Element => {
       }}
     >
       <label className='flex flex-col gap-2'>
-        {t('scenarios.multiple-windows.windows.popup.label')}
+        {t(`scenarios.${SLUG}.windows.popup.label`)}
         <Input
           variant='primary'
           type='text'
@@ -312,12 +313,12 @@ const PopupForm = (): JSX.Element => {
       </label>
       <div>
         <Button type='submit' data-testid='popup-send-button'>
-          {t('scenarios.multiple-windows.windows.popup.button')}
+          {t(`scenarios.${SLUG}.windows.popup.button`)}
         </Button>
       </div>
       <p className='min-h-6' role='alert' data-testid='popup-form-feedback'>
-        {error && t('scenarios.multiple-windows.windows.popup.error')}
-        {sent && t('scenarios.multiple-windows.windows.popup.sent')}
+        {error && t(`scenarios.${SLUG}.windows.popup.error`)}
+        {sent && t(`scenarios.${SLUG}.windows.popup.sent`)}
       </p>
     </form>
   )
@@ -330,7 +331,7 @@ interface ChildWindowProps {
 // What the new tab, popup and named window show
 const ChildWindow = ({ view }: ChildWindowProps): JSX.Element => {
   const { t } = useTranslation()
-  const key = `scenarios.multiple-windows.windows.${view}`
+  const key = `scenarios.${SLUG}.windows.${view}`
   const documentTitle = t(`${key}.document-title`)
 
   // A title of its own, so tests can tell this window apart from the others
@@ -371,12 +372,9 @@ const MainWindow = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.multiple-windows.title')}
-        description={t('scenarios.multiple-windows.description')}
-        information={translateInformation(
-          t,
-          'scenarios.multiple-windows.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
           <NewTabSection />
@@ -398,6 +396,6 @@ const MultipleWindows = (): JSX.Element => {
 }
 
 export default defineScenario(MultipleWindows, {
-  slug: 'multiple-windows',
+  slug: SLUG,
   difficulty: 'medium',
 })

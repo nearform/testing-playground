@@ -27,6 +27,9 @@ import {
   toIsoDate,
 } from '../utils/dates'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'date-picker'
+
 // How many years after this one appointments and trips can be booked into
 export const BOOKING_YEARS = 2
 // The earliest year a date of birth can be in
@@ -260,7 +263,7 @@ const CalendarPopup = ({
       <div className='flex items-center justify-between gap-2'>
         <button
           type='button'
-          aria-label={t('scenarios.date-picker.calendar.previous-month')}
+          aria-label={t(`scenarios.${SLUG}.calendar.previous-month`)}
           disabled={!canGoBack}
           onClick={() =>
             showMonth(focused.getFullYear(), focused.getMonth() - 1)
@@ -271,7 +274,7 @@ const CalendarPopup = ({
           ‹
         </button>
         <select
-          aria-label={t('scenarios.date-picker.calendar.month')}
+          aria-label={t(`scenarios.${SLUG}.calendar.month`)}
           value={focused.getMonth()}
           onChange={(event) =>
             showMonth(focused.getFullYear(), Number(event.target.value))
@@ -286,7 +289,7 @@ const CalendarPopup = ({
           ))}
         </select>
         <select
-          aria-label={t('scenarios.date-picker.calendar.year')}
+          aria-label={t(`scenarios.${SLUG}.calendar.year`)}
           value={focused.getFullYear()}
           onChange={(event) =>
             showMonth(Number(event.target.value), focused.getMonth())
@@ -302,7 +305,7 @@ const CalendarPopup = ({
         </select>
         <button
           type='button'
-          aria-label={t('scenarios.date-picker.calendar.next-month')}
+          aria-label={t(`scenarios.${SLUG}.calendar.next-month`)}
           disabled={!canGoForward}
           onClick={() =>
             showMonth(focused.getFullYear(), focused.getMonth() + 1)
@@ -428,12 +431,12 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
 
   return (
     <section className={sectionClasses}>
-      <CardTitle>{t('scenarios.date-picker.appointment.title')}</CardTitle>
+      <CardTitle>{t(`scenarios.${SLUG}.appointment.title`)}</CardTitle>
       <p className='text-sm'>
-        {t('scenarios.date-picker.appointment.instructions')}
+        {t(`scenarios.${SLUG}.appointment.instructions`)}
       </p>
       <span id='appointment-label' className='font-semibold'>
-        {t('scenarios.date-picker.appointment.label')}
+        {t(`scenarios.${SLUG}.appointment.label`)}
       </span>
       <button
         ref={triggerRef}
@@ -448,7 +451,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
       >
         <span id='appointment-text'>
           {value === null
-            ? t('scenarios.date-picker.appointment.placeholder')
+            ? t(`scenarios.${SLUG}.appointment.placeholder`)
             : formatDisplayDate(value, order)}
         </span>
         <CalendarIcon />
@@ -456,7 +459,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
       {open && (
         <CalendarPopup
           id='appointment'
-          label={t('scenarios.date-picker.appointment.calendar')}
+          label={t(`scenarios.${SLUG}.appointment.calendar`)}
           anchor={triggerRef}
           initialFocus={value ?? nextWeekday(today)}
           min={today}
@@ -471,7 +474,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
         />
       )}
       <IsoValue
-        label={t('scenarios.date-picker.iso-value')}
+        label={t(`scenarios.${SLUG}.iso-value`)}
         value={value}
         testId='appointment-value'
       />
@@ -482,7 +485,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
         onClick={() => setValue(null)}
         data-testid='appointment-clear'
       >
-        {t('scenarios.date-picker.clear')}
+        {t(`scenarios.${SLUG}.clear`)}
       </Button>
     </section>
   )
@@ -501,7 +504,7 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
   }
 
   const triggerText = (): string => {
-    if (range.start === null) return t('scenarios.date-picker.trip.placeholder')
+    if (range.start === null) return t(`scenarios.${SLUG}.trip.placeholder`)
     const start = formatDisplayDate(range.start, order)
     const end = range.end === null ? '…' : formatDisplayDate(range.end, order)
     return `${start} – ${end}`
@@ -509,10 +512,10 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
 
   return (
     <section className={sectionClasses}>
-      <CardTitle>{t('scenarios.date-picker.trip.title')}</CardTitle>
-      <p className='text-sm'>{t('scenarios.date-picker.trip.instructions')}</p>
+      <CardTitle>{t(`scenarios.${SLUG}.trip.title`)}</CardTitle>
+      <p className='text-sm'>{t(`scenarios.${SLUG}.trip.instructions`)}</p>
       <span id='trip-label' className='font-semibold'>
-        {t('scenarios.date-picker.trip.label')}
+        {t(`scenarios.${SLUG}.trip.label`)}
       </span>
       <button
         ref={triggerRef}
@@ -531,7 +534,7 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
       {open && (
         <CalendarPopup
           id='trip'
-          label={t('scenarios.date-picker.trip.calendar')}
+          label={t(`scenarios.${SLUG}.trip.calendar`)}
           anchor={triggerRef}
           initialFocus={range.start ?? today}
           min={today}
@@ -556,19 +559,19 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
               data-testid='trip-calendar-status'
             >
               {range.start === null || range.end !== null
-                ? t('scenarios.date-picker.trip.pick-start')
-                : t('scenarios.date-picker.trip.pick-end')}
+                ? t(`scenarios.${SLUG}.trip.pick-start`)
+                : t(`scenarios.${SLUG}.trip.pick-end`)}
             </p>
           }
         />
       )}
       <IsoValue
-        label={t('scenarios.date-picker.trip.start')}
+        label={t(`scenarios.${SLUG}.trip.start`)}
         value={range.start}
         testId='trip-start-value'
       />
       <IsoValue
-        label={t('scenarios.date-picker.trip.end')}
+        label={t(`scenarios.${SLUG}.trip.end`)}
         value={range.end}
         testId='trip-end-value'
       />
@@ -579,7 +582,7 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
         onClick={() => setRange({ start: null, end: null })}
         data-testid='trip-clear'
       >
-        {t('scenarios.date-picker.clear')}
+        {t(`scenarios.${SLUG}.clear`)}
       </Button>
     </section>
   )
@@ -597,7 +600,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
   const fieldRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const format = t('scenarios.date-picker.birth-date.format')
+  const format = t(`scenarios.${SLUG}.birth-date.format`)
   const min = new Date(MIN_BIRTH_YEAR, 0, 1)
 
   // A chosen date is shown again in the new format after a language switch
@@ -642,16 +645,16 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
 
   return (
     <section className={sectionClasses}>
-      <CardTitle>{t('scenarios.date-picker.birth-date.title')}</CardTitle>
+      <CardTitle>{t(`scenarios.${SLUG}.birth-date.title`)}</CardTitle>
       <p className='text-sm'>
-        {t('scenarios.date-picker.birth-date.instructions', { format })}
+        {t(`scenarios.${SLUG}.birth-date.instructions`, { format })}
       </p>
       <div ref={fieldRef} className='flex w-fit items-end gap-2'>
         <Input
           id='birth-date'
           type='text'
           variant='primary'
-          labelText={t('scenarios.date-picker.birth-date.label')}
+          labelText={t(`scenarios.${SLUG}.birth-date.label`)}
           placeholder={format}
           clearable={false}
           autoComplete='off'
@@ -669,7 +672,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
         <button
           ref={buttonRef}
           type='button'
-          aria-label={t('scenarios.date-picker.birth-date.open-calendar')}
+          aria-label={t(`scenarios.${SLUG}.birth-date.open-calendar`)}
           aria-haspopup='dialog'
           aria-expanded={open}
           aria-controls={open ? 'birth-date-calendar' : undefined}
@@ -687,7 +690,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
           className='text-sm text-feedback-error dark:text-feedback-error-dark'
           data-testid='birth-date-error'
         >
-          {t(`scenarios.date-picker.birth-date.errors.${error}`, {
+          {t(`scenarios.${SLUG}.birth-date.errors.${error}`, {
             format,
             year: MIN_BIRTH_YEAR,
           })}
@@ -696,7 +699,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
       {open && (
         <CalendarPopup
           id='birth-date'
-          label={t('scenarios.date-picker.birth-date.calendar')}
+          label={t(`scenarios.${SLUG}.birth-date.calendar`)}
           anchor={fieldRef}
           initialFocus={value ?? today}
           min={min}
@@ -711,7 +714,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
         />
       )}
       <IsoValue
-        label={t('scenarios.date-picker.iso-value')}
+        label={t(`scenarios.${SLUG}.iso-value`)}
         value={value}
         testId='birth-date-value'
       />
@@ -727,16 +730,12 @@ const DatePicker = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.date-picker.title')}
-        description={t('scenarios.date-picker.description')}
-        information={translateInformation(
-          t,
-          'scenarios.date-picker.information',
-          {
-            lastYear: today.getFullYear() + BOOKING_YEARS,
-            minYear: MIN_BIRTH_YEAR,
-          },
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`, {
+          lastYear: today.getFullYear() + BOOKING_YEARS,
+          minYear: MIN_BIRTH_YEAR,
+        })}
       >
         <div className='grid gap-10 md:grid-cols-2 xl:grid-cols-3'>
           <AppointmentPicker today={today} />
@@ -749,6 +748,6 @@ const DatePicker = (): JSX.Element => {
 }
 
 export default defineScenario(DatePicker, {
-  slug: 'date-picker',
+  slug: SLUG,
   difficulty: 'hard',
 })

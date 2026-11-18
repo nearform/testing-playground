@@ -13,6 +13,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'infinite-scroll'
+
 export const BATCH_SIZE = 10
 // Long enough for a test to see the loading state before new items arrive
 export const LOAD_DELAY = 800
@@ -54,25 +57,22 @@ const InfiniteScroll = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.infinite-scroll.title')}
-        description={t('scenarios.infinite-scroll.description')}
-        information={translateInformation(
-          t,
-          'scenarios.infinite-scroll.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <p
           className='mb-4 text-sm text-foreground-muted dark:text-foreground-muted-dark'
           data-testid='item-count'
           aria-live='polite'
         >
-          {t('scenarios.infinite-scroll.count', { count: itemCount })}
+          {t(`scenarios.${SLUG}.count`, { count: itemCount })}
         </p>
 
         <div
           role='feed'
           aria-busy={isLoading}
-          aria-label={t('scenarios.infinite-scroll.feed-label')}
+          aria-label={t(`scenarios.${SLUG}.feed-label`)}
           className='flex flex-col gap-4'
           data-testid='feed'
         >
@@ -91,14 +91,14 @@ const InfiniteScroll = (): JSX.Element => {
               >
                 <div className='flex items-center justify-between gap-4'>
                   <CardTitle id={`item-${number}-title`}>
-                    {t('scenarios.infinite-scroll.item-title', { number })}
+                    {t(`scenarios.${SLUG}.item-title`, { number })}
                   </CardTitle>
                   <Badge size='sm' data-testid={`item-${number}-batch`}>
-                    {t('scenarios.infinite-scroll.batch', { batch })}
+                    {t(`scenarios.${SLUG}.batch`, { batch })}
                   </Badge>
                 </div>
                 <CardDescription>
-                  {t('scenarios.infinite-scroll.item-description', { number })}
+                  {t(`scenarios.${SLUG}.item-description`, { number })}
                 </CardDescription>
               </Card>
             )
@@ -113,7 +113,7 @@ const InfiniteScroll = (): JSX.Element => {
           >
             {/* No label: the text beside it already says what is loading */}
             <Spinner />
-            {t('scenarios.infinite-scroll.loading')}
+            {t(`scenarios.${SLUG}.loading`)}
           </div>
         )}
 
@@ -125,6 +125,6 @@ const InfiniteScroll = (): JSX.Element => {
 }
 
 export default defineScenario(InfiniteScroll, {
-  slug: 'infinite-scroll',
+  slug: SLUG,
   difficulty: 'medium',
 })

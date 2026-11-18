@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'file-upload'
+
 const FileUpload = (): JSX.Element => {
   const { t } = useTranslation()
   const [file, setFile] = useState<File | null>(null)
@@ -36,7 +39,7 @@ const FileUpload = (): JSX.Element => {
       () => {
         setUploading(false)
         setUploadMessage({
-          text: t('scenarios.file-upload.upload-success', { filename }),
+          text: t(`scenarios.${SLUG}.upload-success`, { filename }),
           severity: 'success',
         })
       },
@@ -50,7 +53,7 @@ const FileUpload = (): JSX.Element => {
       simulateFileUpload(file.name)
     } else {
       setUploadMessage({
-        text: t('scenarios.file-upload.please-select-file'),
+        text: t(`scenarios.${SLUG}.please-select-file`),
         severity: 'error',
       })
     }
@@ -59,12 +62,9 @@ const FileUpload = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.file-upload.title')}
-        description={t('scenarios.file-upload.description')}
-        information={translateInformation(
-          t,
-          'scenarios.file-upload.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col items-start gap-4'>
           <input
@@ -80,13 +80,13 @@ const FileUpload = (): JSX.Element => {
             leftSideChild={<BsCloudUpload aria-hidden='true' />}
           >
             <label htmlFor='icon-button-file' className='cursor-pointer'>
-              {t('scenarios.file-upload.select-file')}
+              {t(`scenarios.${SLUG}.select-file`)}
             </label>
           </Button>
           {file != null && (
             <>
               <p data-testid='selected-file-name'>
-                {t('scenarios.file-upload.selected-file', {
+                {t(`scenarios.${SLUG}.selected-file`, {
                   filename: file.name,
                 })}
               </p>
@@ -96,7 +96,7 @@ const FileUpload = (): JSX.Element => {
                 disabled={uploading}
                 data-testid='upload-button'
               >
-                {t('scenarios.file-upload.upload-button')}
+                {t(`scenarios.${SLUG}.upload-button`)}
               </Button>
             </>
           )}
@@ -104,7 +104,7 @@ const FileUpload = (): JSX.Element => {
             // No value: the upload's progress is unknown, so the bar is
             // indeterminate
             <ProgressBar
-              aria-label={t('scenarios.file-upload.upload-button')}
+              aria-label={t(`scenarios.${SLUG}.upload-button`)}
               data-testid='upload-progress'
             />
           )}
@@ -123,6 +123,6 @@ const FileUpload = (): JSX.Element => {
 }
 
 export default defineScenario(FileUpload, {
-  slug: 'file-upload',
+  slug: SLUG,
   difficulty: 'medium',
 })

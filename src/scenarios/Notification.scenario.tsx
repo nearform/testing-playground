@@ -16,6 +16,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'notification'
+
 const NOTIFICATION_DURATION = 6000
 
 type NotificationType = { message: string; severity: AlertSeverity } | null
@@ -27,22 +30,22 @@ const notificationTypes: Array<{
 }> = [
   {
     key: 'success',
-    label: 'scenarios.notification.type.success',
+    label: `scenarios.${SLUG}.type.success`,
     variant: 'success',
   },
   {
     key: 'info',
-    label: 'scenarios.notification.type.info',
+    label: `scenarios.${SLUG}.type.info`,
     variant: 'primary',
   },
   {
     key: 'warning',
-    label: 'scenarios.notification.type.warning',
+    label: `scenarios.${SLUG}.type.warning`,
     variant: 'warning',
   },
   {
     key: 'error',
-    label: 'scenarios.notification.type.error',
+    label: `scenarios.${SLUG}.type.error`,
     variant: 'danger',
   },
 ]
@@ -55,10 +58,10 @@ const Notification = (): JSX.Element => {
 
   const generateNotification = (severity: AlertSeverity): void => {
     const messages = {
-      success: t('scenarios.notification.messages.success'),
-      info: t('scenarios.notification.messages.info'),
-      warning: t('scenarios.notification.messages.warning'),
-      error: t('scenarios.notification.messages.error'),
+      success: t(`scenarios.${SLUG}.messages.success`),
+      info: t(`scenarios.${SLUG}.messages.info`),
+      warning: t(`scenarios.${SLUG}.messages.warning`),
+      error: t(`scenarios.${SLUG}.messages.error`),
     }
 
     setNotification({ message: messages[severity], severity })
@@ -75,12 +78,9 @@ const Notification = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.notification.title')}
-        description={t('scenarios.notification.description')}
-        information={translateInformation(
-          t,
-          'scenarios.notification.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <ToastProvider duration={NOTIFICATION_DURATION}>
           <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
@@ -132,6 +132,6 @@ const Notification = (): JSX.Element => {
 }
 
 export default defineScenario(Notification, {
-  slug: 'notification',
+  slug: SLUG,
   difficulty: 'medium',
 })

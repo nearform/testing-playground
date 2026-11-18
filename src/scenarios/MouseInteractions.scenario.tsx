@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'mouse-interactions'
+
 // How long the hold button has to be held down before it confirms
 export const HOLD_DURATION = 1000
 // How often the hold button's progress bar moves on
@@ -211,16 +214,16 @@ const MouseInteractions = (): JSX.Element => {
   }
 
   const buttonName = (button: MouseButton): string =>
-    t(`scenarios.mouse-interactions.buttons.names.${button}`)
+    t(`scenarios.${SLUG}.buttons.names.${button}`)
 
   const describeInteraction = (interaction: Interaction | null): string => {
-    const prefix = 'scenarios.mouse-interactions.result'
+    const prefix = `scenarios.${SLUG}.result`
     if (interaction === null) return t(`${prefix}.none`)
     switch (interaction.type) {
       case 'context-menu':
         return t(`${prefix}.context-menu`, {
           action: t(
-            `scenarios.mouse-interactions.context-menu.actions.${interaction.action}`,
+            `scenarios.${SLUG}.context-menu.actions.${interaction.action}`,
           ),
         })
       case 'button':
@@ -238,12 +241,9 @@ const MouseInteractions = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.mouse-interactions.title')}
-        description={t('scenarios.mouse-interactions.description')}
-        information={translateInformation(
-          t,
-          'scenarios.mouse-interactions.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col gap-10'>
           <section
@@ -251,7 +251,7 @@ const MouseInteractions = (): JSX.Element => {
             aria-labelledby='last-interaction-title'
           >
             <CardTitle id='last-interaction-title'>
-              {t('scenarios.mouse-interactions.result.title')}
+              {t(`scenarios.${SLUG}.result.title`)}
             </CardTitle>
             <p aria-live='polite' data-testid='last-interaction'>
               {describeInteraction(lastInteraction)}
@@ -259,40 +259,36 @@ const MouseInteractions = (): JSX.Element => {
           </section>
 
           <section className={sectionClasses}>
-            <CardTitle>
-              {t('scenarios.mouse-interactions.double-click.title')}
-            </CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.double-click.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.mouse-interactions.double-click.instructions')}
+              {t(`scenarios.${SLUG}.double-click.instructions`)}
             </p>
             <div
               onDoubleClick={doubleClick}
               className={targetClasses}
               data-testid='double-click-target'
             >
-              {t('scenarios.mouse-interactions.double-click.label')}
+              {t(`scenarios.${SLUG}.double-click.label`)}
             </div>
             <p data-testid='double-click-count'>
-              {t('scenarios.mouse-interactions.double-click.count', {
+              {t(`scenarios.${SLUG}.double-click.count`, {
                 count: doubleClicks,
               })}
             </p>
           </section>
 
           <section className={sectionClasses}>
-            <CardTitle>
-              {t('scenarios.mouse-interactions.context-menu.title')}
-            </CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.context-menu.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.mouse-interactions.context-menu.instructions')}
+              {t(`scenarios.${SLUG}.context-menu.instructions`)}
             </p>
             {deleted ? (
               <div className='flex flex-wrap items-center gap-4'>
                 <p data-testid='note-deleted'>
-                  {t('scenarios.mouse-interactions.context-menu.deleted')}
+                  {t(`scenarios.${SLUG}.context-menu.deleted`)}
                 </p>
                 <Button size='xs' variant='secondary' onClick={restoreNote}>
-                  {t('scenarios.mouse-interactions.context-menu.restore')}
+                  {t(`scenarios.${SLUG}.context-menu.restore`)}
                 </Button>
               </div>
             ) : (
@@ -313,20 +309,16 @@ const MouseInteractions = (): JSX.Element => {
                 data-pinned={pinned}
                 data-highlighted={highlighted}
               >
-                <span>
-                  {t('scenarios.mouse-interactions.context-menu.note')}
-                </span>
+                <span>{t(`scenarios.${SLUG}.context-menu.note`)}</span>
                 <span className='flex gap-2 text-xs'>
                   {pinned && (
                     <span data-testid='note-pinned'>
-                      {t('scenarios.mouse-interactions.context-menu.pinned')}
+                      {t(`scenarios.${SLUG}.context-menu.pinned`)}
                     </span>
                   )}
                   {highlighted && (
                     <span data-testid='note-highlighted'>
-                      {t(
-                        'scenarios.mouse-interactions.context-menu.highlighted',
-                      )}
+                      {t(`scenarios.${SLUG}.context-menu.highlighted`)}
                     </span>
                   )}
                 </span>
@@ -336,9 +328,7 @@ const MouseInteractions = (): JSX.Element => {
               <ul
                 ref={menuRef}
                 role='menu'
-                aria-label={t(
-                  'scenarios.mouse-interactions.context-menu.menu-label',
-                )}
+                aria-label={t(`scenarios.${SLUG}.context-menu.menu-label`)}
                 onKeyDown={menuKeyDown}
                 // Right-clicking the menu itself should not open the
                 // browser's menu on top of it
@@ -357,9 +347,7 @@ const MouseInteractions = (): JSX.Element => {
                       className='w-full px-4 py-2 text-left hover:bg-grey-200 focus:bg-grey-200 focus:outline-hidden dark:hover:bg-background-alt-dark dark:focus:bg-background-alt-dark'
                       data-testid={`context-menu-${action}`}
                     >
-                      {t(
-                        `scenarios.mouse-interactions.context-menu.actions.${action}`,
-                      )}
+                      {t(`scenarios.${SLUG}.context-menu.actions.${action}`)}
                     </button>
                   </li>
                 ))}
@@ -368,11 +356,9 @@ const MouseInteractions = (): JSX.Element => {
           </section>
 
           <section className={sectionClasses}>
-            <CardTitle>
-              {t('scenarios.mouse-interactions.hold.title')}
-            </CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.hold.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.mouse-interactions.hold.instructions', {
+              {t(`scenarios.${SLUG}.hold.instructions`, {
                 seconds: HOLD_DURATION / 1000,
               })}
             </p>
@@ -391,25 +377,23 @@ const MouseInteractions = (): JSX.Element => {
                 .join(' ')}
               data-testid='hold-button'
             >
-              {t('scenarios.mouse-interactions.hold.label')}
+              {t(`scenarios.${SLUG}.hold.label`)}
             </button>
             <ProgressBar
-              aria-label={t('scenarios.mouse-interactions.hold.progress')}
+              aria-label={t(`scenarios.${SLUG}.hold.progress`)}
               value={holdPercent}
               className='w-72'
               data-testid='hold-progress'
             />
             <p aria-live='polite' data-testid='hold-result'>
-              {t(`scenarios.mouse-interactions.hold.state.${holdState}`)}
+              {t(`scenarios.${SLUG}.hold.state.${holdState}`)}
             </p>
           </section>
 
           <section className={sectionClasses}>
-            <CardTitle>
-              {t('scenarios.mouse-interactions.buttons.title')}
-            </CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.buttons.title`)}</CardTitle>
             <p className='text-sm'>
-              {t('scenarios.mouse-interactions.buttons.instructions')}
+              {t(`scenarios.${SLUG}.buttons.instructions`)}
             </p>
             <div
               onMouseDown={readButton}
@@ -421,25 +405,25 @@ const MouseInteractions = (): JSX.Element => {
               className={targetClasses}
               data-testid='button-target'
             >
-              {t('scenarios.mouse-interactions.buttons.label')}
+              {t(`scenarios.${SLUG}.buttons.label`)}
             </div>
             {buttonPress === null ? (
               <p data-testid='button-result'>
-                {t('scenarios.mouse-interactions.buttons.none')}
+                {t(`scenarios.${SLUG}.buttons.none`)}
               </p>
             ) : (
               <dl
                 className='grid grid-cols-[auto_1fr] gap-x-4 text-sm'
                 data-testid='button-result'
               >
-                <dt>{t('scenarios.mouse-interactions.buttons.button')}</dt>
+                <dt>{t(`scenarios.${SLUG}.buttons.button`)}</dt>
                 <dd data-testid='button-result-button'>
                   {buttonName(buttonPress.button)}
                 </dd>
-                <dt>{t('scenarios.mouse-interactions.buttons.modifiers')}</dt>
+                <dt>{t(`scenarios.${SLUG}.buttons.modifiers`)}</dt>
                 <dd data-testid='button-result-modifiers'>
                   {buttonPress.modifiers.length === 0
-                    ? t('scenarios.mouse-interactions.buttons.no-modifiers')
+                    ? t(`scenarios.${SLUG}.buttons.no-modifiers`)
                     : buttonPress.modifiers.join(' + ')}
                 </dd>
               </dl>
@@ -452,6 +436,6 @@ const MouseInteractions = (): JSX.Element => {
 }
 
 export default defineScenario(MouseInteractions, {
-  slug: 'mouse-interactions',
+  slug: SLUG,
   difficulty: 'medium',
 })

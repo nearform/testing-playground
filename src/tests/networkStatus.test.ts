@@ -85,6 +85,23 @@ describe('requestStatus', () => {
     await expect(requestStatus()).rejects.toBeInstanceOf(InvalidResponseError)
   })
 
+  it.each([
+    ['null'],
+    ['{}'],
+    ['[]'],
+    ['{"service":"s","status":1,"message":"m"}'],
+  ])(
+    'rejects with an InvalidResponseError when the JSON body is %s',
+    async (body) => {
+      vi.stubGlobal(
+        'fetch',
+        vi.fn(async () => new Response(body)),
+      )
+
+      await expect(requestStatus()).rejects.toBeInstanceOf(InvalidResponseError)
+    },
+  )
+
   it('passes on the error when the request gets no response', async () => {
     const failure = new TypeError('Failed to fetch')
     vi.stubGlobal(

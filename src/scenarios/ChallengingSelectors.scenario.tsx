@@ -19,7 +19,10 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
-const key = (path: string): string => `scenarios.challenging-selectors.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'challenging-selectors'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 // A short random string, like the hashes CSS-in-JS libraries put in class
 // names. A new one is made on every load, so selectors built on them break.
@@ -499,6 +502,6 @@ const ChallengingSelectors = (): JSX.Element => {
 }
 
 export default defineScenario(ChallengingSelectors, {
-  slug: 'challenging-selectors',
+  slug: SLUG,
   difficulty: 'medium',
 })

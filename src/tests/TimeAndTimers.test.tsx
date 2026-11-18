@@ -289,6 +289,36 @@ describe('TimeAndTimers scenario', () => {
         expect(byTestId('idle-time')).toHaveTextContent('Idle for 00:00')
       })
 
+      it('does not re-render for every pointer move', async () => {
+        vi.setSystemTime(WEDNESDAY_MORNING)
+        let commits = 0
+        TestRenderer(
+          <React.Profiler
+            id='page'
+            onRender={() => {
+              commits += 1
+            }}
+          >
+            <TimeAndTimers />
+          </React.Profiler>,
+        )
+        await wait(MINUTE)
+        commits = 0
+
+        // Separate events 16ms apart, like a pointer moving, all within a TICK
+        for (let move = 0; move < 50; move += 1) {
+          act(() => {
+            vi.advanceTimersByTime(16)
+            fireEvent.mouseMove(window)
+          })
+        }
+
+        // One to reset the idle time. React may render once more before it
+        // skips updates that change nothing, but not once per event.
+        expect(commits).toBeLessThanOrEqual(2)
+        expect(byTestId('idle-time')).toHaveTextContent('Idle for 00:00')
+      })
+
       it('ignores activity once the warning is showing', async () => {
         render()
         await wait(IDLE_WARNING)

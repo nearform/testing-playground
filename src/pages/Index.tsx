@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import ScenarioBox from '../components/ScenarioBox'
-import * as Scenario from '../scenarios/Index'
+import { scenarios } from '../scenarios/list'
 import { type DifficultyFilter, matchesDifficulty } from '../utils/difficulty'
 import {
   Input,
@@ -15,21 +15,25 @@ import {
 } from '@nearform/quantum'
 
 export default function Index(): JSX.Element {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
-  // Get all scenario components from the Scenario module
-  const scenarioComponents = Object.values(Scenario)
-
-  // Generate scenarioData dynamically
-  const scenarioData = scenarioComponents.map((ScenarioComponent) => {
-    const link = ScenarioComponent.slug
-    return {
-      title: t(`scenarios.${link}.title`),
-      description: t(`scenarios.${link}.description`),
-      link,
-      difficulty: ScenarioComponent.difficulty,
-    }
-  })
+  // Each scenario's card, worked out again only when the language changes,
+  // not on every keystroke in the search box
+  const scenarioData = useMemo(
+    () =>
+      scenarios.map((ScenarioComponent) => {
+        const link = ScenarioComponent.slug
+        return {
+          title: t(`scenarios.${link}.title`),
+          description: t(`scenarios.${link}.description`),
+          link,
+          difficulty: ScenarioComponent.difficulty,
+        }
+      }),
+    // The language is listed as well as t, in case t keeps its identity
+    // across a change of language
+    [t, i18n.language],
+  )
 
   // State for search term and selected difficulty
   const [searchTerm, setSearchTerm] = useState<string>('')
