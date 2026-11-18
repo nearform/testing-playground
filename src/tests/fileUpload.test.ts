@@ -4,6 +4,7 @@ import {
   MAX_FILE_SIZE,
   advanceProgress,
   formatSize,
+  formatSizeAgainstLimit,
   uploadStep,
   validateFile,
   validateFiles,
@@ -105,6 +106,35 @@ describe('formatSize', () => {
 
   it('formats the number in the given language', () => {
     expect(formatSize(1536, 'fr-FR')).toEqual({ value: '1,5', unit: 'kb' })
+  })
+})
+
+describe('formatSizeAgainstLimit', () => {
+  it('keeps the rounded sizes when they differ', () => {
+    expect(
+      formatSizeAgainstLimit(2 * MAX_FILE_SIZE, MAX_FILE_SIZE, 'en-GB'),
+    ).toEqual({
+      size: { value: '2', unit: 'mb' },
+      limit: { value: '1', unit: 'mb' },
+    })
+  })
+
+  it('keeps the rounded sizes for a file exactly at the limit', () => {
+    expect(
+      formatSizeAgainstLimit(MAX_FILE_SIZE, MAX_FILE_SIZE, 'en-GB'),
+    ).toEqual({
+      size: { value: '1', unit: 'mb' },
+      limit: { value: '1', unit: 'mb' },
+    })
+  })
+
+  it('gives both in bytes when rounding would make them look equal', () => {
+    expect(
+      formatSizeAgainstLimit(MAX_FILE_SIZE + 1, MAX_FILE_SIZE, 'en-GB'),
+    ).toEqual({
+      size: { value: '1,048,577', unit: 'b' },
+      limit: { value: '1,048,576', unit: 'b' },
+    })
   })
 })
 

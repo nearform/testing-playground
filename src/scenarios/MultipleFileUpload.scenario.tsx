@@ -13,13 +13,14 @@ import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
-import type { Rejection } from '../utils/fileUpload'
+import type { FormattedSize, Rejection } from '../utils/fileUpload'
 import {
   ACCEPT,
   MAX_FILE_SIZE,
   UPLOAD_TICK_MS,
   advanceProgress,
   formatSize,
+  formatSizeAgainstLimit,
   validateFiles,
 } from '../utils/fileUpload'
 import { translateInformation } from '../utils/information'
@@ -51,13 +52,20 @@ const locales: Record<string, string> = {
   ptBr: 'pt-BR',
 }
 
+const useLocale = (): string => {
+  const { i18n } = useTranslation()
+  return locales[i18n.language] ?? 'en-GB'
+}
+
+const useShowSize = (): ((size: FormattedSize) => string) => {
+  const { t } = useTranslation()
+  return ({ value, unit }) => t(key(`units.${unit}`), { value })
+}
+
 const useFormatSize = (): ((bytes: number) => string) => {
-  const { t, i18n } = useTranslation()
-  const locale = locales[i18n.language] ?? 'en-GB'
-  return (bytes) => {
-    const { value, unit } = formatSize(bytes, locale)
-    return t(key(`units.${unit}`), { value })
-  }
+  const locale = useLocale()
+  const showSize = useShowSize()
+  return (bytes) => showSize(formatSize(bytes, locale))
 }
 
 const MultipleFiles = (): JSX.Element => {
@@ -124,6 +132,8 @@ const dropZoneClasses = [
 const DropZone = (): JSX.Element => {
   const { t } = useTranslation()
   const size = useFormatSize()
+  const showSize = useShowSize()
+  const locale = useLocale()
   const inputRef = useRef<HTMLInputElement>(null)
   const nextId = useRef(1)
   // dragenter and dragleave fire for every child the pointer crosses, so the
@@ -216,12 +226,14 @@ const DropZone = (): JSX.Element => {
     setRejections([])
   }
 
-  const rejectionText = (rejection: Rejection): string =>
-    t(key(`errors.${rejection.error}`), {
+  const rejectionText = (rejection: Rejection): string => {
+    const sizes = formatSizeAgainstLimit(rejection.size, MAX_FILE_SIZE, locale)
+    return t(key(`errors.${rejection.error}`), {
       name: rejection.name,
-      size: size(rejection.size),
-      max: size(MAX_FILE_SIZE),
+      size: showSize(sizes.size),
+      max: showSize(sizes.limit),
     })
+  }
 
   return (
     <section className='flex flex-col gap-4' aria-labelledby='drop-zone-title'>

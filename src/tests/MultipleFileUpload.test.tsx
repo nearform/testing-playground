@@ -170,7 +170,7 @@ describe('MultipleFileUpload', () => {
       {
         file: image('huge.png', MAX_FILE_SIZE + 1),
         error: 'size',
-        text: 'huge.png is 1 MB, over the 1 MB limit.',
+        text: 'huge.png is 1,048,577 B, over the 1,048,576 B limit.',
       },
     ])('rejects a file with a $error error', async ({ file, error, text }) => {
       const user = setup()

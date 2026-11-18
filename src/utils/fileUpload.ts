@@ -71,17 +71,38 @@ export const validateFiles = (
 
 export type SizeUnit = 'b' | 'kb' | 'mb'
 
+export interface FormattedSize {
+  value: string
+  unit: SizeUnit
+}
+
 // A file size in the largest unit that keeps it at 1 or more, with up to one
 // decimal place, in the given language
-export const formatSize = (
-  bytes: number,
-  locale: string,
-): { value: string; unit: SizeUnit } => {
+export const formatSize = (bytes: number, locale: string): FormattedSize => {
   const format = (value: number): string =>
     new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)
   if (bytes < 1024) return { value: format(bytes), unit: 'b' }
   if (bytes < MAX_FILE_SIZE) return { value: format(bytes / 1024), unit: 'kb' }
   return { value: format(bytes / MAX_FILE_SIZE), unit: 'mb' }
+}
+
+// A file's size beside a limit it differs from. Rounding can make the two
+// look equal (1 MB + 1 byte shows as 1 MB), so both are then given in bytes.
+export const formatSizeAgainstLimit = (
+  bytes: number,
+  limit: number,
+  locale: string,
+): { size: FormattedSize; limit: FormattedSize } => {
+  const size = formatSize(bytes, locale)
+  const max = formatSize(limit, locale)
+  if (bytes === limit || size.value !== max.value || size.unit !== max.unit) {
+    return { size, limit: max }
+  }
+  const inBytes = (value: number): FormattedSize => ({
+    value: new Intl.NumberFormat(locale).format(value),
+    unit: 'b',
+  })
+  return { size: inBytes(bytes), limit: inBytes(limit) }
 }
 
 // How far an upload moves on each tick, in percent: larger files are slower,
