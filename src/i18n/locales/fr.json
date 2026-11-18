@@ -508,6 +508,72 @@
         "dismiss": "Entrer dans le playground"
       }
     },
+    "mouse-interactions": {
+      "title": "Interactions avec la souris",
+      "description": "Double-cliquez, faites un clic droit, cliquez en maintenant, et cliquez avec différents boutons de la souris et touches de modification.",
+      "information": "Chaque cible de cette page demande plus qu'un simple clic gauche, et chaque outil de test expose ces actions de la souris différemment. La cible du double-clic ignore les clics simples et ne compte que les double-clics. La note ouvre un menu contextuel personnalisé au clic droit à la place de celui du navigateur, et ses éléments épinglent, surlignent ou suppriment la note ; le menu est un élément distinct placé à l'endroit du pointeur, et il se ferme avec Échap ou en appuyant n'importe où en dehors. Le bouton à maintenir ne confirme que si le bouton gauche de la souris reste enfoncé dessus pendant une seconde entière, donc l'appui et le relâchement doivent être envoyés en deux étapes séparées avec une attente entre les deux ; relâcher ou sortir du bouton plus tôt ne compte pas, et la barre de progression indique où vous en êtes. La dernière zone indique quel bouton de la souris a été enfoncé (gauche, milieu, droit, précédent ou suivant) et quelles touches de modification (Shift, Control, Alt, Meta) étaient maintenues. Le panneau en haut affiche toujours la dernière interaction. Il n'y a volontairement aucune alternative au clavier pour le double-clic, le bouton à maintenir ou la zone des boutons de la souris.",
+      "double-click": {
+        "title": "Double-clic",
+        "instructions": "Seul un double-clic compte ici : les clics simples sont ignorés.",
+        "label": "Double-cliquez-moi",
+        "count": "Double-clics : {{count}}"
+      },
+      "context-menu": {
+        "title": "Menu contextuel",
+        "instructions": "Faites un clic droit sur la note pour ouvrir son menu. Le menu du navigateur n'apparaît pas.",
+        "note": "Penser à arroser les plantes",
+        "pinned": "Épinglée",
+        "highlighted": "Surlignée",
+        "menu-label": "Actions de la note",
+        "actions": {
+          "pin": "Épingler",
+          "unpin": "Désépingler",
+          "highlight": "Surligner",
+          "unhighlight": "Retirer le surlignage",
+          "delete": "Supprimer"
+        },
+        "deleted": "La note a été supprimée.",
+        "restore": "Restaurer la note"
+      },
+      "hold": {
+        "title": "Cliquer et maintenir",
+        "instructions": "Appuyez sur le bouton et maintenez-le enfoncé pendant {{seconds}} seconde pour confirmer. Relâcher ou sortir du bouton plus tôt ne compte pas.",
+        "label": "Maintenir pour confirmer",
+        "progress": "Progression du maintien",
+        "state": {
+          "idle": "Non confirmé",
+          "holding": "Continuez à maintenir…",
+          "confirmed": "Confirmé",
+          "released-early": "Relâché trop tôt, réessayez"
+        }
+      },
+      "buttons": {
+        "title": "Boutons de la souris et touches de modification",
+        "instructions": "Cliquez sur la zone avec n'importe quel bouton de la souris, en maintenant Shift, Control, Alt ou Meta si vous le souhaitez.",
+        "label": "Cliquez-moi avec n'importe quel bouton",
+        "none": "Pas encore cliqué",
+        "button": "Bouton",
+        "modifiers": "Maintenu avec",
+        "no-modifiers": "Rien",
+        "names": {
+          "left": "Gauche",
+          "middle": "Milieu",
+          "right": "Droit",
+          "back": "Précédent",
+          "forward": "Suivant"
+        }
+      },
+      "result": {
+        "title": "Dernière interaction",
+        "none": "Rien pour l'instant",
+        "double-click": "Double-clic sur la cible",
+        "context-menu": "« {{action}} » choisi dans le menu contextuel",
+        "hold-confirmed": "Bouton maintenu assez longtemps pour confirmer",
+        "hold-early": "Bouton à maintenir relâché trop tôt",
+        "button": "Clic : bouton {{button}}",
+        "button-with": "Clic : bouton {{button}}, avec {{modifiers}}"
+      }
+    },
     "multiple-windows": {
       "title": "Fenêtres multiples",
       "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",
