@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ScenarioErrorBoundary from './components/ScenarioErrorBoundary'
 import Index from './pages/Index'
+import NotFound from './pages/NotFound'
 import { scenarios } from './scenarios/list'
 
 // Shown while a scenario's code downloads, so the header and footer stay put
@@ -31,6 +32,8 @@ function Router(): JSX.Element {
           }
         />
       ))}
+      {/* Any other address, such as a mistyped or retired scenario */}
+      <Route path='*' element={<NotFound />} />
     </Routes>
   )
 }

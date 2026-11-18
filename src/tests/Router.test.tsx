@@ -47,6 +47,21 @@ describe('Router', () => {
     )
   })
 
+  describe('when the address has no page', () => {
+    it('shows a not-found page with a way back', () => {
+      TestRenderer(<Router />, { initialEntries: ['/retired-scenario'] })
+
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Page not found' }),
+      ).toBeVisible()
+      expect(screen.getByRole('banner')).toBeVisible()
+      expect(screen.getByTestId('not-found')).toHaveTextContent(
+        'Requested address: /retired-scenario',
+      )
+      expect(screen.getByTestId('back')).toHaveAttribute('href', '/')
+    })
+  })
+
   describe('when a scenario fails to load', () => {
     // React's development build reports the caught error to the console and
     // as a window error event, which is expected here

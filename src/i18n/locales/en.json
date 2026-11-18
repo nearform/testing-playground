@@ -30,6 +30,11 @@
     "load-error-body": "Part of the page failed to download. Check your connection, or the site may have just been updated: reload to try again.",
     "reload": "Reload the page"
   },
+  "not-found": {
+    "title": "Page not found",
+    "description": "There is no page at this address. The scenario may have been renamed or removed: go back to the main page to see the ones available.",
+    "requested": "Requested address:"
+  },
   "navigation": {
     "back_to_main_page": "Back to Main Page"
   },

@@ -17,6 +17,7 @@ import type { Information } from '../utils/information'
 interface PageSetupProps {
   children: React.ReactNode
   title: string
+  // Already translated: it is parsed as HTML, not looked up again
   description: string
   information?: Information
 }
@@ -46,7 +47,7 @@ const PageSetup: React.FC<PageSetupProps> = ({
             <h2>{t('scenarios.description')}</h2>
           </CardTitle>
           <CardDescription className='max-w-[75ch] text-sm'>
-            {ReactHtmlParser(t(description))}
+            {ReactHtmlParser(description)}
           </CardDescription>
         </section>
         {information && (

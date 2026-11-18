@@ -95,6 +95,10 @@ describe('formatSize', () => {
     { bytes: 1023, expected: { value: '1,023', unit: 'b' } },
     { bytes: 1024, expected: { value: '1', unit: 'kb' } },
     { bytes: 1536, expected: { value: '1.5', unit: 'kb' } },
+    // 1,023.9 KB: still in KB, as it does not round up to 1,024
+    { bytes: 1023.9 * 1024, expected: { value: '1,023.9', unit: 'kb' } },
+    // Just under 1 MB rounds to 1,024 KB, so it moves up to MB
+    { bytes: MAX_FILE_SIZE - 1, expected: { value: '1', unit: 'mb' } },
     { bytes: MAX_FILE_SIZE, expected: { value: '1', unit: 'mb' } },
     { bytes: 2.25 * MAX_FILE_SIZE, expected: { value: '2.3', unit: 'mb' } },
   ])(

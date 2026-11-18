@@ -178,7 +178,9 @@ const Hovers = (): JSX.Element => {
                     data-testid={`profile-${id}`}
                   >
                     <Avatar name={name} size='xl' />
-                    {/* Not in the DOM at all until the card is hovered */}
+                    {/* Not in the DOM at all until the card is hovered. Mouse
+                        only on purpose, unlike the file rows below: this is
+                        the hover-only case, as the information notes say */}
                     {hoveredProfile === id && (
                       <div
                         className='absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/95 p-4 text-center dark:bg-background-dark/95'

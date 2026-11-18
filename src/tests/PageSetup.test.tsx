@@ -56,6 +56,31 @@ describe('PageSetup', () => {
     ).toEqual(['Description', 'Information'])
   })
 
+  it('shows the description as given, without translating it again', () => {
+    TestRenderer(
+      <PageSetup
+        title='A scenario'
+        description='Type {{name}} or $t(navigation.back_to_main_page)'
+      >
+        <p>Scenario content</p>
+      </PageSetup>,
+    )
+
+    expect(
+      screen.getByText('Type {{name}} or $t(navigation.back_to_main_page)'),
+    ).toBeInTheDocument()
+  })
+
+  it('renders HTML in the description', () => {
+    TestRenderer(
+      <PageSetup title='A scenario' description='Some <strong>bold</strong>'>
+        <p>Scenario content</p>
+      </PageSetup>,
+    )
+
+    expect(screen.getByText('bold').tagName).toBe('STRONG')
+  })
+
   describe('when the language changes', () => {
     afterEach(async () => {
       await switchLanguage('en')
