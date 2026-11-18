@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Layout from './components/Layout'
+import ScenarioErrorBoundary from './components/ScenarioErrorBoundary'
 import Index from './pages/Index'
 import { scenarios } from './scenarios/list'
 
@@ -22,9 +23,11 @@ function Router(): JSX.Element {
           key={slug}
           path={slug}
           element={
-            <Suspense fallback={loading}>
-              <Component />
-            </Suspense>
+            <ScenarioErrorBoundary>
+              <Suspense fallback={loading}>
+                <Component />
+              </Suspense>
+            </ScenarioErrorBoundary>
           }
         />
       ))}
