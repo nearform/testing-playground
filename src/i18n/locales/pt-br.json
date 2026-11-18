@@ -448,6 +448,66 @@
       "username": "Nome de Usuário",
       "password": "Senha"
     },
+    "modal-dialogs": {
+      "title": "Diálogos modais",
+      "description": "Abra, use e feche diálogos desenhados na página, incluindo um que aparece sozinho ao carregar.",
+      "information": "Ao contrário dos diálogos nativos do navegador (veja JS Alerts), estes modais são elementos comuns do DOM, mas cada um é renderizado em seu próprio elemento no <em>final do <code>&lt;body&gt;</code></em>, fora da marcação do cenário: procure-o a partir do documento, e não dentro da seção que o abriu. Enquanto um modal está aberto, um fundo em tela cheia cobre a página e tudo atrás dele é marcado com <code>inert</code> e <code>aria-hidden=\"true\"</code>: os cliques na página são interceptados pelo fundo e os elementos ao fundo saem da árvore de acessibilidade, então consultas por papel (role) não os encontram mais. O modal básico fecha com o botão de fechar, a tecla Escape ou um clique no fundo, e informa qual foi usado. O modal de confirmação protege uma exclusão: o botão Cancelar, a opção segura, recebe o foco, e Escape ou o fundo também cancelam. O modal com formulário mantém o foco preso dentro dele enquanto está aberto (o Tab dá a volta) e devolve o foco ao botão que o abriu quando fecha. Os modais empilhados mostram um segundo diálogo sobre o primeiro: Escape e o fundo fecham apenas o de cima. Por fim, um modal de boas-vindas abre <em>sozinho</em> na sua primeira visita e só pode ser fechado pelo seu botão; essa escolha é lembrada no <code>localStorage</code> na chave <code>modal-dialogs-entry-dismissed</code>, então os testes precisam fechá-lo ou definir essa chave antes de a página carregar.",
+      "close": "Fechar",
+      "cancel": "Cancelar",
+      "basic": {
+        "title": "Modal básico",
+        "open": "Abrir modal",
+        "modal-title": "Olá de um modal",
+        "modal-body": "Feche-me com o botão de fechar, a tecla Escape ou um clique fora.",
+        "not-closed": "O modal ainda não foi fechado",
+        "closed": {
+          "button": "Fechado com o botão de fechar",
+          "escape": "Fechado com a tecla Escape",
+          "backdrop": "Fechado com um clique no fundo"
+        }
+      },
+      "confirm": {
+        "title": "Confirmar antes de excluir",
+        "item": "Fatura nº {{number}}",
+        "delete": "Excluir",
+        "delete-item": "Excluir {{item}}",
+        "modal-title": "Excluir item?",
+        "modal-body": "{{item}} será excluída permanentemente.",
+        "deleted": "{{item}} foi excluída",
+        "cancelled": "A exclusão de {{item}} foi cancelada",
+        "empty": "Não há mais itens",
+        "restore": "Restaurar itens"
+      },
+      "form": {
+        "title": "Modal com formulário",
+        "open": "Editar perfil",
+        "modal-title": "Editar perfil",
+        "name": "Nome",
+        "email": "E-mail",
+        "name-required": "O nome é obrigatório",
+        "save": "Salvar",
+        "empty": "Nenhum perfil salvo ainda",
+        "saved": "Perfil salvo: {{name}} ({{email}})"
+      },
+      "stacked": {
+        "title": "Modais empilhados",
+        "open": "Abrir primeiro modal",
+        "first-title": "Primeiro modal",
+        "first-body": "Este modal pode abrir outro por cima dele.",
+        "open-second": "Abrir segundo modal",
+        "second-title": "Segundo modal",
+        "second-body": "Estou sobre o primeiro modal. Feche-me para voltar a ele.",
+        "done": "Concluído"
+      },
+      "entry": {
+        "title": "Modal de boas-vindas",
+        "explanation": "Um modal de boas-vindas abre sozinho na primeira vez que você visita esta página e a bloqueia até ser confirmado.",
+        "reset": "Mostrar o modal de boas-vindas novamente",
+        "modal-title": "Boas-vindas!",
+        "modal-body": "Este modal abriu sozinho quando a página carregou. Você precisa confirmá-lo antes de usar a página.",
+        "dismiss": "Entrar no playground"
+      }
+    },
     "multiple-windows": {
       "title": "Múltiplas janelas",
       "description": "Links e botões que abrem novas abas e janelas pop-up, para as quais os testes precisam alternar e depois voltar.",
