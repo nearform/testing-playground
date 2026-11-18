@@ -1079,6 +1079,83 @@
       "slider-with-input": "Deslizador com Entrada",
       "value": "Valor"
     },
+    "time-and-timers": {
+      "title": "Tempo e temporizadores",
+      "description": "Uma oferta com contagem regressiva, um tempo limite por inatividade, horários relativos, conteúdo conforme a hora, uma busca com debounce e um botão com throttle.",
+      "information": "Tudo nesta página depende da hora atual ou da passagem do tempo, e as esperas são propositalmente longas: a oferta dura cinco minutos, e o aviso de sessão só aparece após dez minutos sem nenhuma atividade. Esperar por eles em tempo real deixa o teste lento e instável, então controle o relógio, com <code>page.clock</code> no Playwright, <code>cy.clock()</code> e <code>cy.tick()</code> no Cypress, ou <code>vi.useFakeTimers()</code> no Vitest. Instale o relógio falso antes de a página carregar, pois temporizadores iniciados antes dele continuam no relógio real. A página relê o relógio a cada segundo e calcula cada estado a partir da hora atual, então avançar o relógio de uma vez (por exemplo com <code>page.clock.fastForward()</code>, que dispara um temporizador vencido só uma vez) chega direto ao estado certo. A saudação e o aviso de horário de funcionamento dependem da hora e do dia da semana, então um teste que não fixa a hora passa ou falha conforme o momento em que roda: defina uma hora fixa, como um sábado ou um dia útil às 08:00, antes de carregar a página. Eles também usam o fuso horário do navegador. O tempo limite da sessão conta qualquer movimento do mouse, clique, tecla ou rolagem como atividade, então um teste que move o mouse enquanto espera o reinicia. O aviso cobre a página inteira, então enquanto ele estiver aberto qualquer outro clique na página é interceptado até que seja fechado; com o aviso aberto, só Continuar conectado mantém a sessão, e depois de desconectado, só Entrar novamente inicia outra. Os horários relativos passam de \"agora mesmo\" para \"há 1 minuto\" e depois para horas e dias, e o horário exato fica no atributo <code>datetime</code>. A busca só roda meio segundo depois que você para de digitar, então o teste deve esperar pelos resultados, ou avançar o relógio, em vez de verificá-los logo após digitar; o contador de buscas mostra quantas buscas realmente rodaram. Salvar tem throttle: depois de salvar, novos cliques são ignorados por dois segundos, então dois cliques seguidos salvam só uma vez.",
+      "clock": {
+        "title": "Hora do dia",
+        "instructions": "A saudação muda conforme a hora do dia, e a loja abre de segunda a sexta, só em horário comercial.",
+        "today": "Agora é",
+        "greeting": {
+          "morning": "Bom dia",
+          "afternoon": "Boa tarde",
+          "evening": "Boa noite",
+          "night": "Boa madrugada"
+        },
+        "shop": {
+          "weekend": "Estamos fechados nos fins de semana. Abrimos novamente na segunda às {{opens}}.",
+          "open": "Estamos abertos até as {{closes}}.",
+          "before-opening": "Estamos fechados. Abrimos hoje às {{opens}}.",
+          "after-closing": "Fechamos às {{closes}}. Volte amanhã."
+        }
+      },
+      "countdown": {
+        "title": "Contagem regressiva",
+        "instructions": "A oferta expira cinco minutos depois de a página carregar e não pode mais ser resgatada.",
+        "offer": "20% de desconto no seu primeiro pedido",
+        "ends-in": "A oferta termina em {{time}}",
+        "claimed": "Oferta resgatada",
+        "expired": "Esta oferta expirou",
+        "claim": "Resgatar oferta",
+        "restart": "Reiniciar a oferta"
+      },
+      "session": {
+        "title": "Tempo limite da sessão",
+        "instructions": "Após {{warning}} sem movimento do mouse, clique, tecla ou rolagem, um aviso aparece. Se ninguém escolher continuar conectado em {{grace}}, a sessão é desconectada.",
+        "signed-in": "Você está conectado",
+        "signed-out": "Você foi desconectado por inatividade",
+        "sign-in": "Entrar novamente",
+        "idle": "Inativo há {{time}}",
+        "warning-title": "Você ainda está aí?",
+        "warning-body": "Você será desconectado em {{time}}.",
+        "stay": "Continuar conectado"
+      },
+      "relative": {
+        "title": "Horários relativos",
+        "instructions": "Cada atualização mostra há quanto tempo aconteceu, e o texto muda com o passar do tempo.",
+        "just-now": "agora mesmo",
+        "post": "Publicar uma atualização",
+        "list": "Atualizações",
+        "opened": "Página aberta",
+        "posted": "Atualização {{number}} publicada"
+      },
+      "rate": {
+        "title": "Debounce e throttle"
+      },
+      "debounce": {
+        "title": "Busca com debounce",
+        "instructions": "A busca roda {{delay}} ms depois que você para de digitar.",
+        "label": "Buscar cidades",
+        "count_one": "{{count}} busca realizada",
+        "count_other": "{{count}} buscas realizadas",
+        "searching": "Buscando…",
+        "empty": "Digite para buscar",
+        "no-results": "Nenhuma cidade corresponde a \"{{query}}\"",
+        "results": "Cidades encontradas"
+      },
+      "throttle": {
+        "title": "Botão com throttle",
+        "instructions": "Depois de salvar, os cliques em Salvar são ignorados por {{interval}} ms.",
+        "save": "Salvar",
+        "ready": "Pronto para salvar",
+        "cooling-down": "Salvo. Os cliques são ignorados por um momento",
+        "saves_one": "Salvo {{count}} vez",
+        "saves_other": "Salvo {{count}} vezes",
+        "ignored_one": "{{count}} clique ignorado",
+        "ignored_other": "{{count}} cliques ignorados"
+      }
+    },
     "tooltip-page": {
       "title": "Tooltip",
       "description": "Cenários para testes utilizando tooltip.",

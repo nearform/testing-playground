@@ -1070,6 +1070,83 @@
       },
       "reset": "Reset sorting"
     },
+    "time-and-timers": {
+      "title": "Time and Timers",
+      "description": "A countdown offer, an inactivity timeout, relative timestamps, time-of-day content, a debounced search and a throttled button.",
+      "information": "Everything on this page depends on the current time or on time passing, and the waits are deliberately long: the offer runs for five minutes, and the session warning only appears after ten minutes without any activity. Waiting for them in real time makes a test slow and flaky, so take control of the clock instead, with <code>page.clock</code> in Playwright, <code>cy.clock()</code> and <code>cy.tick()</code> in Cypress, or <code>vi.useFakeTimers()</code> in Vitest. Install the fake clock before the page loads, because timers started before it are left on the real clock. The page re-reads the clock every second and works out every state from the current time, so jumping the clock forward (for example with <code>page.clock.fastForward()</code>, which fires a due timer only once) lands on the right state straight away. The greeting and the opening hours banner depend on the time of day and the day of the week, so a test that does not fix the time passes or fails depending on when it runs: set a fixed time such as a Saturday, or a weekday at 08:00, before loading the page. They also use the browser's time zone. The session timeout counts any mouse movement, click, key press or scroll as activity, so a test that moves the mouse while waiting resets it. The warning covers the whole page, so while it is showing every other click on the page is intercepted until it is dismissed; once the warning is showing only Stay signed in keeps the session, and once signed out only Sign in again starts a new one. The relative timestamps move from \"just now\" to \"1 minute ago\" and on to hours and days, and their exact time is in the <code>datetime</code> attribute. The search only runs once you stop typing for half a second, so a test should wait for the results, or advance the clock, rather than check them straight after typing; the counter under the search box shows how many searches actually ran. Save is throttled: after a save, further clicks for two seconds are ignored, so clicking it twice in quick succession only saves once.",
+      "clock": {
+        "title": "Time of day",
+        "instructions": "The greeting changes with the time of day, and the shop is open from Monday to Friday, during office hours only.",
+        "today": "It is",
+        "greeting": {
+          "morning": "Good morning",
+          "afternoon": "Good afternoon",
+          "evening": "Good evening",
+          "night": "Good night"
+        },
+        "shop": {
+          "weekend": "We are closed at weekends. We open again on Monday at {{opens}}.",
+          "open": "We are open until {{closes}}.",
+          "before-opening": "We are closed. We open today at {{opens}}.",
+          "after-closing": "We closed at {{closes}}. Come back tomorrow."
+        }
+      },
+      "countdown": {
+        "title": "Countdown",
+        "instructions": "The offer expires five minutes after the page loads, and can no longer be claimed.",
+        "offer": "20% off your first order",
+        "ends-in": "Offer ends in {{time}}",
+        "claimed": "Offer claimed",
+        "expired": "This offer has expired",
+        "claim": "Claim offer",
+        "restart": "Restart the offer"
+      },
+      "session": {
+        "title": "Session timeout",
+        "instructions": "After {{warning}} without any mouse movement, click, key press or scroll, a warning appears. If nobody chooses to stay signed in within {{grace}}, the session is signed out.",
+        "signed-in": "You are signed in",
+        "signed-out": "You have been signed out because you were inactive",
+        "sign-in": "Sign in again",
+        "idle": "Idle for {{time}}",
+        "warning-title": "Are you still there?",
+        "warning-body": "You will be signed out in {{time}}.",
+        "stay": "Stay signed in"
+      },
+      "relative": {
+        "title": "Relative timestamps",
+        "instructions": "Each update shows how long ago it happened, and the text changes as time passes.",
+        "just-now": "just now",
+        "post": "Post an update",
+        "list": "Updates",
+        "opened": "Page opened",
+        "posted": "Update {{number}} posted"
+      },
+      "rate": {
+        "title": "Debounce and throttle"
+      },
+      "debounce": {
+        "title": "Debounced search",
+        "instructions": "The search runs {{delay}} ms after you stop typing.",
+        "label": "Search cities",
+        "count_one": "{{count}} search run",
+        "count_other": "{{count}} searches run",
+        "searching": "Searching…",
+        "empty": "Type to search",
+        "no-results": "No cities match \"{{query}}\"",
+        "results": "Matching cities"
+      },
+      "throttle": {
+        "title": "Throttled button",
+        "instructions": "After a save, clicks on Save are ignored for {{interval}} ms.",
+        "save": "Save",
+        "ready": "Ready to save",
+        "cooling-down": "Saved. Clicks are ignored for a moment",
+        "saves_one": "Saved {{count}} time",
+        "saves_other": "Saved {{count}} times",
+        "ignored_one": "{{count}} click ignored",
+        "ignored_other": "{{count}} clicks ignored"
+      }
+    },
     "tooltip-page": {
       "title": "Tooltips",
       "description": "A set of tooltips to test against.",
