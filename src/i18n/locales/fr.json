@@ -1824,6 +1824,75 @@
       "date": "Date",
       "textarea": "Zone de texte",
       "clear-all": "Tout effacer"
+    },
+    "virtualised-list": {
+      "title": "Liste virtualisée",
+      "description": "Des listes de 10 000 lignes et une grille de 260 000 cellules où seules les lignes à l'écran existent dans le DOM. Les lignes sont créées, réutilisées et supprimées au fil du défilement.",
+      "information": {
+        "summary": "Chaque liste compte 10 000 lignes et la grille 260 000 cellules, mais seules les quelques-unes proches de la zone visible sont dans le DOM. Le compteur au-dessus de chaque liste indique combien de lignes sont affichées en ce moment et lesquelles, pour les voir changer pendant le défilement.",
+        "sections": [
+          {
+            "title": "Les lignes hors écran n'existent pas",
+            "points": [
+              "Chercher la ligne {{fixedTarget}} tout de suite ne trouve rien : elle n'est pas masquée, elle n'est tout simplement pas encore dans le DOM. <code>scrollIntoView()</code> n'aide pas non plus, car il n'y a aucun élément sur lequel l'appeler. Faites défiler la liste elle-même (pas la page) jusqu'à ce que la ligne soit affichée, puis cherchez-la.",
+              "Compter les lignes avec <code>getAllByRole('listitem')</code>, <code>locator.count()</code> ou <code>should('have.length')</code> donne le nombre de lignes affichées, pas le total. Les vrais totaux se trouvent dans <code>aria-setsize</code> sur chaque ligne, et dans <code>aria-rowcount</code> et <code>aria-colcount</code> sur la grille.",
+              "Chercher du texte dans la page, avec <code>getByText</code> ou la recherche du navigateur, ne voit que les lignes affichées.",
+              "Être dans le DOM ne veut pas dire être à l'écran : quelques lignes de plus sont affichées au-dessus et en dessous de la zone visible pour éviter les trous lors d'un défilement rapide. Playwright fait défiler une ligne affichée jusqu'à elle avant de cliquer ; ailleurs, vérifiez d'abord qu'elle est visible."
+            ]
+          },
+          {
+            "title": "Les éléments sont réutilisés",
+            "points": [
+              "Pendant le défilement, l'élément qui affichait une ligne est réutilisé pour une autre : l'élément qui affichait la ligne 3 peut afficher la ligne 18 après un défilement. Un élément conservé, comme un <code>WebElement</code> Selenium ou un alias Cypress, peut ensuite désigner une autre ligne sans devenir obsolète, alors cherchez à nouveau la ligne après chaque défilement.",
+              "Cherchez les lignes par quelque chose qui leur appartient, comme leur texte, leur <code>data-row-id</code> ou le nom de leur bouton (<em>Sélectionner la ligne {{fixedTarget}}</em>), pas par leur position : <code>nth()</code> ou <code>eq()</code> choisit la n-ième ligne affichée, pas la n-ième ligne de la liste.",
+              "Le bouton <code>Sélectionner</code> de chaque ligne a le même texte visible, donc un sélecteur basé sur ce seul texte correspond à toutes les lignes affichées."
+            ]
+          },
+          {
+            "title": "Faire défiler jusqu'à une ligne",
+            "points": [
+              "Dans la liste à hauteur fixe, chaque ligne mesure {{rowHeight}} px, donc la ligne N commence à <code>(N - 1) × {{rowHeight}}</code> pixels. Donnez cette valeur au <code>scrollTop</code> de la liste et la ligne est affichée.",
+              "Dans la liste à hauteur variable, les lignes n'ont pas toutes la même hauteur, donc la position d'une ligne ne se déduit pas de son ID. Faites défiler pas à pas, par exemple de la hauteur de la liste, et vérifiez après chaque pas si la ligne est affichée. Les ID des lignes affichées indiquent s'il faut continuer ou revenir en arrière.",
+              "Les lignes sont affichées en réponse à l'événement de défilement, alors attendez que la ligne apparaisse plutôt que de vérifier juste après avoir défilé. Modifier <code>scrollTop</code>, <code>mouse.wheel()</code> dans Playwright et <code>scrollTo()</code> sur la liste dans Cypress déclenchent tous cet événement.",
+              "La grille défile dans les deux sens : ses colonnes sont aussi virtualisées, donc la colonne Q n'est pas dans le DOM tant que vous n'avez pas défilé vers la droite. Sa ligne d'en-tête et ses numéros de ligne restent en place au-dessus des cellules, donc une cellule juste en dessous est dans le DOM mais recouverte."
+            ]
+          }
+        ]
+      },
+      "rendered": "{{rendered}} lignes sur {{total}} dans le DOM (lignes {{first}} à {{last}})",
+      "row": "Ligne {{id}}",
+      "select": "Sélectionner",
+      "select-label": "Sélectionner la ligne {{id}}",
+      "result": {
+        "title": "Résultat",
+        "none": "Aucune ligne sélectionnée pour l'instant.",
+        "correct": "Vous avez sélectionné la ligne {{id}}. Bravo !",
+        "wrong": "Vous avez sélectionné la ligne {{id}}, pas la ligne {{target}}."
+      },
+      "fixed": {
+        "title": "Liste à hauteur fixe",
+        "instructions": "Chaque ligne mesure {{height}} px. Trouvez la ligne dont l'ID est {{target}} et cliquez sur son bouton Sélectionner.",
+        "label": "Lignes à hauteur fixe"
+      },
+      "variable": {
+        "title": "Liste à hauteur variable",
+        "instructions": "Les lignes mesurent entre {{min}} px et {{max}} px selon leur nombre de notes. Trouvez la ligne dont l'ID est {{target}} et cliquez sur son bouton Sélectionner.",
+        "label": "Lignes à hauteur variable",
+        "note": "Note {{line}} de la ligne {{id}}"
+      },
+      "grid": {
+        "title": "Grille virtualisée",
+        "instructions": "{{rows}} lignes sur {{columns}} colonnes, avec des lignes à hauteur fixe. Les lignes comme les colonnes sont virtualisées. Trouvez la cellule {{target}} (colonne {{column}}, ligne {{row}}) et cliquez dessus.",
+        "label": "Tableur",
+        "corner": "Ligne",
+        "cell": "Cellule {{cell}} : {{value}}",
+        "rendered": "{{rows}} lignes sur {{totalRows}} et {{columns}} colonnes sur {{totalColumns}} dans le DOM ({{cells}} cellules sur {{totalCells}})",
+        "result": {
+          "none": "Aucune cellule cliquée pour l'instant.",
+          "correct": "Vous avez cliqué sur la cellule {{cell}}, qui contient {{value}}. Bravo !",
+          "wrong": "Vous avez cliqué sur la cellule {{cell}}, pas sur {{target}}."
+        }
+      }
     }
   }
 }

@@ -1824,6 +1824,75 @@
       "date": "Data",
       "textarea": "Área de Texto",
       "clear-all": "Limpar Tudo"
+    },
+    "virtualised-list": {
+      "title": "Lista virtualizada",
+      "description": "Listas de 10.000 linhas e uma grade de 260.000 células em que só as linhas na tela existem no DOM. As linhas são criadas, reutilizadas e removidas conforme você rola.",
+      "information": {
+        "summary": "Cada lista tem 10.000 linhas e a grade tem 260.000 células, mas só as poucas perto da área visível estão no DOM. A contagem acima de cada lista mostra quantas linhas estão renderizadas agora e quais são, para você vê-las mudar enquanto rola.",
+        "sections": [
+          {
+            "title": "Linhas fora da tela não existem",
+            "points": [
+              "Procurar a linha {{fixedTarget}} logo de cara não encontra nada: ela não está oculta, ela simplesmente ainda não está no DOM. <code>scrollIntoView()</code> também não ajuda, pois não há elemento em que chamá-lo. Role a própria lista (não a página) até a linha ser renderizada e então procure-a.",
+              "Contar as linhas com <code>getAllByRole('listitem')</code>, <code>locator.count()</code> ou <code>should('have.length')</code> dá o número de linhas renderizadas, não o total. Os totais reais estão em <code>aria-setsize</code> em cada linha, e em <code>aria-rowcount</code> e <code>aria-colcount</code> na grade.",
+              "Procurar texto na página, com <code>getByText</code> ou a busca do navegador, só encontra as linhas renderizadas.",
+              "Estar no DOM não significa estar na tela: algumas linhas a mais são renderizadas acima e abaixo da área visível para que uma rolagem rápida não mostre buracos. O Playwright rola até uma linha renderizada antes de clicar nela; em outras ferramentas, verifique antes se ela está visível."
+            ]
+          },
+          {
+            "title": "Os elementos são reutilizados",
+            "points": [
+              "Conforme você rola, o elemento que mostrava uma linha é reutilizado para outra: o elemento que mostrava a linha 3 pode mostrar a linha 18 depois de uma rolagem. Um elemento guardado, como um <code>WebElement</code> do Selenium ou um alias do Cypress, pode apontar para outra linha depois sem ficar obsoleto, então procure a linha de novo depois de cada rolagem.",
+              "Procure as linhas por algo que pertença a elas, como o texto, o <code>data-row-id</code> ou o nome do botão (<em>Selecionar linha {{fixedTarget}}</em>), e não pela posição: <code>nth()</code> ou <code>eq()</code> escolhe a n-ésima linha renderizada, não a n-ésima linha da lista.",
+              "O botão <code>Selecionar</code> de cada linha tem o mesmo texto visível, então um seletor só por esse texto corresponde a todas as linhas renderizadas."
+            ]
+          },
+          {
+            "title": "Rolar até uma linha",
+            "points": [
+              "Na lista de altura fixa, cada linha tem {{rowHeight}} px, então a linha N começa em <code>(N - 1) × {{rowHeight}}</code> pixels. Defina o <code>scrollTop</code> da lista com esse valor e a linha é renderizada.",
+              "Na lista de altura variável, as linhas têm alturas diferentes, então a posição de uma linha não pode ser calculada pelo ID. Role um passo de cada vez, por exemplo a altura da lista, e depois de cada passo verifique se a linha foi renderizada. Os IDs das linhas renderizadas dizem se você deve continuar ou voltar.",
+              "As linhas são renderizadas em resposta ao evento de rolagem, então espere a linha aparecer em vez de verificar logo depois de rolar. Alterar o <code>scrollTop</code>, <code>mouse.wheel()</code> no Playwright e <code>scrollTo()</code> na lista no Cypress disparam esse evento.",
+              "A grade rola nas duas direções: as colunas também são virtualizadas, então a coluna Q não está no DOM até você rolar para a direita. A linha de cabeçalho e os números das linhas ficam fixos por cima das células, então uma célula logo abaixo deles está no DOM, mas coberta."
+            ]
+          }
+        ]
+      },
+      "rendered": "{{rendered}} de {{total}} linhas no DOM (linhas {{first}} a {{last}})",
+      "row": "Linha {{id}}",
+      "select": "Selecionar",
+      "select-label": "Selecionar linha {{id}}",
+      "result": {
+        "title": "Resultado",
+        "none": "Nenhuma linha selecionada ainda.",
+        "correct": "Você selecionou a linha {{id}}. Muito bem!",
+        "wrong": "Você selecionou a linha {{id}}, não a linha {{target}}."
+      },
+      "fixed": {
+        "title": "Lista de altura fixa",
+        "instructions": "Cada linha tem {{height}} px de altura. Encontre a linha com o ID {{target}} e clique no botão Selecionar dela.",
+        "label": "Linhas de altura fixa"
+      },
+      "variable": {
+        "title": "Lista de altura variável",
+        "instructions": "As linhas têm entre {{min}} px e {{max}} px de altura, conforme o número de notas. Encontre a linha com o ID {{target}} e clique no botão Selecionar dela.",
+        "label": "Linhas de altura variável",
+        "note": "Nota {{line}} da linha {{id}}"
+      },
+      "grid": {
+        "title": "Grade virtualizada",
+        "instructions": "{{rows}} linhas por {{columns}} colunas, com linhas de altura fixa. Tanto as linhas quanto as colunas são virtualizadas. Encontre a célula {{target}} (coluna {{column}}, linha {{row}}) e clique nela.",
+        "label": "Planilha",
+        "corner": "Linha",
+        "cell": "Célula {{cell}}: {{value}}",
+        "rendered": "{{rows}} de {{totalRows}} linhas e {{columns}} de {{totalColumns}} colunas no DOM ({{cells}} de {{totalCells}} células)",
+        "result": {
+          "none": "Nenhuma célula clicada ainda.",
+          "correct": "Você clicou na célula {{cell}}, que contém {{value}}. Muito bem!",
+          "wrong": "Você clicou na célula {{cell}}, não na {{target}}."
+        }
+      }
     }
   }
 }

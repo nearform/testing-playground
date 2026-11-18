@@ -1823,6 +1823,75 @@
       "date": "Date",
       "textarea": "TextArea",
       "clear-all": "Clear All"
+    },
+    "virtualised-list": {
+      "title": "Virtualised List",
+      "description": "Lists of 10,000 rows and a grid of 260,000 cells where only the rows on screen exist in the DOM. Rows are created, reused and removed as you scroll.",
+      "information": {
+        "summary": "Each list has 10,000 rows and the grid has 260,000 cells, but only the handful near the viewport are in the DOM. The count above each list shows how many rows are rendered right now and which ones, so you can watch them change as you scroll.",
+        "sections": [
+          {
+            "title": "Rows off screen do not exist",
+            "points": [
+              "Looking for row {{fixedTarget}} straight away finds nothing: it is not hidden, it is simply not in the DOM yet. <code>scrollIntoView()</code> cannot help either, as there is no element to call it on. Scroll the list itself (not the page) until the row is rendered, then find it.",
+              "Counting rows with <code>getAllByRole('listitem')</code>, <code>locator.count()</code> or <code>should('have.length')</code> gives the number rendered, not the total. The real totals are in <code>aria-setsize</code> on each row, and <code>aria-rowcount</code> and <code>aria-colcount</code> on the grid.",
+              "Searching the page for text, with <code>getByText</code> or the browser's find, only sees the rendered rows.",
+              "In the DOM does not mean on screen: a few extra rows are rendered above and below the viewport so fast scrolling does not show gaps. Playwright scrolls a rendered row into view before clicking it; elsewhere check it is visible first."
+            ]
+          },
+          {
+            "title": "Elements are reused",
+            "points": [
+              "As you scroll, the element that showed one row is reused for another: the element that showed row 3 may show row 18 after a scroll. A stored element, such as a Selenium <code>WebElement</code> or a Cypress alias, can point at a different row afterwards without going stale, so find the row again after every scroll.",
+              "Find rows by something that belongs to the row, such as its text, its <code>data-row-id</code> or its button's name (<em>Select row {{fixedTarget}}</em>), not by position: <code>nth()</code> or <code>eq()</code> picks the nth rendered row, not the nth row of the list.",
+              "Each row's <code>Select</code> button has the same visible text, so a locator for the text alone matches whichever rows are rendered."
+            ]
+          },
+          {
+            "title": "Scrolling to a row",
+            "points": [
+              "In the fixed-height list every row is {{rowHeight}}px tall, so row N starts at <code>(N - 1) × {{rowHeight}}</code> pixels. Set the list's <code>scrollTop</code> to that and the row is rendered.",
+              "In the variable-height list rows have different heights, so a row's position cannot be worked out from its ID. Scroll a step at a time, for example by the height of the list, and after each step check whether the row is rendered. The IDs of the rendered rows tell you whether to keep going or go back.",
+              "Rows are rendered in response to the scroll event, so wait for the row to appear rather than checking straight after scrolling. Setting <code>scrollTop</code>, <code>mouse.wheel()</code> in Playwright and <code>scrollTo()</code> on the list in Cypress all fire it.",
+              "The grid scrolls both ways: its columns are virtualised too, so column Q is not in the DOM until you scroll right. Its header row and row numbers stay in place over the cells, so a cell scrolled just under them is in the DOM but covered."
+            ]
+          }
+        ]
+      },
+      "rendered": "{{rendered}} of {{total}} rows in the DOM (rows {{first}} to {{last}})",
+      "row": "Row {{id}}",
+      "select": "Select",
+      "select-label": "Select row {{id}}",
+      "result": {
+        "title": "Result",
+        "none": "No row selected yet.",
+        "correct": "You selected row {{id}}. Well done!",
+        "wrong": "You selected row {{id}}, not row {{target}}."
+      },
+      "fixed": {
+        "title": "Fixed-height list",
+        "instructions": "Every row is {{height}}px tall. Find the row with ID {{target}} and click its Select button.",
+        "label": "Fixed-height rows"
+      },
+      "variable": {
+        "title": "Variable-height list",
+        "instructions": "Rows are between {{min}}px and {{max}}px tall, depending on how many notes they have. Find the row with ID {{target}} and click its Select button.",
+        "label": "Variable-height rows",
+        "note": "Note {{line}} for row {{id}}"
+      },
+      "grid": {
+        "title": "Virtualised grid",
+        "instructions": "{{rows}} rows by {{columns}} columns, with rows of a fixed height. Both the rows and the columns are virtualised. Find cell {{target}} (column {{column}}, row {{row}}) and click it.",
+        "label": "Spreadsheet",
+        "corner": "Row",
+        "cell": "Cell {{cell}}: {{value}}",
+        "rendered": "{{rows}} of {{totalRows}} rows and {{columns}} of {{totalColumns}} columns in the DOM ({{cells}} of {{totalCells}} cells)",
+        "result": {
+          "none": "No cell clicked yet.",
+          "correct": "You clicked cell {{cell}}, which holds {{value}}. Well done!",
+          "wrong": "You clicked cell {{cell}}, not {{target}}."
+        }
+      }
     }
   }
 }
