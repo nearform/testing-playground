@@ -2243,7 +2243,8 @@
         },
         "panels": {
           "overview": "Le sac à dos Trailblazer a une contenance de 28 litres et une pochette rembourrée pour ordinateur portable.",
-          "specifications": "Poids : 1,2 kg. Dimensions : 50 × 30 × 20 cm. Matière : nylon recyclé."
+          "specifications": "Poids : 1,2 kg. Dimensions : 50 × 30 × 20 cm. Matière : nylon recyclé.",
+          "archive": "Les anciens modèles ne sont plus disponibles."
         },
         "reviews-loading": "Chargement des avis…",
         "reviews": {

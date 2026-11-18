@@ -2242,7 +2242,8 @@
         },
         "panels": {
           "overview": "The Trailblazer backpack holds 28 litres and has a padded laptop sleeve.",
-          "specifications": "Weight: 1.2 kg. Dimensions: 50 × 30 × 20 cm. Material: recycled nylon."
+          "specifications": "Weight: 1.2 kg. Dimensions: 50 × 30 × 20 cm. Material: recycled nylon.",
+          "archive": "Older models are no longer available."
         },
         "reviews-loading": "Loading reviews…",
         "reviews": {

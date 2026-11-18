@@ -2243,7 +2243,8 @@
         },
         "panels": {
           "overview": "A mochila Trailblazer comporta 28 litros e tem um compartimento acolchoado para notebook.",
-          "specifications": "Peso: 1,2 kg. Dimensões: 50 × 30 × 20 cm. Material: náilon reciclado."
+          "specifications": "Peso: 1,2 kg. Dimensões: 50 × 30 × 20 cm. Material: náilon reciclado.",
+          "archive": "Os modelos antigos não estão mais disponíveis."
         },
         "reviews-loading": "Carregando avaliações…",
         "reviews": {

@@ -62,7 +62,16 @@ describe('Tabs and accordions scenario', () => {
       expect(
         screen.getByTestId('product-panel-specifications'),
       ).not.toBeVisible()
-      expect(screen.getByTestId('product-panel-archive')).not.toBeVisible()
+      const archive = screen.getByTestId('product-panel-archive')
+      expect(archive).not.toBeVisible()
+      // A hidden panel's text can still be found, so it must be real text
+      expect(archive).toHaveTextContent('Older models are no longer available.')
+    })
+
+    it('shows no untranslated keys, even in hidden content', () => {
+      renderScenario()
+
+      expect(document.body).not.toHaveTextContent(/scenarios\./)
     })
 
     it('shows a panel and records it in the URL when its tab is clicked', async () => {
