@@ -1,7 +1,7 @@
 import { BackLink, Button, Card, CardTitle } from '@nearform/quantum'
 import React, { Component, type ErrorInfo, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Layout from './Layout'
 
@@ -46,7 +46,9 @@ interface BoundaryState {
   failed: boolean
 }
 
-class Boundary extends Component<BoundaryProps, BoundaryState> {
+// Each scenario route has its own boundary, so leaving a page that failed
+// unmounts it and the next page starts afresh
+class ScenarioErrorBoundary extends Component<BoundaryProps, BoundaryState> {
   state: BoundaryState = { failed: false }
 
   static getDerivedStateFromError(): BoundaryState {
@@ -54,19 +56,12 @@ class Boundary extends Component<BoundaryProps, BoundaryState> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
-    console.error('Scenario failed to load', error, info.componentStack)
+    console.error('Scenario page error', error, info.componentStack)
   }
 
   render(): ReactNode {
     return this.state.failed ? <LoadError /> : this.props.children
   }
-}
-
-// Starts afresh on every route, so leaving a page that failed shows the next
-// one rather than the same message
-const ScenarioErrorBoundary = ({ children }: BoundaryProps): JSX.Element => {
-  const { pathname } = useLocation()
-  return <Boundary key={pathname}>{children}</Boundary>
 }
 
 export default ScenarioErrorBoundary
