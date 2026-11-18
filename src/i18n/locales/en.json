@@ -447,6 +447,66 @@
       "username": "Username",
       "password": "Password"
     },
+    "modal-dialogs": {
+      "title": "Modal Dialogs",
+      "description": "Open, use and close dialogs drawn in the page, including one that appears by itself on load.",
+      "information": "Unlike the browser's native dialogs (see JS Alerts), these modals are ordinary DOM elements, but each is rendered in its own element at the <em>end of <code>&lt;body&gt;</code></em>, outside the scenario's markup, so look for it from the document rather than inside the section that opened it. While a modal is open a full-screen backdrop sits over the page and everything behind it is marked <code>inert</code> and <code>aria-hidden=\"true\"</code>: clicks on the page are intercepted by the backdrop and background elements drop out of the accessibility tree, so role-based queries no longer find them. The basic modal closes with its close button, the Escape key or a click on the backdrop, and reports which one was used. The confirmation modal guards a delete: the safe Cancel button gets focus, and Escape or the backdrop also cancel. The form modal keeps focus trapped inside while it is open (Tab wraps around) and gives focus back to the button that opened it when it closes. The stacked modals show a second dialog on top of the first: Escape and the backdrop only close the top one. Finally, a welcome modal opens <em>by itself</em> on your first visit and can only be closed with its button; that choice is remembered in <code>localStorage</code> under <code>modal-dialogs-entry-dismissed</code>, so tests must either dismiss it or set that key before the page loads.",
+      "close": "Close",
+      "cancel": "Cancel",
+      "basic": {
+        "title": "Basic modal",
+        "open": "Open modal",
+        "modal-title": "Hello from a modal",
+        "modal-body": "Close me with the close button, the Escape key or a click outside.",
+        "not-closed": "The modal has not been closed yet",
+        "closed": {
+          "button": "Closed with the close button",
+          "escape": "Closed with the Escape key",
+          "backdrop": "Closed with a backdrop click"
+        }
+      },
+      "confirm": {
+        "title": "Confirm before deleting",
+        "item": "Invoice #{{number}}",
+        "delete": "Delete",
+        "delete-item": "Delete {{item}}",
+        "modal-title": "Delete item?",
+        "modal-body": "{{item}} will be permanently deleted.",
+        "deleted": "{{item}} was deleted",
+        "cancelled": "Deleting {{item}} was cancelled",
+        "empty": "No items left",
+        "restore": "Restore items"
+      },
+      "form": {
+        "title": "Modal with a form",
+        "open": "Edit profile",
+        "modal-title": "Edit profile",
+        "name": "Name",
+        "email": "Email",
+        "name-required": "Name is required",
+        "save": "Save",
+        "empty": "No profile saved yet",
+        "saved": "Saved profile: {{name}} ({{email}})"
+      },
+      "stacked": {
+        "title": "Stacked modals",
+        "open": "Open first modal",
+        "first-title": "First modal",
+        "first-body": "This modal can open another one on top of it.",
+        "open-second": "Open second modal",
+        "second-title": "Second modal",
+        "second-body": "I am on top of the first modal. Close me to get back to it.",
+        "done": "Done"
+      },
+      "entry": {
+        "title": "Welcome modal",
+        "explanation": "A welcome modal opens by itself the first time you visit this page and blocks it until it is acknowledged.",
+        "reset": "Show the welcome modal again",
+        "modal-title": "Welcome!",
+        "modal-body": "This modal opened by itself when the page loaded. You need to acknowledge it before you can use the page.",
+        "dismiss": "Enter the playground"
+      }
+    },
     "multiple-windows": {
       "title": "Multiple Windows",
       "description": "Links and buttons that open new tabs and popup windows, which tests have to switch to and back from.",

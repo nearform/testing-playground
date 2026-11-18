@@ -448,6 +448,66 @@
       "username": "Nom d'utilisateur",
       "password": "Mot de passe"
     },
+    "modal-dialogs": {
+      "title": "Boîtes de dialogue modales",
+      "description": "Ouvrez, utilisez et fermez des boîtes de dialogue dessinées dans la page, dont une qui apparaît d'elle-même au chargement.",
+      "information": "Contrairement aux boîtes de dialogue natives du navigateur (voir JS Alerts), ces modales sont des éléments du DOM ordinaires, mais chacune est rendue dans son propre élément à la <em>fin de <code>&lt;body&gt;</code></em>, en dehors du balisage du scénario : cherchez-la depuis le document plutôt qu'à l'intérieur de la section qui l'a ouverte. Tant qu'une modale est ouverte, un fond plein écran recouvre la page et tout ce qui se trouve derrière est marqué <code>inert</code> et <code>aria-hidden=\"true\"</code> : les clics sur la page sont interceptés par le fond et les éléments en arrière-plan sortent de l'arbre d'accessibilité, si bien que les requêtes par rôle ne les trouvent plus. La modale simple se ferme avec son bouton de fermeture, la touche Échap ou un clic sur le fond, et indique lequel a été utilisé. La modale de confirmation protège une suppression : le bouton Annuler, le choix sûr, reçoit le focus, et Échap ou le fond annulent aussi. La modale avec formulaire garde le focus piégé à l'intérieur tant qu'elle est ouverte (Tab fait le tour) et rend le focus au bouton qui l'a ouverte à sa fermeture. Les modales empilées affichent une deuxième boîte de dialogue au-dessus de la première : Échap et le fond ne ferment que celle du dessus. Enfin, une modale de bienvenue s'ouvre <em>d'elle-même</em> lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans <code>localStorage</code> sous <code>modal-dialogs-entry-dismissed</code>, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page.",
+      "close": "Fermer",
+      "cancel": "Annuler",
+      "basic": {
+        "title": "Modale simple",
+        "open": "Ouvrir la modale",
+        "modal-title": "Bonjour depuis une modale",
+        "modal-body": "Fermez-moi avec le bouton de fermeture, la touche Échap ou un clic à l'extérieur.",
+        "not-closed": "La modale n'a pas encore été fermée",
+        "closed": {
+          "button": "Fermée avec le bouton de fermeture",
+          "escape": "Fermée avec la touche Échap",
+          "backdrop": "Fermée par un clic sur le fond"
+        }
+      },
+      "confirm": {
+        "title": "Confirmer avant de supprimer",
+        "item": "Facture n° {{number}}",
+        "delete": "Supprimer",
+        "delete-item": "Supprimer {{item}}",
+        "modal-title": "Supprimer l'élément ?",
+        "modal-body": "{{item}} sera définitivement supprimée.",
+        "deleted": "{{item}} a été supprimée",
+        "cancelled": "La suppression de {{item}} a été annulée",
+        "empty": "Il ne reste aucun élément",
+        "restore": "Restaurer les éléments"
+      },
+      "form": {
+        "title": "Modale avec un formulaire",
+        "open": "Modifier le profil",
+        "modal-title": "Modifier le profil",
+        "name": "Nom",
+        "email": "E-mail",
+        "name-required": "Le nom est obligatoire",
+        "save": "Enregistrer",
+        "empty": "Aucun profil enregistré pour l'instant",
+        "saved": "Profil enregistré : {{name}} ({{email}})"
+      },
+      "stacked": {
+        "title": "Modales empilées",
+        "open": "Ouvrir la première modale",
+        "first-title": "Première modale",
+        "first-body": "Cette modale peut en ouvrir une autre par-dessus.",
+        "open-second": "Ouvrir la deuxième modale",
+        "second-title": "Deuxième modale",
+        "second-body": "Je suis au-dessus de la première modale. Fermez-moi pour y revenir.",
+        "done": "Terminé"
+      },
+      "entry": {
+        "title": "Modale de bienvenue",
+        "explanation": "Une modale de bienvenue s'ouvre d'elle-même lors de votre première visite sur cette page et la bloque jusqu'à ce que vous la validiez.",
+        "reset": "Afficher à nouveau la modale de bienvenue",
+        "modal-title": "Bienvenue !",
+        "modal-body": "Cette modale s'est ouverte d'elle-même au chargement de la page. Vous devez la valider avant de pouvoir utiliser la page.",
+        "dismiss": "Entrer dans le playground"
+      }
+    },
     "multiple-windows": {
       "title": "Fenêtres multiples",
       "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",
