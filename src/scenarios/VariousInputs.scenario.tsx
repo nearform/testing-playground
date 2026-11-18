@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'various-inputs'
@@ -125,6 +126,7 @@ const VariousInputs: React.FC = (): JSX.Element => {
       <PageSetup
         title={t(`scenarios.${SLUG}.title`)}
         description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <Button variant='secondary' onClick={handleClearAll}>
           {t(`scenarios.${SLUG}.clear-all`)}

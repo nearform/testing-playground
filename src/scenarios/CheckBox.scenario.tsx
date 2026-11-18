@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'check-box'
@@ -85,6 +86,7 @@ const CheckBox = (): JSX.Element => {
       <PageSetup
         title={t(`scenarios.${SLUG}.title`)}
         description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <div className='flex flex-col gap-3'>

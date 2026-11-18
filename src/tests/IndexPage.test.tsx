@@ -1,4 +1,4 @@
-import { act, fireEvent, screen } from '@testing-library/react'
+import { act, fireEvent, screen, within } from '@testing-library/react'
 import React from 'react'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -51,5 +51,34 @@ describe('Index page', () => {
     expect(
       screen.getByRole('link', { name: /Presse-papiers/ }),
     ).toHaveAttribute('href', '/clipboard')
+  })
+
+  it('explains what the playground is for', () => {
+    TestRenderer(<Index />)
+
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Practise test automation on the parts of the web that make it hard',
+      }),
+    ).toBeVisible()
+  })
+
+  it('walks a first-time visitor through using it in three steps', () => {
+    TestRenderer(<Index />)
+
+    const steps = screen.getByRole('list', {
+      name: 'How to use the playground',
+    })
+
+    expect(within(steps).getAllByRole('listitem')).toHaveLength(3)
+  })
+
+  it('links to the repository for suggesting a scenario', () => {
+    TestRenderer(<Index />)
+
+    expect(
+      screen.getByRole('link', { name: 'suggest or add a scenario on GitHub' }),
+    ).toHaveAttribute('href', 'https://github.com/nearform/testing-playground')
   })
 })

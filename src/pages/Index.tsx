@@ -7,12 +7,19 @@ import { scenarios } from '../scenarios/list'
 import { type DifficultyFilter, matchesDifficulty } from '../utils/difficulty'
 import {
   Input,
+  Link,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@nearform/quantum'
+
+const REPOSITORY_URL = 'https://github.com/nearform/testing-playground'
+
+// The muted text of the scenario pages, stopped at about 75 characters a line
+const proseClass =
+  'max-w-[75ch] text-sm text-foreground-muted dark:text-foreground-muted-dark'
 
 export default function Index(): JSX.Element {
   const { t, i18n } = useTranslation()
@@ -54,6 +61,35 @@ export default function Index(): JSX.Element {
 
   return (
     <Layout>
+      {/* What the site is for, so a first visit makes sense without anyone
+          to ask. Left aligned with the cards, and kept to a readable width. */}
+      <section
+        aria-labelledby='site-intro-title'
+        className='flex flex-col gap-3 px-4 pt-6 md:px-8'
+        data-testid='site-intro'
+      >
+        <h2
+          id='site-intro-title'
+          className='max-w-[40ch] text-xl font-semibold text-balance'
+        >
+          {t('home.title')}
+        </h2>
+        <p className={proseClass}>{t('home.intro')}</p>
+        <ol
+          aria-label={t('home.steps-label')}
+          className={`${proseClass} flex list-decimal flex-col gap-1 pl-5`}
+        >
+          <li>{t('home.steps.choose')}</li>
+          <li>{t('home.steps.read')}</li>
+          <li>{t('home.steps.test')}</li>
+        </ol>
+        <p className={proseClass}>
+          {t('home.source')}{' '}
+          <Link variant='inline' href={REPOSITORY_URL}>
+            {t('home.source-link')}
+          </Link>
+        </p>
+      </section>
       <div className='flex flex-wrap justify-center gap-2 p-4'>
         <div className='w-60'>
           <Input

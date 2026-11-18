@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import en from '../i18n/locales/en.json'
 import fr from '../i18n/locales/fr.json'
 import ptBr from '../i18n/locales/pt-br.json'
+import { scenarios } from '../scenarios/list'
 import {
   isStructured,
   translateInformation,
@@ -74,8 +75,55 @@ describe('translateInformation', () => {
   })
 })
 
+// Every string a reader sees in some information
+const textsOf = (information: Information): string[] =>
+  isStructured(information)
+    ? [
+        ...(information.summary === undefined ? [] : [information.summary]),
+        ...information.sections.flatMap(({ title, points }) => [
+          title,
+          ...points,
+        ]),
+      ]
+    : [information]
+
 describe('scenario information', () => {
   const english = informationOf(en)
+  // Every scenario's information in every language, as [language/scenario,
+  // information], so a mistake in a translation is caught as well
+  const written = [
+    { language: 'en', locale: en },
+    { language: 'fr', locale: fr },
+    { language: 'pt-br', locale: ptBr },
+  ].flatMap(({ language, locale }) =>
+    Object.entries(informationOf(locale))
+      .filter((entry): entry is [string, Information] => entry[1] !== undefined)
+      .map(([name, information]): [string, Information] => [
+        `${language}/${name}`,
+        information,
+      ]),
+  )
+
+  // A scenario's page is all a visitor has to go on, so each one explains
+  // what is there to test and what makes it awkward
+  it.each(scenarios.map(({ slug }) => slug))(
+    'gives the %s scenario some information',
+    (slug) => {
+      expect(english[slug]).toBeDefined()
+    },
+  )
+
+  it.each(written)('has no placeholder text in %s', (_, information) => {
+    expect(textsOf(information).join(' ')).not.toMatch(/lorem ipsum/i)
+  })
+
+  // The text is parsed as HTML, so markdown backticks would show as they are
+  it.each(written)(
+    'marks code in %s with <code> rather than backticks',
+    (_, information) => {
+      expect(textsOf(information).join(' ')).not.toContain('`')
+    },
+  )
 
   it.each(
     Object.entries(english).filter(
