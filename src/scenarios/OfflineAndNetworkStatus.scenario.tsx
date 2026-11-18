@@ -99,7 +99,7 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
     setSending(true)
     try {
       while (queueRef.current.length > 0) {
-        const [next, ...rest] = queueRef.current
+        const [next] = queueRef.current
         try {
           await requestStatus()
         } catch (error) {
@@ -108,7 +108,9 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
           setQueueError(classifyRequestError(error, isOnline()))
           return
         }
-        setQueue(rest)
+        // Messages may have joined the queue while this one was sending, so
+        // remove just this one rather than keeping a copy taken before
+        setQueue(queueRef.current.filter((item) => item.id !== next.id))
         setSent((previous) => [
           ...previous,
           {
@@ -134,7 +136,12 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
     const id = newId()
     const goesStraightOut =
       isOnline() && queueRef.current.length === 0 && !sendingRef.current
-    firstSendRef.current = goesStraightOut ? id : null
+    // Only set, never cleared here: clearing it would mark a message that went
+    // straight out, and is still sending, as having waited. Later messages
+    // have other ids, so they still count as waiting.
+    if (goesStraightOut) {
+      firstSendRef.current = id
+    }
     setQueue([...queueRef.current, { id, text, queuedAt: new Date() }])
     setMessage('')
     if (isOnline()) {

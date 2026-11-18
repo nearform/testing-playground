@@ -167,6 +167,41 @@ describe('Offline and Network Status scenario', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1)
     })
 
+    it('keeps a message that went straight out unmarked when another is sent while it is in flight', async () => {
+      const user = userEvent.setup()
+      let respond: () => void = () => {}
+      fetchMock.mockImplementationOnce(
+        () =>
+          new Promise<Response>((resolve) => {
+            respond = () => {
+              resolve(Response.json(STATUS_BODY))
+            }
+          }),
+      )
+      TestRenderer(<OfflineAndNetworkStatus />)
+
+      await sendMessage(user, 'First')
+      expect(screen.getByTestId('queue-item')).toHaveAttribute(
+        'data-state',
+        'sending',
+      )
+      await sendMessage(user, 'Second')
+      expect(texts('queue-item-text')).toEqual(['First', 'Second'])
+
+      await act(async () => {
+        respond()
+      })
+
+      await waitFor(() => {
+        expect(texts('sent-item-text')).toEqual(['First', 'Second'])
+      })
+      expect(
+        screen
+          .getAllByTestId('sent-item')
+          .map((item) => item.getAttribute('data-waited')),
+      ).toEqual(['false', 'true'])
+    })
+
     it('does not send an empty message', async () => {
       const user = userEvent.setup()
       TestRenderer(<OfflineAndNetworkStatus />)
