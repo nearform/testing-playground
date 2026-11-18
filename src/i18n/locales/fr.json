@@ -1421,6 +1421,125 @@
         "button-with": "Clic : bouton {{button}}, avec {{modifiers}}"
       }
     },
+    "multi-step-form": {
+      "title": "Formulaire en plusieurs étapes",
+      "description": "Un assistant d'inscription réparti sur plusieurs étapes, avec une validation par étape, une étape qui n'apparaît que pour les comptes professionnels, une étape facultative, une page de récapitulatif avec des liens de modification, et des réponses conservées après un rechargement. L'étape en cours est indiquée dans l'URL.",
+      "information": {
+        "summary": "Le formulaire est découpé en étapes : informations personnelles, informations sur l'entreprise (comptes professionnels uniquement), adresse, préférences (facultative) et récapitulatif. Chaque étape a sa propre URL, comme <code>?step=address</code>, et les réponses sont enregistrées dans <code>sessionStorage</code> au fur et à mesure.",
+        "sections": [
+          {
+            "title": "Les étapes et l'URL",
+            "points": [
+              "Suivant ajoute une entrée à l'historique : le bouton Précédent du navigateur revient donc d'une étape, comme le bouton Retour du formulaire.",
+              "Une étape ne peut être affichée que lorsque toutes les étapes précédentes sont terminées. Ouvrir <code>?step=review</code> sur une page vierge affiche la première étape à la place, et l'URL est corrigée avec <code>history.replaceState</code>. Attendez que l'URL ou le titre de l'étape se stabilise plutôt que de vérifier juste après la navigation.",
+              "Pour accéder directement à une étape plus loin, remplissez les étapes précédentes via l'interface, ou renseignez la clé <code>multi-step-form</code> de <code>sessionStorage</code> avant le chargement de la page, par exemple avec <code>page.addInitScript()</code> dans Playwright ou <code>onBeforeLoad</code> dans Cypress. Les données doivent être valides et les étapes précédentes listées dans <code>completed</code> (ou <code>skipped</code>, pour l'étape facultative)."
+            ]
+          },
+          {
+            "title": "Validation et contenu conditionnel",
+            "points": [
+              "Suivant ne vérifie que les champs de l'étape en cours. Les erreurs apparaissent après un clic sur Suivant, puis se mettent à jour pendant la saisie, et le focus passe au premier champ en erreur.",
+              "Retour ne valide rien : une étape terminée peut donc redevenir invalide. Avancer de nouveau, ou ouvrir l'URL d'une étape suivante, vous y ramène.",
+              "Choisir <em>Professionnel</em> ajoute une étape sur l'entreprise : le nombre d'étapes passe de 4 à 5 et chaque étape suivante est décalée d'un rang. Repérez les étapes par leur nom ou par l'attribut <code>data-step</code>, pas par leur position.",
+              "L'étape des préférences est facultative : Passer avance sans l'enregistrer comme terminée, et le récapitulatif l'indique comme passée. Le champ du numéro de téléphone n'existe que lorsque <em>Téléphone</em> est le moyen de contact choisi.",
+              "Revenir à un compte personnel masque l'étape sur l'entreprise. Ses réponses sont conservées, mais ne sont plus affichées dans le récapitulatif."
+            ]
+          },
+          {
+            "title": "Récapitulatif, focus et réponses enregistrées",
+            "points": [
+              "Chaque section du récapitulatif a un lien dont le texte visible est simplement <em>Modifier</em>. Leurs noms accessibles indiquent l'étape qu'ils ouvrent, par exemple <em>Modifier Adresse</em> : recherchez-les par rôle et par nom. Après une modification, le bouton principal affiche <em>Enregistrer et revenir au récapitulatif</em> au lieu de Suivant.",
+              "Quand l'étape change, le focus passe au titre de l'étape. Saisir du texte juste après avoir cliqué sur Suivant ne remplit aucun champ.",
+              "Les réponses survivent à un rechargement, mais pas à un nouvel onglet ni à un nouveau contexte de navigateur, car <code>sessionStorage</code> appartient à un seul onglet. Recommencez, ou videz le stockage, pour que les tests ne voient pas les réponses des autres. L'envoi les efface aussi.",
+              "Chaque étape fait un objet de page naturel, avec un composant partagé pour la liste de progression et les boutons Retour, Suivant et Passer, et les étapes se prêtent bien à des scénarios BDD comme <em>Étant donné que j'ai rempli mes informations personnelles</em>."
+            ]
+          }
+        ]
+      },
+      "progress-label": "Progression du formulaire",
+      "step-count": "Étape {{current}} sur {{total}}",
+      "optional": "facultative",
+      "error-summary_one": "Veuillez corriger l'erreur ci-dessous pour continuer.",
+      "error-summary_other": "Veuillez corriger les {{count}} erreurs ci-dessous pour continuer.",
+      "success": "Merci {{name}}, votre demande a été envoyée.",
+      "choose": "Choisir…",
+      "company-size-option": "{{size}} salariés",
+      "review-intro": "Vérifiez vos réponses avant l'envoi. Utilisez les liens Modifier pour changer une section.",
+      "edit": "Modifier",
+      "edit-label": "Modifier {{step}}",
+      "skipped": "Passée",
+      "yes": "Oui",
+      "no": "Non",
+      "steps": {
+        "personal": "Informations personnelles",
+        "company": "Informations sur l'entreprise",
+        "address": "Adresse",
+        "preferences": "Préférences",
+        "review": "Récapitulatif"
+      },
+      "status": {
+        "done": "terminée",
+        "skipped": "passée"
+      },
+      "fields": {
+        "full-name": "Nom complet",
+        "email": "E-mail",
+        "account-type": "Type de compte",
+        "company-name": "Nom de l'entreprise",
+        "company-size": "Taille de l'entreprise",
+        "street": "Adresse",
+        "city": "Ville",
+        "postcode": "Code postal",
+        "country": "Pays",
+        "contact-method": "Moyen de contact préféré",
+        "phone": "Numéro de téléphone",
+        "newsletter": "M'envoyer la newsletter mensuelle"
+      },
+      "hints": {
+        "account-type": "Les comptes professionnels renseignent leur entreprise à l'étape suivante"
+      },
+      "account-types": {
+        "personal": "Personnel",
+        "business": "Professionnel"
+      },
+      "countries": {
+        "gb": "Royaume-Uni",
+        "fr": "France",
+        "br": "Brésil",
+        "pt": "Portugal",
+        "other": "Autre"
+      },
+      "contact-methods": {
+        "email": "E-mail",
+        "phone": "Téléphone"
+      },
+      "buttons": {
+        "back": "Retour",
+        "next": "Suivant",
+        "return-to-review": "Enregistrer et revenir au récapitulatif",
+        "skip": "Passer cette étape",
+        "start-over": "Recommencer",
+        "submit": "Envoyer",
+        "start-new": "Commencer une nouvelle demande"
+      },
+      "errors": {
+        "full-name-required": "Le nom complet est obligatoire",
+        "full-name-too-short": "Le nom complet doit contenir au moins 2 caractères",
+        "email-required": "L'e-mail est obligatoire",
+        "email-invalid": "Veuillez saisir une adresse e-mail valide",
+        "account-type-required": "Veuillez choisir un type de compte",
+        "company-name-required": "Le nom de l'entreprise est obligatoire",
+        "company-size-required": "Veuillez choisir une taille d'entreprise",
+        "street-required": "L'adresse est obligatoire",
+        "city-required": "La ville est obligatoire",
+        "postcode-required": "Le code postal est obligatoire",
+        "postcode-invalid": "Veuillez saisir un code postal valide",
+        "country-required": "Veuillez choisir un pays",
+        "phone-required": "Le numéro de téléphone est obligatoire pour être contacté par téléphone",
+        "phone-invalid": "Le numéro de téléphone ne peut contenir que des chiffres, des espaces et un + initial",
+        "phone-length": "Le numéro de téléphone doit contenir entre 10 et 15 chiffres"
+      }
+    },
     "multiple-windows": {
       "title": "Fenêtres multiples",
       "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",

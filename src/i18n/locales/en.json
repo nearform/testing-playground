@@ -1420,6 +1420,125 @@
         "button-with": "{{button}} button click with {{modifiers}}"
       }
     },
+    "multi-step-form": {
+      "title": "Multi-Step Form",
+      "description": "A sign-up wizard spread over several steps, with per-step validation, a step that only appears for business accounts, an optional step, a review page with edit links, and answers that survive a reload. The current step is kept in the URL.",
+      "information": {
+        "summary": "The form is split into steps: personal details, company details (business accounts only), address, preferences (optional) and a review. Each step has its own URL, such as <code>?step=address</code>, and answers are saved in <code>sessionStorage</code> as you go.",
+        "sections": [
+          {
+            "title": "Steps and the URL",
+            "points": [
+              "Next adds a history entry, so the browser's back button goes back a step, just like the form's Back button.",
+              "A step can only be shown once every step before it is finished. Opening <code>?step=review</code> on a fresh page lands on the first step instead, and the URL is corrected with <code>history.replaceState</code>. Wait for the URL or the step heading to settle rather than asserting straight after navigating.",
+              "To deep-link to a later step, either fill in the earlier steps through the UI, or seed the <code>multi-step-form</code> key in <code>sessionStorage</code> before the page loads, for example with <code>page.addInitScript()</code> in Playwright or <code>onBeforeLoad</code> in Cypress. The data must be valid and the earlier steps listed as <code>completed</code> (or <code>skipped</code>, for the optional step)."
+            ]
+          },
+          {
+            "title": "Validation and conditional content",
+            "points": [
+              "Next only checks the fields on the current step. Errors appear after Next is clicked, then update as you type, and focus moves to the first field with an error.",
+              "Back does not validate, so a finished step can be left invalid. Going forward again, or opening a later step's URL, brings you back to it.",
+              "Choosing <em>Business</em> adds a company details step, so the step count changes from 4 to 5 and every later step moves up by one. Find steps by name or by the <code>data-step</code> attribute, not by their position.",
+              "The preferences step is optional: Skip moves on without saving it as completed, and the review shows it as skipped. The phone number field only exists while <em>Phone</em> is the chosen contact method.",
+              "Switching back to a personal account hides the company step. Its answers are kept, but no longer shown on the review."
+            ]
+          },
+          {
+            "title": "Review, focus and saved answers",
+            "points": [
+              "Every section on the review has a link whose visible text is just <em>Edit</em>. Their accessible names say which step they open, for example <em>Edit Address</em>, so look them up by role and name. After an edit, the main button reads <em>Save and return to review</em> instead of Next.",
+              "When the step changes, focus moves to the step's heading. Typing straight after clicking Next types into nothing.",
+              "Answers survive a reload but not a new tab or a new browser context, as <code>sessionStorage</code> belongs to one tab. Start over, or clear the storage, so tests do not see each other's answers. Submitting clears them too.",
+              "Each step is a natural page object, with a shared component for the progress list and the Back, Next and Skip buttons, and the steps map well onto BDD scenarios such as <em>Given I have filled in my personal details</em>."
+            ]
+          }
+        ]
+      },
+      "progress-label": "Form progress",
+      "step-count": "Step {{current}} of {{total}}",
+      "optional": "optional",
+      "error-summary_one": "Please fix the error below to continue.",
+      "error-summary_other": "Please fix the {{count}} errors below to continue.",
+      "success": "Thanks {{name}}, your application has been submitted.",
+      "choose": "Choose…",
+      "company-size-option": "{{size}} employees",
+      "review-intro": "Check your answers before submitting. Use the Edit links to change a section.",
+      "edit": "Edit",
+      "edit-label": "Edit {{step}}",
+      "skipped": "Skipped",
+      "yes": "Yes",
+      "no": "No",
+      "steps": {
+        "personal": "Personal details",
+        "company": "Company details",
+        "address": "Address",
+        "preferences": "Preferences",
+        "review": "Review"
+      },
+      "status": {
+        "done": "completed",
+        "skipped": "skipped"
+      },
+      "fields": {
+        "full-name": "Full name",
+        "email": "Email",
+        "account-type": "Account type",
+        "company-name": "Company name",
+        "company-size": "Company size",
+        "street": "Street address",
+        "city": "City",
+        "postcode": "Postcode",
+        "country": "Country",
+        "contact-method": "Preferred contact method",
+        "phone": "Phone number",
+        "newsletter": "Send me the monthly newsletter"
+      },
+      "hints": {
+        "account-type": "Business accounts are asked for company details on the next step"
+      },
+      "account-types": {
+        "personal": "Personal",
+        "business": "Business"
+      },
+      "countries": {
+        "gb": "United Kingdom",
+        "fr": "France",
+        "br": "Brazil",
+        "pt": "Portugal",
+        "other": "Other"
+      },
+      "contact-methods": {
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "buttons": {
+        "back": "Back",
+        "next": "Next",
+        "return-to-review": "Save and return to review",
+        "skip": "Skip this step",
+        "start-over": "Start over",
+        "submit": "Submit",
+        "start-new": "Start a new application"
+      },
+      "errors": {
+        "full-name-required": "Full name is required",
+        "full-name-too-short": "Full name must be at least 2 characters",
+        "email-required": "Email is required",
+        "email-invalid": "Please enter a valid email address",
+        "account-type-required": "Please choose an account type",
+        "company-name-required": "Company name is required",
+        "company-size-required": "Please choose a company size",
+        "street-required": "Street address is required",
+        "city-required": "City is required",
+        "postcode-required": "Postcode is required",
+        "postcode-invalid": "Please enter a valid postcode",
+        "country-required": "Please choose a country",
+        "phone-required": "Phone number is required when contacting you by phone",
+        "phone-invalid": "Phone number can only contain digits, spaces and a leading +",
+        "phone-length": "Phone number must be between 10 and 15 digits"
+      }
+    },
     "multiple-windows": {
       "title": "Multiple Windows",
       "description": "Links and buttons that open new tabs and popup windows, which tests have to switch to and back from.",

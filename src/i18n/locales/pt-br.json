@@ -1421,6 +1421,125 @@
         "button-with": "Clique: botão {{button}}, com {{modifiers}}"
       }
     },
+    "multi-step-form": {
+      "title": "Formulário em Várias Etapas",
+      "description": "Um assistente de cadastro dividido em várias etapas, com validação por etapa, uma etapa que só aparece para contas empresariais, uma etapa opcional, uma página de revisão com links de edição e respostas que sobrevivem a um recarregamento. A etapa atual fica na URL.",
+      "information": {
+        "summary": "O formulário é dividido em etapas: dados pessoais, dados da empresa (apenas contas empresariais), endereço, preferências (opcional) e revisão. Cada etapa tem sua própria URL, como <code>?step=address</code>, e as respostas são salvas no <code>sessionStorage</code> à medida que você avança.",
+        "sections": [
+          {
+            "title": "As etapas e a URL",
+            "points": [
+              "Próximo adiciona uma entrada ao histórico, então o botão voltar do navegador volta uma etapa, assim como o botão Voltar do formulário.",
+              "Uma etapa só pode ser exibida quando todas as anteriores estão concluídas. Abrir <code>?step=review</code> em uma página nova mostra a primeira etapa no lugar, e a URL é corrigida com <code>history.replaceState</code>. Espere a URL ou o título da etapa se estabilizar em vez de verificar logo após navegar.",
+              "Para ir direto a uma etapa posterior, preencha as etapas anteriores pela interface ou defina a chave <code>multi-step-form</code> no <code>sessionStorage</code> antes de a página carregar, por exemplo com <code>page.addInitScript()</code> no Playwright ou <code>onBeforeLoad</code> no Cypress. Os dados precisam ser válidos e as etapas anteriores devem estar listadas em <code>completed</code> (ou <code>skipped</code>, para a etapa opcional)."
+            ]
+          },
+          {
+            "title": "Validação e conteúdo condicional",
+            "points": [
+              "Próximo só verifica os campos da etapa atual. Os erros aparecem depois de clicar em Próximo, depois se atualizam enquanto você digita, e o foco vai para o primeiro campo com erro.",
+              "Voltar não valida, então uma etapa concluída pode ficar inválida. Avançar de novo, ou abrir a URL de uma etapa posterior, traz você de volta a ela.",
+              "Escolher <em>Empresarial</em> adiciona uma etapa de dados da empresa, então o total de etapas passa de 4 para 5 e cada etapa seguinte avança uma posição. Encontre as etapas pelo nome ou pelo atributo <code>data-step</code>, não pela posição.",
+              "A etapa de preferências é opcional: Pular avança sem salvá-la como concluída, e a revisão a mostra como pulada. O campo de telefone só existe enquanto <em>Telefone</em> é a forma de contato escolhida.",
+              "Voltar para uma conta pessoal esconde a etapa da empresa. As respostas dela são mantidas, mas deixam de aparecer na revisão."
+            ]
+          },
+          {
+            "title": "Revisão, foco e respostas salvas",
+            "points": [
+              "Cada seção da revisão tem um link cujo texto visível é apenas <em>Editar</em>. Os nomes acessíveis dizem qual etapa eles abrem, por exemplo <em>Editar Endereço</em>, então procure-os por papel e nome. Depois de editar, o botão principal mostra <em>Salvar e voltar para a revisão</em> em vez de Próximo.",
+              "Quando a etapa muda, o foco vai para o título da etapa. Digitar logo após clicar em Próximo não preenche nenhum campo.",
+              "As respostas sobrevivem a um recarregamento, mas não a uma nova aba ou a um novo contexto do navegador, pois o <code>sessionStorage</code> pertence a uma única aba. Recomece, ou limpe o armazenamento, para que um teste não veja as respostas de outro. Enviar o formulário também as apaga.",
+              "Cada etapa é um page object natural, com um componente compartilhado para a lista de progresso e os botões Voltar, Próximo e Pular, e as etapas se encaixam bem em cenários BDD como <em>Dado que preenchi meus dados pessoais</em>."
+            ]
+          }
+        ]
+      },
+      "progress-label": "Progresso do formulário",
+      "step-count": "Etapa {{current}} de {{total}}",
+      "optional": "opcional",
+      "error-summary_one": "Corrija o erro abaixo para continuar.",
+      "error-summary_other": "Corrija os {{count}} erros abaixo para continuar.",
+      "success": "Obrigado, {{name}}, seu pedido foi enviado.",
+      "choose": "Escolha…",
+      "company-size-option": "{{size}} funcionários",
+      "review-intro": "Confira suas respostas antes de enviar. Use os links Editar para alterar uma seção.",
+      "edit": "Editar",
+      "edit-label": "Editar {{step}}",
+      "skipped": "Pulada",
+      "yes": "Sim",
+      "no": "Não",
+      "steps": {
+        "personal": "Dados pessoais",
+        "company": "Dados da empresa",
+        "address": "Endereço",
+        "preferences": "Preferências",
+        "review": "Revisão"
+      },
+      "status": {
+        "done": "concluída",
+        "skipped": "pulada"
+      },
+      "fields": {
+        "full-name": "Nome completo",
+        "email": "E-mail",
+        "account-type": "Tipo de conta",
+        "company-name": "Nome da empresa",
+        "company-size": "Tamanho da empresa",
+        "street": "Endereço",
+        "city": "Cidade",
+        "postcode": "CEP / código postal",
+        "country": "País",
+        "contact-method": "Forma de contato preferida",
+        "phone": "Número de telefone",
+        "newsletter": "Quero receber a newsletter mensal"
+      },
+      "hints": {
+        "account-type": "Contas empresariais informam os dados da empresa na próxima etapa"
+      },
+      "account-types": {
+        "personal": "Pessoal",
+        "business": "Empresarial"
+      },
+      "countries": {
+        "gb": "Reino Unido",
+        "fr": "França",
+        "br": "Brasil",
+        "pt": "Portugal",
+        "other": "Outro"
+      },
+      "contact-methods": {
+        "email": "E-mail",
+        "phone": "Telefone"
+      },
+      "buttons": {
+        "back": "Voltar",
+        "next": "Próximo",
+        "return-to-review": "Salvar e voltar para a revisão",
+        "skip": "Pular esta etapa",
+        "start-over": "Recomeçar",
+        "submit": "Enviar",
+        "start-new": "Iniciar um novo pedido"
+      },
+      "errors": {
+        "full-name-required": "O nome completo é obrigatório",
+        "full-name-too-short": "O nome completo deve ter pelo menos 2 caracteres",
+        "email-required": "O e-mail é obrigatório",
+        "email-invalid": "Digite um endereço de e-mail válido",
+        "account-type-required": "Escolha um tipo de conta",
+        "company-name-required": "O nome da empresa é obrigatório",
+        "company-size-required": "Escolha o tamanho da empresa",
+        "street-required": "O endereço é obrigatório",
+        "city-required": "A cidade é obrigatória",
+        "postcode-required": "O código postal é obrigatório",
+        "postcode-invalid": "Digite um código postal válido",
+        "country-required": "Escolha um país",
+        "phone-required": "O telefone é obrigatório para contato por telefone",
+        "phone-invalid": "O telefone só pode conter dígitos, espaços e um + inicial",
+        "phone-length": "O telefone deve ter entre 10 e 15 dígitos"
+      }
+    },
     "multiple-windows": {
       "title": "Múltiplas janelas",
       "description": "Links e botões que abrem novas abas e janelas pop-up, para as quais os testes precisam alternar e depois voltar.",
