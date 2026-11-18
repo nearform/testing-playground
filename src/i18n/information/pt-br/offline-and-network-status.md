@@ -8,13 +8,13 @@ A página escuta os eventos `online` e `offline` do navegador e lê `navigator.o
 
 ## A fila de mensagens
 
-- Toda mensagem entra na fila e é enviada na hora se o navegador estiver online, então online uma mensagem fica na fila só por um instante. Espere ela aparecer em *Mensagens enviadas* em vez de verificar a fila logo depois de enviar.
-- Offline, as mensagens esperam na fila, em ordem, e são enviadas quando o evento `online` é disparado. As mensagens que tiveram que esperar aparecem marcadas em *Mensagens enviadas*.
+- Toda mensagem entra na fila e é enviada na hora se o navegador estiver online, então online uma mensagem fica na fila só por um instante. Espere ela aparecer em _Mensagens enviadas_ em vez de verificar a fila logo depois de enviar.
+- Offline, as mensagens esperam na fila, em ordem, e são enviadas quando o evento `online` é disparado. As mensagens que tiveram que esperar aparecem marcadas em _Mensagens enviadas_.
 - O envio usa uma requisição real para um arquivo publicado com o site (o site é estático e não pode receber a mensagem em si), e é ela que falha quando a rede cai. Intercepte `status.json` para fazer o envio falhar com um erro do servidor.
 
 ## Requisições que falham
 
-- *Verificar status do serviço* pede o mesmo arquivo. Se falhar, o erro diz se o navegador estava offline, se a requisição não teve resposta ou se o servidor respondeu com um erro, e *Tentar novamente* repete a requisição. O número da tentativa é mostrado para que um teste diferencie uma nova tentativa da primeira.
+- _Verificar status do serviço_ pede o mesmo arquivo. Se falhar, o erro diz se o navegador estava offline, se a requisição não teve resposta ou se o servidor respondeu com um erro, e _Tentar novamente_ repete a requisição. O número da tentativa é mostrado para que um teste diferencie uma nova tentativa da primeira.
 - A resposta nunca vem do cache do navegador, então uma requisição feita offline sempre falha.
 
 ## Eventos de conexão

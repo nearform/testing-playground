@@ -1,4 +1,4 @@
-Arraste a caixa vermelha *Arraste-me!* para a área cinza quantas vezes quiser: cada soltura adiciona uma caixa amarela numerada à área e um ao contador Total de Solturas.
+Arraste a caixa vermelha _Arraste-me!_ para a área cinza quantas vezes quiser: cada soltura adiciona uma caixa amarela numerada à área e um ao contador Total de Solturas.
 
 ## Como o arrasto funciona
 

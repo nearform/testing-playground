@@ -8,9 +8,9 @@ Cada botão abre um dos diálogos JavaScript do próprio navegador: um alerta, u
 ## Cada diálogo
 
 - O alerta só tem o botão OK.
-- A confirmação pergunta *Deseja continuar?*, e OK e Cancelar dão resultados diferentes.
-- O prompt pede o seu nome com *Testador* já preenchido. Aceitar, digitar sua própria resposta antes, enviar vazio e cancelar dão, cada um, um resultado diferente.
+- A confirmação pergunta _Deseja continuar?_, e OK e Cancelar dão resultados diferentes.
+- O prompt pede o seu nome com _Testador_ já preenchido. Aceitar, digitar sua própria resposta antes, enviar vazio e cancelar dão, cada um, um resultado diferente.
 
 ## O resultado
 
-- Depois que o diálogo fecha, o painel Resultado (`data-testid="result"`) mostra o que você fez, como *Você clicou em Cancelar* ou *Você digitou: Testador*.
+- Depois que o diálogo fecha, o painel Resultado (`data-testid="result"`) mostra o que você fez, como _Você clicou em Cancelar_ ou _Você digitou: Testador_.

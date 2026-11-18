@@ -2,8 +2,8 @@ La première section est un champ de fichier natif qui accepte plusieurs fichier
 
 ## Le champ derrière la zone de dépôt
 
-- Le `<input type="file">` de la zone de dépôt est masqué visuellement et hors de l'ordre de tabulation : les utilisateurs ne voient que la zone et son bouton *Parcourir les fichiers*. `setInputFiles()` de Playwright fonctionne sur les champs cachés, ciblez donc directement `#drop-zone-input`. `selectFile()` de Cypress vérifie que l'élément est utilisable, ce qu'un champ caché peut ne pas être : passez `{ force: true }`.
-- Cliquer sur *Parcourir les fichiers* ouvre la boîte de dialogue de fichiers du système, qu'aucun outil de test ne peut piloter. Avec Playwright, attendez l'événement `filechooser` et appelez `setFiles()` dessus ; ailleurs, ne cliquez pas et définissez directement les fichiers du champ.
+- Le `<input type="file">` de la zone de dépôt est masqué visuellement et hors de l'ordre de tabulation : les utilisateurs ne voient que la zone et son bouton _Parcourir les fichiers_. `setInputFiles()` de Playwright fonctionne sur les champs cachés, ciblez donc directement `#drop-zone-input`. `selectFile()` de Cypress vérifie que l'élément est utilisable, ce qu'un champ caché peut ne pas être : passez `{ force: true }`.
+- Cliquer sur _Parcourir les fichiers_ ouvre la boîte de dialogue de fichiers du système, qu'aucun outil de test ne peut piloter. Avec Playwright, attendez l'événement `filechooser` et appelez `setFiles()` dessus ; ailleurs, ne cliquez pas et définissez directement les fichiers du champ.
 - Pour tester le dépôt lui-même, simulez-le sur la zone. Avec Cypress, utilisez `selectFile(file, { action: 'drag-drop' })` sur la zone. Avec Playwright, créez un `DataTransfer` dans la page avec `page.evaluateHandle()` et passez-le à `dispatchEvent('drop', { dataTransfer })`. Selenium n'a pas de méthode intégrée : exécutez un script qui déclenche les événements.
 - Le champ est vidé après chaque sélection, pour qu'un même fichier puisse être choisi de nouveau après l'avoir retiré. Vérifier les `files` du champ ne vous apprend donc rien : vérifiez plutôt la liste des fichiers.
 
@@ -22,7 +22,7 @@ La première section est un champ de fichier natif qui accepte plusieurs fichier
 
 ## Progression, aperçus et suppression
 
-- Chaque image commence à être envoyée dès son ajout, et les gros fichiers prennent plus de temps, jusqu'à environ 3 secondes. Attendez `data-status="uploaded"`, le texte *Envoyé* ou que l'`aria-valuenow` de la barre de progression atteigne 100, plutôt qu'une durée fixe.
-- *Valider* est désactivé tant qu'une image est en cours d'envoi.
-- Chaque fichier a son propre bouton de suppression, nommé d'après lui (*Retirer photo.png*), et la suppression fonctionne aussi pendant l'envoi. Trouvez la ligne d'un fichier par son nom et agissez à l'intérieur plutôt que par sa position, car retirer un fichier fait remonter les suivants.
+- Chaque image commence à être envoyée dès son ajout, et les gros fichiers prennent plus de temps, jusqu'à environ 3 secondes. Attendez `data-status="uploaded"`, le texte _Envoyé_ ou que l'`aria-valuenow` de la barre de progression atteigne 100, plutôt qu'une durée fixe.
+- _Valider_ est désactivé tant qu'une image est en cours d'envoi.
+- Chaque fichier a son propre bouton de suppression, nommé d'après lui (_Retirer photo.png_), et la suppression fonctionne aussi pendant l'envoi. Trouvez la ligne d'un fichier par son nom et agissez à l'intérieur plutôt que par sa position, car retirer un fichier fait remonter les suivants.
 - Les aperçus utilisent des URL `blob:` créées dans la page, leur `src` change donc à chaque exécution. Vérifiez le texte alternatif de l'aperçu, ou qu'il s'est chargé (`naturalWidth` supérieur à 0), plutôt que son `src`.

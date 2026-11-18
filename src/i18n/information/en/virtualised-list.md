@@ -10,7 +10,7 @@ Each list has 10,000 rows and the grid has 260,000 cells, but only the handful n
 ## Elements are reused
 
 - As you scroll, the element that showed one row is reused for another: the element that showed row 3 may show row 18 after a scroll. A stored element, such as a Selenium `WebElement` or a Cypress alias, can point at a different row afterwards without going stale, so find the row again after every scroll.
-- Find rows by something that belongs to the row, such as its text, its `data-row-id` or its button's name (*Select row {{fixedTarget}}*), not by position: `nth()` or `eq()` picks the nth rendered row, not the nth row of the list.
+- Find rows by something that belongs to the row, such as its text, its `data-row-id` or its button's name (_Select row {{fixedTarget}}_), not by position: `nth()` or `eq()` picks the nth rendered row, not the nth row of the list.
 - Each row's `Select` button has the same visible text, so a locator for the text alone matches whichever rows are rendered.
 
 ## Scrolling to a row

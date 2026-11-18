@@ -4,7 +4,7 @@ Entre com o nome de usuário **admin** e a senha **Passw0rd!**. Qualquer outra c
 
 - Os dois valores precisam ser exatamente iguais, então diferenciam maiúsculas de minúsculas e espaços contam.
 - Apertar Enter no campo de senha também faz login, assim como o botão Login.
-- Um login com falha mostra *As credenciais fornecidas são inválidas* e mantém o que foi digitado; um login bem-sucedido troca o formulário por uma mensagem e um botão Logout.
+- Um login com falha mostra _As credenciais fornecidas são inválidas_ e mantém o que foi digitado; um login bem-sucedido troca o formulário por uma mensagem e um botão Logout.
 
 ## Continuando logado
 

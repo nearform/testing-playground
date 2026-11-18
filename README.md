@@ -43,6 +43,6 @@ What the scenario is and what to do on it.
 - Another fact: press <kbd>Tab</kbd> to move on.
 ```
 
-Mark selectors, attributes and code with backticks, and use `**bold**` and `*emphasis*` where needed. Inline HTML such as `<kbd>`, and values passed to `translateInformation` such as `{{delay}}`, can be used anywhere. Nothing else (other headings, numbered or nested lists, code blocks) is allowed, so every page lays its information out the same way. Each language must have the same files, split into the same groups and number of points, and tests check this.
+Mark selectors, attributes and code with backticks, and use `**bold**` and `_emphasis_` where needed. Inline HTML such as `<kbd>`, and values passed to `translateInformation` such as `{{delay}}`, can be used anywhere. Nothing else (other headings, numbered or nested lists, code blocks) is allowed, so every page lays its information out the same way. Each language must have the same files, split into the same groups and number of points, and tests check this.
 
 [![banner](https://raw.githubusercontent.com/nearform/.github/refs/heads/master/assets/os-banner-green.svg)](https://www.nearform.com/contact/?utm_source=open-source&utm_medium=banner&utm_campaign=os-project-pages)

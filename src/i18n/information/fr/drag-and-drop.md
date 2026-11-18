@@ -1,4 +1,4 @@
-Faites glisser la boîte rouge *Faites glisser moi!* sur la zone de dépôt grise autant de fois que vous voulez : chaque dépôt ajoute une boîte jaune numérotée à la zone et un au compteur Total des dépôts.
+Faites glisser la boîte rouge _Faites glisser moi!_ sur la zone de dépôt grise autant de fois que vous voulez : chaque dépôt ajoute une boîte jaune numérotée à la zone et un au compteur Total des dépôts.
 
 ## Comment fonctionne le glisser
 

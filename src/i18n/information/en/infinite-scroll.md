@@ -3,7 +3,7 @@ The list starts with 10 items and loads 10 more each time you reach the bottom. 
 ## Loading more
 
 - More items load when an invisible marker under the last item (`data-testid="scroll-sentinel"`) comes into view, so scroll to the bottom of the page or scroll that marker into view.
-- A loading message shows for 0.8 seconds before each batch of 10 is added, and the count above the list (`data-testid="item-count"`), such as *Showing 20 items*, goes up.
+- A loading message shows for 0.8 seconds before each batch of 10 is added, and the count above the list (`data-testid="item-count"`), such as _Showing 20 items_, goes up.
 - In a very tall window the marker is still in view after a batch loads, so batches keep loading until it is pushed off screen.
 
 ## Checking the items

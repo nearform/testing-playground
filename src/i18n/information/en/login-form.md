@@ -4,7 +4,7 @@ Log in with the username **admin** and the password **Passw0rd!**. Any other com
 
 - Both values must match exactly, so they are case-sensitive and spaces count.
 - Pressing Enter in the password field logs in, as well as the Login button.
-- A failed login shows *The credentials you have provided are invalid* and keeps what was typed; a successful one replaces the form with a message and a Logout button.
+- A failed login shows _The credentials you have provided are invalid_ and keeps what was typed; a successful one replaces the form with a message and a Logout button.
 
 ## Staying logged in
 

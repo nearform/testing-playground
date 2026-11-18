@@ -5,8 +5,15 @@ import { describe, expect, it } from 'vitest'
 import ScenarioInformation from '../components/ScenarioInformation'
 
 describe('ScenarioInformation', () => {
-  it('shows short information as one paragraph, with its inline Markdown', () => {
-    render(<ScenarioInformation information='Open it with `?version=fixed`.' />)
+  it('shows short information as one paragraph, with its inline HTML', () => {
+    render(
+      <ScenarioInformation
+        information={{
+          summary: ['Open it with <code>?version=fixed</code>.'],
+          sections: [],
+        }}
+      />,
+    )
 
     expect(screen.getByText('?version=fixed').tagName).toBe('CODE')
     expect(screen.queryByRole('list')).not.toBeInTheDocument()
@@ -15,18 +22,16 @@ describe('ScenarioInformation', () => {
   it('shows the summary, then each group as a heading over a list of its points', () => {
     render(
       <ScenarioInformation
-        information={[
-          'Every problem is deliberate.',
-          '',
-          '## Running the scan',
-          '',
-          '- Limit the scan.',
-          '- Check `data-rule`.',
-          '',
-          '## Keyboard only',
-          '',
-          '- Tab never leaves the box.',
-        ].join('\n')}
+        information={{
+          summary: ['Every problem is deliberate.'],
+          sections: [
+            {
+              title: 'Running the scan',
+              points: ['Limit the scan.', 'Check <code>data-rule</code>.'],
+            },
+            { title: 'Keyboard only', points: ['Tab never leaves the box.'] },
+          ],
+        }}
       />,
     )
 
@@ -48,7 +53,14 @@ describe('ScenarioInformation', () => {
   })
 
   it('leaves out the summary paragraph when there is none', () => {
-    render(<ScenarioInformation information={'## Only group\n\n- A'} />)
+    render(
+      <ScenarioInformation
+        information={{
+          summary: [],
+          sections: [{ title: 'Only group', points: ['A'] }],
+        }}
+      />,
+    )
 
     expect(
       screen.getByTestId('scenario-information').querySelectorAll(':scope > p'),

@@ -3,7 +3,7 @@ La liste commence avec 10 éléments et en charge 10 de plus chaque fois que vou
 ## Charger la suite
 
 - D'autres éléments se chargent quand un repère invisible sous le dernier élément (`data-testid="scroll-sentinel"`) devient visible : faites défiler jusqu'en bas de la page ou amenez ce repère à l'écran.
-- Un message de chargement s'affiche 0,8 seconde avant l'ajout de chaque lot de 10, et le compteur au-dessus de la liste (`data-testid="item-count"`), comme *20 éléments affichés*, augmente.
+- Un message de chargement s'affiche 0,8 seconde avant l'ajout de chaque lot de 10, et le compteur au-dessus de la liste (`data-testid="item-count"`), comme _20 éléments affichés_, augmente.
 - Dans une fenêtre très haute, le repère reste visible après le chargement d'un lot : les lots continuent de se charger jusqu'à ce qu'il sorte de l'écran.
 
 ## Vérifier les éléments

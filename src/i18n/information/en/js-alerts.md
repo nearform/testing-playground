@@ -8,9 +8,9 @@ Each button opens one of the browser's built-in JavaScript dialogs: an alert, a 
 ## Each dialog
 
 - The alert only has an OK button.
-- The confirm asks *Do you want to continue?*, and OK and Cancel give different results.
-- The prompt asks for your name with *Tester* already filled in. Accepting it, typing your own answer first, sending it empty and cancelling each give a different result.
+- The confirm asks _Do you want to continue?_, and OK and Cancel give different results.
+- The prompt asks for your name with _Tester_ already filled in. Accepting it, typing your own answer first, sending it empty and cancelling each give a different result.
 
 ## The result
 
-- Once the dialog closes, the Result panel (`data-testid="result"`) shows what you did, such as *You clicked Cancel* or *You entered: Tester*.
+- Once the dialog closes, the Result panel (`data-testid="result"`) shows what you did, such as _You clicked Cancel_ or _You entered: Tester_.

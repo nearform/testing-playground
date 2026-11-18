@@ -1,4 +1,4 @@
-Drag the red *Drag Me!* box onto the grey drop zone as many times as you like: each drop adds a numbered yellow box to the zone and one to the Total Drops count.
+Drag the red _Drag Me!_ box onto the grey drop zone as many times as you like: each drop adds a numbered yellow box to the zone and one to the Total Drops count.
 
 ## How the drag works
 

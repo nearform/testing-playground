@@ -8,8 +8,8 @@ La page écoute les événements `online` et `offline` du navigateur et lit `nav
 
 ## La file d'attente des messages
 
-- Chaque message rejoint la file d'attente et part aussitôt si le navigateur est en ligne : en ligne, un message ne reste donc qu'un instant dans la file. Attendez qu'il apparaisse dans *Messages envoyés* plutôt que de vérifier la file juste après l'envoi.
-- Hors ligne, les messages attendent dans la file, dans l'ordre, et sont envoyés lorsque l'événement `online` se déclenche. Les messages qui ont dû attendre sont signalés comme tels dans *Messages envoyés*.
+- Chaque message rejoint la file d'attente et part aussitôt si le navigateur est en ligne : en ligne, un message ne reste donc qu'un instant dans la file. Attendez qu'il apparaisse dans _Messages envoyés_ plutôt que de vérifier la file juste après l'envoi.
+- Hors ligne, les messages attendent dans la file, dans l'ordre, et sont envoyés lorsque l'événement `online` se déclenche. Les messages qui ont dû attendre sont signalés comme tels dans _Messages envoyés_.
 - L'envoi utilise une vraie requête vers un fichier livré avec le site (le site est statique et ne peut pas recevoir le message lui-même) : c'est elle qui échoue quand le réseau est coupé. Interceptez `status.json` pour faire échouer l'envoi avec une erreur serveur.
 
 ## Requêtes échouées

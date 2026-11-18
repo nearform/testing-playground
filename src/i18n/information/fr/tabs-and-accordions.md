@@ -1,4 +1,4 @@
-Les onglets et les accordéons masquent du contenu sans le supprimer, ou le suppriment sans prévenir : un test doit donc savoir s'il vérifie qu'un élément *existe* ou qu'il est *visible*, et le moyen le plus fiable de savoir ce qui est ouvert est l'état ARIA (`aria-selected`, `aria-expanded`) plutôt que le style.
+Les onglets et les accordéons masquent du contenu sans le supprimer, ou le suppriment sans prévenir : un test doit donc savoir s'il vérifie qu'un élément _existe_ ou qu'il est _visible_, et le moyen le plus fiable de savoir ce qui est ouvert est l'état ARIA (`aria-selected`, `aria-expanded`) plutôt que le style.
 
 ## Visible ou présent
 
@@ -10,7 +10,7 @@ Les onglets et les accordéons masquent du contenu sans le supprimer, ou le supp
 
 - Repérez les onglets et les panneaux par leur rôle (`tab`, `tabpanel`) et leur nom, et vérifiez l'onglet sélectionné avec `aria-selected="true"`. Chaque panneau est étiqueté par son onglet via `aria-labelledby`.
 - Les en-têtes d'accordéon sont des boutons placés dans des titres, avec `aria-expanded` et `aria-controls` qui pointe vers une `region` étiquetée par son en-tête.
-- L'onglet *Archives* est désactivé avec `aria-disabled` plutôt qu'avec l'attribut natif `disabled` : il peut toujours recevoir un clic et le focus, mais ne fait rien. Certains outils considèrent `aria-disabled` comme désactivé et refusent de cliquer, d'autres cliquent sans problème.
+- L'onglet _Archives_ est désactivé avec `aria-disabled` plutôt qu'avec l'attribut natif `disabled` : il peut toujours recevoir un clic et le focus, mais ne fait rien. Certains outils considèrent `aria-disabled` comme désactivé et refusent de cliquer, d'autres cliquent sans problème.
 
 ## Clavier
 
@@ -19,6 +19,6 @@ Les onglets et les accordéons masquent du contenu sans le supprimer, ou le supp
 
 ## Délais et URL
 
-- L'onglet *Avis* met environ 1,5 seconde à se charger la première fois qu'il est sélectionné, et affiche d'ici là un message de chargement avec `aria-busy`. Attendez les avis eux-mêmes plutôt qu'un délai fixe.
+- L'onglet _Avis_ met environ 1,5 seconde à se charger la première fois qu'il est sélectionné, et affiche d'ici là un message de chargement avec `aria-busy`. Attendez les avis eux-mêmes plutôt qu'un délai fixe.
 - Les onglets sélectionnés sont conservés dans l'URL (`?product=reviews&report=monthly`), ce qui permet à un test d'ouvrir directement un onglet. Un onglet inconnu ou désactivé revient au premier.
 - Les éléments natifs `<details>` n'ont pas d'`aria-expanded` : vérifiez plutôt l'attribut `open`. Leur contenu est masqué par le navigateur, pas par la page.

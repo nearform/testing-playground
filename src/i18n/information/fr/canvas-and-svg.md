@@ -8,7 +8,7 @@ Rien de ce qui est dessiné dans un canvas n'est dans le DOM : les barres, la ci
 
 ## Graphique à barres
 
-- Le canvas mesure 480 × 260 pixels, la barre *i* (en comptant à partir de 0) fait 50 pixels de large et est centrée en x = 75 + 70 × *i*, et l'axe est en y = 230, donc un clic en y = 225 touche toujours une barre.
+- Le canvas mesure 480 × 260 pixels, la barre _i_ (en comptant à partir de 0) fait 50 pixels de large et est centrée en x = 75 + 70 × _i_, et l'axe est en y = 230, donc un clic en y = 225 touche toujours une barre.
 - Un clic entre ou au-dessus des barres indique qu'aucune barre n'a été cliquée.
 
 ## Cible

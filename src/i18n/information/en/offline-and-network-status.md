@@ -8,13 +8,13 @@ The page listens to the browser's `online` and `offline` events and reads `navig
 
 ## The message queue
 
-- Every message joins the queue and is sent at once if the browser is online, so while online a message only sits in the queue for a moment. Wait for it to appear in *Sent messages* rather than asserting the queue straight after sending.
-- While offline, messages wait in the queue, in order, and are sent when the `online` event fires. Messages that had to wait are marked as such in *Sent messages*.
+- Every message joins the queue and is sent at once if the browser is online, so while online a message only sits in the queue for a moment. Wait for it to appear in _Sent messages_ rather than asserting the queue straight after sending.
+- While offline, messages wait in the queue, in order, and are sent when the `online` event fires. Messages that had to wait are marked as such in _Sent messages_.
 - Sending uses a real request to a file shipped with the site (the site is static, so it cannot accept the message itself), which is what fails when the network is down. Intercept `status.json` to make sending fail with a server error instead.
 
 ## Failed requests
 
-- *Check service status* requests the same file. If it fails, the error says whether the browser was offline, the request got no response, or the server answered with an error, and *Retry* tries again. The attempt number is shown so a test can tell a retry from the first try.
+- _Check service status_ requests the same file. If it fails, the error says whether the browser was offline, the request got no response, or the server answered with an error, and _Retry_ tries again. The attempt number is shown so a test can tell a retry from the first try.
 - The response is never taken from the browser's cache, so a request made while offline always fails.
 
 ## Connection events

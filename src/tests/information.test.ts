@@ -6,7 +6,7 @@ import { scenarios } from '../scenarios/list'
 import {
   parseInformation,
   translateInformation,
-  type ParsedInformation,
+  type Information,
 } from '../utils/information'
 
 // Past this length a single paragraph is hard to read, so it should be split
@@ -41,7 +41,7 @@ const informationIn = (folder: string): Record<string, string> =>
 
 // How some information is split up. Two languages with the same shape split
 // the text the same way.
-const shapeOf = ({ summary, sections }: ParsedInformation) => ({
+const shapeOf = ({ summary, sections }: Information) => ({
   paragraphs: summary.length,
   points: sections.map(({ points }) => points.length),
 })
@@ -125,17 +125,28 @@ describe('translateInformation', () => {
     resources: {
       en: {
         translation: {
-          information:
-            '## Search\n\n- Waits {{delay}} ms for `{{count}}` rows.',
+          information: parseInformation(
+            'Loads {{count}} rows.\n\n## Search\n\n- Waits `{{delay}}` ms.',
+          ),
         },
       },
     },
   })
 
-  it('returns the Markdown with every value filled in', () => {
+  it('fills the values into every string of the information', () => {
     expect(
       translateInformation(t.t, 'information', { count: 143, delay: 300 }),
-    ).toBe('## Search\n\n- Waits 300 ms for `143` rows.')
+    ).toEqual({
+      summary: ['Loads 143 rows.'],
+      sections: [{ title: 'Search', points: ['Waits <code>300</code> ms.'] }],
+    })
+  })
+
+  it('shows the key of missing information as its summary', () => {
+    expect(translateInformation(t.t, 'missing')).toEqual({
+      summary: ['missing'],
+      sections: [],
+    })
   })
 })
 
@@ -146,16 +157,30 @@ describe('withInformation', () => {
   }
   const markdownFiles = {
     './information/en/hovers.md': 'English notes',
-    './information/fr/hovers.md': 'Notes en français',
+    './information/fr/hovers.md': 'Notes en *français*',
   }
 
-  it("adds the language's files to its scenarios, keeping their other texts", () => {
+  it("adds the language's parsed files to its scenarios, keeping their other texts", () => {
     expect(withInformation(translation, 'fr', markdownFiles)).toEqual({
       title: 'Playground',
       scenarios: {
-        hovers: { title: 'Hovers', information: 'Notes en français' },
+        hovers: {
+          title: 'Hovers',
+          information: {
+            summary: ['Notes en <em>français</em>'],
+            sections: [],
+          },
+        },
       },
     })
+  })
+
+  it('names the file that breaks the layout', () => {
+    expect(() =>
+      withInformation(translation, 'en', {
+        './information/en/hovers.md': '1. A numbered point',
+      }),
+    ).toThrow(/^Could not read \.\/information\/en\/hovers\.md: /)
   })
 
   it('leaves the texts it was given unchanged', () => {
@@ -165,7 +190,7 @@ describe('withInformation', () => {
   })
 
   it.each(LANGUAGES)(
-    'gives the app every $folder file as its scenario information',
+    'gives the app every $folder file, parsed, as its scenario information',
     ({ folder, language }) => {
       for (const [scenario, markdown] of Object.entries(
         informationIn(folder),
@@ -176,7 +201,7 @@ describe('withInformation', () => {
             'translation',
             `scenarios.${scenario}.information`,
           ),
-        ).toBe(markdown)
+        ).toEqual(parseInformation(markdown))
       }
     },
   )

@@ -10,7 +10,7 @@ Cada lista tem 10.000 linhas e a grade tem 260.000 células, mas só as poucas p
 ## Os elementos são reutilizados
 
 - Conforme você rola, o elemento que mostrava uma linha é reutilizado para outra: o elemento que mostrava a linha 3 pode mostrar a linha 18 depois de uma rolagem. Um elemento guardado, como um `WebElement` do Selenium ou um alias do Cypress, pode apontar para outra linha depois sem ficar obsoleto, então procure a linha de novo depois de cada rolagem.
-- Procure as linhas por algo que pertença a elas, como o texto, o `data-row-id` ou o nome do botão (*Selecionar linha {{fixedTarget}}*), e não pela posição: `nth()` ou `eq()` escolhe a n-ésima linha renderizada, não a n-ésima linha da lista.
+- Procure as linhas por algo que pertença a elas, como o texto, o `data-row-id` ou o nome do botão (_Selecionar linha {{fixedTarget}}_), e não pela posição: `nth()` ou `eq()` escolhe a n-ésima linha renderizada, não a n-ésima linha da lista.
 - O botão `Selecionar` de cada linha tem o mesmo texto visível, então um seletor só por esse texto corresponde a todas as linhas renderizadas.
 
 ## Rolar até uma linha

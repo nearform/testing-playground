@@ -1,4 +1,4 @@
-Abas e acordeões ocultam conteúdo sem removê-lo, ou o removem sem aviso, então um teste precisa saber se está verificando que algo *existe* ou que está *visível*, e a forma mais clara de saber o que está aberto é o estado ARIA (`aria-selected`, `aria-expanded`), e não o estilo.
+Abas e acordeões ocultam conteúdo sem removê-lo, ou o removem sem aviso, então um teste precisa saber se está verificando que algo _existe_ ou que está _visível_, e a forma mais clara de saber o que está aberto é o estado ARIA (`aria-selected`, `aria-expanded`), e não o estilo.
 
 ## Visível ou presente
 
@@ -10,7 +10,7 @@ Abas e acordeões ocultam conteúdo sem removê-lo, ou o removem sem aviso, ent�
 
 - Localize abas e painéis pelo papel (`tab`, `tabpanel`) e pelo nome, e verifique a aba selecionada com `aria-selected="true"`. Cada painel é rotulado pela sua aba por meio de `aria-labelledby`.
 - Os cabeçalhos dos acordeões são botões dentro de títulos, com `aria-expanded` e `aria-controls` apontando para uma `region` rotulada pelo cabeçalho.
-- A aba *Arquivo* é desativada com `aria-disabled` em vez do atributo nativo `disabled`, então ainda pode receber clique e foco, mas não faz nada. Algumas ferramentas tratam `aria-disabled` como desativado e se recusam a clicar; outras clicam normalmente.
+- A aba _Arquivo_ é desativada com `aria-disabled` em vez do atributo nativo `disabled`, então ainda pode receber clique e foco, mas não faz nada. Algumas ferramentas tratam `aria-disabled` como desativado e se recusam a clicar; outras clicam normalmente.
 
 ## Teclado
 
@@ -19,6 +19,6 @@ Abas e acordeões ocultam conteúdo sem removê-lo, ou o removem sem aviso, ent�
 
 ## Tempo e URL
 
-- A aba *Avaliações* leva cerca de 1,5 segundo para carregar na primeira vez em que é selecionada, mostrando até lá uma mensagem de carregamento com `aria-busy`. Espere pelas próprias avaliações em vez de um tempo fixo.
+- A aba _Avaliações_ leva cerca de 1,5 segundo para carregar na primeira vez em que é selecionada, mostrando até lá uma mensagem de carregamento com `aria-busy`. Espere pelas próprias avaliações em vez de um tempo fixo.
 - As abas selecionadas ficam na URL (`?product=reviews&report=monthly`), então um teste pode abrir uma aba diretamente. Uma aba desconhecida ou desativada volta para a primeira.
 - Os elementos nativos `<details>` não têm `aria-expanded`: verifique o atributo `open`. O conteúdo é ocultado pelo navegador, não pela página.

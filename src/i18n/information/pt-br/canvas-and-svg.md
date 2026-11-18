@@ -8,7 +8,7 @@ Nada do que é desenhado em um canvas está no DOM: as barras, o alvo e o seu de
 
 ## Gráfico de barras
 
-- O canvas tem 480 × 260 pixels, a barra *i* (contando a partir de 0) tem 50 pixels de largura e está centralizada em x = 75 + 70 × *i*, e o eixo fica em y = 230, então um clique em y = 225 sempre acerta uma barra.
+- O canvas tem 480 × 260 pixels, a barra _i_ (contando a partir de 0) tem 50 pixels de largura e está centralizada em x = 75 + 70 × _i_, e o eixo fica em y = 230, então um clique em y = 225 sempre acerta uma barra.
 - Um clique entre ou acima das barras informa que nenhuma barra foi clicada.
 
 ## Alvo

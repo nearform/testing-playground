@@ -10,7 +10,7 @@ Chaque liste compte 10 000 lignes et la grille 260 000 cellules, mais seules les
 ## Les éléments sont réutilisés
 
 - Pendant le défilement, l'élément qui affichait une ligne est réutilisé pour une autre : l'élément qui affichait la ligne 3 peut afficher la ligne 18 après un défilement. Un élément conservé, comme un `WebElement` Selenium ou un alias Cypress, peut ensuite désigner une autre ligne sans devenir obsolète, alors cherchez à nouveau la ligne après chaque défilement.
-- Cherchez les lignes par quelque chose qui leur appartient, comme leur texte, leur `data-row-id` ou le nom de leur bouton (*Sélectionner la ligne {{fixedTarget}}*), pas par leur position : `nth()` ou `eq()` choisit la n-ième ligne affichée, pas la n-ième ligne de la liste.
+- Cherchez les lignes par quelque chose qui leur appartient, comme leur texte, leur `data-row-id` ou le nom de leur bouton (_Sélectionner la ligne {{fixedTarget}}_), pas par leur position : `nth()` ou `eq()` choisit la n-ième ligne affichée, pas la n-ième ligne de la liste.
 - Le bouton `Sélectionner` de chaque ligne a le même texte visible, donc un sélecteur basé sur ce seul texte correspond à toutes les lignes affichées.
 
 ## Faire défiler jusqu'à une ligne

@@ -10,13 +10,13 @@ O formulário é dividido em etapas: dados pessoais, dados da empresa (apenas co
 
 - Próximo só verifica os campos da etapa atual. Os erros aparecem depois de clicar em Próximo, depois se atualizam enquanto você digita, e o foco vai para o primeiro campo com erro.
 - Voltar não valida, então uma etapa concluída pode ficar inválida. Avançar de novo, ou abrir a URL de uma etapa posterior, traz você de volta a ela.
-- Escolher *Empresarial* adiciona uma etapa de dados da empresa, então o total de etapas passa de 4 para 5 e cada etapa seguinte avança uma posição. Encontre as etapas pelo nome ou pelo atributo `data-step`, não pela posição.
-- A etapa de preferências é opcional: Pular avança sem salvá-la como concluída, e a revisão a mostra como pulada. O campo de telefone só existe enquanto *Telefone* é a forma de contato escolhida.
+- Escolher _Empresarial_ adiciona uma etapa de dados da empresa, então o total de etapas passa de 4 para 5 e cada etapa seguinte avança uma posição. Encontre as etapas pelo nome ou pelo atributo `data-step`, não pela posição.
+- A etapa de preferências é opcional: Pular avança sem salvá-la como concluída, e a revisão a mostra como pulada. O campo de telefone só existe enquanto _Telefone_ é a forma de contato escolhida.
 - Voltar para uma conta pessoal esconde a etapa da empresa. As respostas dela são mantidas, mas deixam de aparecer na revisão.
 
 ## Revisão, foco e respostas salvas
 
-- Cada seção da revisão tem um link cujo texto visível é apenas *Editar*. Os nomes acessíveis dizem qual etapa eles abrem, por exemplo *Editar Endereço*, então procure-os por papel e nome. Depois de editar, o botão principal mostra *Salvar e voltar para a revisão* em vez de Próximo.
+- Cada seção da revisão tem um link cujo texto visível é apenas _Editar_. Os nomes acessíveis dizem qual etapa eles abrem, por exemplo _Editar Endereço_, então procure-os por papel e nome. Depois de editar, o botão principal mostra _Salvar e voltar para a revisão_ em vez de Próximo.
 - Quando a etapa muda, o foco vai para o título da etapa. Digitar logo após clicar em Próximo não preenche nenhum campo.
 - As respostas sobrevivem a um recarregamento, mas não a uma nova aba ou a um novo contexto do navegador, pois o `sessionStorage` pertence a uma única aba. Recomece, ou limpe o armazenamento, para que um teste não veja as respostas de outro. Enviar o formulário também as apaga.
-- Cada etapa é um page object natural, com um componente compartilhado para a lista de progresso e os botões Voltar, Próximo e Pular, e as etapas se encaixam bem em cenários BDD como *Dado que preenchi meus dados pessoais*.
+- Cada etapa é um page object natural, com um componente compartilhado para a lista de progresso e os botões Voltar, Próximo e Pular, e as etapas se encaixam bem em cenários BDD como _Dado que preenchi meus dados pessoais_.

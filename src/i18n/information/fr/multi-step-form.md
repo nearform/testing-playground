@@ -10,13 +10,13 @@ Le formulaire est découpé en étapes : informations personnelles, informations
 
 - Suivant ne vérifie que les champs de l'étape en cours. Les erreurs apparaissent après un clic sur Suivant, puis se mettent à jour pendant la saisie, et le focus passe au premier champ en erreur.
 - Retour ne valide rien : une étape terminée peut donc redevenir invalide. Avancer de nouveau, ou ouvrir l'URL d'une étape suivante, vous y ramène.
-- Choisir *Professionnel* ajoute une étape sur l'entreprise : le nombre d'étapes passe de 4 à 5 et chaque étape suivante est décalée d'un rang. Repérez les étapes par leur nom ou par l'attribut `data-step`, pas par leur position.
-- L'étape des préférences est facultative : Passer avance sans l'enregistrer comme terminée, et le récapitulatif l'indique comme passée. Le champ du numéro de téléphone n'existe que lorsque *Téléphone* est le moyen de contact choisi.
+- Choisir _Professionnel_ ajoute une étape sur l'entreprise : le nombre d'étapes passe de 4 à 5 et chaque étape suivante est décalée d'un rang. Repérez les étapes par leur nom ou par l'attribut `data-step`, pas par leur position.
+- L'étape des préférences est facultative : Passer avance sans l'enregistrer comme terminée, et le récapitulatif l'indique comme passée. Le champ du numéro de téléphone n'existe que lorsque _Téléphone_ est le moyen de contact choisi.
 - Revenir à un compte personnel masque l'étape sur l'entreprise. Ses réponses sont conservées, mais ne sont plus affichées dans le récapitulatif.
 
 ## Récapitulatif, focus et réponses enregistrées
 
-- Chaque section du récapitulatif a un lien dont le texte visible est simplement *Modifier*. Leurs noms accessibles indiquent l'étape qu'ils ouvrent, par exemple *Modifier Adresse* : recherchez-les par rôle et par nom. Après une modification, le bouton principal affiche *Enregistrer et revenir au récapitulatif* au lieu de Suivant.
+- Chaque section du récapitulatif a un lien dont le texte visible est simplement _Modifier_. Leurs noms accessibles indiquent l'étape qu'ils ouvrent, par exemple _Modifier Adresse_ : recherchez-les par rôle et par nom. Après une modification, le bouton principal affiche _Enregistrer et revenir au récapitulatif_ au lieu de Suivant.
 - Quand l'étape change, le focus passe au titre de l'étape. Saisir du texte juste après avoir cliqué sur Suivant ne remplit aucun champ.
 - Les réponses survivent à un rechargement, mais pas à un nouvel onglet ni à un nouveau contexte de navigateur, car `sessionStorage` appartient à un seul onglet. Recommencez, ou videz le stockage, pour que les tests ne voient pas les réponses des autres. L'envoi les efface aussi.
-- Chaque étape fait un objet de page naturel, avec un composant partagé pour la liste de progression et les boutons Retour, Suivant et Passer, et les étapes se prêtent bien à des scénarios BDD comme *Étant donné que j'ai rempli mes informations personnelles*.
+- Chaque étape fait un objet de page naturel, avec un composant partagé pour la liste de progression et les boutons Retour, Suivant et Passer, et les étapes se prêtent bien à des scénarios BDD comme _Étant donné que j'ai rempli mes informations personnelles_.

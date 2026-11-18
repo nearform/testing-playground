@@ -1,4 +1,4 @@
-A barra verde embaixo da tabela nomeia um dos quatro processos e mostra o valor de CPU dele, como *Chrome CPU: 23.4%*. A tarefa é encontrar a linha desse processo na tabela e verificar se a célula de CPU mostra o mesmo valor.
+A barra verde embaixo da tabela nomeia um dos quatro processos e mostra o valor de CPU dele, como _Chrome CPU: 23.4%_. A tarefa é encontrar a linha desse processo na tabela e verificar se a célula de CPU mostra o mesmo valor.
 
 ## O que muda a cada carregamento
 

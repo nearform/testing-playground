@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import ReactHtmlParser from 'html-react-parser'
 
-import { parseInformation, type Information } from '../utils/information'
+import type { Information } from '../utils/information'
 
 // The same muted text as Quantum's CardDescription, which is a <p> and so
 // cannot hold the lists below
@@ -21,13 +21,8 @@ interface ScenarioInformationProps {
 }
 
 const ScenarioInformation: React.FC<ScenarioInformationProps> = ({
-  information,
+  information: { summary, sections },
 }) => {
-  const { summary, sections } = useMemo(
-    () => parseInformation(information),
-    [information],
-  )
-
   return (
     <div
       className={`flex flex-col gap-4 ${codeClass}`}

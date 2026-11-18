@@ -8,9 +8,9 @@ Chaque bouton ouvre l'une des boîtes de dialogue JavaScript intégrées au navi
 ## Chaque boîte de dialogue
 
 - L'alerte n'a qu'un bouton OK.
-- La confirmation demande *Voulez-vous continuer ?*, et OK et Annuler donnent des résultats différents.
-- La saisie demande votre nom avec *Testeur* déjà rempli. L'accepter, taper votre propre réponse d'abord, l'envoyer vide et annuler donnent chacun un résultat différent.
+- La confirmation demande _Voulez-vous continuer ?_, et OK et Annuler donnent des résultats différents.
+- La saisie demande votre nom avec _Testeur_ déjà rempli. L'accepter, taper votre propre réponse d'abord, l'envoyer vide et annuler donnent chacun un résultat différent.
 
 ## Le résultat
 
-- Une fois la boîte de dialogue fermée, le panneau Résultat (`data-testid="result"`) indique ce que vous avez fait, comme *Vous avez cliqué sur Annuler* ou *Vous avez saisi : Testeur*.
+- Une fois la boîte de dialogue fermée, le panneau Résultat (`data-testid="result"`) indique ce que vous avez fait, comme _Vous avez cliqué sur Annuler_ ou _Vous avez saisi : Testeur_.

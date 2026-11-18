@@ -2,8 +2,8 @@ The first section is a native file input that takes several files at once. The s
 
 ## The input behind the drop zone
 
-- The drop zone's `<input type="file">` is visually hidden and out of the tab order: users only see the zone and its *Browse files* button. Playwright's `setInputFiles()` works on hidden inputs, so target `#drop-zone-input` directly. Cypress's `selectFile()` checks the element is actionable, which a hidden input can fail, so pass `{ force: true }`.
-- Clicking *Browse files* opens the operating system's file dialog, which no test tool can drive. In Playwright, wait for the `filechooser` event and call `setFiles()` on it; elsewhere skip the click and set the input's files.
+- The drop zone's `<input type="file">` is visually hidden and out of the tab order: users only see the zone and its _Browse files_ button. Playwright's `setInputFiles()` works on hidden inputs, so target `#drop-zone-input` directly. Cypress's `selectFile()` checks the element is actionable, which a hidden input can fail, so pass `{ force: true }`.
+- Clicking _Browse files_ opens the operating system's file dialog, which no test tool can drive. In Playwright, wait for the `filechooser` event and call `setFiles()` on it; elsewhere skip the click and set the input's files.
 - To test the drop itself, simulate one on the zone. In Cypress use `selectFile(file, { action: 'drag-drop' })` on the zone. In Playwright, build a `DataTransfer` in the page with `page.evaluateHandle()` and pass it to `dispatchEvent('drop', { dataTransfer })`. Selenium has no built-in way, so run a script that dispatches the events.
 - The input is emptied after every selection, so the same file can be chosen again after removing it. Checking the input's `files` therefore tells you nothing: check the list of files instead.
 
@@ -22,7 +22,7 @@ The first section is a native file input that takes several files at once. The s
 
 ## Progress, previews and removing
 
-- Each image starts uploading as soon as it is added, and larger files take longer, up to about 3 seconds. Wait for `data-status="uploaded"`, the *Uploaded* text or the progress bar's `aria-valuenow` reaching 100, not for a fixed time.
-- *Submit* is disabled while any image is still uploading.
-- Every file has its own remove button named after it (*Remove photo.png*), and removing works mid-upload too. Find a file's row by its name and act inside it rather than by its position, as removing a file moves the ones after it up.
+- Each image starts uploading as soon as it is added, and larger files take longer, up to about 3 seconds. Wait for `data-status="uploaded"`, the _Uploaded_ text or the progress bar's `aria-valuenow` reaching 100, not for a fixed time.
+- _Submit_ is disabled while any image is still uploading.
+- Every file has its own remove button named after it (_Remove photo.png_), and removing works mid-upload too. Find a file's row by its name and act inside it rather than by its position, as removing a file moves the ones after it up.
 - Previews use `blob:` URLs made in the page, so their `src` changes on every run. Check the preview's alt text, or that it loaded (`naturalWidth` above 0), rather than its `src`.

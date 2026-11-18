@@ -1,4 +1,4 @@
-The green bar under the table names one of the four processes and gives its CPU value, such as *Chrome CPU: 23.4%*. The task is to find that process's row in the table and check that its CPU cell shows the same value.
+The green bar under the table names one of the four processes and gives its CPU value, such as _Chrome CPU: 23.4%_. The task is to find that process's row in the table and check that its CPU cell shows the same value.
 
 ## What changes on every load
 

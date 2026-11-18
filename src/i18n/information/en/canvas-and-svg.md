@@ -8,7 +8,7 @@ Nothing drawn on a canvas is in the DOM: the bars, the target and your drawing a
 
 ## Bar chart
 
-- The canvas is 480 × 260 pixels, bar *i* (counting from 0) is 50 pixels wide and centred at x = 75 + 70 × *i*, and the axis is at y = 230, so clicking at y = 225 always hits a bar.
+- The canvas is 480 × 260 pixels, bar _i_ (counting from 0) is 50 pixels wide and centred at x = 75 + 70 × _i_, and the axis is at y = 230, so clicking at y = 225 always hits a bar.
 - A click between or above the bars says no bar was clicked.
 
 ## Target

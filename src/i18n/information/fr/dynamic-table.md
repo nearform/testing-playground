@@ -1,4 +1,4 @@
-La barre verte sous le tableau nomme l'un des quatre processus et donne sa valeur d'UC, comme *Chrome UC: 23.4%*. Le but est de trouver la ligne de ce processus dans le tableau et de vérifier que sa cellule UC affiche la même valeur.
+La barre verte sous le tableau nomme l'un des quatre processus et donne sa valeur d'UC, comme _Chrome UC: 23.4%_. Le but est de trouver la ligne de ce processus dans le tableau et de vérifier que sa cellule UC affiche la même valeur.
 
 ## Ce qui change à chaque chargement
 

@@ -2,8 +2,8 @@ A primeira seção é um campo de arquivo nativo que aceita vários arquivos de 
 
 ## O campo por trás da área de soltar
 
-- O `<input type="file">` da área de soltar fica visualmente oculto e fora da ordem de tabulação: os usuários veem apenas a área e o botão *Procurar arquivos*. O `setInputFiles()` do Playwright funciona em campos ocultos, então mire direto em `#drop-zone-input`. O `selectFile()` do Cypress verifica se o elemento é acionável, o que um campo oculto pode não ser, então passe `{ force: true }`.
-- Clicar em *Procurar arquivos* abre a janela de arquivos do sistema operacional, que nenhuma ferramenta de teste consegue controlar. No Playwright, aguarde o evento `filechooser` e chame `setFiles()` nele; nas demais, não clique e defina os arquivos do campo diretamente.
+- O `<input type="file">` da área de soltar fica visualmente oculto e fora da ordem de tabulação: os usuários veem apenas a área e o botão _Procurar arquivos_. O `setInputFiles()` do Playwright funciona em campos ocultos, então mire direto em `#drop-zone-input`. O `selectFile()` do Cypress verifica se o elemento é acionável, o que um campo oculto pode não ser, então passe `{ force: true }`.
+- Clicar em _Procurar arquivos_ abre a janela de arquivos do sistema operacional, que nenhuma ferramenta de teste consegue controlar. No Playwright, aguarde o evento `filechooser` e chame `setFiles()` nele; nas demais, não clique e defina os arquivos do campo diretamente.
 - Para testar o próprio soltar, simule-o na área. No Cypress, use `selectFile(file, { action: 'drag-drop' })` na área. No Playwright, crie um `DataTransfer` na página com `page.evaluateHandle()` e passe-o para `dispatchEvent('drop', { dataTransfer })`. O Selenium não tem uma forma nativa, então execute um script que dispare os eventos.
 - O campo é esvaziado após cada seleção, para que o mesmo arquivo possa ser escolhido de novo depois de removido. Por isso, verificar os `files` do campo não diz nada: verifique a lista de arquivos.
 
@@ -22,7 +22,7 @@ A primeira seção é um campo de arquivo nativo que aceita vários arquivos de 
 
 ## Progresso, pré-visualizações e remoção
 
-- Cada imagem começa a ser enviada assim que é adicionada, e arquivos maiores demoram mais, até cerca de 3 segundos. Aguarde `data-status="uploaded"`, o texto *Enviado* ou o `aria-valuenow` da barra de progresso chegar a 100, em vez de um tempo fixo.
-- *Enviar* fica desativado enquanto alguma imagem ainda está sendo enviada.
-- Cada arquivo tem seu próprio botão de remover, com o nome dele (*Remover photo.png*), e a remoção funciona também durante o envio. Encontre a linha de um arquivo pelo nome e aja dentro dela, não pela posição, pois remover um arquivo faz os seguintes subirem.
+- Cada imagem começa a ser enviada assim que é adicionada, e arquivos maiores demoram mais, até cerca de 3 segundos. Aguarde `data-status="uploaded"`, o texto _Enviado_ ou o `aria-valuenow` da barra de progresso chegar a 100, em vez de um tempo fixo.
+- _Enviar_ fica desativado enquanto alguma imagem ainda está sendo enviada.
+- Cada arquivo tem seu próprio botão de remover, com o nome dele (_Remover photo.png_), e a remoção funciona também durante o envio. Encontre a linha de um arquivo pelo nome e aja dentro dela, não pela posição, pois remover um arquivo faz os seguintes subirem.
 - As pré-visualizações usam URLs `blob:` criadas na página, então o `src` muda a cada execução. Verifique o texto alternativo da pré-visualização, ou se ela carregou (`naturalWidth` maior que 0), em vez do `src`.

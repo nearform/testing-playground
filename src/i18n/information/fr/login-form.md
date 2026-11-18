@@ -4,7 +4,7 @@ Connectez-vous avec le nom d'utilisateur **admin** et le mot de passe **Passw0rd
 
 - Les deux valeurs doivent correspondre exactement : elles sont sensibles à la casse et les espaces comptent.
 - Appuyer sur Entrée dans le champ du mot de passe connecte aussi, comme le bouton Se connecter.
-- Un échec affiche *Les informations que vous avez fournies ne sont pas valides* et garde ce qui a été saisi ; une réussite remplace le formulaire par un message et un bouton Se déconnecter.
+- Un échec affiche _Les informations que vous avez fournies ne sont pas valides_ et garde ce qui a été saisi ; une réussite remplace le formulaire par un message et un bouton Se déconnecter.
 
 ## Rester connecté
 
