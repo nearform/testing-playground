@@ -53,6 +53,90 @@
         "too-short_other": "Tapez au moins {{count}} caractères"
       }
     },
+    "challenging-selectors": {
+      "title": "Sélecteurs difficiles",
+      "description": "Des ID aléatoires, des boutons identiques, du texte découpé et des doublons cachés qui font échouer les sélecteurs naïfs.",
+      "information": "Cette page est conçue pour que les sélecteurs évidents échouent. Les ID et noms de classe de la première section (et les noms de classe ailleurs) sont des hachages aléatoires, comme ceux des bibliothèques CSS-in-JS, et changent à chaque chargement de la page : trouvez donc le champ par son libellé et les boutons par leur rôle et leur nom. Le tableau de l’équipe est mélangé à chaque chargement et chaque ligne a les mêmes boutons Modifier et Supprimer, sans nom accessible propre : choisissez la ligne par son contenu (le nom ou l’e-mail de la personne), puis le bouton dans cette ligne ; une position de ligne ou la n-ième correspondance tombera sur quelqu’un d’autre. Le message d’accueil et le nombre de messages non lus sont découpés en plusieurs éléments, donc une recherche sur le texte propre d’un élément ne trouvera pas la phrase entière : cherchez sur le texte du parent ou normalisez d’abord le texte. Le libellé du bouton de lecture est découpé de la même façon, mais son nom accessible reste la phrase complète. Les deux blocs d’adresse ont des champs dont les libellés sont du texte simple non lié aux champs, et les deux blocs sont identiques à part leur titre : il faut donc repérer un champ par rapport au texte voisin ou par sa position dans le bon bloc. Les deux formulaires de newsletter font la même chose : celui avec libellés a un titre, un libellé, un vrai bouton et des attributs data-testid, tandis que celui sans libellés n’a qu’un texte indicatif, une div cliquable qui ressemble à un bouton et des noms de classe aléatoires ; comparez comment chaque stratégie de localisation s’en sort. Enfin, le bouton Commander est présent trois fois dans la page : une version mobile et une version bureau, dont une seule est affichée selon la largeur de l’écran, et une troisième dans le panneau Plus d’options fermé ; un localisateur doit donc viser celui qui est visible et non le premier du DOM. Le panneau Dernière action en haut indique ce que votre dernier clic a réellement fait, pour vérifier que vous avez touché l’élément voulu.",
+      "result": {
+        "title": "Dernière action",
+        "none": "Rien pour l’instant",
+        "empty": "(vide)",
+        "saved-name": "Nom d’affichage « {{name}} » enregistré",
+        "reset-name": "Nom d’affichage effacé",
+        "editing": "Modification de {{name}}",
+        "deleted": "{{name}} supprimé(e)",
+        "restored": "Tous les membres de l’équipe ont été restaurés",
+        "marked-read": "Tous les messages ont été marqués comme lus",
+        "saved-addresses": "Adresse de livraison {{deliveryCity}}, {{deliveryPostcode}} et adresse de facturation {{billingCity}}, {{billingPostcode}} enregistrées",
+        "subscribed-labelled": "{{email}} inscrit avec le formulaire avec libellés",
+        "subscribed-unlabelled": "{{email}} inscrit avec le formulaire sans libellés",
+        "checkout": "Commande passée avec le bouton {{variant}}",
+        "saved-for-later": "Panier mis de côté"
+      },
+      "random": {
+        "title": "ID et classes aléatoires",
+        "instructions": "Les ID et noms de classe de ce formulaire changent à chaque chargement de la page.",
+        "label": "Nom d’affichage",
+        "save": "Enregistrer",
+        "reset": "Effacer"
+      },
+      "rows": {
+        "title": "Boutons identiques sur chaque ligne",
+        "instructions": "Chaque ligne a les mêmes boutons Modifier et Supprimer, et les lignes sont mélangées à chaque chargement.",
+        "columns": {
+          "name": "Nom",
+          "email": "E-mail",
+          "role": "Rôle",
+          "actions": "Actions"
+        },
+        "roles": {
+          "admin": "Administrateur",
+          "editor": "Éditeur",
+          "viewer": "Lecteur"
+        },
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "restore": "Restaurer tous les membres"
+      },
+      "split": {
+        "title": "Texte découpé en plusieurs éléments",
+        "instructions": "Ces phrases sont faites de plusieurs éléments, donc aucun élément ne contient tout le texte.",
+        "hello": "Bonjour",
+        "world": "le monde",
+        "unread": "Salut <name>Ada</name>, vous avez <count>{{count}}</count> messages non lus.",
+        "mark-read": "<part>Tout</part> <part>marquer</part> comme <strong>lu</strong>"
+      },
+      "addresses": {
+        "title": "Champs distingués par le texte voisin",
+        "instructions": "Les deux blocs ont les mêmes champs, et leurs libellés ne sont pas liés aux champs.",
+        "delivery": "Adresse de livraison",
+        "billing": "Adresse de facturation",
+        "city": "Ville",
+        "postcode": "Code postal",
+        "save": "Enregistrer les adresses"
+      },
+      "compare": {
+        "title": "Formulaires avec et sans libellés",
+        "instructions": "Le même formulaire de newsletter deux fois : une fois avec des noms accessibles et des ID de test, une fois sans.",
+        "labelled-title": "Formulaire avec libellés",
+        "unlabelled-title": "Formulaire sans libellés",
+        "email": "Adresse e-mail",
+        "email-placeholder": "Adresse e-mail",
+        "subscribe": "S’inscrire"
+      },
+      "duplicates": {
+        "title": "Doublons cachés",
+        "instructions": "Le bouton Commander est présent plusieurs fois dans la page, mais une seule copie est visible à la fois.",
+        "checkout": "Commander",
+        "more": "Plus d’options",
+        "save-for-later": "Mettre de côté",
+        "variants": {
+          "mobile": "mobile",
+          "desktop": "bureau",
+          "menu": "Plus d’options"
+        }
+      }
+    },
     "check-box": {
       "title": "Checkbox",
       "description": "Tester des scénarios à l'aide d'une case à cocher.",

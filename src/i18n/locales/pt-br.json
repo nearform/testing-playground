@@ -53,6 +53,90 @@
         "too-short_other": "Digite pelo menos {{count}} caracteres"
       }
     },
+    "challenging-selectors": {
+      "title": "Seletores Difíceis",
+      "description": "IDs aleatórios, botões idênticos, texto dividido e duplicatas ocultas que quebram seletores ingênuos.",
+      "information": "Esta página foi feita para que os seletores óbvios falhem. Os IDs e nomes de classe da primeira seção (e os nomes de classe no resto da página) são hashes aleatórios, como os de bibliotecas CSS-in-JS, e mudam toda vez que a página carrega; então encontre o campo pelo rótulo e os botões pela função e pelo nome. A tabela da equipe é embaralhada a cada carregamento e cada linha tem os mesmos botões Editar e Excluir, sem nome acessível próprio; escolha a linha pelo conteúdo (o nome ou o e-mail da pessoa) e depois o botão dentro dessa linha, porque a posição da linha ou a n-ésima correspondência vai acertar outra pessoa. A saudação e a contagem de mensagens não lidas estão divididas em vários elementos, então buscar pelo texto próprio de um elemento não encontra a frase inteira: busque pelo texto do elemento pai ou normalize o texto antes. O rótulo do botão de marcar como lidas é dividido do mesmo jeito, mas o nome acessível dele continua sendo a frase completa. Os dois blocos de endereço têm campos cujos rótulos são texto simples, não ligados aos campos, e os dois blocos são idênticos exceto pelo título; então é preciso localizar um campo em relação ao texto próximo ou pela posição dentro do bloco certo. Os dois formulários de newsletter fazem a mesma coisa: o com rótulos tem um título, um rótulo, um botão de verdade e atributos data-testid, enquanto o sem rótulos só tem um texto de exemplo, uma div clicável com cara de botão e nomes de classe aleatórios; compare como cada estratégia de localização lida com os dois. Por fim, o botão Finalizar compra aparece três vezes na página: uma versão para celular e outra para desktop, das quais só uma é exibida dependendo da largura da tela, e uma terceira dentro do painel Mais opções fechado; então o localizador precisa mirar no botão visível, e não no primeiro do DOM. O painel Última ação no topo mostra o que o seu último clique realmente fez, para você conferir se acertou o elemento certo.",
+      "result": {
+        "title": "Última ação",
+        "none": "Nada ainda",
+        "empty": "(vazio)",
+        "saved-name": "Nome de exibição “{{name}}” salvo",
+        "reset-name": "Nome de exibição apagado",
+        "editing": "Editando {{name}}",
+        "deleted": "{{name}} excluído(a)",
+        "restored": "Todos os membros da equipe foram restaurados",
+        "marked-read": "Todas as mensagens foram marcadas como lidas",
+        "saved-addresses": "Endereço de entrega {{deliveryCity}}, {{deliveryPostcode}} e endereço de cobrança {{billingCity}}, {{billingPostcode}} salvos",
+        "subscribed-labelled": "{{email}} inscrito pelo formulário com rótulos",
+        "subscribed-unlabelled": "{{email}} inscrito pelo formulário sem rótulos",
+        "checkout": "Compra finalizada pelo botão {{variant}}",
+        "saved-for-later": "Carrinho salvo para depois"
+      },
+      "random": {
+        "title": "IDs e classes aleatórios",
+        "instructions": "Os IDs e nomes de classe deste formulário mudam toda vez que a página carrega.",
+        "label": "Nome de exibição",
+        "save": "Salvar",
+        "reset": "Limpar"
+      },
+      "rows": {
+        "title": "Botões idênticos em todas as linhas",
+        "instructions": "Cada linha tem os mesmos botões Editar e Excluir, e as linhas são embaralhadas a cada carregamento.",
+        "columns": {
+          "name": "Nome",
+          "email": "E-mail",
+          "role": "Função",
+          "actions": "Ações"
+        },
+        "roles": {
+          "admin": "Administrador",
+          "editor": "Editor",
+          "viewer": "Leitor"
+        },
+        "edit": "Editar",
+        "delete": "Excluir",
+        "restore": "Restaurar todos os membros"
+      },
+      "split": {
+        "title": "Texto dividido em vários elementos",
+        "instructions": "Estas frases são feitas de vários elementos, então nenhum elemento sozinho contém o texto inteiro.",
+        "hello": "Olá",
+        "world": "mundo",
+        "unread": "Oi <name>Ada</name>, você tem <count>{{count}}</count> mensagens não lidas.",
+        "mark-read": "<part>Marcar</part> <part>todas</part> como <strong>lidas</strong>"
+      },
+      "addresses": {
+        "title": "Campos diferenciados pelo texto próximo",
+        "instructions": "Os dois blocos têm os mesmos campos, e os rótulos não estão ligados aos campos.",
+        "delivery": "Endereço de entrega",
+        "billing": "Endereço de cobrança",
+        "city": "Cidade",
+        "postcode": "CEP",
+        "save": "Salvar endereços"
+      },
+      "compare": {
+        "title": "Formulários com e sem rótulos",
+        "instructions": "O mesmo formulário de newsletter duas vezes: uma com nomes acessíveis e IDs de teste, outra sem.",
+        "labelled-title": "Formulário com rótulos",
+        "unlabelled-title": "Formulário sem rótulos",
+        "email": "Endereço de e-mail",
+        "email-placeholder": "Endereço de e-mail",
+        "subscribe": "Inscrever-se"
+      },
+      "duplicates": {
+        "title": "Duplicatas ocultas",
+        "instructions": "O botão Finalizar compra aparece mais de uma vez na página, mas só uma cópia fica visível por vez.",
+        "checkout": "Finalizar compra",
+        "more": "Mais opções",
+        "save-for-later": "Salvar para depois",
+        "variants": {
+          "mobile": "de celular",
+          "desktop": "de desktop",
+          "menu": "de Mais opções"
+        }
+      }
+    },
     "check-box": {
       "title": "Checkbox",
       "description": "Cenários para testes utilizando checkbox.",
