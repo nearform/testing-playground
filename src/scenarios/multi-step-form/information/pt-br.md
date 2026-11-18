@@ -4,7 +4,7 @@ O formulário é dividido em etapas: dados pessoais, dados da empresa (apenas co
 
 - Próximo adiciona uma entrada ao histórico, então o botão voltar do navegador volta uma etapa, assim como o botão Voltar do formulário.
 - Uma etapa só pode ser exibida quando todas as anteriores estão concluídas. Abrir `?step=review` em uma página nova mostra a primeira etapa no lugar, e a URL é corrigida com `history.replaceState`. Espere a URL ou o título da etapa se estabilizar em vez de verificar logo após navegar.
-- Para ir direto a uma etapa posterior, preencha as etapas anteriores pela interface ou defina a chave `multi-step-form` no `sessionStorage` antes de a página carregar, por exemplo com `page.addInitScript()` no Playwright ou `onBeforeLoad` no Cypress. Os dados precisam ser válidos e as etapas anteriores devem estar listadas em `completed` (ou `skipped`, para a etapa opcional).
+- Para ir direto a uma etapa posterior, preencha as etapas anteriores pela interface ou defina a chave `tp:multi-step-form` no `sessionStorage` antes de a página carregar, por exemplo com `page.addInitScript()` no Playwright ou `onBeforeLoad` no Cypress. Os dados precisam ser válidos e as etapas anteriores devem estar listadas em `completed` (ou `skipped`, para a etapa opcional).
 
 ## Validação e conteúdo condicional
 

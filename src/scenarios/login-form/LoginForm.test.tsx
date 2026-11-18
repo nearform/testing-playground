@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
 import { switchLanguage } from '../../tests/switchLanguage'
-import LoginForm from './LoginForm.scenario'
+import LoginForm, { LOGGED_IN_KEY, USERNAME_KEY } from './LoginForm.scenario'
 
 describe('LoginForm component', () => {
   beforeEach(() => {
@@ -102,9 +102,19 @@ describe('LoginForm component', () => {
     expect(screen.queryByTestId('logout-button')).toBeNull()
   })
 
-  it('shows the login form when the saved login state is not valid JSON', () => {
+  it("ignores another site's unprefixed login keys", () => {
     localStorage.setItem('username', 'admin')
-    localStorage.setItem('isLoggedIn', 'yes')
+    localStorage.setItem('isLoggedIn', 'true')
+
+    TestRenderer(<LoginForm />)
+
+    expect(screen.getByTestId('login-button')).toBeInTheDocument()
+    expect(screen.queryByTestId('logout-button')).toBeNull()
+  })
+
+  it('shows the login form when the saved login state is not valid JSON', () => {
+    localStorage.setItem(USERNAME_KEY, 'admin')
+    localStorage.setItem(LOGGED_IN_KEY, 'yes')
 
     TestRenderer(<LoginForm />)
 

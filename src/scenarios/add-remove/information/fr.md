@@ -1,4 +1,4 @@
-Ajouter un élément ajoute un bouton Supprimer un élément numéroté, et cliquer sur l'un d'eux le retire. Les boutons sont enregistrés dans `sessionStorage` : ils sont toujours là après un rechargement.
+Ajouter un élément ajoute un bouton Supprimer un élément numéroté, et cliquer sur l'un d'eux le retire. Les boutons sont enregistrés dans `sessionStorage` sous `tp:elements`, et le numéro du prochain bouton sous `tp:nextIndex` : ils sont toujours là après un rechargement.
 
 ## La numérotation
 
@@ -10,4 +10,4 @@ Ajouter un élément ajoute un bouton Supprimer un élément numéroté, et cliq
 
 - Ajouter `?initialElements=5` à l'URL (`#/add-remove?initialElements=5`) ouvre la page avec les boutons 1 à 5, ce qui évite de les ajouter un par un.
 - Le paramètre n'est utilisé que si la page se charge sans bouton enregistré : un rechargement qui a déjà des boutons dans `sessionStorage` l'ignore.
-- Effacer le stockage retire tous les boutons en vidant tout le `sessionStorage` du site, ce qui efface aussi ce que d'autres scénarios y ont enregistré. Chaque onglet a son propre `sessionStorage` : un nouvel onglet ou contexte de navigateur part toujours de zéro.
+- Effacer le stockage retire tous les boutons en supprimant uniquement ces deux clés : ce que d'autres scénarios ont enregistré dans `sessionStorage` est conservé. Chaque onglet a son propre `sessionStorage` : un nouvel onglet ou contexte de navigateur part toujours de zéro.

@@ -1,4 +1,4 @@
-Add Element adds a numbered Remove Element button, and clicking one of those removes it. The buttons are saved in `sessionStorage`, so they are still there after a reload.
+Add Element adds a numbered Remove Element button, and clicking one of those removes it. The buttons are saved in `sessionStorage` under `tp:elements`, with the next button's number under `tp:nextIndex`, so they are still there after a reload.
 
 ## Numbering
 
@@ -10,4 +10,4 @@ Add Element adds a numbered Remove Element button, and clicking one of those rem
 
 - Adding `?initialElements=5` to the URL (`#/add-remove?initialElements=5`) starts the page with buttons 1 to 5, which saves adding them one by one.
 - The parameter is only used when the page loads with no buttons saved, so a reload that already has buttons in `sessionStorage` ignores it.
-- Clear Storage removes every button by emptying the whole of `sessionStorage` for the site, which also clears what other scenarios have saved there. Each tab has its own `sessionStorage`, so a new tab or browser context always starts empty.
+- Clear Storage removes every button by deleting only those two keys, so what other scenarios have saved in `sessionStorage` is kept. Each tab has its own `sessionStorage`, so a new tab or browser context always starts empty.

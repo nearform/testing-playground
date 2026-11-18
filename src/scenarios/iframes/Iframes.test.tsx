@@ -4,7 +4,7 @@ import React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
-import i18n from '../../i18n/i18nConfig'
+import i18n, { LANGUAGE_KEY } from '../../i18n/i18nConfig'
 import Iframes from './Iframes.scenario'
 
 type Queries = ReturnType<typeof within>
@@ -174,7 +174,7 @@ describe('Iframes scenario', () => {
         await act(async () => {
           await i18n.changeLanguage('en')
         })
-        localStorage.removeItem('language')
+        localStorage.removeItem(LANGUAGE_KEY)
       }
     })
 

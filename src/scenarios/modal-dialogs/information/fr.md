@@ -12,4 +12,4 @@
 
 ## La fenêtre de bienvenue
 
-- Une modale de bienvenue s'ouvre _d'elle-même_ lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans `localStorage` sous `modal-dialogs-entry-dismissed`, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page.
+- Une modale de bienvenue s'ouvre _d'elle-même_ lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans `localStorage` sous `tp:modal-dialogs-entry-dismissed`, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page.

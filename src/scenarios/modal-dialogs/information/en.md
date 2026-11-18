@@ -12,4 +12,4 @@
 
 ## The welcome modal
 
-- A welcome modal opens _by itself_ on your first visit and can only be closed with its button; that choice is remembered in `localStorage` under `modal-dialogs-entry-dismissed`, so tests must either dismiss it or set that key before the page loads.
+- A welcome modal opens _by itself_ on your first visit and can only be closed with its button; that choice is remembered in `localStorage` under `tp:modal-dialogs-entry-dismissed`, so tests must either dismiss it or set that key before the page loads.

@@ -9,13 +9,14 @@ import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
+import { storageKey } from '../../utils/storage'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'modal-dialogs'
 
 // Remembers that the welcome modal has been dismissed, so it only opens on
 // the first visit
-export const ENTRY_STORAGE_KEY = 'modal-dialogs-entry-dismissed'
+export const ENTRY_STORAGE_KEY = storageKey('modal-dialogs-entry-dismissed')
 
 export type CloseReason = 'button' | 'escape' | 'backdrop'
 

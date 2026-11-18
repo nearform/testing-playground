@@ -2,8 +2,9 @@ Almost every real site shows a cookie consent banner on the first visit, and it 
 
 ## Where the state is kept
 
-- The choice is remembered in the `cookie_consent` cookie (`accepted`, `rejected` or `custom`), and the analytics and marketing choices are kept in `localStorage` under `cookie_preferences`, so both survive a reload.
-- The session note is kept in `sessionStorage`, which belongs to a single tab: it survives a reload but is gone in a new tab or a new browser context.
+- The choice is remembered in the `tp_cookie_consent` cookie (`accepted`, `rejected` or `custom`), and the analytics and marketing choices are kept in `localStorage` under `tp:cookie_preferences`, so both survive a reload.
+- The cookie's path is `/testing-playground`, so when seeding it from a test set that path as well as the domain; a cookie on `/` is only used when there is none on the playground's path.
+- The session note is kept in `sessionStorage` under `tp:session_note`, which belongs to a single tab: it survives a reload but is gone in a new tab or a new browser context.
 
 ## Keeping tests independent
 

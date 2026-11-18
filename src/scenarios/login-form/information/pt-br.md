@@ -8,6 +8,6 @@ Entre com o nome de usuário **admin** e a senha **Passw0rd!**. Qualquer outra c
 
 ## Continuando logado
 
-- O login salva `username` e `isLoggedIn` no `localStorage`, então a página continua logada depois de recarregar ou em uma nova aba.
-- Se os seus testes compartilham uma sessão do navegador (como no Selenium, ou no Cypress com o isolamento de testes desligado), esse estado passa de um teste para o próximo, então faça logout ou limpe o `localStorage` antes; para começar um teste já logado, defina `username` e `isLoggedIn` (como `true`) antes de a página carregar.
+- O login salva `tp:username` e `tp:isLoggedIn` no `localStorage`, então a página continua logada depois de recarregar ou em uma nova aba.
+- Se os seus testes compartilham uma sessão do navegador (como no Selenium, ou no Cypress com o isolamento de testes desligado), esse estado passa de um teste para o próximo, então faça logout ou limpe o `localStorage` antes; para começar um teste já logado, defina `tp:username` e `tp:isLoggedIn` (como `true`) antes de a página carregar.
 - O logout remove as duas chaves e esvazia o formulário.

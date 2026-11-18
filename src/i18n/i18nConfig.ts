@@ -3,6 +3,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import { parseInformation, type Information } from '../utils/information'
+import { storageKey } from '../utils/storage'
 import enTranslation from './locales/en.json'
 import frTranslation from './locales/fr.json'
 import ptBrTranslation from './locales/pt-br.json'
@@ -88,9 +89,12 @@ const resources = {
 export const isSupportedLanguage = (language: string): boolean =>
   Object.hasOwn(resources, language)
 
+// Where the chosen language is remembered in localStorage
+export const LANGUAGE_KEY = storageKey('language')
+
 const getSavedLanguage = (): string => {
   try {
-    const saved = localStorage.getItem('language')
+    const saved = localStorage.getItem(LANGUAGE_KEY)
     return saved !== null && isSupportedLanguage(saved) ? saved : 'en'
   } catch {
     return 'en'
@@ -112,7 +116,7 @@ i18n
 // language still changes, it just is not remembered
 const saveLanguage = (language: string): void => {
   try {
-    localStorage.setItem('language', language)
+    localStorage.setItem(LANGUAGE_KEY, language)
   } catch {
     // Not saved
   }

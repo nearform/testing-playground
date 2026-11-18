@@ -3,7 +3,7 @@ import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
-import AddRemove from './AddRemove.scenario'
+import AddRemove, { ELEMENTS_KEY, NEXT_INDEX_KEY } from './AddRemove.scenario'
 
 describe('AddRemove component', () => {
   beforeEach(() => {
@@ -90,8 +90,8 @@ describe('AddRemove component', () => {
   })
 
   it("never reuses a saved button's number, even with a stale saved index", () => {
-    sessionStorage.setItem('elements', JSON.stringify([0, 1, 2]))
-    sessionStorage.setItem('nextIndex', '0')
+    sessionStorage.setItem(ELEMENTS_KEY, JSON.stringify([0, 1, 2]))
+    sessionStorage.setItem(NEXT_INDEX_KEY, '0')
     TestRenderer(<AddRemove />)
 
     fireEvent.click(screen.getByTestId('add-element'))
@@ -153,8 +153,8 @@ describe('AddRemove component', () => {
     })
 
     it('keeps the buttons already saved instead', () => {
-      sessionStorage.setItem('elements', JSON.stringify([0, 4]))
-      sessionStorage.setItem('nextIndex', '5')
+      sessionStorage.setItem(ELEMENTS_KEY, JSON.stringify([0, 4]))
+      sessionStorage.setItem(NEXT_INDEX_KEY, '5')
       renderWithInitialElements(3)
 
       expect(removeButtonIds()).toEqual([
@@ -166,8 +166,8 @@ describe('AddRemove component', () => {
     it('numbers the next button correctly after a reload', () => {
       // Left over from an earlier visit in the same tab: one button was
       // added and removed again
-      sessionStorage.setItem('elements', '[]')
-      sessionStorage.setItem('nextIndex', '0')
+      sessionStorage.setItem(ELEMENTS_KEY, '[]')
+      sessionStorage.setItem(NEXT_INDEX_KEY, '0')
       renderWithInitialElements(3)
       cleanup()
       renderWithInitialElements(3)
@@ -197,20 +197,20 @@ describe('AddRemove component', () => {
     fireEvent.click(clearStorageButton)
 
     // Check if storage is cleared
-    expect(sessionStorage.getItem('elements')).toEqual('[]')
-    expect(sessionStorage.getItem('nextIndex')).toEqual('0')
+    expect(sessionStorage.getItem(ELEMENTS_KEY)).toEqual('[]')
+    expect(sessionStorage.getItem(NEXT_INDEX_KEY)).toEqual('0')
 
     // Check if state is updated
     expect(removeElementButton).not.toBeInTheDocument()
   })
 
   it('leaves other scenarios\' session data alone on "Clear Storage"', () => {
-    sessionStorage.setItem('multi-step-form', '{"step":2}')
+    sessionStorage.setItem('tp:multi-step-form', '{"step":2}')
     TestRenderer(<AddRemove />)
 
     fireEvent.click(screen.getByTestId('clear-storage'))
 
-    expect(sessionStorage.getItem('multi-step-form')).toBe('{"step":2}')
+    expect(sessionStorage.getItem('tp:multi-step-form')).toBe('{"step":2}')
   })
 
   it.each([
@@ -219,7 +219,7 @@ describe('AddRemove component', () => {
     { stored: 'not json' },
     { stored: '[1, "two"]' },
   ])('starts with no buttons when the saved list is $stored', ({ stored }) => {
-    sessionStorage.setItem('elements', stored)
+    sessionStorage.setItem(ELEMENTS_KEY, stored)
 
     TestRenderer(<AddRemove />)
 
