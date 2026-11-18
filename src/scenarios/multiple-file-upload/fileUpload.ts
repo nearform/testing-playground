@@ -76,11 +76,23 @@ export interface FormattedSize {
   unit: SizeUnit
 }
 
+// One size format per language, kept, as building one is relatively slow and
+// sizes are formatted on every render of the file list
+const sizeFormats = new Map<string, Intl.NumberFormat>()
+
+const sizeFormat = (locale: string): Intl.NumberFormat => {
+  let format = sizeFormats.get(locale)
+  if (format === undefined) {
+    format = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 })
+    sizeFormats.set(locale, format)
+  }
+  return format
+}
+
 // A file size in the largest unit that keeps it at 1 or more, with up to one
 // decimal place, in the given language
 export const formatSize = (bytes: number, locale: string): FormattedSize => {
-  const format = (value: number): string =>
-    new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)
+  const format = (value: number): string => sizeFormat(locale).format(value)
   if (bytes < 1024) return { value: format(bytes), unit: 'b' }
   if (bytes < MAX_FILE_SIZE) return { value: format(bytes / 1024), unit: 'kb' }
   return { value: format(bytes / MAX_FILE_SIZE), unit: 'mb' }

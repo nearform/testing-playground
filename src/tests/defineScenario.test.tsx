@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import i18n from '../i18n/i18nConfig'
-import * as Scenario from '../scenarios/Index'
-import { defineScenario } from '../utils/defineScenario'
+import { scenarios } from '../scenarios/list'
+import { defineScenario, type ScenarioComponent } from '../utils/defineScenario'
 import { DIFFICULTY_BADGE_VARIANT } from '../utils/difficulty'
 
 describe('defineScenario', () => {
@@ -20,7 +20,40 @@ describe('defineScenario', () => {
   })
 })
 
+// Every scenario component, by file, loaded up front
+const Scenario = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<ScenarioComponent>('../scenarios/*/*.scenario.tsx', {
+      import: 'default',
+      eager: true,
+    }),
+  ).map(([path, component]) => [path.split('/')[2], component]),
+)
+
 describe('registered scenarios', () => {
+  // The router and the index page read each scenario's metadata from the
+  // list, without loading the scenario, so it must match the file's own
+  it('lists every scenario with the metadata it declares', () => {
+    const bySlug = (a: { slug: string }, b: { slug: string }): number =>
+      a.slug.localeCompare(b.slug)
+
+    expect(
+      scenarios
+        .map(({ slug, difficulty }) => ({ slug, difficulty }))
+        .sort(bySlug),
+    ).toEqual(
+      Object.values(Scenario)
+        .map(({ slug, difficulty }) => ({ slug, difficulty }))
+        .sort(bySlug),
+    )
+  })
+
+  it('loads each listed scenario from its own folder', async () => {
+    for (const { slug, load } of scenarios) {
+      expect((await load()).default).toBe(Scenario[slug])
+    }
+  })
+
   it.each(Object.entries(Scenario))(
     '%s declares a known difficulty',
     (_name, component) => {

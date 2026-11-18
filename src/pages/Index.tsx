@@ -28,15 +28,12 @@ export default function Index(): JSX.Element {
   // not on every keystroke in the search box
   const scenarioData = useMemo(
     () =>
-      scenarios.map((ScenarioComponent) => {
-        const link = ScenarioComponent.slug
-        return {
-          title: t(`scenarios.${link}.title`),
-          description: t(`scenarios.${link}.description`),
-          link,
-          difficulty: ScenarioComponent.difficulty,
-        }
-      }),
+      scenarios.map(({ slug, difficulty }) => ({
+        title: t(`scenarios.${slug}.title`),
+        description: t(`scenarios.${slug}.description`),
+        link: slug,
+        difficulty,
+      })),
     // The language is listed as well as t, in case t keeps its identity
     // across a change of language
     [t, i18n.language],
