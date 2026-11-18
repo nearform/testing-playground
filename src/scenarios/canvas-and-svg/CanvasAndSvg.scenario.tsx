@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { useNumberFormat } from '../../utils/locale'
 import type { ChartLayout, Point, Size } from './canvas'
@@ -21,9 +20,7 @@ import {
   toCanvasPoint,
   toSvgPoints,
 } from './canvas'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'canvas-and-svg'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -627,7 +624,4 @@ const CanvasAndSvg = (): JSX.Element => {
   )
 }
 
-export default defineScenario(CanvasAndSvg, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default CanvasAndSvg

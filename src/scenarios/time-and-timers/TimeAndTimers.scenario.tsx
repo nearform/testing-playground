@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { useDateTimeFormat, useLocale } from '../../utils/locale'
 import {
@@ -23,9 +22,7 @@ import {
   formatDuration,
   shopStatus,
 } from './time'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'time-and-timers'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -569,7 +566,4 @@ const TimeAndTimers = (): JSX.Element => {
   )
 }
 
-export default defineScenario(TimeAndTimers, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default TimeAndTimers

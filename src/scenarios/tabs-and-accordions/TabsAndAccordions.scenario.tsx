@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import {
   LOAD_DELAY_MS,
@@ -14,9 +13,7 @@ import {
   nextTabIndex,
   resolveTab,
 } from './tabs'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'tabs-and-accordions'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -438,7 +435,4 @@ const TabsAndAccordions = (): JSX.Element => {
   )
 }
 
-export default defineScenario(TabsAndAccordions, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default TabsAndAccordions

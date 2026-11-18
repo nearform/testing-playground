@@ -13,12 +13,9 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { COOKIE_PATH, cookieName, storageKey } from '../../utils/storage'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'cookies-and-storage'
+import { SLUG } from './meta'
 
 // Where the scenario keeps its state. Tests seed or read these directly. The
 // names are prefixed, and the cookie scoped to the playground's path, because
@@ -610,7 +607,4 @@ const CookiesAndStorage = (): JSX.Element => {
   )
 }
 
-export default defineScenario(CookiesAndStorage, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default CookiesAndStorage

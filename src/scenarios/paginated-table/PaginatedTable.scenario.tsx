@@ -17,12 +17,9 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { useDateTimeFormat, useNumberFormat } from '../../utils/locale'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'paginated-table'
+import { SLUG } from './meta'
 
 export type Status = 'paid' | 'pending' | 'overdue' | 'cancelled'
 
@@ -593,7 +590,4 @@ const PaginatedTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(PaginatedTable, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default PaginatedTable

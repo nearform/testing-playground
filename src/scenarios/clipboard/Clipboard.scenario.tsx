@@ -14,11 +14,8 @@ import {
   maskSecret,
   toPlainText,
 } from './clipboard'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'clipboard'
+import { SLUG } from './meta'
 
 // Fixed values, so a test can compare what it reads back from the clipboard
 export const CODE_SNIPPET = 'npx playwright test --project=chromium'
@@ -467,7 +464,4 @@ const Clipboard = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Clipboard, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default Clipboard

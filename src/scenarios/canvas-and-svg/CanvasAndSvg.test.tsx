@@ -13,6 +13,7 @@ import CanvasAndSvg, {
   TARGET_RADIUS,
 } from './CanvasAndSvg.scenario'
 import { boundingBox, centreOf, isInPolygon } from './canvas'
+import { DIFFICULTY } from './meta'
 
 // Every key path under an object, e.g. "pad.title"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -100,7 +101,7 @@ const clickAt = (element: HTMLElement, x: number, y: number): void => {
 
 describe('Canvas and SVG scenario', () => {
   it('is a hard scenario', () => {
-    expect(CanvasAndSvg.difficulty).toBe('hard')
+    expect(DIFFICULTY).toBe('hard')
   })
 
   it.each([

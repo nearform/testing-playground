@@ -16,12 +16,9 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'challenging-selectors'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -508,7 +505,4 @@ const ChallengingSelectors = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ChallengingSelectors, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default ChallengingSelectors

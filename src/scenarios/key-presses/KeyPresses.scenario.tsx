@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'key-presses'
+import { SLUG } from './meta'
 
 // How many of the most recent keys the key reader remembers
 const HISTORY_LENGTH = 10
@@ -232,7 +229,4 @@ const KeyPresses = (): JSX.Element => {
   )
 }
 
-export default defineScenario(KeyPresses, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default KeyPresses

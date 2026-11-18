@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'file-upload'
+import { SLUG } from './meta'
 
 const FileUpload = (): JSX.Element => {
   const { t } = useTranslation()
@@ -137,7 +134,4 @@ const FileUpload = (): JSX.Element => {
   )
 }
 
-export default defineScenario(FileUpload, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default FileUpload

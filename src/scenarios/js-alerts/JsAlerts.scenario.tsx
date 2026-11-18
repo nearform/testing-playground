@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'js-alerts'
+import { SLUG } from './meta'
 
 type DialogType = 'alert' | 'confirm' | 'prompt'
 
@@ -110,7 +107,4 @@ const JsAlerts = (): JSX.Element => {
   )
 }
 
-export default defineScenario(JsAlerts, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default JsAlerts

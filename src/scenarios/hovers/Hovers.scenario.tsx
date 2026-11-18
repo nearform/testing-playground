@@ -4,11 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'hovers'
+import { SLUG } from './meta'
 
 // How long the pointer has to rest on a menu item before its submenu opens,
 // and how long the menu stays open after the pointer leaves it
@@ -296,7 +293,4 @@ const Hovers = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Hovers, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default Hovers

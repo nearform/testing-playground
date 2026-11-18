@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'autocomplete'
+import { SLUG } from './meta'
 
 // How many characters the city search needs before it asks the server
 export const MIN_CITY_CHARACTERS = 2
@@ -431,7 +428,4 @@ const Autocomplete = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Autocomplete, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default Autocomplete

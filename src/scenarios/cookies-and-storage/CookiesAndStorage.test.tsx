@@ -14,6 +14,7 @@ import CookiesAndStorage, {
   SESSION_NOTE_KEY,
   SYNC_CHANNEL,
 } from './CookiesAndStorage.scenario'
+import { DIFFICULTY } from './meta'
 
 // Every key path under an object, e.g. "banner.title"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -66,7 +67,7 @@ describe('Cookies and storage scenario', () => {
   })
 
   it('is a medium scenario', () => {
-    expect(CookiesAndStorage.difficulty).toBe('medium')
+    expect(DIFFICULTY).toBe('medium')
   })
 
   it.each([

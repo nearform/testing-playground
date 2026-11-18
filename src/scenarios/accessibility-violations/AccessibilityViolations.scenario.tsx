@@ -19,11 +19,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'accessibility-violations'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -528,7 +525,4 @@ const AccessibilityViolations = (): JSX.Element => {
   )
 }
 
-export default defineScenario(AccessibilityViolations, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default AccessibilityViolations

@@ -16,7 +16,6 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { PHONE_DIGIT_LIMITS } from '../../utils/formValidation'
 import { translateInformation } from '../../utils/information'
 import type {
@@ -43,9 +42,7 @@ import {
   resolveStep,
   validateStep,
 } from './multiStepForm'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'multi-step-form'
+import { SLUG } from './meta'
 
 const STEP_PARAM = 'step'
 const FROM_PARAM = 'from'
@@ -752,7 +749,4 @@ const Review = ({ data, progress, steps }: ReviewProps): JSX.Element => {
   )
 }
 
-export default defineScenario(MultiStepForm, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default MultiStepForm

@@ -14,6 +14,7 @@ import AccessibilityViolations, {
   NEEDS_REVIEW_RULES,
   versionFrom,
 } from './AccessibilityViolations.scenario'
+import { DIFFICULTY } from './meta'
 
 // Every key path under an object, e.g. "form.title"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -67,7 +68,7 @@ const rowCells = (selector: string): string[] => {
 
 describe('Accessibility violations scenario', () => {
   it('is a medium scenario', () => {
-    expect(AccessibilityViolations.difficulty).toBe('medium')
+    expect(DIFFICULTY).toBe('medium')
   })
 
   it.each([

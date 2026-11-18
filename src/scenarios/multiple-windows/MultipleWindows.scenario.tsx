@@ -15,11 +15,8 @@ import { useHref, useSearchParams } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'multiple-windows'
+import { SLUG } from './meta'
 
 // The other windows are this same scenario, shown as a different view chosen
 // by the `window` query parameter (`#/multiple-windows?window=popup`)
@@ -395,7 +392,4 @@ const MultipleWindows = (): JSX.Element => {
   return isWindowView(view) ? <ChildWindow view={view} /> : <MainWindow />
 }
 
-export default defineScenario(MultipleWindows, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default MultipleWindows

@@ -21,6 +21,7 @@ Each scenario is one folder in [scenarios](./src/scenarios), named after its slu
 
 ```
 src/scenarios/my-scenario/
+  meta.ts                   its slug and difficulty
   MyScenario.scenario.tsx   the page
   MyScenario.test.tsx       its tests
   myHelper.ts               any helpers only this scenario uses, with their tests
@@ -28,16 +29,19 @@ src/scenarios/my-scenario/
   information/              its information: en.md, fr.md and pt-br.md
 ```
 
-1. Create `src/scenarios/my-scenario/MyScenario.scenario.tsx`. Name its slug once, as `const SLUG = 'my-scenario'`, and build its text keys from it. The folder must have the same name as the slug.
-2. Export it with its slug and difficulty (`easy`, `medium` or `hard`). The slug is both its URL and the key of its texts:
-   `export default defineScenario(MyScenario, { slug: SLUG, difficulty: 'easy' })`
-3. Add it to the [index](./src/scenarios/Index.tsx) file:
-   `export { default as MyScenario } from './my-scenario/MyScenario.scenario'`
-4. Add its texts (`title`, `description` and any on-page text) to `locales/en.json`, `locales/fr.json` and `locales/pt-br.json` in its folder, with the same keys in each. They are read as `scenarios.my-scenario.<key>`.
-5. Write its information in Markdown as `information/en.md`, `information/fr.md` and `information/pt-br.md` in its folder, and pass it to the page with ``information={translateInformation(t, `scenarios.${SLUG}.information`)}`` on `PageSetup`.
-6. Add its tests beside it as `MyScenario.test.tsx`.
+1. Create `src/scenarios/my-scenario/meta.ts` with its slug and difficulty (`easy`, `medium` or `hard`). The slug is both its URL and the key of its texts, and the folder must have the same name:
+   ```ts
+   import type { Difficulty } from '../../utils/difficulty'
 
-All the routes and the cards on the front page are generated from the index, and the texts and information are found from the folder, so there is nothing else to register. Texts shared by the whole site stay in [locales](./src/i18n/locales).
+   export const SLUG = 'my-scenario'
+   export const DIFFICULTY: Difficulty = 'easy'
+   ```
+2. Create `MyScenario.scenario.tsx` beside it, `import { SLUG } from './meta'`, build its text keys from `SLUG`, and `export default MyScenario`. It is loaded only when its page is opened.
+3. Add its texts (`title`, `description` and any on-page text) to `locales/en.json`, `locales/fr.json` and `locales/pt-br.json` in its folder, with the same keys in each. They are read as `scenarios.my-scenario.<key>`.
+4. Write its information in Markdown as `information/en.md`, `information/fr.md` and `information/pt-br.md` in its folder, and pass it to the page with ``information={translateInformation(t, `scenarios.${SLUG}.information`)}`` on `PageSetup`.
+5. Add its tests beside it as `MyScenario.test.tsx`.
+
+All the routes and the cards on the front page are generated from the scenario folders, and the texts and information are found from the folder, so there is nothing else to register. Texts shared by the whole site stay in [locales](./src/i18n/locales).
 
 ### Writing the information
 

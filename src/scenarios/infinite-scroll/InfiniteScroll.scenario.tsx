@@ -10,11 +10,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'infinite-scroll'
+import { SLUG } from './meta'
 
 export const BATCH_SIZE = 10
 // Long enough for a test to see the loading state before new items arrive
@@ -124,7 +121,4 @@ const InfiniteScroll = (): JSX.Element => {
   )
 }
 
-export default defineScenario(InfiniteScroll, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default InfiniteScroll

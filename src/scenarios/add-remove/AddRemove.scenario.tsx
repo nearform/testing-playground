@@ -5,12 +5,9 @@ import { useLocation } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { storageKey } from '../../utils/storage'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'add-remove'
+import { SLUG } from './meta'
 
 // Where the buttons are saved in sessionStorage. Tests seed or read these.
 export const ELEMENTS_KEY = storageKey('elements')
@@ -182,7 +179,4 @@ const AddRemove = (): JSX.Element => {
   )
 }
 
-export default defineScenario(AddRemove, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default AddRemove

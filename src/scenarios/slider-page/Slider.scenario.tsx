@@ -4,11 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'slider-page'
+import { SLUG } from './meta'
 
 const MIN = 1
 const MAX = 100
@@ -130,7 +127,4 @@ const SliderPage: React.FC = () => {
   )
 }
 
-export default defineScenario(SliderPage, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default SliderPage

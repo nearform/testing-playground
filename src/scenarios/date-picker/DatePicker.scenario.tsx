@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import type { DateRange } from '../../utils/dates'
 import {
@@ -32,9 +31,7 @@ import {
   startOfMonth,
   toIsoDate,
 } from '../../utils/dates'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'date-picker'
+import { SLUG } from './meta'
 
 // How many years after this one appointments and trips can be booked into
 export const BOOKING_YEARS = 2
@@ -762,7 +759,4 @@ const DatePicker = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DatePicker, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default DatePicker

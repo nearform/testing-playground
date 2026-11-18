@@ -17,6 +17,7 @@ import Actionability, {
   SETTLE_PASSES,
   TERMS_CLAUSES,
 } from './Actionability.scenario'
+import { DIFFICULTY } from './meta'
 
 const lastAction = (): HTMLElement => screen.getByTestId('last-action')
 const button = (name: string): HTMLElement =>
@@ -38,7 +39,7 @@ const keyPaths = (value: unknown, prefix = ''): string[] =>
 
 describe('Actionability scenario', () => {
   it('is a hard scenario', () => {
-    expect(Actionability.difficulty).toBe('hard')
+    expect(DIFFICULTY).toBe('hard')
   })
 
   it.each([

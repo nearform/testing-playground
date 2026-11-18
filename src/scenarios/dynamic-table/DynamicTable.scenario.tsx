@@ -12,11 +12,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'dynamic-table'
+import { SLUG } from './meta'
 
 // The processes in the table. A row keeps its process's id, not its name,
 // and the name is translated as the row is drawn, so it follows a language
@@ -167,7 +164,4 @@ const DynamicTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DynamicTable, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default DynamicTable
