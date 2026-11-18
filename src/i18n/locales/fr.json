@@ -695,6 +695,61 @@
         "error": "Il s'agit d'un message de notification d'erreur"
       }
     },
+    "paginated-table": {
+      "title": "Tableau paginé",
+      "description": "Retrouvez des factures sur les pages d'un tableau grâce à la recherche, aux filtres, à la sélection de lignes et à une action groupée.",
+      "information": "Le tableau contient 143 factures, affichées par 10, 25 ou 50. Chaque changement (une nouvelle page, taille de page, recherche ou filtre) se charge pendant une durée aléatoire de {{min}} à {{max}} ms, et pendant le chargement les anciennes lignes restent affichées : le tableau est marqué <code>aria-busy=\"true\"</code>, un voile avec un indicateur de chargement le recouvre et la pagination, la taille de page et les cases à cocher sont désactivées. Vérifier les lignes juste après un clic peut lire l'ancienne page : attendez la fin du chargement ou que le résumé du nombre de lignes change. La recherche ne se lance qu'après une pause de {{debounce}} ms dans la saisie, puis se charge à son tour ; elle porte sur le numéro de facture ou le client, sans tenir compte de la casse ni des accents (« cafe » trouve « Café Étoile »). Une nouvelle recherche, un nouveau filtre ou une nouvelle taille de page ramène à la page 1, et les deux bornes de la période sont incluses. La pagination affiche la première et la dernière page ainsi que celles qui entourent la page courante, avec … pour les autres : la page voulue n'a donc pas forcément encore de bouton ; la page courante est marquée <code>aria-current=\"page\"</code>. Les lignes sélectionnées le restent quand vous changez de page ou de filtre, même si elles ne sont plus affichées, et le nombre de lignes sélectionnées les inclut. La case de l'en-tête ne sélectionne que les lignes de la page courante, et est partiellement cochée quand seules certaines le sont. Marquer des factures comme payées les modifie immédiatement : avec un filtre de statut, elles peuvent donc disparaître de la page. Quand rien ne correspond, le tableau affiche un message avec un bouton pour effacer les filtres, et la pagination disparaît. Le résumé, les dates et les montants sont rédigés et formatés différemment selon la langue.",
+      "filters": {
+        "search": "Rechercher",
+        "search-placeholder": "Numéro de facture ou client",
+        "status": "Statut",
+        "all-statuses": "Tous les statuts",
+        "from": "Émise à partir du",
+        "to": "Émise jusqu'au"
+      },
+      "statuses": {
+        "paid": "Payée",
+        "pending": "En attente",
+        "overdue": "En retard",
+        "cancelled": "Annulée"
+      },
+      "columns": {
+        "id": "Facture",
+        "customer": "Client",
+        "issued": "Émise le",
+        "status": "Statut",
+        "amount": "Montant"
+      },
+      "selection": {
+        "page": "Sélectionner toutes les factures de cette page",
+        "row": "Sélectionner {{id}}",
+        "count_one": "{{count}} facture sélectionnée",
+        "count_other": "{{count}} factures sélectionnées",
+        "mark-paid": "Marquer comme payées",
+        "clear": "Effacer la sélection",
+        "marked_one": "{{count}} facture marquée comme payée",
+        "marked_other": "{{count}} factures marquées comme payées"
+      },
+      "loading": "Chargement des factures",
+      "empty": {
+        "title": "Aucune facture ne correspond à votre recherche",
+        "hint": "Essayez une autre recherche, ou modifiez ou effacez les filtres.",
+        "clear": "Effacer les filtres"
+      },
+      "summary": {
+        "showing": "Affichage de {{start}} à {{end}} sur {{total}}",
+        "none": "Aucune facture à afficher"
+      },
+      "page-size": "Lignes par page",
+      "pagination": {
+        "label": "Pagination",
+        "first": "Première",
+        "previous": "Précédente",
+        "next": "Suivante",
+        "last": "Dernière",
+        "page": "Page {{page}}"
+      }
+    },
     "radio-button": {
       "title": "Bouton radio",
       "description": "Un ensemble de boutons radio à cocher.",
