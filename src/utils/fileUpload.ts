@@ -1,0 +1,96 @@
+// Rules for the Multiple File Upload scenario's drop zone, kept apart from the
+// component so they can be tested on their own.
+
+export const ACCEPTED_TYPES = [
+  'image/png',
+  'image/jpeg',
+  'image/gif',
+  'image/webp',
+] as const
+
+// The drop zone input's accept attribute. It only filters the file picker:
+// files set programmatically or dropped are checked by validateFiles.
+export const ACCEPT = ACCEPTED_TYPES.join(',')
+
+export const MAX_FILE_SIZE = 1024 * 1024
+
+// How often a simulated upload moves on, in milliseconds
+export const UPLOAD_TICK_MS = 150
+
+const MIN_STEP = 5
+const MAX_STEP = 25
+
+export type FileError = 'type' | 'size' | 'duplicate'
+
+export interface Rejection {
+  name: string
+  size: number
+  error: FileError
+}
+
+export interface Validated {
+  accepted: File[]
+  rejected: Rejection[]
+}
+
+type FileLike = Pick<File, 'name' | 'size' | 'type'>
+
+// Two files are taken to be the same when they share a name and a size
+export const fileKey = (file: Pick<File, 'name' | 'size'>): string =>
+  `${file.name}:${file.size}`
+
+export const validateFile = (
+  file: FileLike,
+  existing: ReadonlySet<string>,
+): FileError | null => {
+  if (!(ACCEPTED_TYPES as readonly string[]).includes(file.type)) return 'type'
+  if (file.size > MAX_FILE_SIZE) return 'size'
+  if (existing.has(fileKey(file))) return 'duplicate'
+  return null
+}
+
+// Splits a batch of files into those that can be added and those that cannot,
+// in their original order. A file repeated within the batch is a duplicate.
+export const validateFiles = (
+  files: readonly File[],
+  existing: Iterable<Pick<File, 'name' | 'size'>>,
+): Validated => {
+  const keys = new Set(Array.from(existing, fileKey))
+  const result: Validated = { accepted: [], rejected: [] }
+  for (const file of files) {
+    const error = validateFile(file, keys)
+    if (error === null) {
+      keys.add(fileKey(file))
+      result.accepted.push(file)
+    } else {
+      result.rejected.push({ name: file.name, size: file.size, error })
+    }
+  }
+  return result
+}
+
+export type SizeUnit = 'b' | 'kb' | 'mb'
+
+// A file size in the largest unit that keeps it at 1 or more, with up to one
+// decimal place, in the given language
+export const formatSize = (
+  bytes: number,
+  locale: string,
+): { value: string; unit: SizeUnit } => {
+  const format = (value: number): string =>
+    new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)
+  if (bytes < 1024) return { value: format(bytes), unit: 'b' }
+  if (bytes < MAX_FILE_SIZE) return { value: format(bytes / 1024), unit: 'kb' }
+  return { value: format(bytes / MAX_FILE_SIZE), unit: 'mb' }
+}
+
+// How far an upload moves on each tick, in percent: larger files are slower,
+// from MAX_STEP for an empty file down to MIN_STEP at the size limit
+export const uploadStep = (size: number): number =>
+  Math.round(
+    MAX_STEP -
+      (Math.min(size, MAX_FILE_SIZE) / MAX_FILE_SIZE) * (MAX_STEP - MIN_STEP),
+  )
+
+export const advanceProgress = (progress: number, size: number): number =>
+  Math.min(100, progress + uploadStep(size))

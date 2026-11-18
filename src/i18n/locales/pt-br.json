@@ -2012,6 +2012,91 @@
           "wrong": "Você clicou na célula {{cell}}, não na {{target}}."
         }
       }
+    },
+    "multiple-file-upload": {
+      "title": "Envio de Vários Arquivos",
+      "description": "Escolha vários arquivos de uma vez e adicione imagens por uma área de soltar com um campo oculto, verificação de tipo e tamanho, pré-visualizações, uma barra de progresso por arquivo e botões de remover.",
+      "information": {
+        "summary": "A primeira seção é um campo de arquivo nativo que aceita vários arquivos de uma vez. A segunda é uma área de soltar, como a maioria dos componentes de envio: o campo real fica oculto, os arquivos são verificados ao serem adicionados e cada um é enviado com sua própria barra de progresso.",
+        "sections": [
+          {
+            "title": "O campo por trás da área de soltar",
+            "points": [
+              "O <code>&lt;input type=\"file\"&gt;</code> da área de soltar fica visualmente oculto e fora da ordem de tabulação: os usuários veem apenas a área e o botão <em>Procurar arquivos</em>. O <code>setInputFiles()</code> do Playwright funciona em campos ocultos, então mire direto em <code>#drop-zone-input</code>. O <code>selectFile()</code> do Cypress verifica se o elemento é acionável, o que um campo oculto pode não ser, então passe <code>{ force: true }</code>.",
+              "Clicar em <em>Procurar arquivos</em> abre a janela de arquivos do sistema operacional, que nenhuma ferramenta de teste consegue controlar. No Playwright, aguarde o evento <code>filechooser</code> e chame <code>setFiles()</code> nele; nas demais, não clique e defina os arquivos do campo diretamente.",
+              "Para testar o próprio soltar, simule-o na área. No Cypress, use <code>selectFile(file, { action: 'drag-drop' })</code> na área. No Playwright, crie um <code>DataTransfer</code> na página com <code>page.evaluateHandle()</code> e passe-o para <code>dispatchEvent('drop', { dataTransfer })</code>. O Selenium não tem uma forma nativa, então execute um script que dispare os eventos.",
+              "O campo é esvaziado após cada seleção, para que o mesmo arquivo possa ser escolhido de novo depois de removido. Por isso, verificar os <code>files</code> do campo não diz nada: verifique a lista de arquivos."
+            ]
+          },
+          {
+            "title": "Escolhendo vários arquivos",
+            "points": [
+              "O primeiro campo tem o atributo <code>multiple</code>. Passe um array para <code>setInputFiles()</code> ou <code>selectFile()</code>. No Selenium, envie para <code>sendKeys()</code> os caminhos absolutos separados por quebras de linha.",
+              "Escolher de novo substitui a seleção em vez de somar a ela, como nos campos nativos, enquanto a área de soltar adiciona à sua lista a cada vez.",
+              "Os arquivos não precisam existir no disco: o Playwright aceita <code>{ name, mimeType, buffer }</code> e o Cypress aceita <code>{ contents, fileName, mimeType }</code>."
+            ]
+          },
+          {
+            "title": "Validação",
+            "points": [
+              "Só são aceitas imagens PNG, JPEG, GIF e WebP de até {{max}} cada. O atributo <code>accept</code> do campo só filtra a janela de arquivos: arquivos definidos por um teste ou soltos passam por ele, então a página verifica cada arquivo e lista os que recusou.",
+              "O tipo vem do tipo MIME do arquivo, não do nome, então um arquivo chamado <code>photo.png</code> com o tipo <code>text/plain</code> é recusado. Defina o tipo MIME ao criar arquivos em um teste, ou ele será deduzido pela extensão.",
+              "Um arquivo com o mesmo nome e tamanho de outro já na lista é recusado como duplicado. Quando uma seleção mistura arquivos válidos e inválidos, os válidos são adicionados e só os outros aparecem no erro.",
+              "Testar o limite de tamanho exige um arquivo com mais de {{max}}: crie um em memória, por exemplo com <code>Buffer.alloc(1024 * 1024 + 1)</code>."
+            ]
+          },
+          {
+            "title": "Progresso, pré-visualizações e remoção",
+            "points": [
+              "Cada imagem começa a ser enviada assim que é adicionada, e arquivos maiores demoram mais, até cerca de 3 segundos. Aguarde <code>data-status=\"uploaded\"</code>, o texto <em>Enviado</em> ou o <code>aria-valuenow</code> da barra de progresso chegar a 100, em vez de um tempo fixo.",
+              "<em>Enviar</em> fica desativado enquanto alguma imagem ainda está sendo enviada.",
+              "Cada arquivo tem seu próprio botão de remover, com o nome dele (<em>Remover photo.png</em>), e a remoção funciona também durante o envio. Encontre a linha de um arquivo pelo nome e aja dentro dela, não pela posição, pois remover um arquivo faz os seguintes subirem.",
+              "As pré-visualizações usam URLs <code>blob:</code> criadas na página, então o <code>src</code> muda a cada execução. Verifique o texto alternativo da pré-visualização, ou se ela carregou (<code>naturalWidth</code> maior que 0), em vez do <code>src</code>."
+            ]
+          }
+        ]
+      },
+      "units": {
+        "b": "{{value}} B",
+        "kb": "{{value}} KB",
+        "mb": "{{value}} MB"
+      },
+      "multiple": {
+        "title": "Vários arquivos",
+        "instructions": "Escolha um ou mais arquivos de qualquer tipo. Cada arquivo escolhido é listado abaixo.",
+        "label": "Escolher arquivos",
+        "count_one": "{{count}} arquivo selecionado",
+        "count_other": "{{count}} arquivos selecionados",
+        "list-label": "Arquivos selecionados",
+        "item": "{{name}} ({{size}}, {{type}})",
+        "unknown-type": "tipo desconhecido"
+      },
+      "drop-zone": {
+        "title": "Área de soltar imagens",
+        "instructions": "Solte imagens na área ou procure-as. Só são aceitas imagens PNG, JPEG, GIF e WebP de até {{max}} cada. Cada imagem é enviada separadamente; envie o formulário quando todas terminarem.",
+        "prompt": "Arraste e solte imagens aqui, ou",
+        "release": "Solte para adicionar os arquivos",
+        "browse": "Procurar arquivos",
+        "input-label": "Escolher imagens para enviar",
+        "list-label": "Imagens para enviar",
+        "preview": "Pré-visualização de {{name}}",
+        "progress": "Progresso do envio de {{name}}",
+        "uploading": "Enviando… {{progress}}%",
+        "uploaded": "Enviado",
+        "remove": "Remover {{name}}",
+        "submit": "Enviar",
+        "wait": "Aguarde todos os envios terminarem antes de enviar.",
+        "empty": "Adicione pelo menos uma imagem antes de enviar.",
+        "submitted_one": "{{count}} imagem enviada: {{names}}",
+        "submitted_other": "{{count}} imagens enviadas: {{names}}"
+      },
+      "errors": {
+        "title_one": "{{count}} arquivo não foi adicionado:",
+        "title_other": "{{count}} arquivos não foram adicionados:",
+        "type": "{{name}} não é uma imagem PNG, JPEG, GIF ou WebP.",
+        "size": "{{name}} tem {{size}}, acima do limite de {{max}}.",
+        "duplicate": "{{name}} já foi adicionado."
+      }
     }
   }
 }
