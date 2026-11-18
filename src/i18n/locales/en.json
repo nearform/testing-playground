@@ -2011,6 +2011,91 @@
           "wrong": "You clicked cell {{cell}}, not {{target}}."
         }
       }
+    },
+    "multiple-file-upload": {
+      "title": "Multiple File Upload",
+      "description": "Choose several files at once, and add images through a drop zone with a hidden input, type and size checks, previews, a progress bar per file and remove buttons.",
+      "information": {
+        "summary": "The first section is a native file input that takes several files at once. The second is a drop zone, as most upload widgets are built: the real input is hidden, files are checked as they are added, and each one uploads with its own progress bar.",
+        "sections": [
+          {
+            "title": "The input behind the drop zone",
+            "points": [
+              "The drop zone's <code>&lt;input type=\"file\"&gt;</code> is visually hidden and out of the tab order: users only see the zone and its <em>Browse files</em> button. Playwright's <code>setInputFiles()</code> works on hidden inputs, so target <code>#drop-zone-input</code> directly. Cypress's <code>selectFile()</code> checks the element is actionable, which a hidden input can fail, so pass <code>{ force: true }</code>.",
+              "Clicking <em>Browse files</em> opens the operating system's file dialog, which no test tool can drive. In Playwright, wait for the <code>filechooser</code> event and call <code>setFiles()</code> on it; elsewhere skip the click and set the input's files.",
+              "To test the drop itself, simulate one on the zone. In Cypress use <code>selectFile(file, { action: 'drag-drop' })</code> on the zone. In Playwright, build a <code>DataTransfer</code> in the page with <code>page.evaluateHandle()</code> and pass it to <code>dispatchEvent('drop', { dataTransfer })</code>. Selenium has no built-in way, so run a script that dispatches the events.",
+              "The input is emptied after every selection, so the same file can be chosen again after removing it. Checking the input's <code>files</code> therefore tells you nothing: check the list of files instead."
+            ]
+          },
+          {
+            "title": "Choosing several files",
+            "points": [
+              "The first input has the <code>multiple</code> attribute. Pass an array to <code>setInputFiles()</code> or <code>selectFile()</code>. In Selenium, send the absolute paths to <code>sendKeys()</code> joined by newlines.",
+              "Choosing again replaces the selection rather than adding to it, as native inputs do, whereas the drop zone adds to its list every time.",
+              "Files do not have to exist on disk: Playwright takes <code>{ name, mimeType, buffer }</code> and Cypress takes <code>{ contents, fileName, mimeType }</code>."
+            ]
+          },
+          {
+            "title": "Validation",
+            "points": [
+              "Only PNG, JPEG, GIF and WebP images up to {{max}} each are accepted. The input's <code>accept</code> attribute only filters the file dialog: files set by a test or dropped get past it, so the page checks every file itself and lists the ones it turned away.",
+              "The type is taken from the file's MIME type, not its name, so a file called <code>photo.png</code> with the type <code>text/plain</code> is rejected. Set the MIME type yourself when building files in a test, or it is guessed from the extension.",
+              "A file with the same name and size as one already in the list is rejected as a duplicate. When a selection mixes good and bad files, the good ones are added and only the others are listed in the error.",
+              "Testing the size limit needs a file over {{max}}: build one in memory, for example with <code>Buffer.alloc(1024 * 1024 + 1)</code>."
+            ]
+          },
+          {
+            "title": "Progress, previews and removing",
+            "points": [
+              "Each image starts uploading as soon as it is added, and larger files take longer, up to about 3 seconds. Wait for <code>data-status=\"uploaded\"</code>, the <em>Uploaded</em> text or the progress bar's <code>aria-valuenow</code> reaching 100, not for a fixed time.",
+              "<em>Submit</em> is disabled while any image is still uploading.",
+              "Every file has its own remove button named after it (<em>Remove photo.png</em>), and removing works mid-upload too. Find a file's row by its name and act inside it rather than by its position, as removing a file moves the ones after it up.",
+              "Previews use <code>blob:</code> URLs made in the page, so their <code>src</code> changes on every run. Check the preview's alt text, or that it loaded (<code>naturalWidth</code> above 0), rather than its <code>src</code>."
+            ]
+          }
+        ]
+      },
+      "units": {
+        "b": "{{value}} B",
+        "kb": "{{value}} KB",
+        "mb": "{{value}} MB"
+      },
+      "multiple": {
+        "title": "Multiple files",
+        "instructions": "Choose one or more files of any type. Every file chosen is listed below.",
+        "label": "Choose files",
+        "count_one": "{{count}} file selected",
+        "count_other": "{{count}} files selected",
+        "list-label": "Selected files",
+        "item": "{{name}} ({{size}}, {{type}})",
+        "unknown-type": "unknown type"
+      },
+      "drop-zone": {
+        "title": "Image drop zone",
+        "instructions": "Drop images on the zone or browse for them. Only PNG, JPEG, GIF and WebP images up to {{max}} each are accepted. Each image uploads on its own; submit once they have all finished.",
+        "prompt": "Drag and drop images here, or",
+        "release": "Release to add the files",
+        "browse": "Browse files",
+        "input-label": "Choose images to upload",
+        "list-label": "Images to upload",
+        "preview": "Preview of {{name}}",
+        "progress": "Upload progress for {{name}}",
+        "uploading": "Uploading… {{progress}}%",
+        "uploaded": "Uploaded",
+        "remove": "Remove {{name}}",
+        "submit": "Submit",
+        "wait": "Wait for every upload to finish before submitting.",
+        "empty": "Add at least one image before submitting.",
+        "submitted_one": "{{count}} image submitted: {{names}}",
+        "submitted_other": "{{count}} images submitted: {{names}}"
+      },
+      "errors": {
+        "title_one": "{{count}} file was not added:",
+        "title_other": "{{count}} files were not added:",
+        "type": "{{name}} is not a PNG, JPEG, GIF or WebP image.",
+        "size": "{{name}} is {{size}}, over the {{max}} limit.",
+        "duplicate": "{{name}} has already been added."
+      }
     }
   }
 }

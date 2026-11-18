@@ -2012,6 +2012,91 @@
           "wrong": "Vous avez cliqué sur la cellule {{cell}}, pas sur {{target}}."
         }
       }
+    },
+    "multiple-file-upload": {
+      "title": "Envoi de plusieurs fichiers",
+      "description": "Choisissez plusieurs fichiers à la fois, et ajoutez des images par une zone de dépôt avec un champ caché, des contrôles de type et de taille, des aperçus, une barre de progression par fichier et des boutons de suppression.",
+      "information": {
+        "summary": "La première section est un champ de fichier natif qui accepte plusieurs fichiers à la fois. La seconde est une zone de dépôt, comme la plupart des composants d'envoi : le vrai champ est caché, les fichiers sont vérifiés à leur ajout et chacun est envoyé avec sa propre barre de progression.",
+        "sections": [
+          {
+            "title": "Le champ derrière la zone de dépôt",
+            "points": [
+              "Le <code>&lt;input type=\"file\"&gt;</code> de la zone de dépôt est masqué visuellement et hors de l'ordre de tabulation : les utilisateurs ne voient que la zone et son bouton <em>Parcourir les fichiers</em>. <code>setInputFiles()</code> de Playwright fonctionne sur les champs cachés, ciblez donc directement <code>#drop-zone-input</code>. <code>selectFile()</code> de Cypress vérifie que l'élément est utilisable, ce qu'un champ caché peut ne pas être : passez <code>{ force: true }</code>.",
+              "Cliquer sur <em>Parcourir les fichiers</em> ouvre la boîte de dialogue de fichiers du système, qu'aucun outil de test ne peut piloter. Avec Playwright, attendez l'événement <code>filechooser</code> et appelez <code>setFiles()</code> dessus ; ailleurs, ne cliquez pas et définissez directement les fichiers du champ.",
+              "Pour tester le dépôt lui-même, simulez-le sur la zone. Avec Cypress, utilisez <code>selectFile(file, { action: 'drag-drop' })</code> sur la zone. Avec Playwright, créez un <code>DataTransfer</code> dans la page avec <code>page.evaluateHandle()</code> et passez-le à <code>dispatchEvent('drop', { dataTransfer })</code>. Selenium n'a pas de méthode intégrée : exécutez un script qui déclenche les événements.",
+              "Le champ est vidé après chaque sélection, pour qu'un même fichier puisse être choisi de nouveau après l'avoir retiré. Vérifier les <code>files</code> du champ ne vous apprend donc rien : vérifiez plutôt la liste des fichiers."
+            ]
+          },
+          {
+            "title": "Choisir plusieurs fichiers",
+            "points": [
+              "Le premier champ a l'attribut <code>multiple</code>. Passez un tableau à <code>setInputFiles()</code> ou <code>selectFile()</code>. Avec Selenium, envoyez à <code>sendKeys()</code> les chemins absolus séparés par des retours à la ligne.",
+              "Choisir de nouveau remplace la sélection au lieu de s'y ajouter, comme pour les champs natifs, alors que la zone de dépôt ajoute à sa liste à chaque fois.",
+              "Les fichiers n'ont pas besoin d'exister sur le disque : Playwright accepte <code>{ name, mimeType, buffer }</code> et Cypress <code>{ contents, fileName, mimeType }</code>."
+            ]
+          },
+          {
+            "title": "Validation",
+            "points": [
+              "Seules les images PNG, JPEG, GIF et WebP de {{max}} au plus sont acceptées. L'attribut <code>accept</code> du champ ne filtre que la boîte de dialogue : les fichiers définis par un test ou déposés passent outre, la page vérifie donc chaque fichier elle-même et liste ceux qu'elle a refusés.",
+              "Le type vient du type MIME du fichier, pas de son nom : un fichier nommé <code>photo.png</code> de type <code>text/plain</code> est refusé. Définissez vous-même le type MIME en créant des fichiers dans un test, sinon il est deviné à partir de l'extension.",
+              "Un fichier ayant le même nom et la même taille qu'un fichier déjà dans la liste est refusé comme doublon. Quand une sélection mêle bons et mauvais fichiers, les bons sont ajoutés et seuls les autres apparaissent dans l'erreur.",
+              "Tester la taille maximale demande un fichier de plus de {{max}} : créez-en un en mémoire, par exemple avec <code>Buffer.alloc(1024 * 1024 + 1)</code>."
+            ]
+          },
+          {
+            "title": "Progression, aperçus et suppression",
+            "points": [
+              "Chaque image commence à être envoyée dès son ajout, et les gros fichiers prennent plus de temps, jusqu'à environ 3 secondes. Attendez <code>data-status=\"uploaded\"</code>, le texte <em>Envoyé</em> ou que l'<code>aria-valuenow</code> de la barre de progression atteigne 100, plutôt qu'une durée fixe.",
+              "<em>Valider</em> est désactivé tant qu'une image est en cours d'envoi.",
+              "Chaque fichier a son propre bouton de suppression, nommé d'après lui (<em>Retirer photo.png</em>), et la suppression fonctionne aussi pendant l'envoi. Trouvez la ligne d'un fichier par son nom et agissez à l'intérieur plutôt que par sa position, car retirer un fichier fait remonter les suivants.",
+              "Les aperçus utilisent des URL <code>blob:</code> créées dans la page, leur <code>src</code> change donc à chaque exécution. Vérifiez le texte alternatif de l'aperçu, ou qu'il s'est chargé (<code>naturalWidth</code> supérieur à 0), plutôt que son <code>src</code>."
+            ]
+          }
+        ]
+      },
+      "units": {
+        "b": "{{value}} o",
+        "kb": "{{value}} Ko",
+        "mb": "{{value}} Mo"
+      },
+      "multiple": {
+        "title": "Plusieurs fichiers",
+        "instructions": "Choisissez un ou plusieurs fichiers de n'importe quel type. Chaque fichier choisi est listé ci-dessous.",
+        "label": "Choisir des fichiers",
+        "count_one": "{{count}} fichier sélectionné",
+        "count_other": "{{count}} fichiers sélectionnés",
+        "list-label": "Fichiers sélectionnés",
+        "item": "{{name}} ({{size}}, {{type}})",
+        "unknown-type": "type inconnu"
+      },
+      "drop-zone": {
+        "title": "Zone de dépôt d'images",
+        "instructions": "Déposez des images sur la zone ou parcourez vos fichiers. Seules les images PNG, JPEG, GIF et WebP de {{max}} au plus sont acceptées. Chaque image est envoyée séparément ; validez une fois qu'elles sont toutes terminées.",
+        "prompt": "Glissez-déposez des images ici, ou",
+        "release": "Relâchez pour ajouter les fichiers",
+        "browse": "Parcourir les fichiers",
+        "input-label": "Choisir des images à envoyer",
+        "list-label": "Images à envoyer",
+        "preview": "Aperçu de {{name}}",
+        "progress": "Progression de l'envoi de {{name}}",
+        "uploading": "Envoi… {{progress}} %",
+        "uploaded": "Envoyé",
+        "remove": "Retirer {{name}}",
+        "submit": "Valider",
+        "wait": "Attendez la fin de tous les envois avant de valider.",
+        "empty": "Ajoutez au moins une image avant de valider.",
+        "submitted_one": "{{count}} image envoyée : {{names}}",
+        "submitted_other": "{{count}} images envoyées : {{names}}"
+      },
+      "errors": {
+        "title_one": "{{count}} fichier n'a pas été ajouté :",
+        "title_other": "{{count}} fichiers n'ont pas été ajoutés :",
+        "type": "{{name}} n'est pas une image PNG, JPEG, GIF ou WebP.",
+        "size": "{{name}} fait {{size}}, au-delà de la limite de {{max}}.",
+        "duplicate": "{{name}} a déjà été ajouté."
+      }
     }
   }
 }
