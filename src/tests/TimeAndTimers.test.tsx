@@ -422,6 +422,14 @@ describe('TimeAndTimers scenario', () => {
         act(() => {
           vi.setSystemTime(Date.now() + THROTTLE_INTERVAL)
         })
+        // The next clock tick re-renders the label. The cooldown timer is
+        // not due yet, as jumping the system time does not move timers
+        await wait(TICK)
+        expect(byTestId('throttle-status')).toHaveAttribute(
+          'data-state',
+          'ready',
+        )
+
         fireEvent.click(button('Save'))
 
         expect(byTestId('save-count')).toHaveTextContent('Saved 2 times')
