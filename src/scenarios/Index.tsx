@@ -6,6 +6,7 @@ export { default as BrokenImagesAndLinks } from './BrokenImagesAndLinks.scenario
 export { default as CanvasAndSvg } from './CanvasAndSvg.scenario'
 export { default as ChallengingSelectors } from './ChallengingSelectors.scenario'
 export { default as CheckBox } from './CheckBox.scenario'
+export { default as Clipboard } from './Clipboard.scenario'
 export { default as CookiesAndStorage } from './CookiesAndStorage.scenario'
 export { default as DatePicker } from './DatePicker.scenario'
 export { default as DragAndDropHard } from './DragAndDropHard.scenario'
