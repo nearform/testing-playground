@@ -28,6 +28,17 @@ const wait = async (ms: number): Promise<void> => {
   })
 }
 
+// Moves the time on without firing every timer in between, then lets one
+// tick run so the page reads the new time. Stepping hours through a clock that
+// ticks every second runs thousands of renders, which is slow enough under
+// load to time out.
+const jump = async (ms: number): Promise<void> => {
+  act(() => {
+    vi.setSystemTime(Date.now() + ms)
+  })
+  await wait(TICK)
+}
+
 const button = (name: string): HTMLElement =>
   screen.getByRole('button', { name })
 const byTestId = (id: string): HTMLElement => screen.getByTestId(id)
@@ -61,7 +72,11 @@ describe('TimeAndTimers scenario', () => {
 
   // user-event waits on timers internally, which never fire under Vitest's
   // fake timers, so these use fireEvent instead
-  describe('with a controlled clock', () => {
+  // Stepping ten minutes of one-second ticks takes a second or two of real
+  // time on its own, and several times that when the whole suite runs at
+  // once, so these get more than the default five seconds. The clock they
+  // control is fake; only how long the machine takes varies.
+  describe('with a controlled clock', { timeout: 20_000 }, () => {
     beforeEach(() => {
       vi.useFakeTimers()
     })
@@ -375,7 +390,7 @@ describe('TimeAndTimers scenario', () => {
         await wait(3 * MINUTE)
         expect(times()).toEqual(['3 minutes ago'])
 
-        await wait(2 * HOUR)
+        await jump(2 * HOUR)
         expect(times()).toEqual(['2 hours ago'])
       })
 
@@ -399,7 +414,7 @@ describe('TimeAndTimers scenario', () => {
         await i18n.changeLanguage('fr')
         render()
 
-        await wait(3 * MINUTE)
+        await jump(3 * MINUTE)
 
         expect(times()).toEqual(['il y a 3 minutes'])
       })
