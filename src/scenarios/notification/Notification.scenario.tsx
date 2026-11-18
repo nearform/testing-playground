@@ -15,6 +15,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { useLocale } from '../../utils/locale'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'notification'
@@ -53,7 +54,9 @@ const notificationTypes: Array<{
 ]
 
 const Notification = (): JSX.Element => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  // An Intl locale, as not every language code is one (ptBr)
+  const locale = useLocale()
   const [notification, setNotification] = useState<NotificationType>(null)
   const [alert, setAlert] = useState<NotificationType>(null)
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false)
@@ -116,7 +119,7 @@ const Notification = (): JSX.Element => {
           <Alert
             severity={alert}
             title={t(`scenarios.${SLUG}.type.${alert}`).toLocaleUpperCase(
-              i18n.language,
+              locale,
             )}
             className='mt-8'
             data-testid={`message-${alert}`}

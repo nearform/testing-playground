@@ -66,6 +66,20 @@ describe('RadioButton component', () => {
     expect(screen.getByRole('radio', { name: 'Purple' })).not.toBeChecked()
   })
 
+  it('gives each radio its colour as its value', () => {
+    TestRenderer(<RadioButton />)
+    fireEvent.click(screen.getByRole('radio', { name: 'Red' }))
+
+    expect(screen.getByRole('radio', { name: 'Red' })).toHaveAttribute(
+      'value',
+      'red',
+    )
+    expect(screen.getByRole('radio', { name: 'Purple' })).toHaveAttribute(
+      'value',
+      'purple',
+    )
+  })
+
   it('disables the last radio button in the first group', () => {
     TestRenderer(<RadioButton />)
     const fourthRadioButton = screen.getByRole('radio', { name: 'White' })

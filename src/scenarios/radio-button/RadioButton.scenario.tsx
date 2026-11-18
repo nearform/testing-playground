@@ -10,13 +10,14 @@ import { translateInformation } from '../../utils/information'
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'radio-button'
 
-// The values are the colours' ids, not their names, so a choice stays picked
-// when the language changes; only the labels are translated
-const PRIMARY_COLOURS = ['first', 'second', 'third', 'fourth'] as const
+// The values are fixed ids (the colours' English names), not their
+// translated names, so a choice stays picked when the language changes; only
+// the labels are translated
+const PRIMARY_COLOURS = ['red', 'blue', 'yellow', 'white'] as const
 const secondRadioOptions: Record<string, string[]> = {
-  first: ['first', 'second'],
-  second: ['first', 'third'],
-  third: ['second', 'third'],
+  red: ['purple', 'orange'],
+  blue: ['purple', 'green'],
+  yellow: ['orange', 'green'],
 }
 
 const RadioButton = (): JSX.Element => {

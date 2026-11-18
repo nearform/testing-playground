@@ -4,14 +4,14 @@
   "first-set": "Primary Colours",
   "second-set": "Secondary Colours",
   "first": {
-    "first": "Red",
-    "second": "Blue",
-    "third": "Yellow",
-    "fourth": "White"
+    "red": "Red",
+    "blue": "Blue",
+    "yellow": "Yellow",
+    "white": "White"
   },
   "second": {
-    "first": "Purple",
-    "second": "Orange",
-    "third": "Green"
+    "purple": "Purple",
+    "orange": "Orange",
+    "green": "Green"
   }
 }

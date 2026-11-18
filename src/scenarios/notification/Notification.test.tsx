@@ -43,20 +43,30 @@ describe('Notification when the language changes', () => {
     await switchLanguage('en')
   })
 
-  it('shows the popup and the alert in the new language', async () => {
-    TestRenderer(<Notification />)
-    fireEvent.click(screen.getByTestId('button-success'))
-    expect(screen.getByTestId('message-success')).toHaveTextContent('SUCCESS')
+  it.each([
+    {
+      language: 'fr',
+      title: 'SUCCÈS',
+      text: "Il s'agit d'un message de notification réussi",
+    },
+    {
+      language: 'ptBr',
+      title: 'SUCESSO',
+      text: 'Esta é uma mensagem de notificação bem-sucedida',
+    },
+  ])(
+    'shows the popup and the alert in $language',
+    async ({ language, title, text }) => {
+      TestRenderer(<Notification />)
+      fireEvent.click(screen.getByTestId('button-success'))
+      expect(screen.getByTestId('message-success')).toHaveTextContent('SUCCESS')
 
-    await switchLanguage('fr')
+      await switchLanguage(language)
 
-    const alert = screen.getByTestId('message-success')
-    expect(alert).toHaveTextContent('SUCCÈS')
-    expect(alert).toHaveTextContent(
-      "Il s'agit d'un message de notification réussi",
-    )
-    expect(screen.getByTestId('notification-success')).toHaveTextContent(
-      "Il s'agit d'un message de notification réussi",
-    )
-  })
+      const alert = screen.getByTestId('message-success')
+      expect(alert).toHaveTextContent(title)
+      expect(alert).toHaveTextContent(text)
+      expect(screen.getByTestId('notification-success')).toHaveTextContent(text)
+    },
+  )
 })

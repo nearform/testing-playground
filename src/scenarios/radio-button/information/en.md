@@ -5,6 +5,7 @@ Picking a primary colour shows a second set of secondary colours, and which ones
 - Red offers Purple and Orange, Blue offers Purple and Green, and Yellow offers Orange and Green.
 - White is disabled and cannot be picked.
 - Changing the primary colour clears the secondary choice, even when the new set offers the same colour.
+- Each radio's value is the colour's English name in lower case, such as `purple`, in every language, so a value can be checked without depending on the translated label.
 - Each radio's test id has its set and position, such as `radio-button-group-2-1`, and the second set changes with the first choice, so the same test id is Purple after Red but Orange after Yellow: check the label as well.
 
 ## Not native radio buttons
