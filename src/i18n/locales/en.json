@@ -290,6 +290,112 @@
         "too-short_other": "Type at least {{count}} characters"
       }
     },
+    "broken-images-and-links": {
+      "title": "Broken Images and Links",
+      "description": "A gallery and a list of links where some work and some do not, including a 404 image, an image with an invalid URL, a lazy-loaded image, missing pages and anchor links.",
+      "information": {
+        "summary": "Some of the images and links on this page work and some do not, for checking that every image loads and every link leads somewhere. Each image and link has a <code>data-expected</code> attribute of <code>ok</code> or <code>broken</code>, so a test can compare what it finds with what it should find.",
+        "sections": [
+          {
+            "title": "Broken images",
+            "points": [
+              "A broken image is still in the page: it keeps its <code>src</code>, shows its alt text and is visible, so checking that the <code>&lt;img&gt;</code> exists or is visible passes. Check that it has finished loading and has a size instead: <code>img.complete &amp;&amp; img.naturalWidth === 0</code> means it failed.",
+              "The image with an invalid URL never makes a request at all, so it does not show up as a 404 in the network log. Only the image itself tells you it failed.",
+              "Listening for failed responses only catches requests made after the listener is added, so add it before loading the page."
+            ]
+          },
+          {
+            "title": "Lazy loading",
+            "points": [
+              "The last image has <code>loading=\"lazy\"</code> and sits below the fold, so the browser does not request it until it is scrolled near the viewport.",
+              "Until then <code>complete</code> is false and <code>naturalWidth</code> is 0, so a check that runs straight away reports it as broken (or, with Check images, as not loaded yet). Scroll it into view and wait for it to load before checking it."
+            ]
+          },
+          {
+            "title": "Checking links",
+            "points": [
+              "Clicking every link is slow and leaves the page, so request each URL with an API request instead (<code>page.request.get()</code> in Playwright, <code>cy.request()</code> in Cypress) and check the status is below 400. Read the resolved <code>href</code> property rather than the attribute, which may be relative.",
+              "A missing static file, such as the old gallery page, returns a real 404.",
+              "This playground uses hash routing, so a link to a page in the app such as <code>#/cookies-and-storage</code> only requests the home page: the server returns 200 even for a page that does not exist. Open these links and check the page shows its content instead.",
+              "External sites may block automated requests, rate limit them or be down, which makes external link checks flaky. Many suites check them on a schedule rather than on every run."
+            ]
+          },
+          {
+            "title": "Anchor links",
+            "points": [
+              "Because the # in the URL is already used for routing, the links to sections on this page are handled by script: clicking one scrolls to the section without changing the URL.",
+              "To check an anchor, look for an element whose <code>id</code> matches the part after the #. The link to the reviews section has no matching section, so clicking it does nothing."
+            ]
+          }
+        ]
+      },
+      "nav": {
+        "title": "On this page"
+      },
+      "images": {
+        "title": "Gallery",
+        "explanation": "Two of these images load. One points to a file that does not exist, and one has a URL that cannot be parsed.",
+        "mountain": {
+          "alt": "Mountains under a blue sky",
+          "caption": "Mountains"
+        },
+        "lake": {
+          "alt": "A lake surrounded by grass",
+          "caption": "Lake"
+        },
+        "missing": {
+          "alt": "A sunset over the sea",
+          "caption": "Sunset"
+        },
+        "invalid": {
+          "alt": "A photo from an invalid address",
+          "caption": "Invalid address"
+        },
+        "lazy": {
+          "alt": "A row of pine trees",
+          "caption": "Forest"
+        }
+      },
+      "check": {
+        "button": "Check images",
+        "status": {
+          "loaded": "Loaded",
+          "broken": "Broken",
+          "pending": "Not loaded yet"
+        }
+      },
+      "links": {
+        "title": "Links",
+        "explanation": "Some of these links lead to a page and some lead nowhere.",
+        "kind": {
+          "route": "page in this app",
+          "static": "static page",
+          "external": "external site",
+          "anchor": "section on this page"
+        },
+        "items": {
+          "route": "Cookies and storage scenario",
+          "unknown-route": "Retired scenario",
+          "static": "About the gallery",
+          "missing-static": "Old gallery",
+          "external": "Testing Playground on GitHub",
+          "missing-external": "Missing GitHub page",
+          "anchor-images": "Gallery",
+          "anchor-links": "Links",
+          "anchor-lazy-image": "Lazy-loaded image",
+          "anchor-reviews": "Reviews"
+        }
+      },
+      "snippets": {
+        "title": "Checking in a test",
+        "explanation": "Examples of checking every image and external link on a page."
+      },
+      "lazy": {
+        "title": "Lazy-loaded image",
+        "explanation": "This image has loading=\"lazy\", so the browser only requests it when it is scrolled near the viewport.",
+        "scroll-hint": "Scroll down: there is a lazy-loaded image below."
+      }
+    },
     "canvas-and-svg": {
       "title": "Canvas and SVG",
       "description": "A drawing pad, a bar chart and a target game drawn on canvas, and an SVG map with hover tooltips, where what is shown cannot be found with normal DOM queries.",
