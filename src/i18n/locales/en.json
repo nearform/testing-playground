@@ -1842,7 +1842,7 @@
           {
             "title": "Elements are reused",
             "points": [
-              "As you scroll, the element that showed one row is reused for another: the element that showed row 3 may show row 15 after a scroll. A stored element, such as a Selenium <code>WebElement</code> or a Cypress alias, can point at a different row afterwards without going stale, so find the row again after every scroll.",
+              "As you scroll, the element that showed one row is reused for another: the element that showed row 3 may show row 18 after a scroll. A stored element, such as a Selenium <code>WebElement</code> or a Cypress alias, can point at a different row afterwards without going stale, so find the row again after every scroll.",
               "Find rows by something that belongs to the row, such as its text, its <code>data-row-id</code> or its button's name (<em>Select row {{fixedTarget}}</em>), not by position: <code>nth()</code> or <code>eq()</code> picks the nth rendered row, not the nth row of the list.",
               "Each row's <code>Select</code> button has the same visible text, so a locator for the text alone matches whichever rows are rendered."
             ]

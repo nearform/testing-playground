@@ -1843,7 +1843,7 @@
           {
             "title": "Os elementos são reutilizados",
             "points": [
-              "Conforme você rola, o elemento que mostrava uma linha é reutilizado para outra: o elemento que mostrava a linha 3 pode mostrar a linha 15 depois de uma rolagem. Um elemento guardado, como um <code>WebElement</code> do Selenium ou um alias do Cypress, pode apontar para outra linha depois sem ficar obsoleto, então procure a linha de novo depois de cada rolagem.",
+              "Conforme você rola, o elemento que mostrava uma linha é reutilizado para outra: o elemento que mostrava a linha 3 pode mostrar a linha 18 depois de uma rolagem. Um elemento guardado, como um <code>WebElement</code> do Selenium ou um alias do Cypress, pode apontar para outra linha depois sem ficar obsoleto, então procure a linha de novo depois de cada rolagem.",
               "Procure as linhas por algo que pertença a elas, como o texto, o <code>data-row-id</code> ou o nome do botão (<em>Selecionar linha {{fixedTarget}}</em>), e não pela posição: <code>nth()</code> ou <code>eq()</code> escolhe a n-ésima linha renderizada, não a n-ésima linha da lista.",
               "O botão <code>Selecionar</code> de cada linha tem o mesmo texto visível, então um seletor só por esse texto corresponde a todas as linhas renderizadas."
             ]

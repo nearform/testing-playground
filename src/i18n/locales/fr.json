@@ -1843,7 +1843,7 @@
           {
             "title": "Les éléments sont réutilisés",
             "points": [
-              "Pendant le défilement, l'élément qui affichait une ligne est réutilisé pour une autre : l'élément qui affichait la ligne 3 peut afficher la ligne 15 après un défilement. Un élément conservé, comme un <code>WebElement</code> Selenium ou un alias Cypress, peut ensuite désigner une autre ligne sans devenir obsolète, alors cherchez à nouveau la ligne après chaque défilement.",
+              "Pendant le défilement, l'élément qui affichait une ligne est réutilisé pour une autre : l'élément qui affichait la ligne 3 peut afficher la ligne 18 après un défilement. Un élément conservé, comme un <code>WebElement</code> Selenium ou un alias Cypress, peut ensuite désigner une autre ligne sans devenir obsolète, alors cherchez à nouveau la ligne après chaque défilement.",
               "Cherchez les lignes par quelque chose qui leur appartient, comme leur texte, leur <code>data-row-id</code> ou le nom de leur bouton (<em>Sélectionner la ligne {{fixedTarget}}</em>), pas par leur position : <code>nth()</code> ou <code>eq()</code> choisit la n-ième ligne affichée, pas la n-ième ligne de la liste.",
               "Le bouton <code>Sélectionner</code> de chaque ligne a le même texte visible, donc un sélecteur basé sur ce seul texte correspond à toutes les lignes affichées."
             ]

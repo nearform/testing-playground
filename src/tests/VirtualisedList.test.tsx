@@ -175,6 +175,18 @@ describe('Virtualised list scenario', () => {
       expect(firstRow).toHaveTextContent('Row 16')
     })
 
+    it('reuses the element of row 3 for row 18, as the information says', () => {
+      renderPage()
+      const thirdRow = screen.getByTestId('fixed-row-3')
+
+      scrollViewport('fixed', { top: 7 * ROW_HEIGHT })
+
+      expect(thirdRow).toHaveAttribute('data-row-id', '18')
+      expect(
+        en.scenarios['virtualised-list'].information.sections[1].points[0],
+      ).toContain('row 3 may show row 18')
+    })
+
     it('keeps the selection with the row rather than with its element', () => {
       renderPage()
       fireEvent.click(selectButton('fixed', 1))

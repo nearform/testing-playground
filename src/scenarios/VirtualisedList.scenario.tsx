@@ -28,7 +28,9 @@ export const OVERSCAN = 3
 export const ROW_HEIGHT = 48
 export const FIXED_TARGET_ROW = 7342
 
-// A variable-height row has a heading line and one to four lines of notes
+// A variable-height row has a heading line and one to four lines of notes.
+// The heading part is its padding (8px above, 7px below), the 28px heading
+// line and the 1px divider: see variableRowClasses.
 export const VARIABLE_HEADER_HEIGHT = 44
 export const NOTE_LINE_HEIGHT = 20
 export const MAX_NOTE_LINES = 4
@@ -110,12 +112,20 @@ const locales: Record<string, string> = {
 
 const useFormatNumber = (): ((value: number) => string) => {
   const { i18n } = useTranslation()
-  const formatter = new Intl.NumberFormat(locales[i18n.language] ?? 'en-GB')
-  return (value) => formatter.format(value)
+  const locale = locales[i18n.language] ?? 'en-GB'
+  return useMemo(() => {
+    const formatter = new Intl.NumberFormat(locale)
+    return (value: number) => formatter.format(value)
+  }, [locale])
 }
 
 const range = (start: number, end: number): number[] =>
   Array.from({ length: Math.max(0, end - start) }, (_, index) => start + index)
+
+// Fixed rows centre their content, which is shorter than ROW_HEIGHT less the
+// 1px divider. Variable rows add up to exactly VARIABLE_HEADER_HEIGHT plus
+// their notes, so nothing spills over into the next row.
+const variableRowClasses = 'items-start pb-[7px] pt-2'
 
 const sectionClasses = 'flex flex-col gap-4'
 // Scroll anchoring would move the scroll position when recycled rows move,
@@ -241,9 +251,11 @@ const VirtualList = ({
                 data-testid={`${name}-row-${id}`}
                 data-row-id={id}
                 data-selected={selected}
-                className={`absolute left-0 right-0 flex items-start justify-between gap-4 border-b border-border px-4 py-2 dark:border-border-dark ${
-                  selected ? 'bg-brandGreen-100 text-black' : ''
-                }`}
+                className={`absolute left-0 right-0 flex justify-between gap-4 border-b border-border px-4 dark:border-border-dark ${
+                  renderDetails === undefined
+                    ? 'items-center'
+                    : variableRowClasses
+                } ${selected ? 'bg-brandGreen-100 text-black' : ''}`}
                 style={{
                   height: rowHeight(index),
                   transform: `translateY(${rowTop(index)}px)`,
@@ -381,7 +393,8 @@ const VariableSection = (): JSX.Element => {
         selectedId={selectedId}
         onSelect={select}
         renderDetails={(id) => (
-          <div className='text-sm text-foreground-muted dark:text-foreground-muted-dark'>
+          // Inherits the row's colour, so it stays readable when selected
+          <div className='text-sm opacity-80'>
             {range(1, noteLines(id) + 1).map((line) => (
               <p
                 key={line}
