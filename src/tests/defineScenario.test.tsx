@@ -72,4 +72,13 @@ describe('scenario sources', () => {
       expect(source).not.toMatch(/['"`]scenarios\.[a-z]/)
     },
   )
+
+  // Texts in the locale files are not enough on their own: without this prop
+  // the page shows no information at all
+  it.each(Object.entries(sources))(
+    '%s passes its information to the page',
+    (_, source) => {
+      expect(source).toMatch(/information=\{translateInformation\(\s*t,/)
+    },
+  )
 })

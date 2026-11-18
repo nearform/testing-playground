@@ -89,8 +89,19 @@ const textsOf = (information: Information): string[] =>
 
 describe('scenario information', () => {
   const english = informationOf(en)
-  const written = Object.entries(english).filter(
-    (entry): entry is [string, Information] => entry[1] !== undefined,
+  // Every scenario's information in every language, as [language/scenario,
+  // information], so a mistake in a translation is caught as well
+  const written = [
+    { language: 'en', locale: en },
+    { language: 'fr', locale: fr },
+    { language: 'pt-br', locale: ptBr },
+  ].flatMap(({ language, locale }) =>
+    Object.entries(informationOf(locale))
+      .filter((entry): entry is [string, Information] => entry[1] !== undefined)
+      .map(([name, information]): [string, Information] => [
+        `${language}/${name}`,
+        information,
+      ]),
   )
 
   // A scenario's page is all a visitor has to go on, so each one explains
