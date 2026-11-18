@@ -6,7 +6,10 @@ on:
       - main
 
 jobs:
+  # PR Tests already runs on every pull request, so this copy only runs for
+  # Dependabot's, where auto-merge below has to wait for it to pass
   pr:
+    if: ${{ github.actor == 'dependabot[bot]' }}
     uses: ./.github/workflows/pr.yml
   dependabot:
     runs-on: ubuntu-latest
@@ -23,13 +26,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Major version bumps can break things the tests don't cover, so they
+      # are left open for a person to review and merge
       - name: Approve the PR
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}

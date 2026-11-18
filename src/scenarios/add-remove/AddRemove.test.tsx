@@ -164,4 +164,27 @@ describe('AddRemove component', () => {
     // Check if state is updated
     expect(removeElementButton).not.toBeInTheDocument()
   })
+
+  it('leaves other scenarios\' session data alone on "Clear Storage"', () => {
+    sessionStorage.setItem('multi-step-form', '{"step":2}')
+    TestRenderer(<AddRemove />)
+
+    fireEvent.click(screen.getByTestId('clear-storage'))
+
+    expect(sessionStorage.getItem('multi-step-form')).toBe('{"step":2}')
+  })
+
+  it.each([
+    { stored: 'null' },
+    { stored: '"abc"' },
+    { stored: 'not json' },
+    { stored: '[1, "two"]' },
+  ])('starts with no buttons when the saved list is $stored', ({ stored }) => {
+    sessionStorage.setItem('elements', stored)
+
+    TestRenderer(<AddRemove />)
+
+    expect(screen.getByTestId('add-element')).toBeInTheDocument()
+    expect(screen.queryByTestId('remove-element-1')).toBeNull()
+  })
 })

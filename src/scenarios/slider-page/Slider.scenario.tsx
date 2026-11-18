@@ -59,11 +59,18 @@ const RangeSlider: React.FC = () => {
 const SliderWithInput: React.FC = () => {
   const { t } = useTranslation()
   const [inputValue, setInputValue] = useState<number>(MIN)
+  // Whether the number input has been emptied while typing. An empty input
+  // stays empty (rather than snapping to MIN) so a new value can be typed in
+  // its place; leaving it empty puts the slider's value back.
+  const [isInputEmpty, setIsInputEmpty] = useState(false)
 
   const handleInputChange: React.FormEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    const newValue = Number(event.currentTarget.value)
+    const { value } = event.currentTarget
+    setIsInputEmpty(value === '')
+    if (value === '') return
+    const newValue = Number(value)
     setInputValue((prevValue) => {
       const clampedValue = Math.min(MAX, Math.max(MIN, newValue))
       return isNaN(clampedValue) ? prevValue : clampedValue
@@ -76,6 +83,7 @@ const SliderWithInput: React.FC = () => {
         label={t(`scenarios.${SLUG}.slider-with-input`)}
         value={[inputValue]}
         onValueChange={([value]) => {
+          setIsInputEmpty(false)
           setInputValue(value)
         }}
         min={MIN}
@@ -88,8 +96,11 @@ const SliderWithInput: React.FC = () => {
           variant='primary'
           size='sm'
           type='number'
-          value={inputValue}
+          value={isInputEmpty ? '' : inputValue}
           onChange={handleInputChange}
+          onBlur={() => {
+            setIsInputEmpty(false)
+          }}
           min={MIN}
           max={MAX}
           data-testid='input-slider-text'

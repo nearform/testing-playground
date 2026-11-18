@@ -68,4 +68,29 @@ describe('Slider component', () => {
 
     expect(input).toHaveValue(100)
   })
+
+  it('lets the number input be cleared and a new value typed in', async () => {
+    const user = userEvent.setup()
+    TestRenderer(<Slider />)
+    const [thumb] = thumbsOf('input-slider')
+    const input = screen.getByTestId('input-slider-text')
+
+    await user.clear(input)
+    await user.type(input, '50')
+
+    expect(input).toHaveValue(50)
+    expect(thumb).toHaveAttribute('aria-valuenow', '50')
+  })
+
+  it("puts the slider's value back when the number input is left empty", async () => {
+    const user = userEvent.setup()
+    TestRenderer(<Slider />)
+    const input = screen.getByTestId('input-slider-text')
+    fireEvent.change(input, { target: { value: '40' } })
+
+    await user.clear(input)
+    await user.tab()
+
+    expect(input).toHaveValue(40)
+  })
 })
