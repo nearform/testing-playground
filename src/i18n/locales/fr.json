@@ -2190,6 +2190,130 @@
         "size": "{{name}} fait {{size}}, au-delà de la limite de {{max}}.",
         "duplicate": "{{name}} a déjà été ajouté."
       }
+    },
+    "tabs-and-accordions": {
+      "title": "Onglets et accordéons",
+      "description": "Passez d'un onglet à l'autre et dépliez ou repliez les sections d'accordéons, dont certaines gardent leur contenu masqué dans la page et d'autres le suppriment.",
+      "information": {
+        "summary": "Les onglets et les accordéons masquent du contenu sans le supprimer, ou le suppriment sans prévenir : un test doit donc savoir s'il vérifie qu'un élément <em>existe</em> ou qu'il est <em>visible</em>, et le moyen le plus fiable de savoir ce qui est ouvert est l'état ARIA (<code>aria-selected</code>, <code>aria-expanded</code>) plutôt que le style.",
+        "sections": [
+          {
+            "title": "Visible ou présent",
+            "points": [
+              "Les onglets produit gardent tous les panneaux dans le DOM et masquent les autres avec l'attribut <code>hidden</code> : le texte d'un panneau masqué reste trouvable, vérifiez donc la visibilité (<code>toBeVisible</code>) et pas seulement la présence.",
+              "Les onglets du rapport n'affichent que le panneau sélectionné : les autres n'existent pas du tout, et ce qui a été saisi dans un panneau est perdu quand on change d'onglet puis qu'on revient. Dans les onglets produit, les notes saisies sont conservées.",
+              "Les sections repliées des accordéons restent dans le DOM, masquées, comme pour les onglets produit."
+            ]
+          },
+          {
+            "title": "État ARIA et rôles",
+            "points": [
+              "Repérez les onglets et les panneaux par leur rôle (<code>tab</code>, <code>tabpanel</code>) et leur nom, et vérifiez l'onglet sélectionné avec <code>aria-selected=\"true\"</code>. Chaque panneau est étiqueté par son onglet via <code>aria-labelledby</code>.",
+              "Les en-têtes d'accordéon sont des boutons placés dans des titres, avec <code>aria-expanded</code> et <code>aria-controls</code> qui pointe vers une <code>region</code> étiquetée par son en-tête.",
+              "L'onglet <em>Archives</em> est désactivé avec <code>aria-disabled</code> plutôt qu'avec l'attribut natif <code>disabled</code> : il peut toujours recevoir un clic et le focus, mais ne fait rien. Certains outils considèrent <code>aria-disabled</code> comme désactivé et refusent de cliquer, d'autres cliquent sans problème."
+            ]
+          },
+          {
+            "title": "Clavier",
+            "points": [
+              "Seul l'onglet sélectionné est dans l'ordre de tabulation (<code>tabindex</code> itinérant). La touche <kbd>Tab</kbd> passe de la liste d'onglets au panneau, et non à l'onglet suivant.",
+              "<kbd>ArrowLeft</kbd> et <kbd>ArrowRight</kbd> passent d'un onglet à l'autre en bouclant, <kbd>Home</kbd> et <kbd>End</kbd> vont au premier et au dernier, et l'onglet désactivé est ignoré. Déplacer le focus sélectionne aussi l'onglet."
+            ]
+          },
+          {
+            "title": "Délais et URL",
+            "points": [
+              "L'onglet <em>Avis</em> met environ 1,5 seconde à se charger la première fois qu'il est sélectionné, et affiche d'ici là un message de chargement avec <code>aria-busy</code>. Attendez les avis eux-mêmes plutôt qu'un délai fixe.",
+              "Les onglets sélectionnés sont conservés dans l'URL (<code>?product=reviews&amp;report=monthly</code>), ce qui permet à un test d'ouvrir directement un onglet. Un onglet inconnu ou désactivé revient au premier.",
+              "Les éléments natifs <code>&lt;details&gt;</code> n'ont pas d'<code>aria-expanded</code> : vérifiez plutôt l'attribut <code>open</code>. Leur contenu est masqué par le navigateur, pas par la page."
+            ]
+          }
+        ]
+      },
+      "notes-label": "Notes (changez d'onglet puis revenez pour voir si elles sont conservées)",
+      "product": {
+        "title": "Onglets qui gardent les panneaux masqués",
+        "explanation": "Tous les panneaux sont dans la page, mais seul celui sélectionné est visible. L'onglet Avis se charge après un court délai et l'onglet Archives est désactivé.",
+        "label": "Détails du produit",
+        "tabs": {
+          "overview": "Présentation",
+          "specifications": "Caractéristiques",
+          "reviews": "Avis",
+          "archive": "Archives"
+        },
+        "panels": {
+          "overview": "Le sac à dos Trailblazer a une contenance de 28 litres et une pochette rembourrée pour ordinateur portable.",
+          "specifications": "Poids : 1,2 kg. Dimensions : 50 × 30 × 20 cm. Matière : nylon recyclé.",
+          "archive": "Les anciens modèles ne sont plus disponibles."
+        },
+        "reviews-loading": "Chargement des avis…",
+        "reviews": {
+          "1": "« Confortable même plein. » 5 étoiles",
+          "2": "« La pochette accueille un ordinateur de 16 pouces. » 4 étoiles",
+          "3": "« J'aurais aimé plus de poches. » 3 étoiles"
+        }
+      },
+      "report": {
+        "title": "Onglets qui n'affichent que le panneau sélectionné",
+        "explanation": "Seul le panneau sélectionné est dans la page. Les autres sont supprimés, avec tout ce qui y a été saisi.",
+        "label": "Période du rapport",
+        "tabs": {
+          "daily": "Jour",
+          "weekly": "Semaine",
+          "monthly": "Mois"
+        },
+        "panels": {
+          "daily": "Aujourd'hui : 42 commandes, 3 retours.",
+          "weekly": "Cette semaine : 287 commandes, 19 retours.",
+          "monthly": "Ce mois-ci : 1 204 commandes, 71 retours."
+        }
+      },
+      "faq": {
+        "title": "Accordéon avec une seule section ouverte",
+        "explanation": "Ouvrir une section ferme celle qui était ouverte. Cliquer sur la section ouverte la ferme.",
+        "items": {
+          "shipping": {
+            "title": "Quel est le délai de livraison ?",
+            "body": "Les commandes arrivent sous 3 à 5 jours ouvrés."
+          },
+          "returns": {
+            "title": "Puis-je retourner un article ?",
+            "body": "Oui, dans les 30 jours suivant la livraison, s'il n'a pas été utilisé."
+          },
+          "warranty": {
+            "title": "Y a-t-il une garantie ?",
+            "body": "Chaque produit est garanti deux ans contre les défauts."
+          }
+        }
+      },
+      "settings": {
+        "title": "Accordéon avec plusieurs sections ouvertes",
+        "explanation": "Plusieurs sections peuvent être ouvertes en même temps.",
+        "expand-all": "Tout déplier",
+        "collapse-all": "Tout replier",
+        "items": {
+          "profile": {
+            "title": "Profil",
+            "body": "Votre nom et votre photo sont visibles par les autres utilisateurs."
+          },
+          "notifications": {
+            "title": "Notifications",
+            "body": "Les notifications par e-mail sont envoyées une fois par jour."
+          },
+          "privacy": {
+            "title": "Confidentialité",
+            "body": "Votre profil n'est visible que par les personnes que vous suivez."
+          }
+        }
+      },
+      "details": {
+        "title": "Divulgation native",
+        "explanation": "Les éléments <details> et <summary> du navigateur, pour comparaison. L'un est fermé au départ, l'autre ouvert.",
+        "closed-summary": "Qu'est-ce qu'une divulgation ?",
+        "closed-body": "Un contrôle qui affiche et masque une partie du contenu.",
+        "open-summary": "Pourquoi comparer avec l'élément natif ?",
+        "open-body": "Il ne demande ni script ni ARIA, mais son état est l'attribut open et non aria-expanded."
+      }
     }
   }
 }
