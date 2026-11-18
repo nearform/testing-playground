@@ -235,6 +235,77 @@
       "favorite": "Favorite",
       "bookmark": "Bookmark"
     },
+    "cookies-and-storage": {
+      "title": "Cookies and Storage",
+      "description": "Answer a cookie consent banner, save cookie preferences, keep a note for this tab only, and watch the cookies and storage change.",
+      "information": "Almost every real site shows a cookie consent banner on the first visit, and it covers the page until it is answered, so it is the first thing that gets in the way of an end-to-end test. Here the banner only appears a second after the page loads, the way banners added by a third-party script do, so checking that it is not there straight after the page loads passes too early. The choice is remembered in the <code>cookie_consent</code> cookie (<code>accepted</code>, <code>rejected</code> or <code>custom</code>), and the analytics and marketing choices are kept in <code>localStorage</code> under <code>cookie_preferences</code>, so both survive a reload. The session note is kept in <code>sessionStorage</code>, which belongs to a single tab: it survives a reload but is gone in a new tab or a new browser context. Tests that share a browser context leak this state into each other, so start each test with a clean context, or use Clear everything. Clicking through the banner in every test is slow and brittle; instead, seed the state before the page loads, with <code>context.addCookies</code>, <code>page.addInitScript</code> or a saved <code>storageState</code> in Playwright, or <code>cy.setCookie</code> and <code>onBeforeLoad</code> in Cypress, as shown at the bottom of the page. The live view only reads storage when this page changes it, so after changing storage from a test, press Refresh or reload the page. Clear everything only removes what this scenario stores; the playground's own language and theme settings are kept.",
+      "banner": {
+        "title": "We use cookies",
+        "text": "We use necessary cookies to make this site work. With your permission we would also like to set analytics and marketing cookies. You can change your choice at any time."
+      },
+      "preferences": {
+        "title": "Cookie preferences",
+        "text": "Choose which optional cookies to allow. Necessary cookies are always on."
+      },
+      "categories": {
+        "necessary": {
+          "label": "Necessary",
+          "description": "Needed for the site to work, so they cannot be turned off."
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Help us understand how the site is used."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Used to show you relevant adverts on other sites."
+        }
+      },
+      "button": {
+        "accept-all": "Accept all",
+        "reject-all": "Reject all",
+        "manage": "Manage preferences",
+        "save-preferences": "Save preferences",
+        "cancel": "Cancel",
+        "cookie-settings": "Cookie settings",
+        "reload": "Reload page",
+        "refresh": "Refresh",
+        "clear": "Clear everything"
+      },
+      "consent": {
+        "title": "Cookie consent",
+        "status-title": "Your choice",
+        "status": {
+          "none": "You have not made a choice yet",
+          "accepted": "You accepted all cookies",
+          "rejected": "You rejected all optional cookies",
+          "custom": "You chose which cookies to allow"
+        },
+        "allowed": "Allowed",
+        "blocked": "Blocked"
+      },
+      "session": {
+        "title": "Session only",
+        "explanation": "This note is saved in sessionStorage, so it is kept when the page is reloaded but not in a new tab.",
+        "label": "Session note",
+        "save": "Save note",
+        "empty": "Nothing saved in this tab",
+        "saved": "Saved in this tab: {{note}}",
+        "new-tab": "Open this page in a new tab"
+      },
+      "live": {
+        "title": "Current cookies and storage",
+        "explanation": "What this scenario has stored right now. Changes made from outside the page show up after pressing Refresh.",
+        "cookies": "Cookies",
+        "local": "localStorage",
+        "session": "sessionStorage",
+        "empty": "Nothing stored"
+      },
+      "seeding": {
+        "title": "Skip the banner in your tests",
+        "explanation": "Set the consent cookie (and any preferences) before the page loads, and the banner never appears. Both examples point at this page."
+      }
+    },
     "date-picker": {
       "title": "Date Picker",
       "description": "A custom calendar date picker: single dates, disabled days, a date range and a field you can type into or pick from.",

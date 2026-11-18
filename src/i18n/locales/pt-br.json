@@ -236,6 +236,77 @@
       "favorite": "Favorito",
       "bookmark": "Marcador"
     },
+    "cookies-and-storage": {
+      "title": "Cookies e armazenamento",
+      "description": "Responda a um banner de consentimento de cookies, salve preferências de cookies, guarde uma nota só para esta aba e veja os cookies e o armazenamento mudarem.",
+      "information": "Quase todo site real mostra um banner de consentimento de cookies na primeira visita, e ele cobre a página até ser respondido, por isso é a primeira coisa que atrapalha um teste de ponta a ponta. Aqui o banner só aparece um segundo depois de a página carregar, como acontece com banners adicionados por um script de terceiros, então verificar que ele não está lá logo após o carregamento passa cedo demais. A escolha fica guardada no cookie <code>cookie_consent</code> (<code>accepted</code>, <code>rejected</code> ou <code>custom</code>), e as escolhas de análise e marketing ficam no <code>localStorage</code> em <code>cookie_preferences</code>, então ambas sobrevivem a um recarregamento. A nota de sessão fica no <code>sessionStorage</code>, que pertence a uma única aba: ela sobrevive a um recarregamento, mas some em uma nova aba ou em um novo contexto do navegador. Testes que compartilham um contexto do navegador vazam esse estado entre si, então comece cada teste com um contexto limpo ou use Limpar tudo. Clicar no banner em todo teste é lento e frágil; em vez disso, prepare o estado antes de a página carregar, com <code>context.addCookies</code>, <code>page.addInitScript</code> ou um <code>storageState</code> salvo no Playwright, ou com <code>cy.setCookie</code> e <code>onBeforeLoad</code> no Cypress, como mostrado no fim da página. A visualização ao vivo só lê o armazenamento quando esta página o altera, então, depois de alterar o armazenamento a partir de um teste, clique em Atualizar ou recarregue a página. Limpar tudo remove apenas o que este cenário armazena; as configurações de idioma e tema do próprio site são mantidas.",
+      "banner": {
+        "title": "Usamos cookies",
+        "text": "Usamos cookies necessários para que este site funcione. Com a sua permissão, também gostaríamos de definir cookies de análise e de marketing. Você pode mudar sua escolha a qualquer momento."
+      },
+      "preferences": {
+        "title": "Preferências de cookies",
+        "text": "Escolha quais cookies opcionais permitir. Os cookies necessários estão sempre ativos."
+      },
+      "categories": {
+        "necessary": {
+          "label": "Necessários",
+          "description": "Precisos para o site funcionar, por isso não podem ser desativados."
+        },
+        "analytics": {
+          "label": "Análise",
+          "description": "Ajudam a entender como o site é usado."
+        },
+        "marketing": {
+          "label": "Marketing",
+          "description": "Usados para mostrar anúncios relevantes em outros sites."
+        }
+      },
+      "button": {
+        "accept-all": "Aceitar todos",
+        "reject-all": "Rejeitar todos",
+        "manage": "Gerenciar preferências",
+        "save-preferences": "Salvar preferências",
+        "cancel": "Cancelar",
+        "cookie-settings": "Configurações de cookies",
+        "reload": "Recarregar página",
+        "refresh": "Atualizar",
+        "clear": "Limpar tudo"
+      },
+      "consent": {
+        "title": "Consentimento de cookies",
+        "status-title": "Sua escolha",
+        "status": {
+          "none": "Você ainda não fez uma escolha",
+          "accepted": "Você aceitou todos os cookies",
+          "rejected": "Você rejeitou todos os cookies opcionais",
+          "custom": "Você escolheu quais cookies permitir"
+        },
+        "allowed": "Permitidos",
+        "blocked": "Bloqueados"
+      },
+      "session": {
+        "title": "Somente nesta sessão",
+        "explanation": "Esta nota é salva no sessionStorage, então é mantida quando a página é recarregada, mas não em uma nova aba.",
+        "label": "Nota da sessão",
+        "save": "Salvar nota",
+        "empty": "Nada salvo nesta aba",
+        "saved": "Salvo nesta aba: {{note}}",
+        "new-tab": "Abrir esta página em uma nova aba"
+      },
+      "live": {
+        "title": "Cookies e armazenamento atuais",
+        "explanation": "O que este cenário armazenou neste momento. Alterações feitas fora da página aparecem depois de clicar em Atualizar.",
+        "cookies": "Cookies",
+        "local": "localStorage",
+        "session": "sessionStorage",
+        "empty": "Nada armazenado"
+      },
+      "seeding": {
+        "title": "Pular o banner nos seus testes",
+        "explanation": "Defina o cookie de consentimento (e as preferências, se houver) antes de a página carregar, e o banner nunca aparece. Os dois exemplos apontam para esta página."
+      }
+    },
     "date-picker": {
       "title": "Seletor de data",
       "description": "Um seletor de data com calendário personalizado: datas simples, dias desativados, um período e um campo em que se pode digitar ou escolher a data.",
