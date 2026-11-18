@@ -1,3 +1,5 @@
+# Husky runs hooks with sh, so keep this POSIX (no [[ ]] or other bashisms)
+
 # ANSI color codes
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -6,14 +8,16 @@ staged_files=$(git diff --cached --name-only --diff-filter=ACMRTUXB)
 # Check each staged file
 for file in $staged_files; do
     # Check if it's a scenario .tsx file in its folder in src/scenarios
-    if [[ $file == "src/scenarios/"*"/"*".scenario.tsx" ]]; then
-        # Its tests sit beside it, in the same folder
-        test_file="${file%.scenario.tsx}.test.tsx"
-        # Check if the test file exists
-        if [ ! -e "$test_file" ]; then
-            echo "${RED}Error: Corresponding test file not found for $file${NC}"
-            exit 1
-        fi
-    fi
+    case "$file" in
+        src/scenarios/*/*.scenario.tsx)
+            # Its tests sit beside it, in the same folder
+            test_file="${file%.scenario.tsx}.test.tsx"
+            # Check if the test file exists
+            if [ ! -e "$test_file" ]; then
+                printf "${RED}Error: Corresponding test file not found for %s${NC}\n" "$file"
+                exit 1
+            fi
+            ;;
+    esac
 done
 npx lint-staged
