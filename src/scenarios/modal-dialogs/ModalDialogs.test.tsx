@@ -4,6 +4,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import ModalDialogs, { ENTRY_STORAGE_KEY } from './ModalDialogs.scenario'
 
 // The welcome modal opens on load unless it was dismissed before; most tests
@@ -349,5 +350,24 @@ describe('ModalDialogs scenario', () => {
     expect(document.querySelectorAll('[data-modal-root]')).toHaveLength(0)
     expect(document.querySelectorAll('[inert]')).toHaveLength(0)
     expect(document.body.style.overflow).toBe('')
+  })
+})
+
+describe('ModalDialogs when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the deletion result, and the invoice in it, in the new language', async () => {
+    localStorage.setItem(ENTRY_STORAGE_KEY, 'true')
+    TestRenderer(<ModalDialogs />)
+    fireEvent.click(screen.getByTestId('delete-1002'))
+    fireEvent.click(screen.getByTestId('confirm-delete'))
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('confirm-result')).toHaveTextContent(
+      'Facture n° 1002 a été supprimée',
+    )
   })
 })

@@ -5,6 +5,7 @@ import '@testing-library/jest-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import ShadowDom from './ShadowDom.scenario'
 
 // Testing Library queries stop at shadow root boundaries, so scope them to the root
@@ -117,6 +118,27 @@ describe('ShadowDom scenario', () => {
 
     expect(screen.getByTestId('closed-shadow-status')).toHaveTextContent(
       'Hidden button clicked 1 time',
+    )
+  })
+})
+
+describe('ShadowDom when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the greeting in the new language', async () => {
+    const user = renderScenario()
+    const shadow = inShadowOf(screen.getByTestId('open-shadow-host'))
+    fireEvent.change(shadow.getByLabelText('Your name'), {
+      target: { value: 'Ada' },
+    })
+    await user.click(shadow.getByTestId('shadow-greet-button'))
+
+    await switchLanguage('fr')
+
+    expect(shadow.getByTestId('shadow-greeting')).toHaveTextContent(
+      'Bonjour, Ada !',
     )
   })
 })

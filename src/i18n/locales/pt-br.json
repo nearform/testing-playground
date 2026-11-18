@@ -16,7 +16,7 @@
     "source-link": "sugira ou adicione um cenário no GitHub"
   },
   "common": {
-    "copyright": "Direitos autorais © ",
+    "copyright": "Direitos autorais © {{year}} {{company}} Ltd. Todos os direitos reservados.",
     "learn-more": "Saiba mais",
     "search": "Pesquisar...",
     "difficulty": "Dificuldade",

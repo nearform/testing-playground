@@ -16,6 +16,7 @@
     "source-link": "suggest or add a scenario on GitHub"
   },
   "common": {
+    "copyright": "© Copyright {{year}} {{company}} Ltd. All Rights Reserved.",
     "learn-more": "Learn More",
     "search": "Search...",
     "difficulty": "Difficulty",

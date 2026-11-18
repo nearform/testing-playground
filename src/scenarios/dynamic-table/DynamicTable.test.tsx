@@ -1,9 +1,10 @@
 import { screen } from '@testing-library/react'
 import React from 'react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import DynamicTable from './DynamicTable.scenario'
 
 describe('DynamicTable component', () => {
@@ -43,5 +44,29 @@ describe('DynamicTable component', () => {
     TestRenderer(<DynamicTable />)
 
     expect(screen.getByTestId('target-scenario')).toBeInTheDocument()
+  })
+})
+
+describe('DynamicTable when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('names the processes, and the target, in the new language', async () => {
+    // Makes System the target process
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+    TestRenderer(<DynamicTable />)
+
+    await switchLanguage('fr')
+
+    expect(screen.getByRole('cell', { name: 'Système' })).toBeInTheDocument()
+    expect(screen.queryByRole('cell', { name: 'System' })).toBeNull()
+    expect(screen.getByTestId('target-scenario')).toHaveTextContent(
+      /^Système UC: /,
+    )
   })
 })

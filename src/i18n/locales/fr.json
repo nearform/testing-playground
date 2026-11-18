@@ -16,7 +16,7 @@
     "source-link": "proposez ou ajoutez un scénario sur GitHub"
   },
   "common": {
-    "copyright": "Droits d'auteur © ",
+    "copyright": "Droits d'auteur © {{year}} {{company}} Ltd. Tous droits réservés.",
     "learn-more": "En savoir plus",
     "search": "Rechercher...",
     "difficulty": "Difficulté",

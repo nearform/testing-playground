@@ -10,27 +10,21 @@ import { translateInformation } from '../../utils/information'
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'radio-button'
 
+// The values are the colours' ids, not their names, so a choice stays picked
+// when the language changes; only the labels are translated
+const PRIMARY_COLOURS = ['first', 'second', 'third', 'fourth'] as const
+const secondRadioOptions: Record<string, string[]> = {
+  first: ['first', 'second'],
+  second: ['first', 'third'],
+  third: ['second', 'third'],
+}
+
 const RadioButton = (): JSX.Element => {
   const { t } = useTranslation()
   const [firstRadioValue, setFirstRadioValue] = useState('')
 
   const handleFirstRadioChange = (value: string): void => {
     setFirstRadioValue(value)
-  }
-
-  const secondRadioOptions = {
-    [t(`scenarios.${SLUG}.first.first`)]: [
-      t(`scenarios.${SLUG}.second.first`),
-      t(`scenarios.${SLUG}.second.second`),
-    ],
-    [t(`scenarios.${SLUG}.first.second`)]: [
-      t(`scenarios.${SLUG}.second.first`),
-      t(`scenarios.${SLUG}.second.third`),
-    ],
-    [t(`scenarios.${SLUG}.first.third`)]: [
-      t(`scenarios.${SLUG}.second.second`),
-      t(`scenarios.${SLUG}.second.third`),
-    ],
   }
 
   const renderSecondRadioButtons = (): React.ReactNode => {
@@ -44,11 +38,11 @@ const RadioButton = (): JSX.Element => {
           defaultValue=''
           data-testid='radio-button-group-2'
         >
-          {secondRadioOptions[firstRadioValue].map((label, index) => (
+          {secondRadioOptions[firstRadioValue].map((value, index) => (
             <Radio
-              key={index}
-              value={label.toLowerCase()}
-              label={label}
+              key={value}
+              value={value}
+              label={t(`scenarios.${SLUG}.second.${value}`)}
               data-testid={`radio-button-group-2-${index + 1}`}
             />
           ))}
@@ -72,10 +66,10 @@ const RadioButton = (): JSX.Element => {
             onValueChange={handleFirstRadioChange}
             data-testid='radio-button-group-1'
           >
-            {['first', 'second', 'third', 'fourth'].map((value, index) => (
+            {PRIMARY_COLOURS.map((value, index) => (
               <Radio
                 key={value}
-                value={t(`scenarios.${SLUG}.first.${value}`)}
+                value={value}
                 label={t(`scenarios.${SLUG}.first.${value}`)}
                 data-testid={`radio-button-group-1-${index + 1}`}
                 // Disable the last radio button

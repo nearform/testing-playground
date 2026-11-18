@@ -7,6 +7,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'file-upload'
@@ -15,20 +16,18 @@ const FileUpload = (): JSX.Element => {
   const { t } = useTranslation()
   const [file, setFile] = useState<File | null>(null)
   const [uploading, setUploading] = useState(false)
+  // The message's key, not its text, so it follows a language switch
   const [uploadMessage, setUploadMessage] = useState<{
-    text: string
+    text: Message
     severity: AlertSeverity
-  }>({
-    text: '',
-    severity: 'info',
-  })
+  } | null>(null)
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     if (event.target.files != null && event.target.files.length > 0) {
       setFile(event.target.files[0])
-      setUploadMessage({ text: '', severity: 'info' })
+      setUploadMessage(null)
     }
   }
 
@@ -39,7 +38,7 @@ const FileUpload = (): JSX.Element => {
       () => {
         setUploading(false)
         setUploadMessage({
-          text: t(`scenarios.${SLUG}.upload-success`, { filename }),
+          text: message(`scenarios.${SLUG}.upload-success`, { filename }),
           severity: 'success',
         })
       },
@@ -53,7 +52,7 @@ const FileUpload = (): JSX.Element => {
       simulateFileUpload(file.name)
     } else {
       setUploadMessage({
-        text: t(`scenarios.${SLUG}.please-select-file`),
+        text: message(`scenarios.${SLUG}.please-select-file`),
         severity: 'error',
       })
     }
@@ -108,12 +107,12 @@ const FileUpload = (): JSX.Element => {
               data-testid='upload-progress'
             />
           )}
-          {uploadMessage.text.length > 0 && (
+          {uploadMessage !== null && (
             <Alert
               severity={uploadMessage.severity}
               data-testid='upload-message'
             >
-              {uploadMessage.text}
+              {translateMessage(t, uploadMessage.text)}
             </Alert>
           )}
         </div>

@@ -11,8 +11,9 @@ const SLUG = 'drag-and-drop'
 
 const DragAndDrop = (): JSX.Element => {
   const { t } = useTranslation()
+  // Only the count is kept: each dropped box is labelled as it is drawn, so
+  // the labels follow a language switch
   const [dropCount, setDropCount] = useState(0)
-  const [grid, setGrid] = useState<string[]>([])
 
   const handleDragStart = (e: React.DragEvent): void => {
     e.dataTransfer.setData('text/plain', 'smallBox')
@@ -26,10 +27,6 @@ const DragAndDrop = (): JSX.Element => {
     e.preventDefault()
     if (e.dataTransfer.getData('text/plain') === 'smallBox') {
       setDropCount((prevCount) => prevCount + 1)
-      setGrid((prevGrid) => [
-        ...prevGrid,
-        `${t(`scenarios.${SLUG}.box`)} ${prevGrid.length + 1}`,
-      ])
     }
   }
 
@@ -60,24 +57,26 @@ const DragAndDrop = (): JSX.Element => {
             {/* Render "Drop Here" if the grid is empty */}
             <div
               className={
-                grid.length === 0
+                dropCount === 0
                   ? 'h-full w-full cursor-pointer rounded border border-dashed border-grey-800 bg-grey-200 text-center dark:border-grey-300 dark:bg-grey-700 leading-[200px] shadow'
                   : 'w-full'
               }
               data-testid='drop-target'
             >
-              {grid.length === 0 && t(`scenarios.${SLUG}.drop-here`)}
+              {dropCount === 0 && t(`scenarios.${SLUG}.drop-here`)}
             </div>
 
             {/* Render placeholder boxes in the grid */}
-            {grid.map((boxId) => (
-              <div
-                key={boxId}
-                className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-grey-900 text-center text-sm shadow'
-              >
-                {boxId}
-              </div>
-            ))}
+            {Array.from({ length: dropCount }, (_, index) => index + 1).map(
+              (number) => (
+                <div
+                  key={number}
+                  className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-grey-900 text-center text-sm shadow'
+                >
+                  {t(`scenarios.${SLUG}.box`)} {number}
+                </div>
+              ),
+            )}
           </div>
         </div>
 

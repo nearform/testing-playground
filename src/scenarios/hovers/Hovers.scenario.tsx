@@ -40,13 +40,19 @@ const menu: MenuItem = {
   ],
 }
 
+// What was last done, kept as data rather than text so the result is
+// translated as it is drawn and follows a language switch
+type Action =
+  | { result: 'viewed' | 'opened' | 'deleted'; name: string }
+  | { result: 'chose'; path: string[] }
+
 const Hovers = (): JSX.Element => {
   const { t } = useTranslation()
   const [hoveredProfile, setHoveredProfile] = useState<string | null>(null)
   const [files, setFiles] = useState(initialFiles)
   // The ids of the open menus, outermost first
   const [openMenus, setOpenMenus] = useState<string[]>([])
-  const [lastAction, setLastAction] = useState<string | null>(null)
+  const [lastAction, setLastAction] = useState<Action | null>(null)
   const menuTimer = useRef<ReturnType<typeof setTimeout>>()
 
   const clearMenuTimer = (): void => {
@@ -80,11 +86,17 @@ const Hovers = (): JSX.Element => {
   const chooseMenuItem = (path: string[]): void => {
     clearMenuTimer()
     setOpenMenus([])
-    setLastAction(
-      t(`scenarios.${SLUG}.result.chose`, {
-        name: path.map(menuLabel).join(' › '),
-      }),
-    )
+    setLastAction({ result: 'chose', path })
+  }
+
+  const describeAction = (action: Action | null): string => {
+    if (action === null) return t(`scenarios.${SLUG}.result.none`)
+    return t(`scenarios.${SLUG}.result.${action.result}`, {
+      name:
+        action.result === 'chose'
+          ? action.path.map(menuLabel).join(' › ')
+          : action.name,
+    })
   }
 
   const renderMenuItem = (item: MenuItem, path: string[]): JSX.Element => {
@@ -182,9 +194,7 @@ const Hovers = (): JSX.Element => {
                         <Button
                           size='sm'
                           onClick={() => {
-                            setLastAction(
-                              t(`scenarios.${SLUG}.result.viewed`, { name }),
-                            )
+                            setLastAction({ result: 'viewed', name })
                           }}
                         >
                           {t(`scenarios.${SLUG}.profiles.view`)}
@@ -233,11 +243,7 @@ const Hovers = (): JSX.Element => {
                           name: file,
                         })}
                         onClick={() => {
-                          setLastAction(
-                            t(`scenarios.${SLUG}.result.opened`, {
-                              name: file,
-                            }),
-                          )
+                          setLastAction({ result: 'opened', name: file })
                         }}
                       >
                         {t(`scenarios.${SLUG}.files.open`)}
@@ -252,11 +258,7 @@ const Hovers = (): JSX.Element => {
                           setFiles((current) =>
                             current.filter((f) => f !== file),
                           )
-                          setLastAction(
-                            t(`scenarios.${SLUG}.result.deleted`, {
-                              name: file,
-                            }),
-                          )
+                          setLastAction({ result: 'deleted', name: file })
                         }}
                       >
                         {t(`scenarios.${SLUG}.files.delete`)}
@@ -286,9 +288,7 @@ const Hovers = (): JSX.Element => {
 
           <section className='flex flex-col gap-2' aria-live='polite'>
             <CardTitle>{t(`scenarios.${SLUG}.result.title`)}</CardTitle>
-            <p data-testid='hovers-result'>
-              {lastAction ?? t(`scenarios.${SLUG}.result.none`)}
-            </p>
+            <p data-testid='hovers-result'>{describeAction(lastAction)}</p>
           </section>
         </div>
       </PageSetup>

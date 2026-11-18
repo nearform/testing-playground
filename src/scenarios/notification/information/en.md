@@ -3,7 +3,7 @@ Each button shows its message twice: as a popup over the page and as an alert un
 ## The popup and the alert
 
 - The popup is placed in a notifications region (labelled _Notifications (F8)_) and has a test id made of `notification-` and its type, such as `notification-success`.
-- The alert under the buttons has a test id made of `message-` and its type, and its type in capitals as its title, such as _SUCCESS_.
+- The alert under the buttons has a test id made of `message-` and its type, and the name of its type in capitals, in the chosen language, as its title, such as _SUCCESS_ in English.
 - The popup can be closed early with its close button, but the alert cannot: it always stays for the full 6 seconds.
 
 ## Timing

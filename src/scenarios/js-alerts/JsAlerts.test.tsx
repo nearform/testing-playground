@@ -3,6 +3,7 @@ import React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import JsAlerts from './JsAlerts.scenario'
 
 // jsdom does not implement the browser's native dialogs, so each test stubs
@@ -86,5 +87,23 @@ describe('JS Alerts scenario', () => {
     const result = screen.getByTestId('result')
     expect(result).toHaveTextContent('You clicked Cancel')
     expect(result).not.toHaveTextContent('You accepted the alert')
+  })
+})
+
+describe('JsAlerts when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the result in the new language', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(false)
+    TestRenderer(<JsAlerts />)
+    fireEvent.click(screen.getByTestId('button-confirm'))
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('result')).toHaveTextContent(
+      'Vous avez cliqué sur Annuler',
+    )
   })
 })

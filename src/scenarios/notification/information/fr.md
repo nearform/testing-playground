@@ -3,7 +3,7 @@ Chaque bouton affiche son message deux fois : en popup au-dessus de la page et e
 ## La popup et l'alerte
 
 - La popup est placée dans une région de notifications (nommée _Notifications (F8)_) et a un test id formé de `notification-` et de son type, comme `notification-success`.
-- L'alerte sous les boutons a un test id formé de `message-` et de son type, et son type en majuscules comme titre, comme _SUCCESS_.
+- L'alerte sous les boutons a un test id formé de `message-` et de son type, et le nom de son type en majuscules, dans la langue choisie, comme titre, comme _SUCCÈS_ en français.
 - La popup peut être fermée plus tôt avec son bouton de fermeture, mais pas l'alerte : elle reste toujours les 6 secondes entières.
 
 ## Le minutage

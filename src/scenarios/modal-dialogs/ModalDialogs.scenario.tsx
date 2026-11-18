@@ -8,6 +8,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'modal-dialogs'
@@ -279,7 +280,9 @@ const ConfirmDelete = (): JSX.Element => {
   const { t } = useTranslation()
   const [items, setItems] = useState(INVOICES)
   const [pending, setPending] = useState<number | null>(null)
-  const [result, setResult] = useState<string | null>(null)
+  // The message's key and values, not its text, so it follows a language
+  // switch
+  const [result, setResult] = useState<Message | null>(null)
 
   const name = (number: number): string =>
     t(`scenarios.${SLUG}.confirm.item`, { number })
@@ -290,11 +293,13 @@ const ConfirmDelete = (): JSX.Element => {
       setItems((current) => current.filter((item) => item !== pending))
     }
     setResult(
-      t(
+      message(
         confirmed
           ? `scenarios.${SLUG}.confirm.deleted`
           : `scenarios.${SLUG}.confirm.cancelled`,
-        { item: name(pending) },
+        {
+          item: message(`scenarios.${SLUG}.confirm.item`, { number: pending }),
+        },
       ),
     )
     setPending(null)
@@ -344,7 +349,9 @@ const ConfirmDelete = (): JSX.Element => {
           {t(`scenarios.${SLUG}.confirm.restore`)}
         </Button>
       )}
-      {result !== null && <Result id='confirm'>{result}</Result>}
+      {result !== null && (
+        <Result id='confirm'>{translateMessage(t, result)}</Result>
+      )}
       {pending !== null && (
         <Modal
           id='confirm'

@@ -7,8 +7,10 @@ function Footer(): JSX.Element {
   return (
     <WebsiteFooter size='sm'>
       <FooterStatement size='sm'>
-        &copy; Copyright {new Date().getFullYear()} {t('site.company')} Ltd. All
-        Rights Reserved.
+        {t('common.copyright', {
+          year: new Date().getFullYear(),
+          company: t('site.company'),
+        })}
       </FooterStatement>
     </WebsiteFooter>
   )
