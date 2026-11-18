@@ -46,6 +46,7 @@ describe('Date picker scenario', () => {
 
   afterEach(async () => {
     vi.useRealTimers()
+    vi.restoreAllMocks()
     if (i18n.language !== 'en') await setLanguage('en')
     localStorage.removeItem('language')
   })
@@ -72,6 +73,31 @@ describe('Date picker scenario', () => {
       expect(within(popup).getByRole('grid')).toHaveAccessibleName(
         'November 2026',
       )
+    })
+
+    // Focusing a day scrolls it into view, so the popup has to be under its
+    // trigger by then or a user scrolled down the page is sent to the top
+    it('is already under the trigger when the day is focused', async () => {
+      const user = userEvent.setup()
+      TestRenderer(<DatePicker />)
+      vi.spyOn(appointmentTrigger(), 'getBoundingClientRect').mockReturnValue(
+        DOMRect.fromRect({ x: 40, y: 600, width: 200, height: 40 }),
+      )
+      let topWhenFocused: string | null = null
+      const focus = HTMLElement.prototype.focus
+      vi.spyOn(HTMLElement.prototype, 'focus').mockImplementation(function (
+        this: HTMLElement,
+        options,
+      ) {
+        if (this.dataset.date !== undefined) {
+          topWhenFocused = screen.getByRole('dialog').style.top
+        }
+        focus.call(this, options)
+      })
+
+      await user.click(appointmentTrigger())
+
+      expect(topWhenFocused).toBe('644px')
     })
 
     it('focuses today when it opens', async () => {

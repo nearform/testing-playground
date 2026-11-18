@@ -55,6 +55,20 @@ const CalendarIcon = (): JSX.Element => (
   </svg>
 )
 
+// Just under the anchor, in page coordinates rather than fixed to the
+// viewport, so a popup that opens below the fold can be scrolled to like the
+// rest of the page
+const positionBelow = (
+  anchor: RefObject<HTMLElement | null>,
+): { top: number; left: number } => {
+  const rect = anchor.current?.getBoundingClientRect()
+  if (rect === undefined) return { top: 0, left: 0 }
+  return {
+    top: rect.bottom + window.scrollY + 4,
+    left: rect.left + window.scrollX,
+  }
+}
+
 interface CalendarPopupProps {
   id: string
   label: string
@@ -105,7 +119,10 @@ const CalendarPopup = ({
   const focusDay = useRef(true)
   const popupRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLTableElement>(null)
-  const [position, setPosition] = useState({ top: 0, left: 0 })
+  // Worked out before the first render, not after it: the day is focused as
+  // soon as the popup mounts, and focusing it at the top-left of the page
+  // would scroll a user who opened it further down back up to the top
+  const [position, setPosition] = useState(() => positionBelow(anchor))
 
   // Kept current so the document listener below never calls a stale one
   const onCloseRef = useRef(onClose)
@@ -123,14 +140,8 @@ const CalendarPopup = ({
   // that opens below the fold can be scrolled to like the rest of the page
   useLayoutEffect(() => {
     const update = (): void => {
-      const rect = anchor.current?.getBoundingClientRect()
-      if (rect === undefined) return
-      setPosition({
-        top: rect.bottom + window.scrollY + 4,
-        left: rect.left + window.scrollX,
-      })
+      setPosition(positionBelow(anchor))
     }
-    update()
     window.addEventListener('resize', update)
     return () => {
       window.removeEventListener('resize', update)
