@@ -16,6 +16,7 @@ import { useHref, useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // The other windows are this same scenario, shown as a different view chosen
 // by the `window` query parameter (`#/multiple-windows?window=popup`)
@@ -372,7 +373,10 @@ const MainWindow = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.multiple-windows.title')}
         description={t('scenarios.multiple-windows.description')}
-        information={t('scenarios.multiple-windows.information')}
+        information={translateInformation(
+          t,
+          'scenarios.multiple-windows.information',
+        )}
       >
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
           <NewTabSection />

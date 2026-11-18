@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // How many characters the city search needs before it asks the server
 export const MIN_CITY_CHARACTERS = 2
@@ -352,11 +353,15 @@ const Autocomplete = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.autocomplete.title')}
         description={t('scenarios.autocomplete.description')}
-        information={t('scenarios.autocomplete.information', {
-          min: MIN_CITY_CHARACTERS,
-          debounce: SEARCH_DEBOUNCE,
-          max: MAX_CITY_RESULTS,
-        })}
+        information={translateInformation(
+          t,
+          'scenarios.autocomplete.information',
+          {
+            min: MIN_CITY_CHARACTERS,
+            debounce: SEARCH_DEBOUNCE,
+            max: MAX_CITY_RESULTS,
+          },
+        )}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <section className='flex flex-col gap-4'>

@@ -33,4 +33,25 @@ describe('PageSetup', () => {
     expect(screen.getByText('Main page')).toBeInTheDocument()
     expect(screen.queryByText('Scenario content')).not.toBeInTheDocument()
   })
+
+  it('puts Description and Information one level below the page title', () => {
+    TestRenderer(
+      <PageSetup
+        title='A scenario'
+        description='A description'
+        information='Some information'
+      >
+        <p>Scenario content</p>
+      </PageSetup>,
+    )
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'A scenario' }),
+    ).toBeInTheDocument()
+    expect(
+      screen
+        .getAllByRole('heading', { level: 2 })
+        .map((heading) => heading.textContent),
+    ).toEqual(['Description', 'Information'])
+  })
 })

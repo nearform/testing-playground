@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
@@ -98,7 +99,10 @@ const AddRemove = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.add-remove.title')}
         description={t('scenarios.add-remove.description')}
-        information={t('scenarios.add-remove.information')}
+        information={translateInformation(
+          t,
+          'scenarios.add-remove.information',
+        )}
       >
         <div className='flex gap-4 mb-4'>
           <Button

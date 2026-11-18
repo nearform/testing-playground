@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface Shape {
   id: number
@@ -124,7 +125,10 @@ const DragAndDropHard = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.drag-and-drop-hard.title')}
         description={t('scenarios.drag-and-drop-hard.description')}
-        information={t('scenarios.drag-and-drop-hard.information')}
+        information={translateInformation(
+          t,
+          'scenarios.drag-and-drop-hard.information',
+        )}
       >
         <div className='mx-auto max-w-6xl'>
           <div className='flex flex-wrap items-center justify-center'>

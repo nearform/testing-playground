@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 export type Status = 'paid' | 'pending' | 'overdue' | 'cancelled'
 
@@ -322,7 +323,7 @@ const PaginatedTable = (): JSX.Element => {
       <PageSetup
         title={t(key('title'))}
         description={t(key('description'))}
-        information={t(key('information'), {
+        information={translateInformation(t, key('information'), {
           debounce: SEARCH_DEBOUNCE,
           min: MIN_LOAD_DELAY,
           max: MAX_LOAD_DELAY,

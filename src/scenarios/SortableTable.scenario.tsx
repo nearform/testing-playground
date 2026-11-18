@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface Employee {
   id: number
@@ -198,7 +199,10 @@ const SortableTable = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.sortable-table.title')}
         description={t('scenarios.sortable-table.description')}
-        information={t('scenarios.sortable-table.information')}
+        information={translateInformation(
+          t,
+          'scenarios.sortable-table.information',
+        )}
       >
         <div className='flex flex-col gap-6'>
           <Table data-testid='sortable-table' bordered>

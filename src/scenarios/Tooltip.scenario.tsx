@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const TooltipPage = (): JSX.Element => {
   const { t } = useTranslation()
@@ -14,7 +15,10 @@ const TooltipPage = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.tooltip-page.title')}
         description={t('scenarios.tooltip-page.description')}
-        information={t('scenarios.tooltip-page.information')}
+        information={translateInformation(
+          t,
+          'scenarios.tooltip-page.information',
+        )}
       >
         <div className='flex flex-col items-center justify-center gap-12'>
           <Tooltip

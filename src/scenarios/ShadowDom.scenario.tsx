@@ -7,6 +7,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import ShadowHost from '../components/ShadowHost'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content needs a stylesheet of its
@@ -175,7 +176,10 @@ const ShadowDom = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.shadow-dom.title')}
         description={t('scenarios.shadow-dom.description')}
-        information={t('scenarios.shadow-dom.information')}
+        information={translateInformation(
+          t,
+          'scenarios.shadow-dom.information',
+        )}
       >
         <div
           className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${SHADOW_THEME}`}

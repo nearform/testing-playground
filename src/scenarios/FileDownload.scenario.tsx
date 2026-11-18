@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = useTranslation()
@@ -43,7 +44,10 @@ const FileDownload: React.FC = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.file-download.title')}
         description={t('scenarios.file-download.description')}
-        information={t('scenarios.file-download.information')}
+        information={translateInformation(
+          t,
+          'scenarios.file-download.information',
+        )}
       >
         <div>
           <DownloadButton onClick={handleDownload} />

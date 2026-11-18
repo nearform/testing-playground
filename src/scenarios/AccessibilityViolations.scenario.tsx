@@ -1,4 +1,17 @@
-import { Button, CardTitle, Input, Label, Switch } from '@nearform/quantum'
+import {
+  Badge,
+  Button,
+  CardTitle,
+  Input,
+  Label,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@nearform/quantum'
 import type { KeyboardEvent, ReactNode } from 'react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,6 +20,7 @@ import { useSearchParams } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const key = (path: string): string =>
   `scenarios.accessibility-violations.${path}`
@@ -42,12 +56,24 @@ export const NEEDS_REVIEW_RULES = ['duplicate-id-aria'] as const
 // Problems axe-core cannot find, which need a keyboard check instead
 export const MANUAL_ISSUES = ['keyboard-trap', 'mouse-only'] as const
 
-interface ProblemList {
-  id: 'rules' | 'review' | 'manual'
-  title: string
+// How a problem shows up: as an axe-core violation, as an axe-core result
+// that needs review, or only when someone tests with a keyboard
+type ProblemGroupId = 'rules' | 'review' | 'manual'
+
+interface ProblemGroup {
+  id: ProblemGroupId
   attribute: 'data-rule' | 'data-issue'
   items: readonly string[]
   isRule: boolean
+}
+
+const FOUND_BADGE_VARIANT: Record<
+  ProblemGroupId,
+  'error' | 'warning' | 'info'
+> = {
+  rules: 'error',
+  review: 'warning',
+  manual: 'info',
 }
 
 export const versionFrom = (value: string | null): Version =>
@@ -149,24 +175,21 @@ const AccessibilityViolations = (): JSX.Element => {
   // In the broken version the first sub-heading skips from h2 to h4
   const FirstHeading = broken ? 'h4' : 'h3'
 
-  const problems: ProblemList[] = [
+  const problems: ProblemGroup[] = [
     {
       id: 'rules',
-      title: 'expected.axe',
       attribute: 'data-rule',
       items: EXPECTED_RULES,
       isRule: true,
     },
     {
       id: 'review',
-      title: 'expected.review',
       attribute: 'data-rule',
       items: NEEDS_REVIEW_RULES,
       isRule: true,
     },
     {
       id: 'manual',
-      title: 'expected.manual',
       attribute: 'data-issue',
       items: MANUAL_ISSUES,
       isRule: false,
@@ -178,7 +201,7 @@ const AccessibilityViolations = (): JSX.Element => {
       <PageSetup
         title={t(key('title'))}
         description={t(key('description'))}
-        information={t(key('information'))}
+        information={translateInformation(t, key('information'))}
       >
         <div className='flex flex-col gap-8'>
           <section className='flex flex-col gap-4'>
@@ -209,29 +232,50 @@ const AccessibilityViolations = (): JSX.Element => {
             </CardTitle>
             <p>{t(key('expected.explanation'))}</p>
             {broken ? (
-              <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-                {problems.map(({ id, title, attribute, items, isRule }) => (
-                  <div key={id} className='flex flex-col gap-2'>
-                    <h3 className='font-semibold'>{t(key(title))}</h3>
-                    <ul
-                      className='flex list-disc flex-col gap-1 pl-6'
-                      data-testid={`expected-${id}`}
-                    >
-                      {items.map((item) => (
-                        <li key={item} {...{ [attribute]: item }}>
+              // One table body per group, so each group can still be found
+              // on its own by its test ID
+              <Table bordered divided data-testid='expected-problems'>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t(key('expected.columns.rule'))}</TableHead>
+                    <TableHead>{t(key('expected.columns.problem'))}</TableHead>
+                    <TableHead>{t(key('expected.columns.found'))}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                {problems.map(({ id, attribute, items, isRule }) => (
+                  <TableBody key={id} data-testid={`expected-${id}`}>
+                    {items.map((item) => (
+                      <TableRow key={item} {...{ [attribute]: item }}>
+                        <TableCell className='whitespace-nowrap'>
                           {isRule ? (
-                            <>
-                              <code>{item}</code>: {t(key(`rules.${item}`))}
-                            </>
+                            <code>{item}</code>
                           ) : (
-                            t(key(`manual.${item}`))
+                            t(key(`manual.${item}.name`))
                           )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                        </TableCell>
+                        <TableCell>
+                          {t(
+                            key(
+                              isRule
+                                ? `rules.${item}`
+                                : `manual.${item}.problem`,
+                            ),
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={FOUND_BADGE_VARIANT[id]}
+                            size='sm'
+                            className='whitespace-nowrap'
+                          >
+                            {t(key(`expected.found.${id}`))}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
                 ))}
-              </div>
+              </Table>
             ) : (
               <p data-testid='expected-none'>{t(key('expected.none'))}</p>
             )}

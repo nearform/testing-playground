@@ -10,6 +10,7 @@ import FrameHost, {
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // Page styles (Tailwind/Quantum) live in the page's document and do not reach
 // into a frame's document, so each frame gets a stylesheet of its own. Its
@@ -352,7 +353,7 @@ const Iframes = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.iframes.title')}
         description={t('scenarios.iframes.description')}
-        information={t('scenarios.iframes.information')}
+        information={translateInformation(t, 'scenarios.iframes.information')}
       >
         <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${FRAME_THEME}`}>
           <Section

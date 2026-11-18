@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const key = (path: string): string => `scenarios.actionability.${path}`
 
@@ -96,7 +97,7 @@ const Actionability = (): JSX.Element => {
       <PageSetup
         title={t(key('title'))}
         description={t(key('description'))}
-        information={t(key('information'))}
+        information={translateInformation(t, key('information'))}
       >
         <div className='flex flex-col gap-10'>
           <section

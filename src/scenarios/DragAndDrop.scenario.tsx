@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const DragAndDrop = (): JSX.Element => {
   const { t } = useTranslation()
@@ -34,7 +35,10 @@ const DragAndDrop = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.drag-and-drop.title')}
         description={t('scenarios.drag-and-drop.description')}
-        information={t('scenarios.drag-and-drop.information')}
+        information={translateInformation(
+          t,
+          'scenarios.drag-and-drop.information',
+        )}
       >
         <div className='flex items-center justify-center'>
           {/* Small draggable box on the left */}

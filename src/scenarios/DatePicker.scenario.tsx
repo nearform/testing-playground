@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 import type { DateRange } from '../utils/dates'
 import {
   addDays,
@@ -728,10 +729,14 @@ const DatePicker = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.date-picker.title')}
         description={t('scenarios.date-picker.description')}
-        information={t('scenarios.date-picker.information', {
-          lastYear: today.getFullYear() + BOOKING_YEARS,
-          minYear: MIN_BIRTH_YEAR,
-        })}
+        information={translateInformation(
+          t,
+          'scenarios.date-picker.information',
+          {
+            lastYear: today.getFullYear() + BOOKING_YEARS,
+            minYear: MIN_BIRTH_YEAR,
+          },
+        )}
       >
         <div className='grid gap-10 md:grid-cols-2 xl:grid-cols-3'>
           <AppointmentPicker today={today} />
