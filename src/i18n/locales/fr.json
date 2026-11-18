@@ -291,6 +291,63 @@
         "too-short_other": "Tapez au moins {{count}} caractères"
       }
     },
+    "canvas-and-svg": {
+      "title": "Canvas et SVG",
+      "description": "Un bloc de dessin, un graphique à barres et un jeu de cible dessinés dans un canvas, ainsi qu'une carte SVG avec des info-bulles au survol, dont le contenu est introuvable avec les requêtes DOM habituelles.",
+      "information": "Rien de ce qui est dessiné dans un canvas n'est dans le DOM : les barres, la cible et votre dessin ne sont que des pixels, il n'y a donc aucun élément ni texte qu'un localisateur puisse trouver. Un test doit agir à des coordonnées précises et vérifier les résultats affichés sous chaque canvas. Chaque canvas est affiché à la taille à laquelle il est dessiné, donc une position en pixels CSS depuis son coin supérieur gauche est la même position en pixels du canvas : utilisez <code>click({ position: { x, y } })</code> dans Playwright ou <code>.click(x, y)</code> dans Cypress. <strong>Bloc de dessin</strong> : un trait demande d'appuyer sur le bouton, de déplacer le pointeur puis de relâcher le bouton, donc un simple clic ne dessine rien et n'est pas compté. Pilotez-le avec <code>page.mouse.move</code>, <code>page.mouse.down</code> et <code>page.mouse.up</code>, qui utilisent les coordonnées de la page (ajoutez donc la position du rectangle englobant du canvas), ou déclenchez des événements de pointeur sur le canvas. Le nombre de traits et de points est affiché sous le bloc et dans ses attributs <code>data-strokes</code> et <code>data-points</code>. <strong>Graphique à barres</strong> : le canvas mesure 480 × 260 pixels, la barre <em>i</em> (en comptant à partir de 0) fait 50 pixels de large et est centrée en x = 75 + 70 × <em>i</em>, et l'axe est en y = 230, donc un clic en y = 225 touche toujours une barre. Un clic entre ou au-dessus des barres indique qu'aucune barre n'a été cliquée. <strong>Cible</strong> : la cible a un rayon de 15 pixels et apparaît en (60, 60), (340, 240), (200, 150), (320, 50) puis (80, 250), dans cet ordre. Son centre actuel se trouve dans les attributs <code>data-target-x</code> et <code>data-target-y</code> du canvas, un raccourci qu'un vrai jeu ne vous donnerait pas. <strong>Carte des quartiers</strong> : la carte est en SVG, ses régions sont donc des éléments, mais elles n'ont ni rôle ni nom accessible et le <code>svg</code> est une seule image pour les technologies d'assistance, donc les localisateurs par rôle n'y trouvent rien. Trouvez une région avec <code>[data-region=\"harbour\"]</code>. XPath a besoin de <code>//*[local-name()='polygon']</code>, car les éléments SVG sont dans leur propre espace de noms. Le Port entoure la Vieille Ville, donc le milieu de son rectangle englobant, là où les outils cliquent et survolent par défaut, se trouve dans la Vieille Ville : cliquez-le avec un décalage, par exemple près de son bord inférieur. Les noms sur la carte ignorent la souris et transmettent les clics à la région en dessous, donc un outil qui vérifie quel élément est sous le pointeur avant de cliquer, comme Playwright, attend qu'un nom reçoive le clic et finit par expirer. L'info-bulle n'apparaît que lorsque la souris est sur une région et la suit, elle demande donc un survol plutôt qu'un clic. <strong>Tests de capture d'écran</strong> : tout est dessiné à une taille fixe avec des couleurs fixes, quel que soit le thème, sans animation ni hasard, donc les mêmes actions donnent toujours la même image. Faites la capture du seul canvas ou de la carte plutôt que de toute la page, et attendez-vous à de petites différences entre navigateurs, systèmes d'exploitation et polices (anticrénelage et texte) : gardez une référence par navigateur et par plateforme, ou autorisez un petit seuil. Les pixels peuvent aussi être lus directement avec <code>canvas.toDataURL()</code> ou <code>getContext('2d').getImageData()</code>.",
+      "pad": {
+        "title": "Bloc de dessin",
+        "intro": "Maintenez le bouton de la souris enfoncé et déplacez-la pour dessiner. Chaque ligne dessinée est un trait.",
+        "label": "Bloc de dessin",
+        "clear": "Effacer",
+        "strokes_one": "{{count}} trait",
+        "strokes_other": "{{count}} traits",
+        "points_one": "{{count}} point",
+        "points_other": "{{count}} points"
+      },
+      "chart": {
+        "title": "Graphique des commandes",
+        "intro": "Cliquez sur une barre pour voir le nombre de commandes de ce mois.",
+        "label": "Graphique à barres des commandes par mois, de janvier à juin",
+        "months": {
+          "jan": "Janv.",
+          "feb": "Févr.",
+          "mar": "Mars",
+          "apr": "Avr.",
+          "may": "Mai",
+          "jun": "Juin"
+        },
+        "value_one": "{{month}} : {{count}} commande",
+        "value_other": "{{month}} : {{count}} commandes",
+        "none": "Cliquez sur une barre pour voir sa valeur.",
+        "missed": "Aucune barre n'a été cliquée."
+      },
+      "game": {
+        "title": "Tir sur cible",
+        "intro": "Cliquez sur la cible. Chaque fois que vous la touchez, elle se déplace.",
+        "label": "Jeu de cible",
+        "reset": "Recommencer",
+        "score": "Touchés : {{hits}} sur {{total}}",
+        "misses_one": "{{count}} tir manqué",
+        "misses_other": "{{count}} tirs manqués",
+        "done": "Toutes les cibles sont touchées !"
+      },
+      "map": {
+        "title": "Carte des quartiers",
+        "intro": "Pointez un quartier pour voir sa population, et cliquez dessus pour le sélectionner.",
+        "label": "Carte des quartiers de l'île",
+        "regions": {
+          "northfield": "Champs-du-Nord",
+          "westmoor": "Lande-Ouest",
+          "old-town": "Vieille Ville",
+          "harbour": "Port",
+          "eastvale": "Val-Est"
+        },
+        "population": "Population : {{population}}",
+        "selected": "Sélection : {{name}} (population {{population}})",
+        "none": "Aucun quartier sélectionné."
+      }
+    },
     "challenging-selectors": {
       "title": "Sélecteurs difficiles",
       "description": "Des ID aléatoires, des boutons identiques, du texte découpé et des doublons cachés qui font échouer les sélecteurs naïfs.",

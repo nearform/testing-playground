@@ -290,6 +290,63 @@
         "too-short_other": "Type at least {{count}} characters"
       }
     },
+    "canvas-and-svg": {
+      "title": "Canvas and SVG",
+      "description": "A drawing pad, a bar chart and a target game drawn on canvas, and an SVG map with hover tooltips, where what is shown cannot be found with normal DOM queries.",
+      "information": "Nothing drawn on a canvas is in the DOM: the bars, the target and your drawing are only pixels, so there is no element or text for a locator to find. A test has to act at coordinates and check the results written underneath each canvas. Every canvas is shown at the size it is drawn at, so a position in CSS pixels from its top left corner is the same position in canvas pixels: use <code>click({ position: { x, y } })</code> in Playwright or <code>.click(x, y)</code> in Cypress. <strong>Drawing pad</strong>: a stroke needs the button pressed, the pointer moved and the button released, so a single click draws nothing and is not counted. Drive it with <code>page.mouse.move</code>, <code>page.mouse.down</code> and <code>page.mouse.up</code>, which use page coordinates, so add the position of the canvas's bounding box, or trigger pointer events on the canvas. The number of strokes and points is shown under the pad and in its <code>data-strokes</code> and <code>data-points</code> attributes. <strong>Bar chart</strong>: the canvas is 480 × 260 pixels, bar <em>i</em> (counting from 0) is 50 pixels wide and centred at x = 75 + 70 × <em>i</em>, and the axis is at y = 230, so clicking at y = 225 always hits a bar. A click between or above the bars says no bar was clicked. <strong>Target</strong>: the target has a radius of 15 pixels and appears at (60, 60), (340, 240), (200, 150), (320, 50) and (80, 250), in that order. Its current centre is in the canvas's <code>data-target-x</code> and <code>data-target-y</code> attributes, a shortcut a real game would not give you. <strong>District map</strong>: the map is SVG, so its regions are elements, but they have no role or accessible name and the <code>svg</code> is a single image to assistive technology, so role-based locators find nothing inside it. Find a region with <code>[data-region=\"harbour\"]</code>. XPath needs <code>//*[local-name()='polygon']</code>, because SVG elements are in their own namespace. The Harbour wraps around the Old Town, so the middle of its bounding box, where tools click and hover by default, is in the Old Town: click it with an offset, for example near its bottom edge. The names on the map ignore the mouse and pass clicks to the region underneath, so a tool that checks which element is under the pointer before clicking, as Playwright does, waits for a name to receive the click and times out. The tooltip only appears while the mouse is over a region and follows it, so it needs a hover rather than a click. <strong>Screenshot tests</strong>: everything is drawn at a fixed size in fixed colours, whatever the theme, with no animation and nothing random, so the same actions always give the same picture. Take the screenshot of just the canvas or the map rather than the whole page, and expect small differences between browsers, operating systems and fonts (anti-aliasing and text): keep a baseline for each browser and platform, or allow a small threshold. The pixels can also be read directly with <code>canvas.toDataURL()</code> or <code>getContext('2d').getImageData()</code>.",
+      "pad": {
+        "title": "Drawing pad",
+        "intro": "Hold the mouse button down and move to draw. Each line you draw is a stroke.",
+        "label": "Drawing pad",
+        "clear": "Clear",
+        "strokes_one": "{{count}} stroke",
+        "strokes_other": "{{count}} strokes",
+        "points_one": "{{count}} point",
+        "points_other": "{{count}} points"
+      },
+      "chart": {
+        "title": "Orders chart",
+        "intro": "Click a bar to see how many orders there were that month.",
+        "label": "Bar chart of orders per month, January to June",
+        "months": {
+          "jan": "Jan",
+          "feb": "Feb",
+          "mar": "Mar",
+          "apr": "Apr",
+          "may": "May",
+          "jun": "Jun"
+        },
+        "value_one": "{{month}}: {{count}} order",
+        "value_other": "{{month}}: {{count}} orders",
+        "none": "Click a bar to see its value.",
+        "missed": "No bar was clicked."
+      },
+      "game": {
+        "title": "Target practice",
+        "intro": "Click the target. Each time you hit it, it moves.",
+        "label": "Target game",
+        "reset": "Start again",
+        "score": "Hits: {{hits}} of {{total}}",
+        "misses_one": "{{count}} miss",
+        "misses_other": "{{count}} misses",
+        "done": "All targets hit!"
+      },
+      "map": {
+        "title": "District map",
+        "intro": "Point at a district to see its population, and click it to select it.",
+        "label": "Map of the districts of the island",
+        "regions": {
+          "northfield": "Northfield",
+          "westmoor": "Westmoor",
+          "old-town": "Old Town",
+          "harbour": "Harbour",
+          "eastvale": "Eastvale"
+        },
+        "population": "Population: {{population}}",
+        "selected": "Selected: {{name}} (population {{population}})",
+        "none": "No district selected."
+      }
+    },
     "challenging-selectors": {
       "title": "Challenging Selectors",
       "description": "Random IDs, identical buttons, split text and hidden duplicates that break naïve selectors.",
