@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -48,6 +48,45 @@ describe('AddRemove component', () => {
     fireEvent.click(removeFirstElementButton)
     const removeSecondElementButton = screen.getByTestId('remove-element-2')
     expect(removeSecondElementButton).toBeInTheDocument()
+  })
+
+  it('numbers two buttons added in the same batch differently', () => {
+    TestRenderer(<AddRemove />)
+    const addButton = screen.getByTestId('add-element')
+
+    act(() => {
+      addButton.click()
+      addButton.click()
+    })
+
+    expect(
+      screen
+        .getAllByTestId(/^remove-element-/)
+        .map((button) => button.getAttribute('data-testid')),
+    ).toEqual(['remove-element-1', 'remove-element-2'])
+  })
+
+  it('keeps focus on a Remove button when another button is added', () => {
+    TestRenderer(<AddRemove />, {
+      initialEntries: ['/add-remove?initialElements=1'],
+    })
+    const removeButton = screen.getByTestId('remove-element-1')
+    removeButton.focus()
+
+    fireEvent.click(screen.getByTestId('add-element'))
+
+    expect(document.activeElement).toBe(removeButton)
+  })
+
+  it("keeps a Remove button's element when an earlier button is removed", () => {
+    TestRenderer(<AddRemove />, {
+      initialEntries: ['/add-remove?initialElements=2'],
+    })
+    const secondButton = screen.getByTestId('remove-element-2')
+
+    fireEvent.click(screen.getByTestId('remove-element-1'))
+
+    expect(secondButton).toBeInTheDocument()
   })
 
   it("never reuses a saved button's number, even with a stale saved index", () => {

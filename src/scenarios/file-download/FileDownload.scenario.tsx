@@ -10,6 +10,9 @@ import { translateInformation } from '../../utils/information'
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'file-download'
 
+// How long the downloaded file's blob URL is kept before it is freed
+export const REVOKE_DELAY_MS = 1000
+
 const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = useTranslation()
 
@@ -36,7 +39,11 @@ const handleDownload = (): void => {
   link.click()
   document.body.removeChild(link)
 
-  URL.revokeObjectURL(url)
+  // Firefox and Safari read the file after click() returns, so freeing it
+  // straight away can leave the download failed or empty
+  window.setTimeout(() => {
+    URL.revokeObjectURL(url)
+  }, REVOKE_DELAY_MS)
 }
 
 const FileDownload: React.FC = (): JSX.Element => {

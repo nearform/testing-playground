@@ -34,7 +34,14 @@ const useDelay = (): ((callback: () => void, ms: number) => void) => {
   }, [])
 
   return useCallback((callback: () => void, ms: number) => {
-    timers.current.push(window.setTimeout(callback, ms))
+    const timer = window.setTimeout(() => {
+      // Forget it once it has fired, so only waiting timers are kept. Removed
+      // in place: the cleanup above holds this same array
+      const pending = timers.current
+      pending.splice(pending.indexOf(timer), 1)
+      callback()
+    }, ms)
+    timers.current.push(timer)
   }, [])
 }
 
