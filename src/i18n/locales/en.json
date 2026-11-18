@@ -52,6 +52,90 @@
         "too-short_other": "Type at least {{count}} characters"
       }
     },
+    "challenging-selectors": {
+      "title": "Challenging Selectors",
+      "description": "Random IDs, identical buttons, split text and hidden duplicates that break naïve selectors.",
+      "information": "This page is built so that the obvious selectors fail. The IDs and class names in the first section (and the class names elsewhere) are random hashes, like those from CSS-in-JS libraries, and change every time the page loads, so find the field by its label and the buttons by their role and name instead. The team table is shuffled on every load and every row has the same Edit and Delete buttons with no accessible name of their own, so pick the row by its content (the person's name or email) and then the button inside that row; a row position or nth match will hit someone else. The greeting and unread message count are split across several elements, so a match on an element's own text will not find the whole sentence: match on the text of the parent, or normalise the text first. The marking button's label is split the same way, but its accessible name is still the full sentence. The two address blocks have fields whose labels are plain text that is not tied to the inputs, and the two blocks are identical apart from their title, so you have to locate a field relative to the nearby text or by its position inside the right block. The two newsletter forms do the same thing: the labelled one has a heading, a label, a real button and data-testid attributes, while the unlabelled one only has a placeholder, a clickable div styled like a button and random class names, so compare how each locator strategy copes with both. Finally, the Checkout button is in the page three times: a mobile and a desktop version, of which only one is shown depending on the screen width, and a third inside the closed More options panel, so a locator has to target the visible one rather than the first one in the DOM. The Last action panel at the top shows what your last click actually did, so you can check you hit the element you meant to.",
+      "result": {
+        "title": "Last action",
+        "none": "Nothing yet",
+        "empty": "(empty)",
+        "saved-name": "Saved display name “{{name}}”",
+        "reset-name": "Cleared the display name",
+        "editing": "Editing {{name}}",
+        "deleted": "Deleted {{name}}",
+        "restored": "Restored every team member",
+        "marked-read": "Marked all messages as read",
+        "saved-addresses": "Saved delivery address {{deliveryCity}}, {{deliveryPostcode}} and billing address {{billingCity}}, {{billingPostcode}}",
+        "subscribed-labelled": "Subscribed {{email}} with the labelled form",
+        "subscribed-unlabelled": "Subscribed {{email}} with the unlabelled form",
+        "checkout": "Checked out with the {{variant}} button",
+        "saved-for-later": "Saved the basket for later"
+      },
+      "random": {
+        "title": "Randomised IDs and classes",
+        "instructions": "The IDs and class names in this form change every time the page loads.",
+        "label": "Display name",
+        "save": "Save",
+        "reset": "Clear"
+      },
+      "rows": {
+        "title": "Identical buttons in every row",
+        "instructions": "Each row has the same Edit and Delete buttons, and the rows are shuffled on every load.",
+        "columns": {
+          "name": "Name",
+          "email": "Email",
+          "role": "Role",
+          "actions": "Actions"
+        },
+        "roles": {
+          "admin": "Admin",
+          "editor": "Editor",
+          "viewer": "Viewer"
+        },
+        "edit": "Edit",
+        "delete": "Delete",
+        "restore": "Restore all members"
+      },
+      "split": {
+        "title": "Text split across elements",
+        "instructions": "These sentences are made of several elements, so no single element holds the whole text.",
+        "hello": "Hello",
+        "world": "world",
+        "unread": "Hi <name>Ada</name>, you have <count>{{count}}</count> unread messages.",
+        "mark-read": "<part>Mark</part> <part>all</part> as <strong>read</strong>"
+      },
+      "addresses": {
+        "title": "Fields told apart by nearby text",
+        "instructions": "Both blocks have the same fields, and their labels are not linked to the inputs.",
+        "delivery": "Delivery address",
+        "billing": "Billing address",
+        "city": "City",
+        "postcode": "Postcode",
+        "save": "Save addresses"
+      },
+      "compare": {
+        "title": "Labelled and unlabelled forms",
+        "instructions": "The same newsletter form twice: once with accessible names and test IDs, once without.",
+        "labelled-title": "Labelled form",
+        "unlabelled-title": "Unlabelled form",
+        "email": "Email address",
+        "email-placeholder": "Email address",
+        "subscribe": "Subscribe"
+      },
+      "duplicates": {
+        "title": "Hidden duplicates",
+        "instructions": "The Checkout button is in the page more than once, but only one copy is visible at a time.",
+        "checkout": "Checkout",
+        "more": "More options",
+        "save-for-later": "Save for later",
+        "variants": {
+          "mobile": "mobile",
+          "desktop": "desktop",
+          "menu": "More options"
+        }
+      }
+    },
     "check-box": {
       "title": "Checkbox",
       "description": "A set of checkbox scenarios to test against.",
