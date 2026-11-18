@@ -39,7 +39,7 @@ describe('PageSetup', () => {
       <PageSetup
         title='A scenario'
         description='A description'
-        information='Some information'
+        information={{ summary: ['Some information'], sections: [] }}
       >
         <p>Scenario content</p>
       </PageSetup>,

@@ -34,36 +34,6 @@
     "accessibility-violations": {
       "title": "Accessibility Violations",
       "description": "A newsletter sign-up form full of deliberate accessibility problems, with a switch to a fixed version, for practising automated and manual accessibility checks.",
-      "information": {
-        "summary": "Every accessibility problem on this page is deliberate. Switching on <strong>Show the fixed version</strong> (or opening <code>#/accessibility-violations?version=fixed</code>) fixes all of them, so the same scan can be run against both versions. Each problem is listed under Expected problems, below.",
-        "sections": [
-          {
-            "title": "Running the scan",
-            "points": [
-              "The problems are all inside the Newsletter sign-up section, whose ID is <code>accessibility-violations-area</code>.",
-              "Limit the scan to that section, so nothing from the rest of the playground mixes in: <code>.include('#accessibility-violations-area')</code> in <code>@axe-core/playwright</code> or <code>cy.checkA11y('#accessibility-violations-area')</code> in <code>cypress-axe</code>.",
-              "Each row under Expected problems has a <code>data-rule</code> attribute with its rule ID (or <code>data-issue</code> for the keyboard problems), and the table empties in the fixed version."
-            ]
-          },
-          {
-            "title": "What makes it tricky to automate",
-            "points": [
-              "<code>duplicate-id-aria</code> is reported under <code>incomplete</code> rather than <code>violations</code>, because axe-core marks the rule as needing review, so a test that only looks at <code>violations</code> never sees it.",
-              "<code>heading-order</code> is a best practice rather than a WCAG rule, so a scan limited with <code>withTags(['wcag2a', 'wcag2aa'])</code> misses it.",
-              "<code>color-contrast</code> and <code>scrollable-region-focusable</code> depend on how the page is laid out, so they are only found in a real browser and never in jsdom.",
-              "One rule can fail on several elements and new axe-core versions add rules, so assert on the rule IDs you expect rather than on the number of violations."
-            ]
-          },
-          {
-            "title": "What a scanner cannot find",
-            "points": [
-              "The Message box keeps the Tab key for itself, the way some code editors indent, so once it has focus neither Tab nor Shift+Tab leaves it: a keyboard trap.",
-              "The Subscribe button is a <code>div</code> with a click handler, so it cannot be reached with Tab and only works with a mouse.",
-              "A clean scan does not prove a page is accessible: it only shows that the problems a scanner can find are gone."
-            ]
-          }
-        ]
-      },
       "version": {
         "title": "Version",
         "switch": "Show the fixed version",
@@ -137,33 +107,6 @@
     "actionability": {
       "title": "Actionability",
       "description": "Overlays, moving buttons, layout shift and elements that are present but cannot safely be clicked.",
-      "information": {
-        "summary": "Every element on this page is in the DOM and looks clickable, but a real click on it either misses or hits something else. This is where errors like \"element click intercepted\", \"element is not stable\", \"element is outside of the viewport\" and \"element does not receive pointer events\" come from. The Last action panel at the top shows what each click actually hit.",
-        "sections": [
-          {
-            "title": "Covered elements",
-            "points": [
-              "In the Overlays section, the Accept terms button is covered for good by a transparent element, so the click is always intercepted: the test should report that rather than pass with a forced or JavaScript click, which would hide a bug a user would hit.",
-              "The Continue button is covered by a transparent loading overlay for a few seconds after the page loads, so a test has to wait for it to clear, not sleep for a fixed time.",
-              "The sticky header sticks to the top of the window while you scroll through the product list, so a tool that scrolls a button to the top of the window before clicking it will click the header instead."
-            ]
-          },
-          {
-            "title": "Elements that move",
-            "points": [
-              "In Moving elements, one button never stops moving, so a stability check never passes and a click at its old position misses; the other moves for a few seconds and then settles, so waiting for it to be stable works, and the Last action panel says whether you clicked it while it was moving.",
-              "In Layout shift, a banner is injected above Confirm order a couple of seconds after the page loads and its Upgrade to premium button lands exactly where Confirm order was, so a click that worked out its position too early upgrades instead of confirming."
-            ]
-          },
-          {
-            "title": "Out of view or not clickable",
-            "points": [
-              "The I agree button is inside a scrollable box rather than the page, so the box itself has to be scrolled before the button is in view.",
-              "One button has pointer-events: none, so the pointer passes straight through it, and another has no width or height at all, so it is in the DOM with text but is not visible. Clicks on both only work through JavaScript, which is not what a user can do."
-            ]
-          }
-        ]
-      },
       "result": {
         "title": "Last action",
         "none": "Nothing yet",
@@ -250,27 +193,6 @@
     "add-remove": {
       "title": "Add/Remove",
       "description": "Dynamically add and remove elements from the page",
-      "information": {
-        "summary": "Add Element adds a numbered Remove Element button, and clicking one of those removes it. The buttons are saved in <code>sessionStorage</code>, so they are still there after a reload.",
-        "sections": [
-          {
-            "title": "Numbering",
-            "points": [
-              "Each new button takes the next number and numbers are not reused, so removing Remove Element 2 out of three leaves 1 and 3, and the next one added is 4.",
-              "Once every button has been removed, numbering starts again from 1.",
-              "Each button's test id includes its number, such as <code>remove-element-3</code>."
-            ]
-          },
-          {
-            "title": "Starting state",
-            "points": [
-              "Adding <code>?initialElements=5</code> to the URL (<code>#/add-remove?initialElements=5</code>) starts the page with buttons 1 to 5, which saves adding them one by one.",
-              "The parameter is only used when the page loads with no buttons saved, so a reload that already has buttons in <code>sessionStorage</code> ignores it.",
-              "Clear Storage removes every button by emptying the whole of <code>sessionStorage</code> for the site, which also clears what other scenarios have saved there. Each tab has its own <code>sessionStorage</code>, so a new tab or browser context always starts empty."
-            ]
-          }
-        ]
-      },
       "add-element": "Add Element",
       "clear-storage": "Clear Storage",
       "remove-element": "Remove Element"
@@ -278,32 +200,6 @@
     "autocomplete": {
       "title": "Autocomplete",
       "description": "Pick a value from suggestions that appear as you type.",
-      "information": {
-        "summary": "Start typing in either box to see suggestions.",
-        "sections": [
-          {
-            "title": "Using the keyboard",
-            "points": [
-              "Use the up and down arrow keys to move through them (they wrap round), Enter to choose the highlighted one, or click a suggestion; Escape closes the list and a second Escape clears the box.",
-              "Tabbing away closes the list without choosing anything, and changing the text after choosing clears the choice."
-            ]
-          },
-          {
-            "title": "Matching and markup",
-            "points": [
-              "The input follows the ARIA combobox pattern: aria-expanded says whether the list is open and aria-activedescendant points at the highlighted option, which has aria-selected=\"true\".",
-              "Suggestions match anywhere in a name, ignoring case and accents, with names that start with what you typed listed first, and the matching part is in bold."
-            ]
-          },
-          {
-            "title": "Country and city",
-            "points": [
-              "The country box filters a fixed list straight away.",
-              "The city box asks a slow pretend server instead: it waits for at least {{min}} characters and a {{debounce}}ms pause in typing, shows a loading message while it waits, returns at most {{max}} cities, and answers short searches more slowly than long ones, so an old answer can arrive after a new one; only the answer for the current text is shown."
-            ]
-          }
-        ]
-      },
       "no-matches": "No matches",
       "nothing-selected": "nothing",
       "selected": "Selected: {{value}}",
@@ -325,42 +221,6 @@
     "broken-images-and-links": {
       "title": "Broken Images and Links",
       "description": "A gallery and a list of links where some work and some do not, including a 404 image, an image with an invalid URL, a lazy-loaded image, missing pages and anchor links.",
-      "information": {
-        "summary": "Some of the images and links on this page work and some do not, for checking that every image loads and every link leads somewhere. Each image and link has a <code>data-expected</code> attribute of <code>ok</code> or <code>broken</code>, so a test can compare what it finds with what it should find.",
-        "sections": [
-          {
-            "title": "Broken images",
-            "points": [
-              "A broken image is still in the page: it keeps its <code>src</code>, shows its alt text and is visible, so checking that the <code>&lt;img&gt;</code> exists or is visible passes. Check that it has finished loading and has a size instead: <code>img.complete &amp;&amp; img.naturalWidth === 0</code> means it failed.",
-              "The image with an invalid URL never makes a request at all, so it does not show up as a 404 in the network log. Only the image itself tells you it failed.",
-              "Listening for failed responses only catches requests made after the listener is added, so add it before loading the page."
-            ]
-          },
-          {
-            "title": "Lazy loading",
-            "points": [
-              "The last image has <code>loading=\"lazy\"</code> and sits below the fold, so the browser does not request it until it is scrolled near the viewport.",
-              "Until then <code>complete</code> is false and <code>naturalWidth</code> is 0, so a check that runs straight away reports it as broken (or, with Check images, as not loaded yet). Scroll it into view and wait for it to load before checking it."
-            ]
-          },
-          {
-            "title": "Checking links",
-            "points": [
-              "Clicking every link is slow and leaves the page, so request each URL with an API request instead (<code>page.request.get()</code> in Playwright, <code>cy.request()</code> in Cypress) and check the status is below 400. Read the resolved <code>href</code> property rather than the attribute, which may be relative.",
-              "A missing static file, such as the old gallery page, returns a real 404.",
-              "This playground uses hash routing, so a link to a page in the app such as <code>#/cookies-and-storage</code> only requests the home page: the server returns 200 even for a page that does not exist. Open these links and check the page shows its content instead.",
-              "External sites may block automated requests, rate limit them or be down, which makes external link checks flaky. Many suites check them on a schedule rather than on every run."
-            ]
-          },
-          {
-            "title": "Anchor links",
-            "points": [
-              "Because the # in the URL is already used for routing, the links to sections on this page are handled by script: clicking one scrolls to the section without changing the URL.",
-              "To check an anchor, look for an element whose <code>id</code> matches the part after the #. The link to the reviews section has no matching section, so clicking it does nothing."
-            ]
-          }
-        ]
-      },
       "nav": {
         "title": "On this page"
       },
@@ -431,51 +291,6 @@
     "canvas-and-svg": {
       "title": "Canvas and SVG",
       "description": "A drawing pad, a bar chart and a target game drawn on canvas, and an SVG map with hover tooltips, where what is shown cannot be found with normal DOM queries.",
-      "information": {
-        "summary": "Nothing drawn on a canvas is in the DOM: the bars, the target and your drawing are only pixels, so there is no element or text for a locator to find. A test has to act at coordinates and check the results written underneath each canvas. Every canvas is shown at the size it is drawn at, so a position in CSS pixels from its top left corner is the same position in canvas pixels: use <code>click({ position: { x, y } })</code> in Playwright or <code>.click(x, y)</code> in Cypress.",
-        "sections": [
-          {
-            "title": "Drawing pad",
-            "points": [
-              "A stroke needs the button pressed, the pointer moved and the button released, so a single click draws nothing and is not counted.",
-              "Drive it with <code>page.mouse.move</code>, <code>page.mouse.down</code> and <code>page.mouse.up</code>, which use page coordinates, so add the position of the canvas's bounding box, or trigger pointer events on the canvas.",
-              "The number of strokes and points is shown under the pad and in its <code>data-strokes</code> and <code>data-points</code> attributes."
-            ]
-          },
-          {
-            "title": "Bar chart",
-            "points": [
-              "The canvas is 480 × 260 pixels, bar <em>i</em> (counting from 0) is 50 pixels wide and centred at x = 75 + 70 × <em>i</em>, and the axis is at y = 230, so clicking at y = 225 always hits a bar.",
-              "A click between or above the bars says no bar was clicked."
-            ]
-          },
-          {
-            "title": "Target",
-            "points": [
-              "The target has a radius of 15 pixels and appears at (60, 60), (340, 240), (200, 150), (320, 50) and (80, 250), in that order.",
-              "Its current centre is in the canvas's <code>data-target-x</code> and <code>data-target-y</code> attributes, a shortcut a real game would not give you."
-            ]
-          },
-          {
-            "title": "District map",
-            "points": [
-              "The map is SVG, so its regions are elements, but they have no role or accessible name and the <code>svg</code> is a single image to assistive technology, so role-based locators find nothing inside it.",
-              "Find a region with <code>[data-region=\"harbour\"]</code>. XPath needs <code>//*[local-name()='polygon']</code>, because SVG elements are in their own namespace.",
-              "The Harbour wraps around the Old Town, so the middle of its bounding box, where tools click and hover by default, is in the Old Town: click it with an offset, for example near its bottom edge.",
-              "The names on the map ignore the mouse and pass clicks to the region underneath, so a tool that checks which element is under the pointer before clicking, as Playwright does, waits for a name to receive the click and times out.",
-              "The tooltip only appears while the mouse is over a region and follows it, so it needs a hover rather than a click."
-            ]
-          },
-          {
-            "title": "Screenshot tests",
-            "points": [
-              "Everything is drawn at a fixed size in fixed colours, whatever the theme, with no animation and nothing random, so the same actions always give the same picture.",
-              "Take the screenshot of just the canvas or the map rather than the whole page, and expect small differences between browsers, operating systems and fonts (anti-aliasing and text): keep a baseline for each browser and platform, or allow a small threshold.",
-              "The pixels can also be read directly with <code>canvas.toDataURL()</code> or <code>getContext('2d').getImageData()</code>."
-            ]
-          }
-        ]
-      },
       "pad": {
         "title": "Drawing pad",
         "intro": "Hold the mouse button down and move to draw. Each line you draw is a stroke.",
@@ -532,38 +347,6 @@
     "challenging-selectors": {
       "title": "Challenging Selectors",
       "description": "Random IDs, identical buttons, split text and hidden duplicates that break naïve selectors.",
-      "information": {
-        "summary": "This page is built so that the obvious selectors fail. The Last action panel at the top shows what your last click actually did, so you can check you hit the element you meant to.",
-        "sections": [
-          {
-            "title": "IDs and order that change",
-            "points": [
-              "The IDs and class names in the first section (and the class names elsewhere) are random hashes, like those from CSS-in-JS libraries, and change every time the page loads, so find the field by its label and the buttons by their role and name instead.",
-              "The team table is shuffled on every load and every row has the same Edit and Delete buttons with no accessible name of their own, so pick the row by its content (the person's name or email) and then the button inside that row; a row position or nth match will hit someone else."
-            ]
-          },
-          {
-            "title": "Split text",
-            "points": [
-              "The greeting and unread message count are split across several elements, so a match on an element's own text will not find the whole sentence: match on the text of the parent, or normalise the text first.",
-              "The marking button's label is split the same way, but its accessible name is still the full sentence."
-            ]
-          },
-          {
-            "title": "Missing labels",
-            "points": [
-              "The two address blocks have fields whose labels are plain text that is not tied to the inputs, and the two blocks are identical apart from their title, so you have to locate a field relative to the nearby text or by its position inside the right block.",
-              "The two newsletter forms do the same thing: the labelled one has a heading, a label, a real button and data-testid attributes, while the unlabelled one only has a placeholder, a clickable div styled like a button and random class names, so compare how each locator strategy copes with both."
-            ]
-          },
-          {
-            "title": "Duplicate elements",
-            "points": [
-              "The Checkout button is in the page three times: a mobile and a desktop version, of which only one is shown depending on the screen width, and a third inside the closed More options panel, so a locator has to target the visible one rather than the first one in the DOM."
-            ]
-          }
-        ]
-      },
       "result": {
         "title": "Last action",
         "none": "Nothing yet",
@@ -647,33 +430,6 @@
     "check-box": {
       "title": "Checkbox",
       "description": "Tick checkboxes in a form, drawn as icons and in a parent and child tree.",
-      "information": {
-        "summary": "Three groups of checkboxes, each with its own catch. None of them is a native <code>&lt;input type=\"checkbox\"&gt;</code>: they are buttons with <code>role=\"checkbox\"</code>, so read their state from <code>aria-checked</code> (or a role-based query) rather than a <code>checked</code> property, and click them rather than using Cypress's <code>check()</code>, which only works on inputs.",
-        "sections": [
-          {
-            "title": "In a form",
-            "points": [
-              "The first box starts ticked and the second is disabled, so clicking it changes nothing.",
-              "The required box shows its error message and is marked <code>aria-invalid=\"true\"</code> until it is ticked; ticking it removes the message from the DOM."
-            ]
-          },
-          {
-            "title": "As icons",
-            "points": [
-              "The heart and the bookmark have no visible text: their names, Favorite and Bookmark, come from <code>aria-label</code>.",
-              "The only visual sign of their state is the filled icon, so check <code>aria-checked</code> rather than the picture."
-            ]
-          },
-          {
-            "title": "Parent and children",
-            "points": [
-              "Ticking the parent ticks both children, and unticking it clears them.",
-              "With only one child ticked the parent is neither checked nor unchecked: it has <code>aria-checked=\"mixed\"</code> and <code>data-state=\"indeterminate\"</code>, and clicking it then ticks both children.",
-              "Both children are labelled Child and share <code>data-testid=\"child\"</code>, so tell them apart by their position."
-            ]
-          }
-        ]
-      },
       "scenario-form": "Scenario within a form",
       "checked": "Checked",
       "required": "Required",
@@ -689,41 +445,6 @@
     "clipboard": {
       "title": "Clipboard",
       "description": "Copy values to the clipboard, read it back and see how pages can change or block a paste.",
-      "information": {
-        "summary": "Reading and writing the system clipboard needs permissions that are not part of the page, and every browser handles them differently, so grant <code>clipboard-read</code> and <code>clipboard-write</code> in your test framework (where it supports them) and check the result by reading the clipboard back rather than trusting the <em>Copied!</em> label.",
-        "sections": [
-          {
-            "title": "Permissions and browsers",
-            "points": [
-              "The Clipboard API only exists in a secure context (HTTPS or localhost) and must be called from a user gesture while the page has focus, so a click from a test that has moved focus elsewhere can still fail.",
-              "In Chromium, grant <code>clipboard-read</code> and <code>clipboard-write</code> (in Playwright with <code>context.grantPermissions</code>), or reading is refused with a permission error. Firefox and WebKit do not support these permissions in the same way: Firefox shows its own <em>Paste</em> pop-up for <code>readText</code>, which a test cannot click.",
-              "Headless browsers may use a clipboard of their own that is not shared with the operating system, and tests running in parallel on one machine can overwrite each other's clipboard in headed mode.",
-              "If permission is denied or the API is missing, the page shows an error explaining which, so the failure is easy to spot in a screenshot."
-            ]
-          },
-          {
-            "title": "Copying",
-            "points": [
-              "Each <em>Copy</em> button writes its value with <code>navigator.clipboard.writeText</code> and reads <em>Copied!</em> for two seconds. Assert on what the clipboard holds, not only on the label.",
-              "The API key is shown masked but the full key is copied, so the text on screen is not what ends up on the clipboard."
-            ]
-          },
-          {
-            "title": "Pasting",
-            "points": [
-              "<em>Paste from clipboard</em> reads the clipboard with <code>navigator.clipboard.readText</code> and shows what it found.",
-              "The notes field cancels the paste event and inserts a cleaned-up, plain-text version, so typing the text, setting the value or simulating a paste each gives a different result. A synthetic paste event needs a <code>clipboardData</code> holding <code>text/plain</code>.",
-              "The <em>Confirm password</em> field rejects pasted text, so a test that fills it by pasting fails and must type the password instead. Filling the field directly skips the paste event altogether."
-            ]
-          },
-          {
-            "title": "Blocked copying",
-            "points": [
-              "The second reference field cancels the <code>copy</code> and <code>cut</code> events, so selecting its text and pressing the copy shortcut leaves the clipboard unchanged. Compare it with the field next to it."
-            ]
-          }
-        ]
-      },
       "unavailable": {
         "title": "Clipboard unavailable"
       },
@@ -782,32 +503,6 @@
     "cookies-and-storage": {
       "title": "Cookies and Storage",
       "description": "Answer a cookie consent banner, save cookie preferences, keep a note for this tab only, and watch the cookies and storage change.",
-      "information": {
-        "summary": "Almost every real site shows a cookie consent banner on the first visit, and it covers the page until it is answered, so it is the first thing that gets in the way of an end-to-end test. Here the banner only appears a second after the page loads, the way banners added by a third-party script do, so checking that it is not there straight after the page loads passes too early.",
-        "sections": [
-          {
-            "title": "Where the state is kept",
-            "points": [
-              "The choice is remembered in the <code>cookie_consent</code> cookie (<code>accepted</code>, <code>rejected</code> or <code>custom</code>), and the analytics and marketing choices are kept in <code>localStorage</code> under <code>cookie_preferences</code>, so both survive a reload.",
-              "The session note is kept in <code>sessionStorage</code>, which belongs to a single tab: it survives a reload but is gone in a new tab or a new browser context."
-            ]
-          },
-          {
-            "title": "Keeping tests independent",
-            "points": [
-              "Tests that share a browser context leak this state into each other, so start each test with a clean context, or use Clear everything.",
-              "Clicking through the banner in every test is slow and brittle; instead, seed the state before the page loads, with <code>context.addCookies</code>, <code>page.addInitScript</code> or a saved <code>storageState</code> in Playwright, or <code>cy.setCookie</code> and <code>onBeforeLoad</code> in Cypress, as shown at the bottom of the page."
-            ]
-          },
-          {
-            "title": "Inspecting and clearing storage",
-            "points": [
-              "The live view only reads storage when this page changes it, so after changing storage from a test, press Refresh or reload the page.",
-              "Clear everything only removes what this scenario stores; the playground's own language and theme settings are kept."
-            ]
-          }
-        ]
-      },
       "banner": {
         "title": "We use cookies",
         "text": "We use necessary cookies to make this site work. With your permission we would also like to set analytics and marketing cookies. You can change your choice at any time."
@@ -878,41 +573,6 @@
     "date-picker": {
       "title": "Date Picker",
       "description": "A custom calendar date picker: single dates, disabled days, a date range and a field you can type into or pick from.",
-      "information": {
-        "sections": [
-          {
-            "title": "Navigating the calendar",
-            "points": [
-              "Each picker opens its calendar in a popup that is added at the end of the page's <code>&lt;body&gt;</code>, not next to its field, so look for it from the whole document rather than inside the field's container.",
-              "There is no typing into the appointment or trip pickers: to reach a date in another month, use the previous and next month buttons or the month and year lists, and check which month is showing first.",
-              "The trip picker stays open after the first day and closes after the last; picking a day before the first starts again from there.",
-              "In the calendar the arrow keys move by day and week, Page Up and Page Down by month, Home and End to the start and end of the week, Enter picks the focused day and Escape closes it."
-            ]
-          },
-          {
-            "title": "Which days can be picked",
-            "points": [
-              "Which days can be picked depends on today's date, read from the browser's clock when the page opens, so a test that picks \"next Monday\" or \"the 15th of this month\" gets a different date (or a disabled one) on a different day unless the clock is faked.",
-              "Disabled days are still shown and can be focused, but they are marked <code>aria-disabled</code>, struck through, and clicking them does nothing.",
-              "Appointments and trips can be booked up to the end of {{lastYear}}."
-            ]
-          },
-          {
-            "title": "Reading the chosen date",
-            "points": [
-              "Each day is a button whose text is just the day number, whose accessible name is the full date in the current language (e.g. \"Friday, November 20, 2026\") and which has a <code>data-date</code> attribute in ISO format.",
-              "Under each picker the chosen value is shown in ISO format (YYYY-MM-DD), the same in every language: assert on that rather than on the displayed text."
-            ]
-          },
-          {
-            "title": "Differences between languages",
-            "points": [
-              "The date of birth field follows the current language's format (MM/DD/YYYY in English, DD/MM/YYYY in French and Portuguese), so 03/04/2000 is 4 March in English but 3 April in French, and the text is only checked when Enter is pressed or the field loses focus; dates in the future or before {{minYear}} are refused.",
-              "The week starts on Sunday in English and Portuguese and on Monday in French, so the same date is in a different column."
-            ]
-          }
-        ]
-      },
       "iso-value": "Value (ISO):",
       "clear": "Clear",
       "calendar": {
@@ -956,26 +616,6 @@
     "drag-and-drop": {
       "title": "Drag and Drop",
       "description": "Drag elements from one side of the page and drop them on the other side.",
-      "information": {
-        "summary": "Drag the red <em>Drag Me!</em> box onto the grey drop zone as many times as you like: each drop adds a numbered yellow box to the zone and one to the Total Drops count.",
-        "sections": [
-          {
-            "title": "How the drag works",
-            "points": [
-              "The page uses the browser's native HTML5 drag and drop (<code>draggable</code> with <code>dragstart</code>, <code>dragover</code> and <code>drop</code> events sharing a <code>dataTransfer</code>) rather than following the mouse.",
-              "Playwright's <code>dragTo()</code> drives it directly. Cypress has no drag command, and Selenium's mouse actions do not start a native drag in every browser, so with those you may have to fire <code>dragstart</code>, <code>dragover</code> and <code>drop</code> yourself with a shared <code>DataTransfer</code>, or use a plugin.",
-              "A drop only counts when the drag started on the red box, which sets <code>text/plain</code> to <code>smallBox</code> in the <code>dataTransfer</code>."
-            ]
-          },
-          {
-            "title": "Checking the result",
-            "points": [
-              "Total Drops (<code>data-testid=\"total-drops\"</code>) counts every drop, and the dropped boxes are labelled Box 1, Box 2 and so on.",
-              "The red box never moves, so check the count and the new boxes rather than where the red box is."
-            ]
-          }
-        ]
-      },
       "box": "Box",
       "drag-me": "Drag Me",
       "drop-here": "Drop Here",
@@ -984,45 +624,11 @@
     "drag-and-drop-hard": {
       "title": "Drag and Drop (Hard)",
       "description": "Sort five random shapes by dragging each one onto the larger shape that matches it.",
-      "information": {
-        "summary": "Five small red shapes, each a circle or a square, have to be dropped onto the matching large shape: circles onto the circle and squares onto the square. Which shapes you get is random and changes on every load.",
-        "sections": [
-          {
-            "title": "Dropping shapes",
-            "points": [
-              "A shape dropped onto the matching target turns green and adds one to Total Correct; dropped onto the wrong one it turns yellow, and can be dragged again to put it right.",
-              "A green shape is finished and cannot be dragged again, so Total Correct reaches 5 once every shape is green.",
-              "The shapes stay where they are and only change colour, so check the colour or the count rather than looking for a shape inside a target."
-            ]
-          },
-          {
-            "title": "Finding the shapes",
-            "points": [
-              "Each shape's test id says what it is and its number, such as <code>draggable-circle-2</code> or <code>draggable-square-4</code>, and the targets are <code>drop-circle</code> and <code>drop-square</code>. As the mix is random, find the shapes by the start of their test id rather than a fixed list.",
-              "The shapes have no text, so their colour (red, yellow or green) is only in their inline <code>background-color</code> style.",
-              "Like the easy version, this uses native HTML5 drag and drop, with the shape's number as <code>shapeId</code> in the <code>dataTransfer</code>."
-            ]
-          }
-        ]
-      },
       "total-correct": "Total Correct"
     },
     "dropdown": {
       "title": "Dropdown",
       "description": "Pick options from a native select, a multi-select and a custom dropdown.",
-      "information": {
-        "summary": "There are three kinds of dropdown here. Your current choices are shown underneath.",
-        "sections": [
-          {
-            "title": "The dropdowns",
-            "points": [
-              "The first two are native <code>&lt;select&gt;</code> elements, so most frameworks can choose an option directly by its value or text; the second allows several options to be picked at once.",
-              "The third is a custom dropdown built from buttons and a list: it is not a <code>&lt;select&gt;</code>, and its options only exist in the DOM, at the end of the page, while it is open, so click it to open it and then click an option.",
-              "Some options are disabled and cannot be picked."
-            ]
-          }
-        ]
-      },
       "native": {
         "title": "Native select",
         "label": "Fruit",
@@ -1065,21 +671,6 @@
     "dynamic-loading": {
       "title": "Dynamic Loading",
       "description": "Elements that appear, disappear and change state after a random delay.",
-      "information": {
-        "summary": "Each section changes the page after a random delay of between {{min}} and {{max}} seconds, picked again every time, so a fixed sleep is sometimes too short and always slower than needed: wait for the condition you actually need instead.",
-        "sections": [
-          {
-            "title": "Each section",
-            "points": [
-              "The first section adds an element to the DOM only once its spinner finishes, so it cannot be found before then.",
-              "The second has its element in the DOM from the start but hidden with <code>display: none</code>, so it is <em>present</em> long before it is <em>visible</em>.",
-              "The third has an input that is disabled until the async step finishes, and clicking it while disabled does nothing.",
-              "The fourth removes its checkbox and later adds a brand new one, so a reference to the old element goes stale and has to be looked up again.",
-              "The last shows \"Loading...\" and then \"Still loading...\" before its final text, so waiting only for \"Loading...\" to go away is not enough: wait for the text you expect."
-            ]
-          }
-        ]
-      },
       "start": "Start",
       "loading": "Loading",
       "rendered": {
@@ -1120,27 +711,6 @@
     "dynamic-table": {
       "title": "Dynamic Table",
       "description": "Find a process in a table whose rows and values change on every load, and check its CPU against the green bar.",
-      "information": {
-        "summary": "The green bar under the table names one of the four processes and gives its CPU value, such as <em>Chrome CPU: 23.4%</em>. The task is to find that process's row in the table and check that its CPU cell shows the same value.",
-        "sections": [
-          {
-            "title": "What changes on every load",
-            "points": [
-              "The order of the rows and every value in them are random, and the green bar picks a different process each time, so a test cannot rely on a row's position or a fixed number.",
-              "The rows' test ids, such as <code>dynamic-table-row-0</code>, follow the order on screen, so they say where a row is, not which process it holds.",
-              "The process names are translated, so they change with the language too."
-            ]
-          },
-          {
-            "title": "Finding the value",
-            "points": [
-              "Read the process name from the green bar, find the row whose Name cell matches it, then read the cell in the CPU column of that row.",
-              "The columns are always in the same order, but finding the CPU column by its header is closer to how a real, changing table would need to be read.",
-              "The values are text with their units (<code>%</code>, <code>MB</code>, <code>Mbps</code> and <code>MB/s</code>), so compare them as text, or remove the unit before comparing them as numbers."
-            ]
-          }
-        ]
-      },
       "name": "Name",
       "cpu": "CPU",
       "memory": "Memory",
@@ -1154,27 +724,6 @@
     "file-upload": {
       "title": "File Upload",
       "description": "Choose a file through a hidden file input, then wait for a slow, simulated upload to finish.",
-      "information": {
-        "summary": "Choose any file, click Upload and wait for the success message. Nothing is sent anywhere: the upload is simulated and takes a random 1 to 10 seconds, whatever the size of the file.",
-        "sections": [
-          {
-            "title": "Choosing a file",
-            "points": [
-              "The real <code>&lt;input type=\"file\"&gt;</code> (<code>data-testid=\"select-file\"</code>) is hidden, and the Select File button is its label, which opens the system's file picker. Set the file on the input instead, with <code>setInputFiles()</code> in Playwright or <code>selectFile()</code> in Cypress (with <code>{ force: true }</code>, as the input is hidden).",
-              "Any type and size of file is accepted, one at a time, and the chosen file's name is shown underneath.",
-              "The Upload button only appears once a file has been chosen."
-            ]
-          },
-          {
-            "title": "Waiting for the upload",
-            "points": [
-              "While the upload runs, the Upload button is disabled and a progress bar with no value (an indeterminate one) is shown.",
-              "An upload can take up to 10 seconds, longer than the default assertion timeouts in Cypress (4 seconds) and Playwright (5 seconds), so give the success message a longer timeout rather than adding a fixed wait.",
-              "Choosing another file clears the previous message."
-            ]
-          }
-        ]
-      },
       "please-select-file": "Please select a file.",
       "select-file": "Select File",
       "selected-file": "File: \"{{ filename }}\"",
@@ -1184,60 +733,11 @@
     "file-download": {
       "title": "File Download",
       "description": "Click a button that downloads a text file, then check the file that was saved.",
-      "information": {
-        "summary": "The Download File button saves a small text file called <code>file.txt</code> that contains <code>Sample content</code>. The file is made in the browser rather than fetched from a server, so a test has to catch the download itself.",
-        "sections": [
-          {
-            "title": "How the download works",
-            "points": [
-              "The button creates a <code>blob:</code> URL for the file, clicks a temporary link with a <code>download</code> attribute, then removes the link and revokes the URL straight away, so there is no link on the page to read and no address to request again.",
-              "Nothing on the page changes after a download, so the only thing to check is the file."
-            ]
-          },
-          {
-            "title": "Checking the file",
-            "points": [
-              "In Playwright, wait for the <code>download</code> event while clicking, then check its <code>suggestedFilename()</code> and the contents of the saved file.",
-              "In Cypress, the file is saved to the <code>downloadsFolder</code> (<code>cypress/downloads</code> by default), so read it from there with <code>cy.readFile()</code>.",
-              "In Selenium and WebdriverIO, set the browser's download folder in its options and wait for the file to appear there, as it can take a moment to finish writing."
-            ]
-          }
-        ]
-      },
       "download": "Download File"
     },
     "form-validation": {
       "title": "Form Validation",
       "description": "A registration form whose inputs are validated, so you can check the error messages shown for incorrectly formatted values.",
-      "information": {
-        "summary": "A registration form that checks every field, so you can check the error message for each kind of mistake. The browser's own validation is turned off (<code>novalidate</code>), so every message comes from the page.",
-        "sections": [
-          {
-            "title": "When errors appear",
-            "points": [
-              "A field is checked when you leave it and again when the form is submitted; once it has been checked, its message updates as you type.",
-              "Submitting with mistakes shows how many there are at the top of the form, in an alert (<code>data-testid=\"form-error-summary\"</code>).",
-              "A valid form shows a success message with your name, and Reset empties every field and message."
-            ]
-          },
-          {
-            "title": "The rules",
-            "points": [
-              "Full name is required, at least 2 characters long and only letters, spaces, hyphens and apostrophes.",
-              "Email is required and must look like <code>name@example.com</code>.",
-              "Phone and website are optional but must be valid if filled in: a phone number has 10 to 15 digits, may start with + and may contain spaces, and a website must start with <code>http://</code> or <code>https://</code>.",
-              "Age is required and must be a whole number from 18 to 120.",
-              "The password needs at least 8 characters with an uppercase letter, a lowercase letter and a number, and Confirm Password must match it."
-            ]
-          },
-          {
-            "title": "Finding the messages",
-            "points": [
-              "Each field's test id is its name, such as <code>email</code> or <code>confirm-password</code>, and its error and hint add <code>-error</code> and <code>-hint</code>, such as <code>email-error</code>."
-            ]
-          }
-        ]
-      },
       "submit-button": "Submit",
       "reset-button": "Reset",
       "error-summary_one": "Please fix the {{count}} error below.",
@@ -1285,19 +785,6 @@
     "geolocation": {
       "title": "Geolocation",
       "description": "Find the browser's location, then follow it as it moves.",
-      "information": {
-        "summary": "The browser asks for permission before sharing its location, and that prompt is not part of the page, so grant (or deny) the geolocation permission and set a fake location in your test framework before clicking.",
-        "sections": [
-          {
-            "title": "Getting the location",
-            "points": [
-              "\"Get my location\" reads the position once; \"Start watching\" keeps following it, so change the fake location and the page will update.",
-              "The coordinates, their accuracy and the nearest of a few well known cities are shown underneath.",
-              "If permission is denied, the position cannot be found or it takes too long, an error explains why."
-            ]
-          }
-        ]
-      },
       "button": {
         "get-location": "Get my location",
         "start-watching": "Start watching",
@@ -1342,19 +829,6 @@
     "hovers": {
       "title": "Hovers",
       "description": "Interact with elements that only appear while the mouse is over something.",
-      "information": {
-        "summary": "Everything on this page only shows up while the mouse pointer rests on something, so tests have to hover first. The last thing you did is shown underneath.",
-        "sections": [
-          {
-            "title": "Each section",
-            "points": [
-              "The details on each profile card are not in the DOM at all until the card is hovered, and on purpose there is no other way to reveal them.",
-              "The buttons on each file are always in the DOM but stay invisible until their row is hovered, so a test that clicks them straight away will be told they are not visible; keyboard users can also reveal them by tabbing to the row.",
-              "The menu opens its submenus a moment after an item is hovered and closes a moment after the pointer leaves it, so move through it the way a person would; clicking an item opens its submenu straight away."
-            ]
-          }
-        ]
-      },
       "profiles": {
         "title": "Profiles",
         "view": "View profile",
@@ -1393,19 +867,6 @@
     "iframes": {
       "title": "IFrames",
       "description": "Forms, nested frames and a rich text editor that live inside iframes, so you have to switch into a frame to reach them.",
-      "information": {
-        "summary": "Everything inside an iframe belongs to a separate document, so selectors run on the page cannot find it: tests have to switch into the frame first, and back out again to check anything on the page.",
-        "sections": [
-          {
-            "title": "Each example",
-            "points": [
-              "The form sends its message to the page outside the frame.",
-              "The counter sits inside a frame that is itself inside another frame, so it takes two switches to reach.",
-              "The rich text editor works like many classic WYSIWYG editors: the text you edit is the body of a frame, while its toolbar, word count and HTML output are on the page around it, so a test has to move between the two."
-            ]
-          }
-        ]
-      },
       "form": {
         "title": "Form in a frame",
         "description": "Send a name from a form inside a frame to the page around it.",
@@ -1444,26 +905,6 @@
     "infinite-scroll": {
       "title": "Infinite Scroll",
       "description": "A list that keeps loading new items every time you reach the bottom of the page.",
-      "information": {
-        "summary": "The list starts with 10 items and loads 10 more each time you reach the bottom. It never runs out, so wait for the new items to appear rather than for the end of the list.",
-        "sections": [
-          {
-            "title": "Loading more",
-            "points": [
-              "More items load when an invisible marker under the last item (<code>data-testid=\"scroll-sentinel\"</code>) comes into view, so scroll to the bottom of the page or scroll that marker into view.",
-              "A loading message shows for 0.8 seconds before each batch of 10 is added, and the count above the list (<code>data-testid=\"item-count\"</code>), such as <em>Showing 20 items</em>, goes up.",
-              "In a very tall window the marker is still in view after a batch loads, so batches keep loading until it is pushed off screen."
-            ]
-          },
-          {
-            "title": "Checking the items",
-            "points": [
-              "Items are numbered in order and each is labelled with its batch, so item 11 is the first of batch 2; their test ids are <code>item-</code> and the number, such as <code>item-11</code>.",
-              "Each item is an <code>article</code> with <code>aria-posinset</code> set to its number, and the list does not say how long it is (<code>aria-setsize=\"-1\"</code>), as it has no end."
-            ]
-          }
-        ]
-      },
       "feed-label": "Infinite feed",
       "count_one": "Showing {{count}} item",
       "count_other": "Showing {{count}} items",
@@ -1475,32 +916,6 @@
     "js-alerts": {
       "title": "JS Alerts",
       "description": "Handle the browser's native alert, confirm and prompt dialogs, which are not part of the page.",
-      "information": {
-        "summary": "Each button opens one of the browser's built-in JavaScript dialogs: an alert, a confirm or a prompt. They are drawn by the browser rather than the page, so they are not in the DOM and cannot be found with selectors.",
-        "sections": [
-          {
-            "title": "Handling a dialog",
-            "points": [
-              "Set up a handler for the dialog before clicking the button that opens it, check its message, then accept or dismiss it; while a dialog is open the page cannot be used.",
-              "Playwright dismisses dialogs by itself unless you handle its <code>dialog</code> event. Cypress accepts alerts and confirms by itself, lets you check them with the <code>window:alert</code> and <code>window:confirm</code> events, and needs <code>window.prompt</code> stubbed to answer a prompt. Selenium switches to the dialog with <code>switchTo().alert()</code>."
-            ]
-          },
-          {
-            "title": "Each dialog",
-            "points": [
-              "The alert only has an OK button.",
-              "The confirm asks <em>Do you want to continue?</em>, and OK and Cancel give different results.",
-              "The prompt asks for your name with <em>Tester</em> already filled in. Accepting it, typing your own answer first, sending it empty and cancelling each give a different result."
-            ]
-          },
-          {
-            "title": "The result",
-            "points": [
-              "Once the dialog closes, the Result panel (<code>data-testid=\"result\"</code>) shows what you did, such as <em>You clicked Cancel</em> or <em>You entered: Tester</em>."
-            ]
-          }
-        ]
-      },
       "button": {
         "alert": "Open JS Alert",
         "confirm": "Open JS Confirm",
@@ -1525,19 +940,6 @@
     "key-presses": {
       "title": "Key Presses",
       "description": "Interact with the page by pressing keys on the keyboard.",
-      "information": {
-        "summary": "Everything on this page is driven by the keyboard, so tests have to send key presses rather than click or type text. There is no mouse alternative on purpose.",
-        "sections": [
-          {
-            "title": "Each control",
-            "points": [
-              "The key reader shows the last key pressed in its text box, with its key and code and any modifier keys held with it, plus the last few keys pressed.",
-              "The counter only changes while it has focus: the up and down (or right and left) arrow keys move it by 1, holding Shift moves it by 10, Home and End jump to the lowest and highest values and Escape puts it back where it started.",
-              "The hold control only confirms if Space is held down for a whole second; letting go sooner does not count, and holding a key down repeats its keydown event, so each repeat has to be ignored."
-            ]
-          }
-        ]
-      },
       "reader": {
         "title": "Key reader",
         "label": "Press any key in this box",
@@ -1570,27 +972,6 @@
     "login-form": {
       "title": "Login Form",
       "description": "A typical login form with username and password.",
-      "information": {
-        "summary": "Log in with the username <strong>admin</strong> and the password <strong>Passw0rd!</strong>. Any other combination shows an error.",
-        "sections": [
-          {
-            "title": "Logging in",
-            "points": [
-              "Both values must match exactly, so they are case-sensitive and spaces count.",
-              "Pressing Enter in the password field logs in, as well as the Login button.",
-              "A failed login shows <em>The credentials you have provided are invalid</em> and keeps what was typed; a successful one replaces the form with a message and a Logout button."
-            ]
-          },
-          {
-            "title": "Staying logged in",
-            "points": [
-              "Logging in saves <code>username</code> and <code>isLoggedIn</code> in <code>localStorage</code>, so the page is still logged in after a reload or in a new tab.",
-              "If your tests share a browser session (as in Selenium, or Cypress with test isolation turned off), that state carries over from one test to the next, so log out or clear <code>localStorage</code> first; to start a test already logged in, set <code>username</code> and <code>isLoggedIn</code> (to <code>true</code>) before the page loads.",
-              "Logging out removes both keys and empties the form."
-            ]
-          }
-        ]
-      },
       "logged-in-message": "You are currently logged in!",
       "invalid-credentials": "The credentials you have provided are invalid",
       "login-button": "Login",
@@ -1601,32 +982,6 @@
     "modal-dialogs": {
       "title": "Modal Dialogs",
       "description": "Open, use and close dialogs drawn in the page, including one that appears by itself on load.",
-      "information": {
-        "sections": [
-          {
-            "title": "Finding a modal",
-            "points": [
-              "Unlike the browser's native dialogs (see JS Alerts), these modals are ordinary DOM elements, but each is rendered in its own element at the <em>end of <code>&lt;body&gt;</code></em>, outside the scenario's markup, so look for it from the document rather than inside the section that opened it.",
-              "While a modal is open a full-screen backdrop sits over the page and everything behind it is marked <code>inert</code> and <code>aria-hidden=\"true\"</code>: clicks on the page are intercepted by the backdrop and background elements drop out of the accessibility tree, so role-based queries no longer find them."
-            ]
-          },
-          {
-            "title": "Each modal",
-            "points": [
-              "The basic modal closes with its close button, the Escape key or a click on the backdrop, and reports which one was used.",
-              "The confirmation modal guards a delete: the safe Cancel button gets focus, and Escape or the backdrop also cancel.",
-              "The form modal keeps focus trapped inside while it is open (Tab wraps around) and gives focus back to the button that opened it when it closes.",
-              "The stacked modals show a second dialog on top of the first: Escape and the backdrop only close the top one."
-            ]
-          },
-          {
-            "title": "The welcome modal",
-            "points": [
-              "A welcome modal opens <em>by itself</em> on your first visit and can only be closed with its button; that choice is remembered in <code>localStorage</code> under <code>modal-dialogs-entry-dismissed</code>, so tests must either dismiss it or set that key before the page loads."
-            ]
-          }
-        ]
-      },
       "close": "Close",
       "cancel": "Cancel",
       "basic": {
@@ -1686,20 +1041,6 @@
     "mouse-interactions": {
       "title": "Mouse Interactions",
       "description": "Double-click, right-click, click and hold, and click with different mouse buttons and modifier keys.",
-      "information": {
-        "summary": "Every target on this page needs more than a plain left click, and each testing tool exposes these mouse actions differently. The panel at the top always shows the last interaction. There is no keyboard alternative for the double-click, hold or mouse button targets on purpose.",
-        "sections": [
-          {
-            "title": "Each target",
-            "points": [
-              "The double-click target ignores single clicks and only counts double-clicks.",
-              "The note opens a custom context menu on right-click instead of the browser's own one, and its items pin, highlight or delete the note; the menu is a separate element positioned where the pointer was, and it closes on Escape or when you press anywhere outside it.",
-              "The hold button only confirms if the left mouse button is held down on it for a whole second, so the press and release have to be sent as separate steps with a wait in between; letting go or moving off it sooner does not count, and the progress bar shows how far through the hold you are.",
-              "The last box reports which mouse button was pressed (left, middle, right, back or forward) and which modifier keys (Shift, Control, Alt, Meta) were held at the time."
-            ]
-          }
-        ]
-      },
       "double-click": {
         "title": "Double-click",
         "instructions": "Only a double-click counts here: single clicks are ignored.",
@@ -1765,38 +1106,6 @@
     "multi-step-form": {
       "title": "Multi-Step Form",
       "description": "A sign-up wizard spread over several steps, with per-step validation, a step that only appears for business accounts, an optional step, a review page with edit links, and answers that survive a reload. The current step is kept in the URL.",
-      "information": {
-        "summary": "The form is split into steps: personal details, company details (business accounts only), address, preferences (optional) and a review. Each step has its own URL, such as <code>?step=address</code>, and answers are saved in <code>sessionStorage</code> as you go.",
-        "sections": [
-          {
-            "title": "Steps and the URL",
-            "points": [
-              "Next adds a history entry, so the browser's back button goes back a step, just like the form's Back button.",
-              "A step can only be shown once every step before it is finished. Opening <code>?step=review</code> on a fresh page lands on the first step instead, and the URL is corrected with <code>history.replaceState</code>. Wait for the URL or the step heading to settle rather than asserting straight after navigating.",
-              "To deep-link to a later step, either fill in the earlier steps through the UI, or seed the <code>multi-step-form</code> key in <code>sessionStorage</code> before the page loads, for example with <code>page.addInitScript()</code> in Playwright or <code>onBeforeLoad</code> in Cypress. The data must be valid and the earlier steps listed as <code>completed</code> (or <code>skipped</code>, for the optional step)."
-            ]
-          },
-          {
-            "title": "Validation and conditional content",
-            "points": [
-              "Next only checks the fields on the current step. Errors appear after Next is clicked, then update as you type, and focus moves to the first field with an error.",
-              "Back does not validate, so a finished step can be left invalid. Going forward again, or opening a later step's URL, brings you back to it.",
-              "Choosing <em>Business</em> adds a company details step, so the step count changes from 4 to 5 and every later step moves up by one. Find steps by name or by the <code>data-step</code> attribute, not by their position.",
-              "The preferences step is optional: Skip moves on without saving it as completed, and the review shows it as skipped. The phone number field only exists while <em>Phone</em> is the chosen contact method.",
-              "Switching back to a personal account hides the company step. Its answers are kept, but no longer shown on the review."
-            ]
-          },
-          {
-            "title": "Review, focus and saved answers",
-            "points": [
-              "Every section on the review has a link whose visible text is just <em>Edit</em>. Their accessible names say which step they open, for example <em>Edit Address</em>, so look them up by role and name. After an edit, the main button reads <em>Save and return to review</em> instead of Next.",
-              "When the step changes, focus moves to the step's heading. Typing straight after clicking Next types into nothing.",
-              "Answers survive a reload but not a new tab or a new browser context, as <code>sessionStorage</code> belongs to one tab. Start over, or clear the storage, so tests do not see each other's answers. Submitting clears them too.",
-              "Each step is a natural page object, with a shared component for the progress list and the Back, Next and Skip buttons, and the steps map well onto BDD scenarios such as <em>Given I have filled in my personal details</em>."
-            ]
-          }
-        ]
-      },
       "progress-label": "Form progress",
       "step-count": "Step {{current}} of {{total}}",
       "optional": "optional",
@@ -1884,18 +1193,6 @@
     "multiple-windows": {
       "title": "Multiple Windows",
       "description": "Links and buttons that open new tabs and popup windows, which tests have to switch to and back from.",
-      "information": {
-        "summary": "Every tab or window has a document of its own, so a test only sees the one it is focused on: it has to wait for the new window, switch to it, and switch back to the original afterwards. Each window sets its own document title to tell it apart.",
-        "sections": [
-          {
-            "title": "Each example",
-            "points": [
-              "The popup sends a message back to the window that opened it, then closes itself, while the page keeps track of whether it is still open.",
-              "The two named-window links both open in the same window, so clicking the second reuses it instead of opening another."
-            ]
-          }
-        ]
-      },
       "new-tab": {
         "title": "New tab",
         "description": "A link that opens a page in a new tab.",
@@ -1954,27 +1251,6 @@
     "notification": {
       "title": "Notification",
       "description": "Trigger notifications that show as a popup and as a message on the page, then disappear by themselves.",
-      "information": {
-        "summary": "Each button shows its message twice: as a popup over the page and as an alert under the buttons. Both disappear by themselves after 6 seconds.",
-        "sections": [
-          {
-            "title": "The popup and the alert",
-            "points": [
-              "The popup is placed in a notifications region (labelled <em>Notifications (F8)</em>) and has a test id made of <code>notification-</code> and its type, such as <code>notification-success</code>.",
-              "The alert under the buttons has a test id made of <code>message-</code> and its type, and its type in capitals as its title, such as <em>SUCCESS</em>.",
-              "The popup can be closed early with its close button, but the alert cannot: it always stays for the full 6 seconds."
-            ]
-          },
-          {
-            "title": "Timing",
-            "points": [
-              "All four buttons are disabled while the alert is shown, so only one notification can be shown at a time: wait for the alert to go before triggering the next one.",
-              "The popup's timer pauses while the pointer is over it or it has focus, so a test that hovers over it or clicks it keeps it open for longer than 6 seconds, while the alert still goes on time.",
-              "Rather than waiting 6 seconds, your framework's clock control (such as <code>page.clock</code> in Playwright or <code>cy.clock()</code> in Cypress) can move time on."
-            ]
-          }
-        ]
-      },
       "generate-notification": "Generate Notification",
       "type": {
         "success": "Success",
@@ -1992,35 +1268,6 @@
     "paginated-table": {
       "title": "Paginated Table",
       "description": "Find invoices across the pages of a table with search, filters, row selection and a bulk action.",
-      "information": {
-        "summary": "The table holds 143 invoices, shown 10, 25 or 50 at a time. The summary, dates and amounts are worded and formatted differently in each language.",
-        "sections": [
-          {
-            "title": "Loading",
-            "points": [
-              "Every change (a new page, page size, search or filter) loads for a random {{min}} to {{max}} ms, and while it loads the old rows stay on screen: the table is marked <code>aria-busy=\"true\"</code>, an overlay with a spinner covers it and the pager, page size and checkboxes are disabled.",
-              "Checking the rows straight after a click can read the old page, so wait for the load to finish or for the row count summary to change."
-            ]
-          },
-          {
-            "title": "Searching, filtering and paging",
-            "points": [
-              "The search box only searches once typing has paused for {{debounce}} ms, and then loads again; it matches the invoice number or the customer, ignoring case and accents (\"cafe\" finds \"Café Étoile\").",
-              "A new search, filter or page size goes back to page 1, and both ends of the date range are included.",
-              "The pager shows the first and last pages and those either side of the current one, with … for the rest, so the page you want may not have a button yet; the current page is marked <code>aria-current=\"page\"</code>.",
-              "When nothing matches, the table shows a message with a button to clear the filters, and the pager is removed."
-            ]
-          },
-          {
-            "title": "Selecting rows",
-            "points": [
-              "Selected rows stay selected when you change page or filter, even when they are no longer shown, and the selected count includes them.",
-              "The checkbox in the header only selects the rows on the current page, and is partly checked when only some of them are.",
-              "Marking invoices as paid changes them straight away, so with a status filter on they can disappear from the page."
-            ]
-          }
-        ]
-      },
       "filters": {
         "search": "Search",
         "search-placeholder": "Invoice number or customer",
@@ -2075,27 +1322,6 @@
     "radio-button": {
       "title": "Radio Button",
       "description": "Pick a primary colour, then a secondary colour from a second set that depends on the first choice.",
-      "information": {
-        "summary": "Picking a primary colour shows a second set of secondary colours, and which ones it offers depends on the primary colour picked.",
-        "sections": [
-          {
-            "title": "The two sets",
-            "points": [
-              "Red offers Purple and Orange, Blue offers Purple and Green, and Yellow offers Orange and Green.",
-              "White is disabled and cannot be picked.",
-              "Changing the primary colour clears the secondary choice, even when the new set offers the same colour.",
-              "Each radio's test id has its set and position, such as <code>radio-button-group-2-1</code>, and the second set changes with the first choice, so the same test id is Purple after Red but Orange after Yellow: check the label as well."
-            ]
-          },
-          {
-            "title": "Not native radio buttons",
-            "points": [
-              "Like the checkboxes in the Checkbox scenario, these are buttons with <code>role=\"radio\"</code> and <code>aria-checked</code> rather than <code>&lt;input type=\"radio\"&gt;</code>, so click them rather than using Cypress's <code>check()</code>, and read their state from <code>aria-checked</code>.",
-              "Each set is a <code>radiogroup</code>: Tab moves into it once, and the arrow keys then move to and pick the next radio, skipping the disabled White."
-            ]
-          }
-        ]
-      },
       "first-set": "Primary Colours",
       "second-set": "Secondary Colours",
       "first": {
@@ -2113,26 +1339,6 @@
     "shadow-dom": {
       "title": "Shadow DOM",
       "description": "Elements hidden inside open, nested and closed shadow roots, so you can check how your tools reach into the shadow DOM.",
-      "information": {
-        "summary": "Four examples hidden inside shadow roots. Regular selectors stop at a shadow root's boundary, so each one tests how your tool reaches inside.",
-        "sections": [
-          {
-            "title": "Each example",
-            "points": [
-              "The open shadow root holds a small form. Playwright's locators reach into open shadow roots by themselves, Cypress does with <code>.shadow()</code> or the <code>includeShadowDom</code> option, and Selenium through the host's shadow root.",
-              "The nested example has a shadow root inside another one, so it takes two hops: into the outer host, then into the inner one.",
-              "The slotted button is shown inside a shadow root but belongs to the light DOM, so ordinary selectors find it from the page.",
-              "The closed shadow root cannot be reached at all through <code>host.shadowRoot</code>, which is <code>null</code>, and Playwright's locators do not pierce it either. Reach its button another way, such as tabbing to it with the keyboard or clicking where it is shown on screen."
-            ]
-          },
-          {
-            "title": "Checking the result",
-            "points": [
-              "Every example shows its result where you can check it: the greeting, the counter and the slotted button's count are next to them, and the closed root's count is outside it, in the light DOM (<code>data-testid=\"closed-shadow-status\"</code>)."
-            ]
-          }
-        ]
-      },
       "open": {
         "title": "Open shadow root",
         "description": "A small form rendered inside an open shadow root.",
@@ -2168,19 +1374,6 @@
     "sortable-table": {
       "title": "Sortable Table",
       "description": "Sort a table by clicking its column headers.",
-      "information": {
-        "summary": "Click a column header to sort by it: the first click sorts ascending, the second descending and the third puts the rows back in their original order. The current sort is shown underneath the table.",
-        "sections": [
-          {
-            "title": "What to look out for",
-            "points": [
-              "The sorted column's header says which way it is sorted in its aria-sort attribute, and the other headers have none; the Email column cannot be sorted.",
-              "The values are picked to catch naive sorting: salaries and project counts sort wrongly as text, start dates are shown in your language's format, one name starts with an accented letter, and several people share a department (they keep their original order when tied).",
-              "The contractor has no salary and always sorts last, whichever way the column is sorted."
-            ]
-          }
-        ]
-      },
       "columns": {
         "name": "Name",
         "department": "Department",
@@ -2207,40 +1400,6 @@
     "time-and-timers": {
       "title": "Time and Timers",
       "description": "A countdown offer, an inactivity timeout, relative timestamps, time-of-day content, a debounced search and a throttled button.",
-      "information": {
-        "summary": "Everything on this page depends on the current time or on time passing, and the waits are deliberately long: the offer runs for five minutes, and the session warning only appears after ten minutes without any activity.",
-        "sections": [
-          {
-            "title": "Controlling the clock",
-            "points": [
-              "Waiting for them in real time makes a test slow and flaky, so take control of the clock instead, with <code>page.clock</code> in Playwright, <code>cy.clock()</code> and <code>cy.tick()</code> in Cypress, or <code>vi.useFakeTimers()</code> in Vitest.",
-              "Install the fake clock before the page loads, because timers started before it are left on the real clock.",
-              "The page re-reads the clock every second and works out every state from the current time, so jumping the clock forward (for example with <code>page.clock.fastForward()</code>, which fires a due timer only once) lands on the right state straight away."
-            ]
-          },
-          {
-            "title": "What depends on the clock",
-            "points": [
-              "The greeting and the opening hours banner depend on the time of day and the day of the week, so a test that does not fix the time passes or fails depending on when it runs: set a fixed time such as a Saturday, or a weekday at 08:00, before loading the page. They also use the browser's time zone.",
-              "The relative timestamps move from \"just now\" to \"1 minute ago\" and on to hours and days, and their exact time is in the <code>datetime</code> attribute."
-            ]
-          },
-          {
-            "title": "Session timeout",
-            "points": [
-              "The session timeout counts any mouse movement, click, key press or scroll as activity, so a test that moves the mouse while waiting resets it.",
-              "The warning covers the whole page, so while it is showing every other click on the page is intercepted until it is dismissed; once the warning is showing only Stay signed in keeps the session, and once signed out only Sign in again starts a new one."
-            ]
-          },
-          {
-            "title": "Search and save",
-            "points": [
-              "The search only runs once you stop typing for half a second, so a test should wait for the results, or advance the clock, rather than check them straight after typing; the counter under the search box shows how many searches actually ran.",
-              "Save is throttled: after a save, further clicks for two seconds are ignored, so clicking it twice in quick succession only saves once."
-            ]
-          }
-        ]
-      },
       "clock": {
         "title": "Time of day",
         "instructions": "The greeting changes with the time of day, and the shop is open from Monday to Friday, during office hours only.",
@@ -2317,26 +1476,6 @@
     "tooltip-page": {
       "title": "Tooltips",
       "description": "Show tooltips on a disabled button, on a button whose tooltip holds a link and on text that is cut short.",
-      "information": {
-        "summary": "Each tooltip only appears while the pointer is over its element or the element has keyboard focus, so a test has to hover (or focus) first. It appears 100 ms after the hover starts and is removed from the DOM when the pointer leaves or Escape is pressed.",
-        "sections": [
-          {
-            "title": "Each tooltip",
-            "points": [
-              "The delete button is disabled, and disabled buttons do not fire pointer events, so its tooltip is triggered by the element wrapped around it (<code>data-testid=\"delete-button\"</code>): hover that rather than the button itself.",
-              "The More info tooltip holds a link. The tooltip stays open while the pointer moves from the button onto it, so move straight onto the link before clicking it.",
-              "The long text is cut short with an ellipsis, and its tooltip shows it in full. The full text is still in the DOM, so a text match succeeds even though not all of it is visible."
-            ]
-          },
-          {
-            "title": "Finding a tooltip",
-            "points": [
-              "An open tooltip has <code>role=\"tooltip\"</code>, so find it by that role and check its text, rather than relying on its position or styling.",
-              "Each tooltip is shown beside its element, inside the page rather than at the end of <code>&lt;body&gt;</code>."
-            ]
-          }
-        ]
-      },
       "no-permission": "You don't have permission to do this",
       "more-information": "More info",
       "more-information-msg": "For more information, click here:",
@@ -2346,27 +1485,6 @@
     "slider-page": {
       "title": "Sliders",
       "description": "Set values with a single slider, a two-handle range slider and a slider tied to a number box.",
-      "information": {
-        "summary": "These sliders are not <code>&lt;input type=\"range\"&gt;</code> elements, so a value cannot be filled in: each handle is an element with <code>role=\"slider\"</code> that is moved by dragging it or with the keyboard. All three go from 1 to 100 in steps of 1.",
-        "sections": [
-          {
-            "title": "Moving a handle",
-            "points": [
-              "A handle's value is in <code>aria-valuenow</code>, with its limits in <code>aria-valuemin</code> and <code>aria-valuemax</code>.",
-              "Once a handle has focus, the arrow keys move it by 1, Shift with an arrow key or Page Up and Page Down move it by 10, and Home and End jump to 1 and 100.",
-              "Dragging works too, but where a handle lands depends on how wide the slider is, so a drag by a fixed number of pixels gives different values on different screens: the keyboard is more reliable."
-            ]
-          },
-          {
-            "title": "Each slider",
-            "points": [
-              "The basic slider shows its value beside its label; the readout has no test id of its own, so look for it inside <code>basic-slider-container</code>.",
-              "The range slider has two handles, at 1 and 25 to start with, which can meet at the same value; its values are always kept in order, so the first handle holds the lower one.",
-              "The last slider is tied to the number box beside it (<code>data-testid=\"input-slider-text\"</code>): typing a number moves the handle, and moving the handle changes the number. A number outside 1 to 100 is clamped to the nearest limit, so typing 150 sets 100."
-            ]
-          }
-        ]
-      },
       "basic-slider": "Basic Slider",
       "range-slider": "Slider with Range",
       "slider-with-input": "Slider with input",
@@ -2375,33 +1493,6 @@
     "various-inputs": {
       "title": "Various Inputs",
       "description": "Every common type of HTML input, each with an output that mirrors what you type so you can check it.",
-      "information": {
-        "summary": "Each row has a native input on the left and a read-only output on the right that shows exactly what the input holds, so you can type into one and check the other.",
-        "sections": [
-          {
-            "title": "The inputs",
-            "points": [
-              "There are text, password, number, date and multi-line text inputs, each with a test id named after its type: <code>text-input</code>, <code>password-input</code>, <code>number-input</code>, <code>date-input</code> and <code>textarea-input</code>.",
-              "The outputs are plain read-only text boxes, so the password shows in clear text.",
-              "When what is typed into the number input is not a valid number, its value is empty, so its output is empty too."
-            ]
-          },
-          {
-            "title": "Dates",
-            "points": [
-              "How the date input looks and is typed into depends on the browser and its language, but its value, which the output shows, is always <code>yyyy-mm-dd</code>.",
-              "Most frameworks can set it directly with a value in that form, such as <code>2025-01-31</code>, rather than typing the day, month and year separately."
-            ]
-          },
-          {
-            "title": "Clearing",
-            "points": [
-              "Each single-line input shows its own clear button once it has a value; the multi-line text input has none.",
-              "The Clear All button at the top empties every input at once."
-            ]
-          }
-        ]
-      },
       "input": "Input",
       "output": "Output",
       "text": "Text",
@@ -2414,37 +1505,6 @@
     "virtualised-list": {
       "title": "Virtualised List",
       "description": "Lists of 10,000 rows and a grid of 260,000 cells where only the rows on screen exist in the DOM. Rows are created, reused and removed as you scroll.",
-      "information": {
-        "summary": "Each list has 10,000 rows and the grid has 260,000 cells, but only the handful near the viewport are in the DOM. The count above each list shows how many rows are rendered right now and which ones, so you can watch them change as you scroll.",
-        "sections": [
-          {
-            "title": "Rows off screen do not exist",
-            "points": [
-              "Looking for row {{fixedTarget}} straight away finds nothing: it is not hidden, it is simply not in the DOM yet. <code>scrollIntoView()</code> cannot help either, as there is no element to call it on. Scroll the list itself (not the page) until the row is rendered, then find it.",
-              "Counting rows with <code>getAllByRole('listitem')</code>, <code>locator.count()</code> or <code>should('have.length')</code> gives the number rendered, not the total. The real totals are in <code>aria-setsize</code> on each row, and <code>aria-rowcount</code> and <code>aria-colcount</code> on the grid.",
-              "Searching the page for text, with <code>getByText</code> or the browser's find, only sees the rendered rows.",
-              "In the DOM does not mean on screen: a few extra rows are rendered above and below the viewport so fast scrolling does not show gaps. Playwright scrolls a rendered row into view before clicking it; elsewhere check it is visible first."
-            ]
-          },
-          {
-            "title": "Elements are reused",
-            "points": [
-              "As you scroll, the element that showed one row is reused for another: the element that showed row 3 may show row 18 after a scroll. A stored element, such as a Selenium <code>WebElement</code> or a Cypress alias, can point at a different row afterwards without going stale, so find the row again after every scroll.",
-              "Find rows by something that belongs to the row, such as its text, its <code>data-row-id</code> or its button's name (<em>Select row {{fixedTarget}}</em>), not by position: <code>nth()</code> or <code>eq()</code> picks the nth rendered row, not the nth row of the list.",
-              "Each row's <code>Select</code> button has the same visible text, so a locator for the text alone matches whichever rows are rendered."
-            ]
-          },
-          {
-            "title": "Scrolling to a row",
-            "points": [
-              "In the fixed-height list every row is {{rowHeight}}px tall, so row N starts at <code>(N - 1) × {{rowHeight}}</code> pixels. Set the list's <code>scrollTop</code> to that and the row is rendered.",
-              "In the variable-height list rows have different heights, so a row's position cannot be worked out from its ID. Scroll a step at a time, for example by the height of the list, and after each step check whether the row is rendered. The IDs of the rendered rows tell you whether to keep going or go back.",
-              "Rows are rendered in response to the scroll event, so wait for the row to appear rather than checking straight after scrolling. Setting <code>scrollTop</code>, <code>mouse.wheel()</code> in Playwright and <code>scrollTo()</code> on the list in Cypress all fire it.",
-              "The grid scrolls both ways: its columns are virtualised too, so column Q is not in the DOM until you scroll right. Its header row and row numbers stay in place over the cells, so a cell scrolled just under them is in the DOM but covered."
-            ]
-          }
-        ]
-      },
       "rendered": "{{rendered}} of {{total}} rows in the DOM (rows {{first}} to {{last}})",
       "row": "Row {{id}}",
       "select": "Select",
@@ -2483,46 +1543,6 @@
     "multiple-file-upload": {
       "title": "Multiple File Upload",
       "description": "Choose several files at once, and add images through a drop zone with a hidden input, type and size checks, previews, a progress bar per file and remove buttons.",
-      "information": {
-        "summary": "The first section is a native file input that takes several files at once. The second is a drop zone, as most upload widgets are built: the real input is hidden, files are checked as they are added, and each one uploads with its own progress bar.",
-        "sections": [
-          {
-            "title": "The input behind the drop zone",
-            "points": [
-              "The drop zone's <code>&lt;input type=\"file\"&gt;</code> is visually hidden and out of the tab order: users only see the zone and its <em>Browse files</em> button. Playwright's <code>setInputFiles()</code> works on hidden inputs, so target <code>#drop-zone-input</code> directly. Cypress's <code>selectFile()</code> checks the element is actionable, which a hidden input can fail, so pass <code>{ force: true }</code>.",
-              "Clicking <em>Browse files</em> opens the operating system's file dialog, which no test tool can drive. In Playwright, wait for the <code>filechooser</code> event and call <code>setFiles()</code> on it; elsewhere skip the click and set the input's files.",
-              "To test the drop itself, simulate one on the zone. In Cypress use <code>selectFile(file, { action: 'drag-drop' })</code> on the zone. In Playwright, build a <code>DataTransfer</code> in the page with <code>page.evaluateHandle()</code> and pass it to <code>dispatchEvent('drop', { dataTransfer })</code>. Selenium has no built-in way, so run a script that dispatches the events.",
-              "The input is emptied after every selection, so the same file can be chosen again after removing it. Checking the input's <code>files</code> therefore tells you nothing: check the list of files instead."
-            ]
-          },
-          {
-            "title": "Choosing several files",
-            "points": [
-              "The first input has the <code>multiple</code> attribute. Pass an array to <code>setInputFiles()</code> or <code>selectFile()</code>. In Selenium, send the absolute paths to <code>sendKeys()</code> joined by newlines.",
-              "Choosing again replaces the selection rather than adding to it, as native inputs do, whereas the drop zone adds to its list every time.",
-              "Files do not have to exist on disk: Playwright takes <code>{ name, mimeType, buffer }</code> and Cypress takes <code>{ contents, fileName, mimeType }</code>."
-            ]
-          },
-          {
-            "title": "Validation",
-            "points": [
-              "Only PNG, JPEG, GIF and WebP images up to {{max}} each are accepted. The input's <code>accept</code> attribute only filters the file dialog: files set by a test or dropped get past it, so the page checks every file itself and lists the ones it turned away.",
-              "The type is taken from the file's MIME type, not its name, so a file called <code>photo.png</code> with the type <code>text/plain</code> is rejected. Set the MIME type yourself when building files in a test, or it is guessed from the extension.",
-              "A file with the same name and size as one already in the list is rejected as a duplicate. When a selection mixes good and bad files, the good ones are added and only the others are listed in the error.",
-              "Testing the size limit needs a file over {{max}}: build one in memory, for example with <code>Buffer.alloc(1024 * 1024 + 1)</code>."
-            ]
-          },
-          {
-            "title": "Progress, previews and removing",
-            "points": [
-              "Each image starts uploading as soon as it is added, and larger files take longer, up to about 3 seconds. Wait for <code>data-status=\"uploaded\"</code>, the <em>Uploaded</em> text or the progress bar's <code>aria-valuenow</code> reaching 100, not for a fixed time.",
-              "<em>Submit</em> is disabled while any image is still uploading.",
-              "Every file has its own remove button named after it (<em>Remove photo.png</em>), and removing works mid-upload too. Find a file's row by its name and act inside it rather than by its position, as removing a file moves the ones after it up.",
-              "Previews use <code>blob:</code> URLs made in the page, so their <code>src</code> changes on every run. Check the preview's alt text, or that it loaded (<code>naturalWidth</code> above 0), rather than its <code>src</code>."
-            ]
-          }
-        ]
-      },
       "units": {
         "b": "{{value}} B",
         "kb": "{{value}} KB",
@@ -2568,42 +1588,6 @@
     "tabs-and-accordions": {
       "title": "Tabs and accordions",
       "description": "Switch between tabs and expand or collapse accordion sections, some of which keep their hidden content in the page and some of which remove it.",
-      "information": {
-        "summary": "Tabs and accordions hide content without removing it, or remove it without warning, so a test has to know whether it is checking that something <em>exists</em> or that it is <em>visible</em>, and the clearest way to tell what is open is the ARIA state (<code>aria-selected</code>, <code>aria-expanded</code>) rather than styling.",
-        "sections": [
-          {
-            "title": "Visible or present",
-            "points": [
-              "The product tabs keep every panel in the DOM and hide the others with the <code>hidden</code> attribute, so a hidden panel's text can still be found: assert on visibility (<code>toBeVisible</code>), not only on presence.",
-              "The report tabs render only the selected panel, so the other panels do not exist at all, and anything typed into a panel is lost when you switch away and back. In the product tabs, typed notes survive.",
-              "Collapsed accordion sections stay in the DOM, hidden, in the same way as the product tabs."
-            ]
-          },
-          {
-            "title": "ARIA state and roles",
-            "points": [
-              "Locate tabs and panels by role (<code>tab</code>, <code>tabpanel</code>) and name, and check the selected tab with <code>aria-selected=\"true\"</code>. Each panel is labelled by its tab through <code>aria-labelledby</code>.",
-              "Accordion headers are buttons inside headings, with <code>aria-expanded</code> and <code>aria-controls</code> pointing at a <code>region</code> labelled by its header.",
-              "The <em>Archive</em> tab is disabled with <code>aria-disabled</code> rather than the native <code>disabled</code> attribute, so it can still be clicked and focused but does nothing. Some tools treat <code>aria-disabled</code> as disabled and refuse to click it; others click it happily."
-            ]
-          },
-          {
-            "title": "Keyboard",
-            "points": [
-              "Only the selected tab is in the tab order (a roving <code>tabindex</code>). Pressing <kbd>Tab</kbd> moves from the tab list into the panel, not to the next tab.",
-              "<kbd>ArrowLeft</kbd> and <kbd>ArrowRight</kbd> move between tabs and wrap around, <kbd>Home</kbd> and <kbd>End</kbd> go to the first and last, and the disabled tab is skipped. Moving focus also selects the tab."
-            ]
-          },
-          {
-            "title": "Timing and the URL",
-            "points": [
-              "The <em>Reviews</em> tab takes about 1.5 seconds to load the first time it is selected, showing a loading message with <code>aria-busy</code> until then. Wait for the reviews themselves rather than a fixed delay.",
-              "The selected tabs are kept in the URL (<code>?product=reviews&amp;report=monthly</code>), so a test can open a tab directly. An unknown or disabled tab falls back to the first one.",
-              "The native <code>&lt;details&gt;</code> disclosures have no <code>aria-expanded</code>: check the <code>open</code> attribute instead. Their content is hidden by the browser, not by the page."
-            ]
-          }
-        ]
-      },
       "notes-label": "Notes (switch tabs and come back to see if they are kept)",
       "product": {
         "title": "Tabs that keep hidden panels",
@@ -2692,41 +1676,6 @@
     "offline-and-network-status": {
       "title": "Offline and Network Status",
       "description": "React to the browser going offline and back online, queue messages while offline and retry a failed request.",
-      "information": {
-        "summary": "The page listens to the browser's <code>online</code> and <code>offline</code> events and reads <code>navigator.onLine</code>, so a test has to cut the connection through the browser itself (in Playwright with <code>context.setOffline</code>, in Cypress or WebdriverIO through Chrome DevTools Protocol network conditions) rather than by stopping a server.",
-        "sections": [
-          {
-            "title": "Going offline",
-            "points": [
-              "Blocking requests with request interception does not change <code>navigator.onLine</code> or fire the <code>offline</code> event, so the banner stays green and the queue does not wait. Only a browser-level switch changes both.",
-              "<code>navigator.onLine</code> being <code>true</code> only means the browser has a network connection, not that the site can be reached. A request can still fail while the banner says online, and the page reports that as a network error rather than as offline.",
-              "Switching the network off in DevTools by hand and in a test are the same thing, but browsers other than Chromium may not support it: check what your framework offers for Firefox and WebKit."
-            ]
-          },
-          {
-            "title": "The message queue",
-            "points": [
-              "Every message joins the queue and is sent at once if the browser is online, so while online a message only sits in the queue for a moment. Wait for it to appear in <em>Sent messages</em> rather than asserting the queue straight after sending.",
-              "While offline, messages wait in the queue, in order, and are sent when the <code>online</code> event fires. Messages that had to wait are marked as such in <em>Sent messages</em>.",
-              "Sending uses a real request to a file shipped with the site (the site is static, so it cannot accept the message itself), which is what fails when the network is down. Intercept <code>status.json</code> to make sending fail with a server error instead."
-            ]
-          },
-          {
-            "title": "Failed requests",
-            "points": [
-              "<em>Check service status</em> requests the same file. If it fails, the error says whether the browser was offline, the request got no response, or the server answered with an error, and <em>Retry</em> tries again. The attempt number is shown so a test can tell a retry from the first try.",
-              "The response is never taken from the browser's cache, so a request made while offline always fails."
-            ]
-          },
-          {
-            "title": "Connection events",
-            "points": [
-              "Each <code>online</code> and <code>offline</code> event is logged with the time it happened, after an entry for the state the page loaded in. Times are 24-hour <code>HH:MM:SS</code> in the browser's time zone, with the full timestamp in the <code>datetime</code> attribute.",
-              "The browser decides when to fire these events, so do not expect one entry for every switch your test makes: switching to the state the browser is already in fires nothing."
-            ]
-          }
-        ]
-      },
       "banner": {
         "online-title": "You are online",
         "online": "The browser reports a network connection. Messages are sent straight away.",

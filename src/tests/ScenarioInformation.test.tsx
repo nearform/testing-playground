@@ -7,7 +7,12 @@ import ScenarioInformation from '../components/ScenarioInformation'
 describe('ScenarioInformation', () => {
   it('shows short information as one paragraph, with its inline HTML', () => {
     render(
-      <ScenarioInformation information='Open it with <code>?version=fixed</code>.' />,
+      <ScenarioInformation
+        information={{
+          summary: ['Open it with <code>?version=fixed</code>.'],
+          sections: [],
+        }}
+      />,
     )
 
     expect(screen.getByText('?version=fixed').tagName).toBe('CODE')
@@ -18,7 +23,7 @@ describe('ScenarioInformation', () => {
     render(
       <ScenarioInformation
         information={{
-          summary: 'Every problem is deliberate.',
+          summary: ['Every problem is deliberate.'],
           sections: [
             {
               title: 'Running the scan',
@@ -50,7 +55,10 @@ describe('ScenarioInformation', () => {
   it('leaves out the summary paragraph when there is none', () => {
     render(
       <ScenarioInformation
-        information={{ sections: [{ title: 'Only group', points: ['A'] }] }}
+        information={{
+          summary: [],
+          sections: [{ title: 'Only group', points: ['A'] }],
+        }}
       />,
     )
 
