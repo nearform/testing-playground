@@ -130,9 +130,14 @@ for (const link of await page.locator('a[href^="http"]').all()) {
   expect.soft(response.status(), href).toBeLessThan(400)
 }`
 
-const cypressSnippet = `// Images: finished loading, but no natural size
+const cypressSnippet = `// Images: scroll each one into view (so lazy images are requested), then
+// retry until it has a natural size, so a slow image is not reported broken
 cy.get('img').each(($img) => {
-  expect($img[0].naturalWidth, $img.attr('src')).to.be.greaterThan(0)
+  cy.wrap($img)
+    .scrollIntoView()
+    .should(($el) => {
+      expect($el[0].naturalWidth, $el.attr('src')).to.be.greaterThan(0)
+    })
 })
 
 // Links: request each one instead of clicking it

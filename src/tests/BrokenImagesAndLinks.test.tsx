@@ -245,6 +245,20 @@ describe('Broken images and links scenario', () => {
       )
     })
 
+    it.each([
+      { framework: 'Playwright', check: 'img.complete' },
+      { framework: 'Cypress', check: 'scrollIntoView()' },
+    ])(
+      'waits for each image to finish loading in the $framework snippet',
+      ({ framework, check }) => {
+        renderPage()
+
+        expect(
+          screen.getByTestId(`snippet-${framework.toLowerCase()}`),
+        ).toHaveTextContent(check)
+      },
+    )
+
     it('does not show any results before the check is run', () => {
       renderPage()
 
