@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface TableDataItem {
   name: string
@@ -104,7 +105,10 @@ const DynamicTable = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.dynamic-table.title')}
         description={t('scenarios.dynamic-table.description')}
-        information={t('scenarios.dynamic-table.information')}
+        information={translateInformation(
+          t,
+          'scenarios.dynamic-table.information',
+        )}
       >
         <Table data-testid='dynamic-table' bordered className='w-full'>
           <TableHeader>

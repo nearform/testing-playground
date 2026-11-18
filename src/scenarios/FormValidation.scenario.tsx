@@ -20,6 +20,7 @@ import {
   validateForm,
 } from '../utils/formValidation'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface FieldConfig {
   name: FormField
@@ -132,7 +133,10 @@ const FormValidation = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.form-validation.title')}
         description={t('scenarios.form-validation.description')}
-        information={t('scenarios.form-validation.information')}
+        information={translateInformation(
+          t,
+          'scenarios.form-validation.information',
+        )}
       >
         <form
           noValidate

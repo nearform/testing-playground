@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // How many of the most recent keys the key reader remembers
 const HISTORY_LENGTH = 10
@@ -111,7 +112,10 @@ const KeyPresses = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.key-presses.title')}
         description={t('scenarios.key-presses.description')}
-        information={t('scenarios.key-presses.information')}
+        information={translateInformation(
+          t,
+          'scenarios.key-presses.information',
+        )}
       >
         <div className='flex flex-col gap-10'>
           <section className='flex flex-col gap-4'>

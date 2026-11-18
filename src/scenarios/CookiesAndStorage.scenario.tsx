@@ -14,6 +14,7 @@ import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // Where the scenario keeps its state. Tests seed or read these directly.
 export const CONSENT_COOKIE = 'cookie_consent'
@@ -260,7 +261,7 @@ const CookiesAndStorage = (): JSX.Element => {
       <PageSetup
         title={t(key('title'))}
         description={t(key('description'))}
-        information={t(key('information'))}
+        information={translateInformation(t, key('information'))}
       >
         <div className='flex flex-col gap-8'>
           <section className='flex flex-col gap-4'>

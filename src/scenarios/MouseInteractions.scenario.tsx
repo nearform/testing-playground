@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // How long the hold button has to be held down before it confirms
 export const HOLD_DURATION = 1000
@@ -239,7 +240,10 @@ const MouseInteractions = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.mouse-interactions.title')}
         description={t('scenarios.mouse-interactions.description')}
-        information={t('scenarios.mouse-interactions.information')}
+        information={translateInformation(
+          t,
+          'scenarios.mouse-interactions.information',
+        )}
       >
         <div className='flex flex-col gap-10'>
           <section

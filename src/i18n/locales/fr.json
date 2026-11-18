@@ -23,7 +23,36 @@
     "accessibility-violations": {
       "title": "Violations d'accessibilité",
       "description": "Un formulaire d'inscription à une newsletter plein de problèmes d'accessibilité volontaires, avec un interrupteur vers une version corrigée, pour s'entraîner aux vérifications d'accessibilité automatiques et manuelles.",
-      "information": "Chaque problème d'accessibilité de cette page est volontaire, et activer <strong>Afficher la version corrigée</strong> (ou ouvrir <code>#/accessibility-violations?version=fixed</code>) les corrige tous, donc le même scan peut être lancé sur les deux versions. Les problèmes se trouvent tous dans la section Inscription à la newsletter, dont l'ID est <code>accessibility-violations-area</code>. Limitez le scan à cette section, avec <code>.include('#accessibility-violations-area')</code> dans <code>@axe-core/playwright</code> ou <code>cy.checkA11y('#accessibility-violations-area')</code> dans <code>cypress-axe</code>, pour que rien du reste du terrain de jeu ne s'y mêle. Dans la version cassée, un scan axe-core signale ces ID de règles comme violations, et dans la version corrigée il n'en signale aucun : <code>label</code> (le champ Adresse e-mail n'a pas d'étiquette); <code>image-alt</code> (la photo de profil n'a pas de texte alternatif); <code>heading-order</code> (Vos coordonnées passe directement d'un titre de niveau 2 à un titre de niveau 4); <code>aria-required-attr</code> (la case du résumé hebdomadaire n'a pas d'aria-checked); <code>aria-valid-attr-value</code> (Plus d'options met aria-expanded à yes ou no au lieu de true ou false); <code>scrollable-region-focusable</code> (la zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier); <code>color-contrast</code> (la note de confidentialité est en gris clair sur blanc); <code>button-name</code> (le bouton d'aide est une icône sans nom); <code>link-name</code> (le lien GitHub est une icône sans nom). Il signale aussi <code>duplicate-id-aria</code> (les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom), mais dans <code>incomplete</code> et non dans <code>violations</code> : axe-core considère que cette règle demande une vérification, donc un test qui ne regarde que <code>violations</code> ne la voit jamais. Ce qui rend l'automatisation délicate : <code>heading-order</code> est une bonne pratique et non une règle WCAG, donc un scan limité avec <code>withTags(['wcag2a', 'wcag2aa'])</code> ne la voit pas. <code>color-contrast</code> et <code>scrollable-region-focusable</code> dépendent de la mise en page, donc elles ne sont trouvées que dans un vrai navigateur et jamais dans jsdom. Une même règle peut échouer sur plusieurs éléments et les nouvelles versions d'axe-core ajoutent des règles, donc vérifiez les ID de règles attendus plutôt que le nombre de violations. Deux problèmes ne peuvent être trouvés par aucun scanner et demandent un test au clavier. La zone Message garde la touche Tab pour elle, comme certains éditeurs de code qui indentent, donc une fois qu'elle a le focus, ni Tab ni Maj+Tab n'en sortent : c'est un piège au clavier. Le bouton S'inscrire est un <code>div</code> avec un gestionnaire de clic, donc il ne peut pas être atteint avec Tab et ne fonctionne qu'à la souris. Les mêmes problèmes sont listés sous Problèmes attendus, avec un attribut <code>data-rule</code> sur chaque règle, et la liste se vide dans la version corrigée. Un scan sans erreur ne prouve pas qu'une page est accessible : il montre seulement que les problèmes qu'un scanner sait trouver ont disparu.",
+      "information": {
+        "summary": "Chaque problème d'accessibilité de cette page est volontaire. Activer <strong>Afficher la version corrigée</strong> (ou ouvrir <code>#/accessibility-violations?version=fixed</code>) les corrige tous, donc le même scan peut être lancé sur les deux versions. Chaque problème est listé plus bas, sous Problèmes attendus.",
+        "sections": [
+          {
+            "title": "Lancer le scan",
+            "points": [
+              "Les problèmes se trouvent tous dans la section Inscription à la newsletter, dont l'ID est <code>accessibility-violations-area</code>.",
+              "Limitez le scan à cette section, pour que rien du reste du terrain de jeu ne s'y mêle : <code>.include('#accessibility-violations-area')</code> dans <code>@axe-core/playwright</code> ou <code>cy.checkA11y('#accessibility-violations-area')</code> dans <code>cypress-axe</code>.",
+              "Chaque ligne de Problèmes attendus a un attribut <code>data-rule</code> avec l'ID de sa règle (ou <code>data-issue</code> pour les problèmes au clavier), et le tableau se vide dans la version corrigée."
+            ]
+          },
+          {
+            "title": "Ce qui rend l'automatisation délicate",
+            "points": [
+              "<code>duplicate-id-aria</code> est signalée dans <code>incomplete</code> et non dans <code>violations</code>, car axe-core considère que cette règle demande une vérification, donc un test qui ne regarde que <code>violations</code> ne la voit jamais.",
+              "<code>heading-order</code> est une bonne pratique et non une règle WCAG, donc un scan limité avec <code>withTags(['wcag2a', 'wcag2aa'])</code> ne la voit pas.",
+              "<code>color-contrast</code> et <code>scrollable-region-focusable</code> dépendent de la mise en page, donc elles ne sont trouvées que dans un vrai navigateur et jamais dans jsdom.",
+              "Une même règle peut échouer sur plusieurs éléments et les nouvelles versions d'axe-core ajoutent des règles, donc vérifiez les ID de règles attendus plutôt que le nombre de violations."
+            ]
+          },
+          {
+            "title": "Ce qu'aucun scanner ne trouve",
+            "points": [
+              "La zone Message garde la touche Tab pour elle, comme certains éditeurs de code qui indentent, donc une fois qu'elle a le focus, ni Tab ni Maj+Tab n'en sortent : c'est un piège au clavier.",
+              "Le bouton S'inscrire est un <code>div</code> avec un gestionnaire de clic, donc il ne peut pas être atteint avec Tab et ne fonctionne qu'à la souris.",
+              "Un scan sans erreur ne prouve pas qu'une page est accessible : il montre seulement que les problèmes qu'un scanner sait trouver ont disparu."
+            ]
+          }
+        ]
+      },
       "version": {
         "title": "Version",
         "switch": "Afficher la version corrigée",
@@ -34,27 +63,40 @@
       },
       "expected": {
         "title": "Problèmes attendus",
-        "explanation": "Ce qu'un scan de la section Inscription à la newsletter devrait trouver dans la version affichée.",
-        "axe": "Violations axe-core",
-        "review": "À vérifier dans axe-core (incomplete)",
-        "manual": "Trouvés uniquement en testant au clavier",
+        "explanation": "Ce qu'un scan de la section Inscription à la newsletter devrait trouver dans la version affichée, et comment chaque problème est signalé.",
+        "columns": {
+          "rule": "Règle",
+          "problem": "Ce qui ne va pas",
+          "found": "Signalé comme"
+        },
+        "found": {
+          "rules": "Violation",
+          "review": "À vérifier (incomplete)",
+          "manual": "Test au clavier uniquement"
+        },
         "none": "Aucun : la version corrigée n'a pas de problème connu."
       },
       "rules": {
-        "label": "le champ Adresse e-mail n'a pas d'étiquette",
-        "duplicate-id-aria": "les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom",
-        "image-alt": "la photo de profil n'a pas de texte alternatif",
+        "label": "Le champ Adresse e-mail n'a pas d'étiquette",
+        "duplicate-id-aria": "Les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom",
+        "image-alt": "La photo de profil n'a pas de texte alternatif",
         "heading-order": "Vos coordonnées passe directement d'un titre de niveau 2 à un titre de niveau 4",
-        "aria-required-attr": "la case du résumé hebdomadaire n'a pas d'aria-checked",
+        "aria-required-attr": "La case du résumé hebdomadaire n'a pas d'aria-checked",
         "aria-valid-attr-value": "Plus d'options met aria-expanded à yes ou no au lieu de true ou false",
-        "scrollable-region-focusable": "la zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier",
-        "color-contrast": "la note de confidentialité est en gris clair sur blanc",
-        "button-name": "le bouton d'aide est une icône sans nom",
-        "link-name": "le lien GitHub est une icône sans nom"
+        "scrollable-region-focusable": "La zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier",
+        "color-contrast": "La note de confidentialité est en gris clair sur blanc",
+        "button-name": "Le bouton d'aide est une icône sans nom",
+        "link-name": "Le lien GitHub est une icône sans nom"
       },
       "manual": {
-        "keyboard-trap": "Piège au clavier : Tab et Maj+Tab ne sortent jamais de la zone Message",
-        "mouse-only": "Souris uniquement : le bouton S'inscrire ne peut pas être atteint avec Tab"
+        "keyboard-trap": {
+          "name": "Piège au clavier",
+          "problem": "Tab et Maj+Tab ne sortent jamais de la zone Message"
+        },
+        "mouse-only": {
+          "name": "Souris uniquement",
+          "problem": "Le bouton S'inscrire ne peut pas être atteint avec Tab"
+        }
       },
       "form": {
         "title": "Inscription à la newsletter",
@@ -84,7 +126,33 @@
     "actionability": {
       "title": "Actionnabilité",
       "description": "Superpositions, boutons en mouvement, décalages de mise en page et éléments présents mais impossibles à cliquer sans risque.",
-      "information": "Chaque élément de cette page est dans le DOM et semble cliquable, mais un vrai clic dessus le rate ou touche autre chose. C’est de là que viennent les erreurs comme « element click intercepted », « element is not stable », « element is outside of the viewport » et « element does not receive pointer events ». Dans la section Superpositions, le bouton Accepter les conditions est recouvert en permanence par un élément transparent, donc le clic est toujours intercepté : le test doit le signaler au lieu de réussir avec un clic forcé ou en JavaScript, qui cacherait un bug qu’un utilisateur rencontrerait. Le bouton Continuer est recouvert par une superposition de chargement transparente pendant quelques secondes après le chargement de la page, donc un test doit attendre qu’elle disparaisse, et non attendre une durée fixe. L’en-tête collant reste en haut de la fenêtre pendant que vous faites défiler la liste des produits, donc un outil qui fait défiler un bouton jusqu’en haut de la fenêtre avant de cliquer cliquera sur l’en-tête. Dans Éléments en mouvement, un bouton ne s’arrête jamais, donc une vérification de stabilité n’aboutit jamais et un clic à son ancienne position le rate ; l’autre bouge pendant quelques secondes puis s’immobilise, donc attendre qu’il soit stable fonctionne, et le panneau Dernière action indique si vous l’avez cliqué pendant qu’il bougeait. Dans Décalage de mise en page, une bannière est insérée au-dessus de Confirmer la commande quelques secondes après le chargement, et son bouton Passer à premium arrive exactement là où se trouvait Confirmer la commande, donc un clic dont la position a été calculée trop tôt passe à premium au lieu de confirmer. Le bouton J’accepte se trouve dans une boîte défilante et non dans la page, donc c’est la boîte qu’il faut faire défiler pour que le bouton soit visible. Enfin, un bouton a pointer-events: none, donc le pointeur le traverse, et un autre n’a ni largeur ni hauteur, donc il est dans le DOM avec du texte mais n’est pas visible. Les clics sur ces deux boutons ne fonctionnent qu’en JavaScript, ce qu’un utilisateur ne peut pas faire. Le panneau Dernière action en haut indique ce que chaque clic a réellement touché.",
+      "information": {
+        "summary": "Chaque élément de cette page est dans le DOM et semble cliquable, mais un vrai clic dessus le rate ou touche autre chose. C’est de là que viennent les erreurs comme « element click intercepted », « element is not stable », « element is outside of the viewport » et « element does not receive pointer events ». Le panneau Dernière action en haut indique ce que chaque clic a réellement touché.",
+        "sections": [
+          {
+            "title": "Éléments recouverts",
+            "points": [
+              "Dans la section Superpositions, le bouton Accepter les conditions est recouvert en permanence par un élément transparent, donc le clic est toujours intercepté : le test doit le signaler au lieu de réussir avec un clic forcé ou en JavaScript, qui cacherait un bug qu’un utilisateur rencontrerait.",
+              "Le bouton Continuer est recouvert par une superposition de chargement transparente pendant quelques secondes après le chargement de la page, donc un test doit attendre qu’elle disparaisse, et non attendre une durée fixe.",
+              "L’en-tête collant reste en haut de la fenêtre pendant que vous faites défiler la liste des produits, donc un outil qui fait défiler un bouton jusqu’en haut de la fenêtre avant de cliquer cliquera sur l’en-tête."
+            ]
+          },
+          {
+            "title": "Éléments qui bougent",
+            "points": [
+              "Dans Éléments en mouvement, un bouton ne s’arrête jamais, donc une vérification de stabilité n’aboutit jamais et un clic à son ancienne position le rate ; l’autre bouge pendant quelques secondes puis s’immobilise, donc attendre qu’il soit stable fonctionne, et le panneau Dernière action indique si vous l’avez cliqué pendant qu’il bougeait.",
+              "Dans Décalage de mise en page, une bannière est insérée au-dessus de Confirmer la commande quelques secondes après le chargement, et son bouton Passer à premium arrive exactement là où se trouvait Confirmer la commande, donc un clic dont la position a été calculée trop tôt passe à premium au lieu de confirmer."
+            ]
+          },
+          {
+            "title": "Hors de vue ou impossibles à cliquer",
+            "points": [
+              "Le bouton J’accepte se trouve dans une boîte défilante et non dans la page, donc c’est la boîte qu’il faut faire défiler pour que le bouton soit visible.",
+              "Un bouton a pointer-events: none, donc le pointeur le traverse, et un autre n’a ni largeur ni hauteur, donc il est dans le DOM avec du texte mais n’est pas visible. Les clics sur ces deux boutons ne fonctionnent qu’en JavaScript, ce qu’un utilisateur ne peut pas faire."
+            ]
+          }
+        ]
+      },
       "result": {
         "title": "Dernière action",
         "none": "Rien pour l’instant",
@@ -179,7 +247,32 @@
     "autocomplete": {
       "title": "Saisie semi-automatique",
       "description": "Choisissez une valeur parmi les suggestions qui apparaissent pendant la saisie.",
-      "information": "Commencez à taper dans l'un des champs pour voir des suggestions. Utilisez les flèches haut et bas pour les parcourir (elles reviennent au début), Entrée pour choisir celle qui est mise en évidence, ou cliquez sur une suggestion ; Échap ferme la liste et un second Échap vide le champ. Quitter le champ avec Tab ferme la liste sans rien choisir, et modifier le texte après un choix annule ce choix. Le champ suit le modèle ARIA combobox : aria-expanded indique si la liste est ouverte et aria-activedescendant désigne l'option mise en évidence, qui a aria-selected=\"true\". Les suggestions correspondent à n'importe quelle partie d'un nom, sans tenir compte de la casse ni des accents ; les noms qui commencent par le texte saisi sont listés en premier et la partie correspondante est en gras. Le champ des pays filtre immédiatement une liste fixe. Le champ des villes interroge plutôt un faux serveur lent : il attend au moins {{min}} caractères et une pause de {{debounce}} ms dans la saisie, affiche un message de chargement pendant l'attente, renvoie au plus {{max}} villes et répond plus lentement aux recherches courtes qu'aux longues, si bien qu'une ancienne réponse peut arriver après une nouvelle ; seule la réponse correspondant au texte actuel est affichée.",
+      "information": {
+        "summary": "Commencez à taper dans l'un des champs pour voir des suggestions.",
+        "sections": [
+          {
+            "title": "Au clavier",
+            "points": [
+              "Utilisez les flèches haut et bas pour les parcourir (elles reviennent au début), Entrée pour choisir celle qui est mise en évidence, ou cliquez sur une suggestion ; Échap ferme la liste et un second Échap vide le champ.",
+              "Quitter le champ avec Tab ferme la liste sans rien choisir, et modifier le texte après un choix annule ce choix."
+            ]
+          },
+          {
+            "title": "Correspondances et balisage",
+            "points": [
+              "Le champ suit le modèle ARIA combobox : aria-expanded indique si la liste est ouverte et aria-activedescendant désigne l'option mise en évidence, qui a aria-selected=\"true\".",
+              "Les suggestions correspondent à n'importe quelle partie d'un nom, sans tenir compte de la casse ni des accents ; les noms qui commencent par le texte saisi sont listés en premier et la partie correspondante est en gras."
+            ]
+          },
+          {
+            "title": "Pays et ville",
+            "points": [
+              "Le champ des pays filtre immédiatement une liste fixe.",
+              "Le champ des villes interroge plutôt un faux serveur lent : il attend au moins {{min}} caractères et une pause de {{debounce}} ms dans la saisie, affiche un message de chargement pendant l'attente, renvoie au plus {{max}} villes et répond plus lentement aux recherches courtes qu'aux longues, si bien qu'une ancienne réponse peut arriver après une nouvelle ; seule la réponse correspondant au texte actuel est affichée."
+            ]
+          }
+        ]
+      },
       "no-matches": "Aucun résultat",
       "nothing-selected": "rien",
       "selected": "Sélection : {{value}}",
@@ -201,7 +294,38 @@
     "challenging-selectors": {
       "title": "Sélecteurs difficiles",
       "description": "Des ID aléatoires, des boutons identiques, du texte découpé et des doublons cachés qui font échouer les sélecteurs naïfs.",
-      "information": "Cette page est conçue pour que les sélecteurs évidents échouent. Les ID et noms de classe de la première section (et les noms de classe ailleurs) sont des hachages aléatoires, comme ceux des bibliothèques CSS-in-JS, et changent à chaque chargement de la page : trouvez donc le champ par son libellé et les boutons par leur rôle et leur nom. Le tableau de l’équipe est mélangé à chaque chargement et chaque ligne a les mêmes boutons Modifier et Supprimer, sans nom accessible propre : choisissez la ligne par son contenu (le nom ou l’e-mail de la personne), puis le bouton dans cette ligne ; une position de ligne ou la n-ième correspondance tombera sur quelqu’un d’autre. Le message d’accueil et le nombre de messages non lus sont découpés en plusieurs éléments, donc une recherche sur le texte propre d’un élément ne trouvera pas la phrase entière : cherchez sur le texte du parent ou normalisez d’abord le texte. Le libellé du bouton de lecture est découpé de la même façon, mais son nom accessible reste la phrase complète. Les deux blocs d’adresse ont des champs dont les libellés sont du texte simple non lié aux champs, et les deux blocs sont identiques à part leur titre : il faut donc repérer un champ par rapport au texte voisin ou par sa position dans le bon bloc. Les deux formulaires de newsletter font la même chose : celui avec libellés a un titre, un libellé, un vrai bouton et des attributs data-testid, tandis que celui sans libellés n’a qu’un texte indicatif, une div cliquable qui ressemble à un bouton et des noms de classe aléatoires ; comparez comment chaque stratégie de localisation s’en sort. Enfin, le bouton Commander est présent trois fois dans la page : une version mobile et une version bureau, dont une seule est affichée selon la largeur de l’écran, et une troisième dans le panneau Plus d’options fermé ; un localisateur doit donc viser celui qui est visible et non le premier du DOM. Le panneau Dernière action en haut indique ce que votre dernier clic a réellement fait, pour vérifier que vous avez touché l’élément voulu.",
+      "information": {
+        "summary": "Cette page est conçue pour que les sélecteurs évidents échouent. Le panneau Dernière action en haut indique ce que votre dernier clic a réellement fait, pour vérifier que vous avez touché l’élément voulu.",
+        "sections": [
+          {
+            "title": "ID et ordre qui changent",
+            "points": [
+              "Les ID et noms de classe de la première section (et les noms de classe ailleurs) sont des hachages aléatoires, comme ceux des bibliothèques CSS-in-JS, et changent à chaque chargement de la page : trouvez donc le champ par son libellé et les boutons par leur rôle et leur nom.",
+              "Le tableau de l’équipe est mélangé à chaque chargement et chaque ligne a les mêmes boutons Modifier et Supprimer, sans nom accessible propre : choisissez la ligne par son contenu (le nom ou l’e-mail de la personne), puis le bouton dans cette ligne ; une position de ligne ou la n-ième correspondance tombera sur quelqu’un d’autre."
+            ]
+          },
+          {
+            "title": "Texte découpé",
+            "points": [
+              "Le message d’accueil et le nombre de messages non lus sont découpés en plusieurs éléments, donc une recherche sur le texte propre d’un élément ne trouvera pas la phrase entière : cherchez sur le texte du parent ou normalisez d’abord le texte.",
+              "Le libellé du bouton de lecture est découpé de la même façon, mais son nom accessible reste la phrase complète."
+            ]
+          },
+          {
+            "title": "Étiquettes manquantes",
+            "points": [
+              "Les deux blocs d’adresse ont des champs dont les libellés sont du texte simple non lié aux champs, et les deux blocs sont identiques à part leur titre : il faut donc repérer un champ par rapport au texte voisin ou par sa position dans le bon bloc.",
+              "Les deux formulaires de newsletter font la même chose : celui avec libellés a un titre, un libellé, un vrai bouton et des attributs data-testid, tandis que celui sans libellés n’a qu’un texte indicatif, une div cliquable qui ressemble à un bouton et des noms de classe aléatoires ; comparez comment chaque stratégie de localisation s’en sort."
+            ]
+          },
+          {
+            "title": "Éléments en double",
+            "points": [
+              "Le bouton Commander est présent trois fois dans la page : une version mobile et une version bureau, dont une seule est affichée selon la largeur de l’écran, et une troisième dans le panneau Plus d’options fermé ; un localisateur doit donc viser celui qui est visible et non le premier du DOM."
+            ]
+          }
+        ]
+      },
       "result": {
         "title": "Dernière action",
         "none": "Rien pour l’instant",
@@ -300,7 +424,32 @@
     "cookies-and-storage": {
       "title": "Cookies et stockage",
       "description": "Répondez à une bannière de consentement aux cookies, enregistrez vos préférences, gardez une note pour cet onglet uniquement et observez l'évolution des cookies et du stockage.",
-      "information": "Presque tous les sites réels affichent une bannière de consentement aux cookies lors de la première visite, et elle couvre la page tant qu'on n'y a pas répondu : c'est donc la première chose qui gêne un test de bout en bout. Ici, la bannière n'apparaît qu'une seconde après le chargement de la page, comme les bannières ajoutées par un script tiers, donc vérifier qu'elle est absente juste après le chargement réussit trop tôt. Le choix est mémorisé dans le cookie <code>cookie_consent</code> (<code>accepted</code>, <code>rejected</code> ou <code>custom</code>), et les choix d'analyse et de marketing sont conservés dans <code>localStorage</code> sous <code>cookie_preferences</code>, si bien que les deux survivent à un rechargement. La note de session est conservée dans <code>sessionStorage</code>, qui appartient à un seul onglet : elle survit à un rechargement mais disparaît dans un nouvel onglet ou un nouveau contexte de navigateur. Les tests qui partagent un contexte de navigateur se transmettent cet état, donc commencez chaque test avec un contexte propre, ou utilisez Tout effacer. Cliquer sur la bannière dans chaque test est lent et fragile ; préparez plutôt l'état avant le chargement de la page, avec <code>context.addCookies</code>, <code>page.addInitScript</code> ou un <code>storageState</code> enregistré dans Playwright, ou avec <code>cy.setCookie</code> et <code>onBeforeLoad</code> dans Cypress, comme le montre le bas de la page. L'aperçu en direct ne relit le stockage que lorsque cette page le modifie : après avoir modifié le stockage depuis un test, appuyez sur Actualiser ou rechargez la page. Tout effacer ne supprime que ce que ce scénario enregistre ; les réglages de langue et de thème du site sont conservés.",
+      "information": {
+        "summary": "Presque tous les sites réels affichent une bannière de consentement aux cookies lors de la première visite, et elle couvre la page tant qu'on n'y a pas répondu : c'est donc la première chose qui gêne un test de bout en bout. Ici, la bannière n'apparaît qu'une seconde après le chargement de la page, comme les bannières ajoutées par un script tiers, donc vérifier qu'elle est absente juste après le chargement réussit trop tôt.",
+        "sections": [
+          {
+            "title": "Où l'état est conservé",
+            "points": [
+              "Le choix est mémorisé dans le cookie <code>cookie_consent</code> (<code>accepted</code>, <code>rejected</code> ou <code>custom</code>), et les choix d'analyse et de marketing sont conservés dans <code>localStorage</code> sous <code>cookie_preferences</code>, si bien que les deux survivent à un rechargement.",
+              "La note de session est conservée dans <code>sessionStorage</code>, qui appartient à un seul onglet : elle survit à un rechargement mais disparaît dans un nouvel onglet ou un nouveau contexte de navigateur."
+            ]
+          },
+          {
+            "title": "Garder les tests indépendants",
+            "points": [
+              "Les tests qui partagent un contexte de navigateur se transmettent cet état, donc commencez chaque test avec un contexte propre, ou utilisez Tout effacer.",
+              "Cliquer sur la bannière dans chaque test est lent et fragile ; préparez plutôt l'état avant le chargement de la page, avec <code>context.addCookies</code>, <code>page.addInitScript</code> ou un <code>storageState</code> enregistré dans Playwright, ou avec <code>cy.setCookie</code> et <code>onBeforeLoad</code> dans Cypress, comme le montre le bas de la page."
+            ]
+          },
+          {
+            "title": "Inspecter et vider le stockage",
+            "points": [
+              "L'aperçu en direct ne relit le stockage que lorsque cette page le modifie : après avoir modifié le stockage depuis un test, appuyez sur Actualiser ou rechargez la page.",
+              "Tout effacer ne supprime que ce que ce scénario enregistre ; les réglages de langue et de thème du site sont conservés."
+            ]
+          }
+        ]
+      },
       "banner": {
         "title": "Nous utilisons des cookies",
         "text": "Nous utilisons des cookies nécessaires au fonctionnement de ce site. Avec votre accord, nous aimerions aussi déposer des cookies d'analyse et de marketing. Vous pouvez modifier votre choix à tout moment."
@@ -371,7 +520,41 @@
     "date-picker": {
       "title": "Sélecteur de date",
       "description": "Un sélecteur de date avec calendrier personnalisé : dates simples, jours désactivés, une période et un champ où l'on peut saisir ou choisir la date.",
-      "information": "Chaque sélecteur ouvre son calendrier dans une fenêtre ajoutée à la fin du <code>&lt;body&gt;</code> de la page, et non à côté de son champ : cherchez-la dans tout le document plutôt que dans le conteneur du champ. On ne peut rien saisir dans les sélecteurs de rendez-vous et de voyage : pour atteindre une date d'un autre mois, utilisez les boutons mois précédent et suivant ou les listes des mois et des années, et vérifiez d'abord quel mois est affiché. Les jours qu'on peut choisir dépendent de la date du jour, lue sur l'horloge du navigateur à l'ouverture de la page : un test qui choisit « lundi prochain » ou « le 15 de ce mois » obtient une autre date (ou une date désactivée) un autre jour, sauf si l'horloge est simulée. Les jours désactivés restent affichés et peuvent recevoir le focus, mais ils sont marqués <code>aria-disabled</code>, barrés, et cliquer dessus ne fait rien. Chaque jour est un bouton dont le texte n'est que le numéro du jour, dont le nom accessible est la date complète dans la langue actuelle (par ex. « vendredi 20 novembre 2026 ») et qui porte un attribut <code>data-date</code> au format ISO. Les rendez-vous et les voyages peuvent être réservés jusqu'à la fin de {{lastYear}}. Le sélecteur de voyage reste ouvert après le premier jour et se ferme après le dernier ; choisir un jour avant le premier recommence à partir de celui-ci. Le champ de la date de naissance suit le format de la langue actuelle (MM/DD/YYYY en anglais, JJ/MM/AAAA en français et en portugais) : 03/04/2000 est le 4 mars en anglais mais le 3 avril en français, et le texte n'est vérifié qu'à l'appui sur Entrée ou quand le champ perd le focus ; les dates futures ou antérieures à {{minYear}} sont refusées. La semaine commence le dimanche en anglais et en portugais et le lundi en français, donc une même date se trouve dans une autre colonne. Sous chaque sélecteur, la valeur choisie est affichée au format ISO (AAAA-MM-JJ), identique dans toutes les langues : vérifiez-la plutôt que le texte affiché. Dans le calendrier, les flèches déplacent d'un jour et d'une semaine, Page précédente et Page suivante d'un mois, Début et Fin au début et à la fin de la semaine, Entrée choisit le jour qui a le focus et Échap le ferme.",
+      "information": {
+        "sections": [
+          {
+            "title": "Naviguer dans le calendrier",
+            "points": [
+              "Chaque sélecteur ouvre son calendrier dans une fenêtre ajoutée à la fin du <code>&lt;body&gt;</code> de la page, et non à côté de son champ : cherchez-la dans tout le document plutôt que dans le conteneur du champ.",
+              "On ne peut rien saisir dans les sélecteurs de rendez-vous et de voyage : pour atteindre une date d'un autre mois, utilisez les boutons mois précédent et suivant ou les listes des mois et des années, et vérifiez d'abord quel mois est affiché.",
+              "Le sélecteur de voyage reste ouvert après le premier jour et se ferme après le dernier ; choisir un jour avant le premier recommence à partir de celui-ci.",
+              "Dans le calendrier, les flèches déplacent d'un jour et d'une semaine, Page précédente et Page suivante d'un mois, Début et Fin au début et à la fin de la semaine, Entrée choisit le jour qui a le focus et Échap le ferme."
+            ]
+          },
+          {
+            "title": "Quels jours peuvent être choisis",
+            "points": [
+              "Les jours qu'on peut choisir dépendent de la date du jour, lue sur l'horloge du navigateur à l'ouverture de la page : un test qui choisit « lundi prochain » ou « le 15 de ce mois » obtient une autre date (ou une date désactivée) un autre jour, sauf si l'horloge est simulée.",
+              "Les jours désactivés restent affichés et peuvent recevoir le focus, mais ils sont marqués <code>aria-disabled</code>, barrés, et cliquer dessus ne fait rien.",
+              "Les rendez-vous et les voyages peuvent être réservés jusqu'à la fin de {{lastYear}}."
+            ]
+          },
+          {
+            "title": "Lire la date choisie",
+            "points": [
+              "Chaque jour est un bouton dont le texte n'est que le numéro du jour, dont le nom accessible est la date complète dans la langue actuelle (par ex. « vendredi 20 novembre 2026 ») et qui porte un attribut <code>data-date</code> au format ISO.",
+              "Sous chaque sélecteur, la valeur choisie est affichée au format ISO (AAAA-MM-JJ), identique dans toutes les langues : vérifiez-la plutôt que le texte affiché."
+            ]
+          },
+          {
+            "title": "Différences entre les langues",
+            "points": [
+              "Le champ de la date de naissance suit le format de la langue actuelle (MM/DD/YYYY en anglais, JJ/MM/AAAA en français et en portugais) : 03/04/2000 est le 4 mars en anglais mais le 3 avril en français, et le texte n'est vérifié qu'à l'appui sur Entrée ou quand le champ perd le focus ; les dates futures ou antérieures à {{minYear}} sont refusées.",
+              "La semaine commence le dimanche en anglais et en portugais et le lundi en français, donc une même date se trouve dans une autre colonne."
+            ]
+          }
+        ]
+      },
       "iso-value": "Valeur (ISO) :",
       "clear": "Effacer",
       "calendar": {
@@ -430,7 +613,19 @@
     "dropdown": {
       "title": "Listes déroulantes",
       "description": "Choisissez des options dans un select natif, une sélection multiple et une liste déroulante personnalisée.",
-      "information": "Il y a ici trois types de listes déroulantes. Les deux premières sont des éléments <code>&lt;select&gt;</code> natifs : la plupart des frameworks peuvent donc choisir une option directement par sa valeur ou son texte ; la deuxième permet de choisir plusieurs options à la fois. La troisième est une liste déroulante personnalisée construite avec des boutons et une liste : ce n'est pas un <code>&lt;select&gt;</code>, et ses options n'existent dans le DOM, à la fin de la page, que lorsqu'elle est ouverte. Cliquez dessus pour l'ouvrir, puis cliquez sur une option. Certaines options sont désactivées et ne peuvent pas être choisies. Vos choix actuels sont affichés en dessous.",
+      "information": {
+        "summary": "Il y a ici trois types de listes déroulantes. Vos choix actuels sont affichés en dessous.",
+        "sections": [
+          {
+            "title": "Les listes déroulantes",
+            "points": [
+              "Les deux premières sont des éléments <code>&lt;select&gt;</code> natifs : la plupart des frameworks peuvent donc choisir une option directement par sa valeur ou son texte ; la deuxième permet de choisir plusieurs options à la fois.",
+              "La troisième est une liste déroulante personnalisée construite avec des boutons et une liste : ce n'est pas un <code>&lt;select&gt;</code>, et ses options n'existent dans le DOM, à la fin de la page, que lorsqu'elle est ouverte. Cliquez dessus pour l'ouvrir, puis cliquez sur une option.",
+              "Certaines options sont désactivées et ne peuvent pas être choisies."
+            ]
+          }
+        ]
+      },
       "native": {
         "title": "Select natif",
         "label": "Fruit",
@@ -473,7 +668,21 @@
     "dynamic-loading": {
       "title": "Chargement dynamique",
       "description": "Des éléments qui apparaissent, disparaissent et changent d’état après un délai aléatoire.",
-      "information": "Chaque section modifie la page après un délai aléatoire compris entre {{min}} et {{max}} secondes, tiré à nouveau à chaque fois : une pause fixe est donc parfois trop courte et toujours plus lente que nécessaire. Attendez plutôt la condition dont vous avez réellement besoin. La première section n'ajoute son élément au DOM qu'une fois son indicateur de chargement terminé : il est donc introuvable avant. La deuxième a son élément dans le DOM dès le départ, mais masqué avec <code>display: none</code> : il est <em>présent</em> bien avant d'être <em>visible</em>. La troisième a un champ désactivé jusqu'à la fin de l'étape asynchrone, et cliquer dessus tant qu'il est désactivé ne fait rien. La quatrième supprime sa case à cocher puis en ajoute une toute nouvelle : une référence à l'ancien élément devient obsolète et doit être recherchée à nouveau. La dernière affiche « Chargement... » puis « Chargement en cours... » avant son texte final : attendre seulement que « Chargement... » disparaisse ne suffit pas, attendez le texte attendu.",
+      "information": {
+        "summary": "Chaque section modifie la page après un délai aléatoire compris entre {{min}} et {{max}} secondes, tiré à nouveau à chaque fois : une pause fixe est donc parfois trop courte et toujours plus lente que nécessaire. Attendez plutôt la condition dont vous avez réellement besoin.",
+        "sections": [
+          {
+            "title": "Chaque section",
+            "points": [
+              "La première section n'ajoute son élément au DOM qu'une fois son indicateur de chargement terminé : il est donc introuvable avant.",
+              "La deuxième a son élément dans le DOM dès le départ, mais masqué avec <code>display: none</code> : il est <em>présent</em> bien avant d'être <em>visible</em>.",
+              "La troisième a un champ désactivé jusqu'à la fin de l'étape asynchrone, et cliquer dessus tant qu'il est désactivé ne fait rien.",
+              "La quatrième supprime sa case à cocher puis en ajoute une toute nouvelle : une référence à l'ancien élément devient obsolète et doit être recherchée à nouveau.",
+              "La dernière affiche « Chargement... » puis « Chargement en cours... » avant son texte final : attendre seulement que « Chargement... » disparaisse ne suffit pas, attendez le texte attendu."
+            ]
+          }
+        ]
+      },
       "start": "Démarrer",
       "loading": "Chargement",
       "rendered": {
@@ -592,7 +801,19 @@
     "geolocation": {
       "title": "Géolocalisation",
       "description": "Trouvez la position du navigateur, puis suivez-la lorsqu'elle change.",
-      "information": "Le navigateur demande l'autorisation avant de partager sa position, et cette demande ne fait pas partie de la page : accordez (ou refusez) l'autorisation de géolocalisation et définissez une fausse position dans votre framework de test avant de cliquer. « Obtenir ma position » lit la position une seule fois ; « Commencer le suivi » continue de la suivre, donc modifiez la fausse position et la page se mettra à jour. Les coordonnées, leur précision et la plus proche de quelques villes connues sont affichées en dessous. Si l'autorisation est refusée, si la position est introuvable ou si la recherche prend trop de temps, une erreur en explique la raison.",
+      "information": {
+        "summary": "Le navigateur demande l'autorisation avant de partager sa position, et cette demande ne fait pas partie de la page : accordez (ou refusez) l'autorisation de géolocalisation et définissez une fausse position dans votre framework de test avant de cliquer.",
+        "sections": [
+          {
+            "title": "Obtenir la position",
+            "points": [
+              "« Obtenir ma position » lit la position une seule fois ; « Commencer le suivi » continue de la suivre, donc modifiez la fausse position et la page se mettra à jour.",
+              "Les coordonnées, leur précision et la plus proche de quelques villes connues sont affichées en dessous.",
+              "Si l'autorisation est refusée, si la position est introuvable ou si la recherche prend trop de temps, une erreur en explique la raison."
+            ]
+          }
+        ]
+      },
       "button": {
         "get-location": "Obtenir ma position",
         "start-watching": "Commencer le suivi",
@@ -637,7 +858,19 @@
     "hovers": {
       "title": "Survols",
       "description": "Interagissez avec des éléments qui n'apparaissent que lorsque la souris survole quelque chose.",
-      "information": "Tout ce qui se trouve sur cette page n'apparaît que lorsque le pointeur de la souris est posé sur quelque chose : les tests doivent donc d'abord survoler. Les détails de chaque carte de profil ne sont pas du tout dans le DOM tant que la carte n'est pas survolée, et il n'existe volontairement aucun autre moyen de les afficher. Les boutons de chaque fichier sont toujours dans le DOM, mais restent invisibles tant que leur ligne n'est pas survolée : un test qui clique dessus directement sera informé qu'ils ne sont pas visibles ; au clavier, on peut aussi les afficher en atteignant la ligne avec Tab. Le menu ouvre ses sous-menus un instant après le survol d'un élément et se ferme un instant après que le pointeur l'a quitté : parcourez-le comme le ferait une personne ; cliquer sur un élément ouvre son sous-menu immédiatement. Votre dernière action est affichée en dessous.",
+      "information": {
+        "summary": "Tout ce qui se trouve sur cette page n'apparaît que lorsque le pointeur de la souris est posé sur quelque chose : les tests doivent donc d'abord survoler. Votre dernière action est affichée en dessous.",
+        "sections": [
+          {
+            "title": "Chaque section",
+            "points": [
+              "Les détails de chaque carte de profil ne sont pas du tout dans le DOM tant que la carte n'est pas survolée, et il n'existe volontairement aucun autre moyen de les afficher.",
+              "Les boutons de chaque fichier sont toujours dans le DOM, mais restent invisibles tant que leur ligne n'est pas survolée : un test qui clique dessus directement sera informé qu'ils ne sont pas visibles ; au clavier, on peut aussi les afficher en atteignant la ligne avec Tab.",
+              "Le menu ouvre ses sous-menus un instant après le survol d'un élément et se ferme un instant après que le pointeur l'a quitté : parcourez-le comme le ferait une personne ; cliquer sur un élément ouvre son sous-menu immédiatement."
+            ]
+          }
+        ]
+      },
       "profiles": {
         "title": "Profils",
         "view": "Voir le profil",
@@ -676,7 +909,19 @@
     "iframes": {
       "title": "IFrames",
       "description": "Des formulaires, des cadres imbriqués et un éditeur de texte enrichi placés dans des iframes : il faut basculer dans un cadre pour les atteindre.",
-      "information": "Tout ce qui se trouve dans une iframe appartient à un document distinct, donc les sélecteurs exécutés sur la page ne le trouvent pas : les tests doivent d'abord basculer dans le cadre, puis en ressortir pour vérifier quoi que ce soit sur la page. Le formulaire envoie son message à la page, en dehors du cadre. Le compteur se trouve dans un cadre lui-même placé dans un autre cadre, il faut donc deux bascules pour l'atteindre. L'éditeur de texte enrichi fonctionne comme de nombreux éditeurs WYSIWYG classiques : le texte modifié est le corps d'un cadre, tandis que la barre d'outils, le nombre de mots et le HTML sont sur la page autour, ce qui oblige un test à passer de l'un à l'autre.",
+      "information": {
+        "summary": "Tout ce qui se trouve dans une iframe appartient à un document distinct, donc les sélecteurs exécutés sur la page ne le trouvent pas : les tests doivent d'abord basculer dans le cadre, puis en ressortir pour vérifier quoi que ce soit sur la page.",
+        "sections": [
+          {
+            "title": "Chaque exemple",
+            "points": [
+              "Le formulaire envoie son message à la page, en dehors du cadre.",
+              "Le compteur se trouve dans un cadre lui-même placé dans un autre cadre, il faut donc deux bascules pour l'atteindre.",
+              "L'éditeur de texte enrichi fonctionne comme de nombreux éditeurs WYSIWYG classiques : le texte modifié est le corps d'un cadre, tandis que la barre d'outils, le nombre de mots et le HTML sont sur la page autour, ce qui oblige un test à passer de l'un à l'autre."
+            ]
+          }
+        ]
+      },
       "form": {
         "title": "Formulaire dans un cadre",
         "description": "Envoyez un nom depuis un formulaire dans un cadre vers la page qui l'entoure.",
@@ -752,7 +997,19 @@
     "key-presses": {
       "title": "Appuis sur les touches",
       "description": "Interagissez avec la page en appuyant sur les touches du clavier.",
-      "information": "Tout sur cette page est piloté par le clavier : les tests doivent donc envoyer des appuis sur les touches plutôt que cliquer ou saisir du texte. Le lecteur de touches affiche la dernière touche appuyée dans sa zone de texte, avec sa clé (key), son code et les touches de modification maintenues, ainsi que les dernières touches appuyées. Le compteur ne change que lorsqu'il a le focus : les flèches haut et bas (ou droite et gauche) le modifient de 1, maintenir Maj le modifie de 10, Début et Fin vont aux valeurs minimale et maximale et Échap le remet à sa valeur de départ. Le contrôle de maintien ne confirme que si Espace est maintenue enfoncée pendant une seconde entière ; relâcher plus tôt ne compte pas, et maintenir une touche répète son événement keydown, donc chaque répétition doit être ignorée. Il n'y a volontairement aucune alternative à la souris.",
+      "information": {
+        "summary": "Tout sur cette page est piloté par le clavier : les tests doivent donc envoyer des appuis sur les touches plutôt que cliquer ou saisir du texte. Il n'y a volontairement aucune alternative à la souris.",
+        "sections": [
+          {
+            "title": "Chaque contrôle",
+            "points": [
+              "Le lecteur de touches affiche la dernière touche appuyée dans sa zone de texte, avec sa clé (key), son code et les touches de modification maintenues, ainsi que les dernières touches appuyées.",
+              "Le compteur ne change que lorsqu'il a le focus : les flèches haut et bas (ou droite et gauche) le modifient de 1, maintenir Maj le modifie de 10, Début et Fin vont aux valeurs minimale et maximale et Échap le remet à sa valeur de départ.",
+              "Le contrôle de maintien ne confirme que si Espace est maintenue enfoncée pendant une seconde entière ; relâcher plus tôt ne compte pas, et maintenir une touche répète son événement keydown, donc chaque répétition doit être ignorée."
+            ]
+          }
+        ]
+      },
       "reader": {
         "title": "Lecteur de touches",
         "label": "Appuyez sur une touche dans cette zone",
@@ -796,7 +1053,32 @@
     "modal-dialogs": {
       "title": "Boîtes de dialogue modales",
       "description": "Ouvrez, utilisez et fermez des boîtes de dialogue dessinées dans la page, dont une qui apparaît d'elle-même au chargement.",
-      "information": "Contrairement aux boîtes de dialogue natives du navigateur (voir JS Alerts), ces modales sont des éléments du DOM ordinaires, mais chacune est rendue dans son propre élément à la <em>fin de <code>&lt;body&gt;</code></em>, en dehors du balisage du scénario : cherchez-la depuis le document plutôt qu'à l'intérieur de la section qui l'a ouverte. Tant qu'une modale est ouverte, un fond plein écran recouvre la page et tout ce qui se trouve derrière est marqué <code>inert</code> et <code>aria-hidden=\"true\"</code> : les clics sur la page sont interceptés par le fond et les éléments en arrière-plan sortent de l'arbre d'accessibilité, si bien que les requêtes par rôle ne les trouvent plus. La modale simple se ferme avec son bouton de fermeture, la touche Échap ou un clic sur le fond, et indique lequel a été utilisé. La modale de confirmation protège une suppression : le bouton Annuler, le choix sûr, reçoit le focus, et Échap ou le fond annulent aussi. La modale avec formulaire garde le focus piégé à l'intérieur tant qu'elle est ouverte (Tab fait le tour) et rend le focus au bouton qui l'a ouverte à sa fermeture. Les modales empilées affichent une deuxième boîte de dialogue au-dessus de la première : Échap et le fond ne ferment que celle du dessus. Enfin, une modale de bienvenue s'ouvre <em>d'elle-même</em> lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans <code>localStorage</code> sous <code>modal-dialogs-entry-dismissed</code>, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page.",
+      "information": {
+        "sections": [
+          {
+            "title": "Trouver une fenêtre modale",
+            "points": [
+              "Contrairement aux boîtes de dialogue natives du navigateur (voir JS Alerts), ces modales sont des éléments du DOM ordinaires, mais chacune est rendue dans son propre élément à la <em>fin de <code>&lt;body&gt;</code></em>, en dehors du balisage du scénario : cherchez-la depuis le document plutôt qu'à l'intérieur de la section qui l'a ouverte.",
+              "Tant qu'une modale est ouverte, un fond plein écran recouvre la page et tout ce qui se trouve derrière est marqué <code>inert</code> et <code>aria-hidden=\"true\"</code> : les clics sur la page sont interceptés par le fond et les éléments en arrière-plan sortent de l'arbre d'accessibilité, si bien que les requêtes par rôle ne les trouvent plus."
+            ]
+          },
+          {
+            "title": "Chaque fenêtre modale",
+            "points": [
+              "La modale simple se ferme avec son bouton de fermeture, la touche Échap ou un clic sur le fond, et indique lequel a été utilisé.",
+              "La modale de confirmation protège une suppression : le bouton Annuler, le choix sûr, reçoit le focus, et Échap ou le fond annulent aussi.",
+              "La modale avec formulaire garde le focus piégé à l'intérieur tant qu'elle est ouverte (Tab fait le tour) et rend le focus au bouton qui l'a ouverte à sa fermeture.",
+              "Les modales empilées affichent une deuxième boîte de dialogue au-dessus de la première : Échap et le fond ne ferment que celle du dessus."
+            ]
+          },
+          {
+            "title": "La fenêtre de bienvenue",
+            "points": [
+              "Une modale de bienvenue s'ouvre <em>d'elle-même</em> lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans <code>localStorage</code> sous <code>modal-dialogs-entry-dismissed</code>, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page."
+            ]
+          }
+        ]
+      },
       "close": "Fermer",
       "cancel": "Annuler",
       "basic": {
@@ -856,7 +1138,20 @@
     "mouse-interactions": {
       "title": "Interactions avec la souris",
       "description": "Double-cliquez, faites un clic droit, cliquez en maintenant, et cliquez avec différents boutons de la souris et touches de modification.",
-      "information": "Chaque cible de cette page demande plus qu'un simple clic gauche, et chaque outil de test expose ces actions de la souris différemment. La cible du double-clic ignore les clics simples et ne compte que les double-clics. La note ouvre un menu contextuel personnalisé au clic droit à la place de celui du navigateur, et ses éléments épinglent, surlignent ou suppriment la note ; le menu est un élément distinct placé à l'endroit du pointeur, et il se ferme avec Échap ou en appuyant n'importe où en dehors. Le bouton à maintenir ne confirme que si le bouton gauche de la souris reste enfoncé dessus pendant une seconde entière, donc l'appui et le relâchement doivent être envoyés en deux étapes séparées avec une attente entre les deux ; relâcher ou sortir du bouton plus tôt ne compte pas, et la barre de progression indique où vous en êtes. La dernière zone indique quel bouton de la souris a été enfoncé (gauche, milieu, droit, précédent ou suivant) et quelles touches de modification (Shift, Control, Alt, Meta) étaient maintenues. Le panneau en haut affiche toujours la dernière interaction. Il n'y a volontairement aucune alternative au clavier pour le double-clic, le bouton à maintenir ou la zone des boutons de la souris.",
+      "information": {
+        "summary": "Chaque cible de cette page demande plus qu'un simple clic gauche, et chaque outil de test expose ces actions de la souris différemment. Le panneau en haut affiche toujours la dernière interaction. Il n'y a volontairement aucune alternative au clavier pour le double-clic, le bouton à maintenir ou la zone des boutons de la souris.",
+        "sections": [
+          {
+            "title": "Chaque cible",
+            "points": [
+              "La cible du double-clic ignore les clics simples et ne compte que les double-clics.",
+              "La note ouvre un menu contextuel personnalisé au clic droit à la place de celui du navigateur, et ses éléments épinglent, surlignent ou suppriment la note ; le menu est un élément distinct placé à l'endroit du pointeur, et il se ferme avec Échap ou en appuyant n'importe où en dehors.",
+              "Le bouton à maintenir ne confirme que si le bouton gauche de la souris reste enfoncé dessus pendant une seconde entière, donc l'appui et le relâchement doivent être envoyés en deux étapes séparées avec une attente entre les deux ; relâcher ou sortir du bouton plus tôt ne compte pas, et la barre de progression indique où vous en êtes.",
+              "La dernière zone indique quel bouton de la souris a été enfoncé (gauche, milieu, droit, précédent ou suivant) et quelles touches de modification (Shift, Control, Alt, Meta) étaient maintenues."
+            ]
+          }
+        ]
+      },
       "double-click": {
         "title": "Double-clic",
         "instructions": "Seul un double-clic compte ici : les clics simples sont ignorés.",
@@ -922,7 +1217,18 @@
     "multiple-windows": {
       "title": "Fenêtres multiples",
       "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",
-      "information": "Chaque onglet ou fenêtre a son propre document, donc un test ne voit que celui sur lequel il se trouve : il doit attendre la nouvelle fenêtre, basculer dessus, puis revenir à la fenêtre d'origine. Chaque fenêtre définit son propre titre de document pour la distinguer. La fenêtre pop-up renvoie un message à la fenêtre qui l'a ouverte, puis se ferme, tandis que la page suit si elle est toujours ouverte. Les deux liens de fenêtre nommée s'ouvrent dans la même fenêtre : cliquer sur le second la réutilise au lieu d'en ouvrir une autre.",
+      "information": {
+        "summary": "Chaque onglet ou fenêtre a son propre document, donc un test ne voit que celui sur lequel il se trouve : il doit attendre la nouvelle fenêtre, basculer dessus, puis revenir à la fenêtre d'origine. Chaque fenêtre définit son propre titre de document pour la distinguer.",
+        "sections": [
+          {
+            "title": "Chaque exemple",
+            "points": [
+              "La fenêtre pop-up renvoie un message à la fenêtre qui l'a ouverte, puis se ferme, tandis que la page suit si elle est toujours ouverte.",
+              "Les deux liens de fenêtre nommée s'ouvrent dans la même fenêtre : cliquer sur le second la réutilise au lieu d'en ouvrir une autre."
+            ]
+          }
+        ]
+      },
       "new-tab": {
         "title": "Nouvel onglet",
         "description": "Un lien qui ouvre une page dans un nouvel onglet.",
@@ -999,7 +1305,35 @@
     "paginated-table": {
       "title": "Tableau paginé",
       "description": "Retrouvez des factures sur les pages d'un tableau grâce à la recherche, aux filtres, à la sélection de lignes et à une action groupée.",
-      "information": "Le tableau contient 143 factures, affichées par 10, 25 ou 50. Chaque changement (une nouvelle page, taille de page, recherche ou filtre) se charge pendant une durée aléatoire de {{min}} à {{max}} ms, et pendant le chargement les anciennes lignes restent affichées : le tableau est marqué <code>aria-busy=\"true\"</code>, un voile avec un indicateur de chargement le recouvre et la pagination, la taille de page et les cases à cocher sont désactivées. Vérifier les lignes juste après un clic peut lire l'ancienne page : attendez la fin du chargement ou que le résumé du nombre de lignes change. La recherche ne se lance qu'après une pause de {{debounce}} ms dans la saisie, puis se charge à son tour ; elle porte sur le numéro de facture ou le client, sans tenir compte de la casse ni des accents (« cafe » trouve « Café Étoile »). Une nouvelle recherche, un nouveau filtre ou une nouvelle taille de page ramène à la page 1, et les deux bornes de la période sont incluses. La pagination affiche la première et la dernière page ainsi que celles qui entourent la page courante, avec … pour les autres : la page voulue n'a donc pas forcément encore de bouton ; la page courante est marquée <code>aria-current=\"page\"</code>. Les lignes sélectionnées le restent quand vous changez de page ou de filtre, même si elles ne sont plus affichées, et le nombre de lignes sélectionnées les inclut. La case de l'en-tête ne sélectionne que les lignes de la page courante, et est partiellement cochée quand seules certaines le sont. Marquer des factures comme payées les modifie immédiatement : avec un filtre de statut, elles peuvent donc disparaître de la page. Quand rien ne correspond, le tableau affiche un message avec un bouton pour effacer les filtres, et la pagination disparaît. Le résumé, les dates et les montants sont rédigés et formatés différemment selon la langue.",
+      "information": {
+        "summary": "Le tableau contient 143 factures, affichées par 10, 25 ou 50. Le résumé, les dates et les montants sont rédigés et formatés différemment selon la langue.",
+        "sections": [
+          {
+            "title": "Chargement",
+            "points": [
+              "Chaque changement (une nouvelle page, taille de page, recherche ou filtre) se charge pendant une durée aléatoire de {{min}} à {{max}} ms, et pendant le chargement les anciennes lignes restent affichées : le tableau est marqué <code>aria-busy=\"true\"</code>, un voile avec un indicateur de chargement le recouvre et la pagination, la taille de page et les cases à cocher sont désactivées.",
+              "Vérifier les lignes juste après un clic peut lire l'ancienne page : attendez la fin du chargement ou que le résumé du nombre de lignes change."
+            ]
+          },
+          {
+            "title": "Recherche, filtres et pages",
+            "points": [
+              "La recherche ne se lance qu'après une pause de {{debounce}} ms dans la saisie, puis se charge à son tour ; elle porte sur le numéro de facture ou le client, sans tenir compte de la casse ni des accents (« cafe » trouve « Café Étoile »).",
+              "Une nouvelle recherche, un nouveau filtre ou une nouvelle taille de page ramène à la page 1, et les deux bornes de la période sont incluses.",
+              "La pagination affiche la première et la dernière page ainsi que celles qui entourent la page courante, avec … pour les autres : la page voulue n'a donc pas forcément encore de bouton ; la page courante est marquée <code>aria-current=\"page\"</code>.",
+              "Quand rien ne correspond, le tableau affiche un message avec un bouton pour effacer les filtres, et la pagination disparaît."
+            ]
+          },
+          {
+            "title": "Sélection des lignes",
+            "points": [
+              "Les lignes sélectionnées le restent quand vous changez de page ou de filtre, même si elles ne sont plus affichées, et le nombre de lignes sélectionnées les inclut.",
+              "La case de l'en-tête ne sélectionne que les lignes de la page courante, et est partiellement cochée quand seules certaines le sont.",
+              "Marquer des factures comme payées les modifie immédiatement : avec un filtre de statut, elles peuvent donc disparaître de la page."
+            ]
+          }
+        ]
+      },
       "filters": {
         "search": "Rechercher",
         "search-placeholder": "Numéro de facture ou client",
@@ -1108,7 +1442,19 @@
     "sortable-table": {
       "title": "Tableau triable",
       "description": "Triez un tableau en cliquant sur les en-têtes de ses colonnes.",
-      "information": "Cliquez sur l'en-tête d'une colonne pour trier selon celle-ci : le premier clic trie par ordre croissant, le deuxième par ordre décroissant et le troisième remet les lignes dans leur ordre d'origine. L'en-tête de la colonne triée indique le sens du tri dans son attribut aria-sort, les autres en-têtes n'en ont pas ; la colonne E-mail ne peut pas être triée. Les valeurs sont choisies pour piéger un tri naïf : les salaires et le nombre de projets sont mal triés comme du texte, les dates d'arrivée sont affichées au format de votre langue, un nom commence par une lettre accentuée et plusieurs personnes partagent un service (elles gardent leur ordre d'origine en cas d'égalité). Le prestataire n'a pas de salaire et est toujours trié en dernier, quel que soit le sens du tri. Le tri actuel est affiché sous le tableau.",
+      "information": {
+        "summary": "Cliquez sur l'en-tête d'une colonne pour trier selon celle-ci : le premier clic trie par ordre croissant, le deuxième par ordre décroissant et le troisième remet les lignes dans leur ordre d'origine. Le tri actuel est affiché sous le tableau.",
+        "sections": [
+          {
+            "title": "Points d'attention",
+            "points": [
+              "L'en-tête de la colonne triée indique le sens du tri dans son attribut aria-sort, les autres en-têtes n'en ont pas ; la colonne E-mail ne peut pas être triée.",
+              "Les valeurs sont choisies pour piéger un tri naïf : les salaires et le nombre de projets sont mal triés comme du texte, les dates d'arrivée sont affichées au format de votre langue, un nom commence par une lettre accentuée et plusieurs personnes partagent un service (elles gardent leur ordre d'origine en cas d'égalité).",
+              "Le prestataire n'a pas de salaire et est toujours trié en dernier, quel que soit le sens du tri."
+            ]
+          }
+        ]
+      },
       "columns": {
         "name": "Nom",
         "department": "Service",
@@ -1143,7 +1489,40 @@
     "time-and-timers": {
       "title": "Temps et minuteurs",
       "description": "Une offre à durée limitée, une déconnexion pour inactivité, des horodatages relatifs, un contenu selon l'heure, une recherche différée et un bouton limité.",
-      "information": "Tout sur cette page dépend de l'heure actuelle ou du temps qui passe, et les attentes sont volontairement longues : l'offre dure cinq minutes, et l'avertissement de session n'apparaît qu'après dix minutes sans aucune activité. Les attendre en temps réel rend un test lent et instable, alors prenez plutôt le contrôle de l'horloge, avec <code>page.clock</code> dans Playwright, <code>cy.clock()</code> et <code>cy.tick()</code> dans Cypress, ou <code>vi.useFakeTimers()</code> dans Vitest. Installez la fausse horloge avant le chargement de la page, car les minuteurs démarrés avant restent sur l'horloge réelle. La page relit l'horloge chaque seconde et calcule chaque état à partir de l'heure actuelle, donc avancer l'horloge d'un coup (par exemple avec <code>page.clock.fastForward()</code>, qui ne déclenche un minuteur échu qu'une seule fois) arrive directement au bon état. Le message d'accueil et la bannière des horaires d'ouverture dépendent de l'heure et du jour de la semaine, donc un test qui ne fixe pas l'heure réussit ou échoue selon le moment où il s'exécute : fixez une heure, comme un samedi ou un jour de semaine à 08:00, avant de charger la page. Ils utilisent aussi le fuseau horaire du navigateur. La déconnexion pour inactivité compte tout mouvement de souris, clic, touche ou défilement comme une activité, donc un test qui bouge la souris pendant l'attente la remet à zéro. L'avertissement couvre toute la page : tant qu'il est affiché, tout autre clic sur la page est intercepté jusqu'à ce qu'il soit fermé ; une fois l'avertissement affiché, seul Rester connecté conserve la session, et une fois déconnecté, seul Se reconnecter en démarre une nouvelle. Les horodatages relatifs passent de « à l'instant » à « il y a 1 minute », puis aux heures et aux jours, et leur heure exacte est dans l'attribut <code>datetime</code>. La recherche ne s'exécute qu'une demi-seconde après la fin de la saisie, donc un test doit attendre les résultats, ou avancer l'horloge, plutôt que de les vérifier juste après la saisie ; le compteur de recherches indique combien de recherches ont réellement été lancées. Enregistrer est limité : après un enregistrement, les clics suivants sont ignorés pendant deux secondes, donc deux clics rapprochés n'enregistrent qu'une fois.",
+      "information": {
+        "summary": "Tout sur cette page dépend de l'heure actuelle ou du temps qui passe, et les attentes sont volontairement longues : l'offre dure cinq minutes, et l'avertissement de session n'apparaît qu'après dix minutes sans aucune activité.",
+        "sections": [
+          {
+            "title": "Contrôler l'horloge",
+            "points": [
+              "Les attendre en temps réel rend un test lent et instable, alors prenez plutôt le contrôle de l'horloge, avec <code>page.clock</code> dans Playwright, <code>cy.clock()</code> et <code>cy.tick()</code> dans Cypress, ou <code>vi.useFakeTimers()</code> dans Vitest.",
+              "Installez la fausse horloge avant le chargement de la page, car les minuteurs démarrés avant restent sur l'horloge réelle.",
+              "La page relit l'horloge chaque seconde et calcule chaque état à partir de l'heure actuelle, donc avancer l'horloge d'un coup (par exemple avec <code>page.clock.fastForward()</code>, qui ne déclenche un minuteur échu qu'une seule fois) arrive directement au bon état."
+            ]
+          },
+          {
+            "title": "Ce qui dépend de l'horloge",
+            "points": [
+              "Le message d'accueil et la bannière des horaires d'ouverture dépendent de l'heure et du jour de la semaine, donc un test qui ne fixe pas l'heure réussit ou échoue selon le moment où il s'exécute : fixez une heure, comme un samedi ou un jour de semaine à 08:00, avant de charger la page. Ils utilisent aussi le fuseau horaire du navigateur.",
+              "Les horodatages relatifs passent de « à l'instant » à « il y a 1 minute », puis aux heures et aux jours, et leur heure exacte est dans l'attribut <code>datetime</code>."
+            ]
+          },
+          {
+            "title": "Expiration de la session",
+            "points": [
+              "La déconnexion pour inactivité compte tout mouvement de souris, clic, touche ou défilement comme une activité, donc un test qui bouge la souris pendant l'attente la remet à zéro.",
+              "L'avertissement couvre toute la page : tant qu'il est affiché, tout autre clic sur la page est intercepté jusqu'à ce qu'il soit fermé ; une fois l'avertissement affiché, seul Rester connecté conserve la session, et une fois déconnecté, seul Se reconnecter en démarre une nouvelle."
+            ]
+          },
+          {
+            "title": "Recherche et enregistrement",
+            "points": [
+              "La recherche ne s'exécute qu'une demi-seconde après la fin de la saisie, donc un test doit attendre les résultats, ou avancer l'horloge, plutôt que de les vérifier juste après la saisie ; le compteur de recherches indique combien de recherches ont réellement été lancées.",
+              "Enregistrer est limité : après un enregistrement, les clics suivants sont ignorés pendant deux secondes, donc deux clics rapprochés n'enregistrent qu'une fois."
+            ]
+          }
+        ]
+      },
       "clock": {
         "title": "Heure de la journée",
         "instructions": "Le message d'accueil change selon l'heure, et la boutique est ouverte du lundi au vendredi, aux heures de bureau uniquement.",

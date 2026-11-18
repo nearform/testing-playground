@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // Every step waits a different random time in this range, so a test that
 // sleeps for a fixed time is sometimes too short and always too slow
@@ -295,10 +296,14 @@ const DynamicLoading = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.dynamic-loading.title')}
         description={t('scenarios.dynamic-loading.description')}
-        information={t('scenarios.dynamic-loading.information', {
-          min: MIN_DELAY / 1000,
-          max: MAX_DELAY / 1000,
-        })}
+        information={translateInformation(
+          t,
+          'scenarios.dynamic-loading.information',
+          {
+            min: MIN_DELAY / 1000,
+            max: MAX_DELAY / 1000,
+          },
+        )}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <RenderedAfterLoading />

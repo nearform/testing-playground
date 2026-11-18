@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface Option {
   value: string
@@ -91,7 +92,7 @@ const Dropdown = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.dropdown.title')}
         description={t('scenarios.dropdown.description')}
-        information={t('scenarios.dropdown.information')}
+        information={translateInformation(t, 'scenarios.dropdown.information')}
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <section className='flex flex-col gap-2'>

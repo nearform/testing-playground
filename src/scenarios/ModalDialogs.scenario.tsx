@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // Remembers that the welcome modal has been dismissed, so it only opens on
 // the first visit
@@ -626,7 +627,10 @@ const ModalDialogs = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.modal-dialogs.title')}
         description={t('scenarios.modal-dialogs.description')}
-        information={t('scenarios.modal-dialogs.information')}
+        information={translateInformation(
+          t,
+          'scenarios.modal-dialogs.information',
+        )}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <BasicModal />

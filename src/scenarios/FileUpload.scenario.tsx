@@ -6,6 +6,7 @@ import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const FileUpload = (): JSX.Element => {
   const { t } = useTranslation()
@@ -60,7 +61,10 @@ const FileUpload = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.file-upload.title')}
         description={t('scenarios.file-upload.description')}
-        information={t('scenarios.file-upload.information')}
+        information={translateInformation(
+          t,
+          'scenarios.file-upload.information',
+        )}
       >
         <div className='flex flex-col items-start gap-4'>
           <input

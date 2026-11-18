@@ -6,6 +6,7 @@ import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 interface City {
   id: string
@@ -195,7 +196,10 @@ const Geolocation = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.geolocation.title')}
         description={t('scenarios.geolocation.description')}
-        information={t('scenarios.geolocation.information')}
+        information={translateInformation(
+          t,
+          'scenarios.geolocation.information',
+        )}
       >
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           <Button

@@ -51,8 +51,19 @@ const area = (): HTMLElement => screen.getByTestId('violations-area')
 
 const listedItems = (testId: string, attribute: string): string[] =>
   within(screen.getByTestId(testId))
-    .getAllByRole('listitem')
-    .map((item) => item.getAttribute(attribute) ?? '')
+    .getAllByRole('row')
+    .map((row) => row.getAttribute(attribute) ?? '')
+
+// The text of each cell in the expected problems row with this attribute
+const rowCells = (selector: string): string[] => {
+  const row = screen
+    .getByTestId('expected-problems')
+    .querySelector<HTMLElement>(selector)
+  if (row === null) throw new Error(`No expected problem row ${selector}`)
+  return within(row)
+    .getAllByRole('cell')
+    .map((cell) => cell.textContent ?? '')
+}
 
 describe('Accessibility violations scenario', () => {
   it('is a medium scenario', () => {
@@ -67,18 +78,6 @@ describe('Accessibility violations scenario', () => {
       keyPaths(locale.scenarios['accessibility-violations']).sort(),
     ).toEqual(keyPaths(en.scenarios['accessibility-violations']).sort())
   })
-
-  it.each(['en', 'fr', 'pt-br'] as const)(
-    'names every expected rule ID in the %s information panel',
-    (language) => {
-      const locales = { en, fr, 'pt-br': ptBr }
-      const { information } =
-        locales[language].scenarios['accessibility-violations']
-      for (const rule of [...EXPECTED_RULES, ...NEEDS_REVIEW_RULES]) {
-        expect(information).toContain(`<code>${rule}</code>`)
-      }
-    },
-  )
 
   it.each([
     { value: null, expected: 'broken' },
@@ -145,6 +144,36 @@ describe('Accessibility violations scenario', () => {
         ...MANUAL_ISSUES,
       ])
     })
+
+    it.each([
+      {
+        selector: '[data-rule="label"]',
+        cells: ['label', 'The Email address field has no label', 'Violation'],
+      },
+      {
+        selector: '[data-rule="duplicate-id-aria"]',
+        cells: [
+          'duplicate-id-aria',
+          'The First name and Last name labels share an ID, so both fields are named First name',
+          'Needs review (incomplete)',
+        ],
+      },
+      {
+        selector: '[data-issue="keyboard-trap"]',
+        cells: [
+          'Keyboard trap',
+          'Tab and Shift+Tab never leave the Message box',
+          'Keyboard test only',
+        ],
+      },
+    ])(
+      'shows what is wrong and how it is reported for $selector',
+      ({ selector, cells }) => {
+        renderBroken()
+
+        expect(rowCells(selector)).toEqual(cells)
+      },
+    )
 
     it('lists nothing in the fixed version', () => {
       renderFixed()

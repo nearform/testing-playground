@@ -6,6 +6,7 @@ import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 type DialogType = 'alert' | 'confirm' | 'prompt'
 
@@ -70,7 +71,7 @@ const JsAlerts = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.js-alerts.title')}
         description={t('scenarios.js-alerts.description')}
-        information={t('scenarios.js-alerts.information')}
+        information={translateInformation(t, 'scenarios.js-alerts.information')}
       >
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           {dialogTypes.map((type) => (

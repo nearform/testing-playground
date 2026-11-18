@@ -14,6 +14,7 @@ import Alert, { type AlertSeverity } from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const NOTIFICATION_DURATION = 6000
 
@@ -76,7 +77,10 @@ const Notification = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.notification.title')}
         description={t('scenarios.notification.description')}
-        information={t('scenarios.notification.information')}
+        information={translateInformation(
+          t,
+          'scenarios.notification.information',
+        )}
       >
         <ToastProvider duration={NOTIFICATION_DURATION}>
           <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>

@@ -11,11 +11,14 @@ import ReactHtmlParser from 'html-react-parser'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import ScenarioInformation from './ScenarioInformation'
+import type { Information } from '../utils/information'
+
 interface PageSetupProps {
   children: React.ReactNode
   title: string
   description: string
-  information?: string
+  information?: Information
 }
 
 const PageSetup: React.FC<PageSetupProps> = ({
@@ -34,19 +37,22 @@ const PageSetup: React.FC<PageSetupProps> = ({
           <Link to='/'>{t('navigation.back_to_main_page')}</Link>
         </BackLink>
       </PageHeader>
+      {/* h2s, so the headings follow on from the page title's h1 */}
       <Card className='flex flex-col gap-4'>
         <section>
-          <CardTitle>{t('scenarios.description')}</CardTitle>
-          <CardDescription className='text-sm'>
+          <CardTitle asChild>
+            <h2>{t('scenarios.description')}</h2>
+          </CardTitle>
+          <CardDescription className='max-w-[75ch] text-sm'>
             {ReactHtmlParser(t(description))}
           </CardDescription>
         </section>
         {information && (
-          <section>
-            <CardTitle>{t('scenarios.information')}</CardTitle>
-            <CardDescription className='text-sm'>
-              {ReactHtmlParser(t(information))}
-            </CardDescription>
+          <section className='flex flex-col gap-2'>
+            <CardTitle asChild>
+              <h2>{t('scenarios.information')}</h2>
+            </CardTitle>
+            <ScenarioInformation information={information} />
           </section>
         )}
       </Card>

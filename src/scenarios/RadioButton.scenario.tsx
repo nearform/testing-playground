@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const RadioButton = (): JSX.Element => {
   const { t } = useTranslation()
@@ -56,7 +57,10 @@ const RadioButton = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.radio-button.title')}
         description={t('scenarios.radio-button.description')}
-        information={t('scenarios.radio-button.information')}
+        information={translateInformation(
+          t,
+          'scenarios.radio-button.information',
+        )}
       >
         <div className='flex flex-wrap gap-12'>
           <RadioGroup

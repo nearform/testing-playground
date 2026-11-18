@@ -6,6 +6,7 @@ import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
@@ -58,7 +59,10 @@ const LoginForm = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.login-form.title')}
         description={t('scenarios.login-form.description')}
-        information={t('scenarios.login-form.information')}
+        information={translateInformation(
+          t,
+          'scenarios.login-form.information',
+        )}
       >
         <div className='mx-auto flex max-w-xl flex-col items-center justify-center gap-4'>
           {!isLoggedIn && (

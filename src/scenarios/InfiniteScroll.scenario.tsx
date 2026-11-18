@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 export const BATCH_SIZE = 10
 // Long enough for a test to see the loading state before new items arrive
@@ -55,7 +56,10 @@ const InfiniteScroll = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.infinite-scroll.title')}
         description={t('scenarios.infinite-scroll.description')}
-        information={t('scenarios.infinite-scroll.information')}
+        information={translateInformation(
+          t,
+          'scenarios.infinite-scroll.information',
+        )}
       >
         <p
           className='mb-4 text-sm text-foreground-muted dark:text-foreground-muted-dark'

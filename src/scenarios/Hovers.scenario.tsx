@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // How long the pointer has to rest on a menu item before its submenu opens,
 // and how long the menu stays open after the pointer leaves it
@@ -146,7 +147,7 @@ const Hovers = (): JSX.Element => {
       <PageSetup
         title={t('scenarios.hovers.title')}
         description={t('scenarios.hovers.description')}
-        information={t('scenarios.hovers.information')}
+        information={translateInformation(t, 'scenarios.hovers.information')}
       >
         <div className='flex flex-col gap-10'>
           <section className='flex flex-col gap-4'>
