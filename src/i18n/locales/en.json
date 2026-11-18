@@ -627,6 +627,99 @@
       "favorite": "Favorite",
       "bookmark": "Bookmark"
     },
+    "clipboard": {
+      "title": "Clipboard",
+      "description": "Copy values to the clipboard, read it back and see how pages can change or block a paste.",
+      "information": {
+        "summary": "Reading and writing the system clipboard needs permissions that are not part of the page, and every browser handles them differently, so grant <code>clipboard-read</code> and <code>clipboard-write</code> in your test framework (where it supports them) and check the result by reading the clipboard back rather than trusting the <em>Copied!</em> label.",
+        "sections": [
+          {
+            "title": "Permissions and browsers",
+            "points": [
+              "The Clipboard API only exists in a secure context (HTTPS or localhost) and must be called from a user gesture while the page has focus, so a click from a test that has moved focus elsewhere can still fail.",
+              "In Chromium, grant <code>clipboard-read</code> and <code>clipboard-write</code> (in Playwright with <code>context.grantPermissions</code>), or reading is refused with a permission error. Firefox and WebKit do not support these permissions in the same way: Firefox shows its own <em>Paste</em> pop-up for <code>readText</code>, which a test cannot click.",
+              "Headless browsers may use a clipboard of their own that is not shared with the operating system, and tests running in parallel on one machine can overwrite each other's clipboard in headed mode.",
+              "If permission is denied or the API is missing, the page shows an error explaining which, so the failure is easy to spot in a screenshot."
+            ]
+          },
+          {
+            "title": "Copying",
+            "points": [
+              "Each <em>Copy</em> button writes its value with <code>navigator.clipboard.writeText</code> and reads <em>Copied!</em> for two seconds. Assert on what the clipboard holds, not only on the label.",
+              "The API key is shown masked but the full key is copied, so the text on screen is not what ends up on the clipboard."
+            ]
+          },
+          {
+            "title": "Pasting",
+            "points": [
+              "<em>Paste from clipboard</em> reads the clipboard with <code>navigator.clipboard.readText</code> and shows what it found.",
+              "The notes field cancels the paste event and inserts a cleaned-up, plain-text version, so typing the text, setting the value or simulating a paste each gives a different result. A synthetic paste event needs a <code>clipboardData</code> holding <code>text/plain</code>.",
+              "The <em>Confirm password</em> field rejects pasted text, so a test that fills it by pasting fails and must type the password instead. Filling the field directly skips the paste event altogether."
+            ]
+          },
+          {
+            "title": "Blocked copying",
+            "points": [
+              "The second reference field cancels the <code>copy</code> and <code>cut</code> events, so selecting its text and pressing the copy shortcut leaves the clipboard unchanged. Compare it with the field next to it."
+            ]
+          }
+        ]
+      },
+      "unavailable": {
+        "title": "Clipboard unavailable"
+      },
+      "errors": {
+        "unavailable": "The Clipboard API is not available. It needs a secure context (HTTPS or localhost) and a browser that supports it.",
+        "permission-denied": "Permission to use the clipboard was denied. Grant the clipboard permission, and make sure the page has focus.",
+        "unknown": "An unknown error occurred while using the clipboard"
+      },
+      "copy": {
+        "title": "Copy values",
+        "explanation": "Each button copies its value to the clipboard.",
+        "values": {
+          "snippet": "Code snippet",
+          "api-key": "API key",
+          "share-link": "Share link"
+        },
+        "button": "Copy",
+        "button-label": "Copy {{name}}",
+        "copied": "Copied!",
+        "copied-message": "{{name}} copied to the clipboard",
+        "failed": "Copy failed"
+      },
+      "paste": {
+        "title": "Read the clipboard",
+        "explanation": "Reads the text on the clipboard and shows it below.",
+        "button": "Paste from clipboard",
+        "reading": "Reading the clipboard...",
+        "result-title": "Clipboard",
+        "empty": "The clipboard is empty or holds no text",
+        "characters_one": "Pasted {{count}} character:",
+        "characters_other": "Pasted {{count}} characters:",
+        "failed": "Paste failed"
+      },
+      "paste-handling": {
+        "title": "Paste handling",
+        "explanation": "These fields change what happens when text is pasted into them.",
+        "notes-label": "Notes (pasted text is cleaned up into plain text)",
+        "notes-formatting-removed": "Pasted as plain text: the formatting was removed",
+        "notes-plain": "Pasted as plain text",
+        "password-label": "Password",
+        "confirm-label": "Confirm password",
+        "paste-blocked-title": "Paste blocked",
+        "paste-blocked": "Pasting is not allowed here. Type the password again.",
+        "match": "The passwords match",
+        "mismatch": "The passwords do not match"
+      },
+      "copy-blocked": {
+        "title": "Blocked copying",
+        "explanation": "Both fields hold the same reference, but copying from the second one is blocked.",
+        "allowed-label": "Reference (can be copied)",
+        "blocked-label": "Reference (copying blocked)",
+        "blocked-title": "Copy blocked",
+        "blocked": "Copying from this field is not allowed"
+      }
+    },
     "cookies-and-storage": {
       "title": "Cookies and Storage",
       "description": "Answer a cookie consent banner, save cookie preferences, keep a note for this tab only, and watch the cookies and storage change.",
