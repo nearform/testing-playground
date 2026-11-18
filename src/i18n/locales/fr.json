@@ -20,6 +20,67 @@
     "back_to_main_page": "Retour à la page principale"
   },
   "scenarios": {
+    "accessibility-violations": {
+      "title": "Violations d'accessibilité",
+      "description": "Un formulaire d'inscription à une newsletter plein de problèmes d'accessibilité volontaires, avec un interrupteur vers une version corrigée, pour s'entraîner aux vérifications d'accessibilité automatiques et manuelles.",
+      "information": "Chaque problème d'accessibilité de cette page est volontaire, et activer <strong>Afficher la version corrigée</strong> (ou ouvrir <code>#/accessibility-violations?version=fixed</code>) les corrige tous, donc le même scan peut être lancé sur les deux versions. Les problèmes se trouvent tous dans la section Inscription à la newsletter, dont l'ID est <code>accessibility-violations-area</code>. Limitez le scan à cette section, avec <code>.include('#accessibility-violations-area')</code> dans <code>@axe-core/playwright</code> ou <code>cy.checkA11y('#accessibility-violations-area')</code> dans <code>cypress-axe</code>, pour que rien du reste du terrain de jeu ne s'y mêle. Dans la version cassée, un scan axe-core signale ces ID de règles comme violations, et dans la version corrigée il n'en signale aucun : <code>label</code> (le champ Adresse e-mail n'a pas d'étiquette); <code>image-alt</code> (la photo de profil n'a pas de texte alternatif); <code>heading-order</code> (Vos coordonnées passe directement d'un titre de niveau 2 à un titre de niveau 4); <code>aria-required-attr</code> (la case du résumé hebdomadaire n'a pas d'aria-checked); <code>aria-valid-attr-value</code> (Plus d'options met aria-expanded à yes ou no au lieu de true ou false); <code>scrollable-region-focusable</code> (la zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier); <code>color-contrast</code> (la note de confidentialité est en gris clair sur blanc); <code>button-name</code> (le bouton d'aide est une icône sans nom); <code>link-name</code> (le lien GitHub est une icône sans nom). Il signale aussi <code>duplicate-id-aria</code> (les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom), mais dans <code>incomplete</code> et non dans <code>violations</code> : axe-core considère que cette règle demande une vérification, donc un test qui ne regarde que <code>violations</code> ne la voit jamais. Ce qui rend l'automatisation délicate : <code>heading-order</code> est une bonne pratique et non une règle WCAG, donc un scan limité avec <code>withTags(['wcag2a', 'wcag2aa'])</code> ne la voit pas. <code>color-contrast</code> et <code>scrollable-region-focusable</code> dépendent de la mise en page, donc elles ne sont trouvées que dans un vrai navigateur et jamais dans jsdom. Une même règle peut échouer sur plusieurs éléments et les nouvelles versions d'axe-core ajoutent des règles, donc vérifiez les ID de règles attendus plutôt que le nombre de violations. Deux problèmes ne peuvent être trouvés par aucun scanner et demandent un test au clavier. La zone Message garde la touche Tab pour elle, comme certains éditeurs de code qui indentent, donc une fois qu'elle a le focus, ni Tab ni Maj+Tab n'en sortent : c'est un piège au clavier. Le bouton S'inscrire est un <code>div</code> avec un gestionnaire de clic, donc il ne peut pas être atteint avec Tab et ne fonctionne qu'à la souris. Les mêmes problèmes sont listés sous Problèmes attendus, avec un attribut <code>data-rule</code> sur chaque règle, et la liste se vide dans la version corrigée. Un scan sans erreur ne prouve pas qu'une page est accessible : il montre seulement que les problèmes qu'un scanner sait trouver ont disparu.",
+      "version": {
+        "title": "Version",
+        "switch": "Afficher la version corrigée",
+        "status": {
+          "broken": "Version cassée affichée",
+          "fixed": "Version corrigée affichée"
+        }
+      },
+      "expected": {
+        "title": "Problèmes attendus",
+        "explanation": "Ce qu'un scan de la section Inscription à la newsletter devrait trouver dans la version affichée.",
+        "axe": "Violations axe-core",
+        "review": "À vérifier dans axe-core (incomplete)",
+        "manual": "Trouvés uniquement en testant au clavier",
+        "none": "Aucun : la version corrigée n'a pas de problème connu."
+      },
+      "rules": {
+        "label": "le champ Adresse e-mail n'a pas d'étiquette",
+        "duplicate-id-aria": "les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom",
+        "image-alt": "la photo de profil n'a pas de texte alternatif",
+        "heading-order": "Vos coordonnées passe directement d'un titre de niveau 2 à un titre de niveau 4",
+        "aria-required-attr": "la case du résumé hebdomadaire n'a pas d'aria-checked",
+        "aria-valid-attr-value": "Plus d'options met aria-expanded à yes ou no au lieu de true ou false",
+        "scrollable-region-focusable": "la zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier",
+        "color-contrast": "la note de confidentialité est en gris clair sur blanc",
+        "button-name": "le bouton d'aide est une icône sans nom",
+        "link-name": "le lien GitHub est une icône sans nom"
+      },
+      "manual": {
+        "keyboard-trap": "Piège au clavier : Tab et Maj+Tab ne sortent jamais de la zone Message",
+        "mouse-only": "Souris uniquement : le bouton S'inscrire ne peut pas être atteint avec Tab"
+      },
+      "form": {
+        "title": "Inscription à la newsletter",
+        "intro": "Inscrivez-vous à notre newsletter hebdomadaire.",
+        "details": "Vos coordonnées",
+        "email": "Adresse e-mail",
+        "first-name": "Prénom",
+        "last-name": "Nom",
+        "photo": "Votre photo de profil",
+        "photo-alt": "Photo de profil par défaut",
+        "preferences": "Préférences",
+        "digest": "M'envoyer le résumé hebdomadaire",
+        "more-options": "Plus d'options",
+        "more-options-text": "Vous pouvez aussi choisir de recevoir plutôt un résumé mensuel.",
+        "terms": "Conditions générales",
+        "terms-clause": "Clause {{number}} : nous n'utiliserons votre adresse e-mail que pour vous envoyer cette newsletter, et vous pouvez vous désinscrire à tout moment grâce au lien en bas de chaque e-mail.",
+        "message": "Message (facultatif)",
+        "finish": "Terminer",
+        "privacy": "Nous ne partagerons jamais votre adresse e-mail avec qui que ce soit.",
+        "help": "Aide",
+        "help-text": "Remplissez vos coordonnées et appuyez sur S'inscrire. Vous pouvez vous désinscrire à tout moment.",
+        "github": "Testing Playground sur GitHub",
+        "subscribe": "S'inscrire",
+        "subscribed": "Merci, vous êtes maintenant inscrit."
+      }
+    },
     "actionability": {
       "title": "Actionnabilité",
       "description": "Superpositions, boutons en mouvement, décalages de mise en page et éléments présents mais impossibles à cliquer sans risque.",
