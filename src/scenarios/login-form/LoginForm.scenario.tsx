@@ -16,7 +16,8 @@ const LoginForm = (): JSX.Element => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  // Whether to show the error, not its text, so it follows a language switch
+  const [invalidCredentials, setInvalidCredentials] = useState(false)
   const [isLoggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -35,13 +36,13 @@ const LoginForm = (): JSX.Element => {
     // Check if username and password match the expected values
     if (username === 'admin' && password === 'Passw0rd!') {
       // Clear error, mark as logged in, and save to localStorage
-      setError('')
+      setInvalidCredentials(false)
       setLoggedIn(true)
       localStorage.setItem('username', username)
       localStorage.setItem('isLoggedIn', JSON.stringify(true))
     } else {
       // Set error message, mark as not logged in, and clear localStorage
-      setError(t(`scenarios.${SLUG}.invalid-credentials`))
+      setInvalidCredentials(true)
       setLoggedIn(false)
       localStorage.removeItem('username')
       localStorage.removeItem('isLoggedIn')
@@ -52,7 +53,7 @@ const LoginForm = (): JSX.Element => {
     // Clear user credentials, mark as not logged in, and clear localStorage
     setUsername('')
     setPassword('')
-    setError('')
+    setInvalidCredentials(false)
     setLoggedIn(false)
     localStorage.removeItem('username')
     localStorage.removeItem('isLoggedIn')
@@ -105,9 +106,9 @@ const LoginForm = (): JSX.Element => {
                   data-testid='password'
                 />
               </div>
-              {error.length > 0 && (
+              {invalidCredentials && (
                 <FieldError data-testid='error-invalid-credentials'>
-                  {error}
+                  {t(`scenarios.${SLUG}.invalid-credentials`)}
                 </FieldError>
               )}
               <Button

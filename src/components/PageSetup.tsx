@@ -33,7 +33,9 @@ const PageSetup: React.FC<PageSetupProps> = ({
     <div className='flex flex-col gap-4 p-4'>
       <PageHeader>
         <PageHeaderTitle>{title}</PageHeaderTitle>
-        <BackLink asChild data-testid={t('navigation.back').toLowerCase()}>
+        {/* A fixed test id: one built from the text would change with the
+            language */}
+        <BackLink asChild data-testid='back'>
           <Link to='/'>{t('navigation.back_to_main_page')}</Link>
         </BackLink>
       </PageHeader>

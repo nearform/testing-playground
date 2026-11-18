@@ -4,14 +4,14 @@
   "first-set": "Cores Primárias",
   "second-set": "Cores Secundárias",
   "first": {
-    "first": "Vermelho",
-    "second": "Azul",
-    "third": "Amarelo",
-    "fourth": "Branco"
+    "red": "Vermelho",
+    "blue": "Azul",
+    "yellow": "Amarelo",
+    "white": "Branco"
   },
   "second": {
-    "first": "Roxo",
-    "second": "Laranja",
-    "third": "Verde"
+    "purple": "Roxo",
+    "orange": "Laranja",
+    "green": "Verde"
   }
 }

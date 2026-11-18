@@ -18,8 +18,13 @@ import { translateInformation } from '../../utils/information'
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'dynamic-table'
 
+// The processes in the table. A row keeps its process's id, not its name,
+// and the name is translated as the row is drawn, so it follows a language
+// switch
+const PROCESSES = ['system', 'chrome', 'docker', 'slack']
+
 interface TableDataItem {
-  name: string
+  id: string
   cpu: string
   memory: string
   network: string
@@ -30,9 +35,9 @@ function getRandomNumber(min: number, max: number): number {
   return Math.random() * (max - min) + min
 }
 
-function generateRandomTableData(name: string): TableDataItem {
+function generateRandomTableData(id: string): TableDataItem {
   return {
-    name,
+    id,
     cpu: `${getRandomNumber(0, 100).toPrecision(3)}%`,
     memory: `${getRandomNumber(1024, 8192).toPrecision(4)} MB`,
     network: `${getRandomNumber(1, 1000).toPrecision(4)} Mbps`,
@@ -74,12 +79,7 @@ function adjustValues(
 
 const DynamicTable = (): JSX.Element => {
   const { t } = useTranslation()
-  const initialData: TableDataItem[] = [
-    generateRandomTableData(t(`scenarios.${SLUG}.system`)),
-    generateRandomTableData(t(`scenarios.${SLUG}.chrome`)),
-    generateRandomTableData(t(`scenarios.${SLUG}.docker`)),
-    generateRandomTableData(t(`scenarios.${SLUG}.slack`)),
-  ]
+  const name = (id: string): string => t(`scenarios.${SLUG}.${id}`)
 
   const [tableData, setTableData] = useState<TableDataItem[]>([])
   const [randomScenario, setRandomScenario] = useState<TableDataItem | null>(
@@ -87,6 +87,7 @@ const DynamicTable = (): JSX.Element => {
   )
 
   useEffect(() => {
+    const initialData = PROCESSES.map(generateRandomTableData)
     let shuffledData = shuffleData(initialData)
     shuffledData = adjustValues(shuffledData, 100, 'cpu', 3)
     shuffledData = adjustValues(shuffledData, 8192, 'memory', 4)
@@ -98,8 +99,8 @@ const DynamicTable = (): JSX.Element => {
     setTableData(shuffledData)
   }, [])
 
-  function findCpuPercentage(data: TableDataItem[], name: string): string {
-    const row = data.find((item) => item.name === name)
+  function findCpuPercentage(data: TableDataItem[], id: string): string {
+    const row = data.find((item) => item.id === id)
     return row != null ? `${parseFloat(row.cpu).toPrecision(3)}%` : 'N/A'
   }
 
@@ -134,7 +135,7 @@ const DynamicTable = (): JSX.Element => {
             {tableData.map((row, index) => (
               <TableRow data-testid={`dynamic-table-row-${index}`} key={index}>
                 <TableCell data-testid={`dynamic-table-row-name-${index}`}>
-                  {row.name}
+                  {name(row.id)}
                 </TableCell>
                 <TableCell data-testid={`dynamic-table-row-cpu-${index}`}>
                   {row.cpu}
@@ -157,8 +158,9 @@ const DynamicTable = (): JSX.Element => {
           className='mt-8'
           data-testid='target-scenario'
         >
-          {randomScenario?.name} {t(`scenarios.${SLUG}.cpu`)}:{' '}
-          {findCpuPercentage(tableData, randomScenario?.name ?? '')}
+          {randomScenario != null && name(randomScenario.id)}{' '}
+          {t(`scenarios.${SLUG}.cpu`)}:{' '}
+          {findCpuPercentage(tableData, randomScenario?.id ?? '')}
         </Notice>
       </PageSetup>
     </Layout>

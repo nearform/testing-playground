@@ -2,9 +2,10 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 import '@testing-library/jest-dom'
 
+import { switchLanguage } from './switchLanguage'
 import TestRenderer from './TestRenderer'
 import PageSetup from '../components/PageSetup'
 
@@ -53,5 +54,26 @@ describe('PageSetup', () => {
         .getAllByRole('heading', { level: 2 })
         .map((heading) => heading.textContent),
     ).toEqual(['Description', 'Information'])
+  })
+
+  describe('when the language changes', () => {
+    afterEach(async () => {
+      await switchLanguage('en')
+    })
+
+    it.each(['fr', 'ptBr'])(
+      'keeps the back link test id in %s',
+      async (language) => {
+        TestRenderer(
+          <PageSetup title='A scenario' description='A description'>
+            <p>Scenario content</p>
+          </PageSetup>,
+        )
+
+        await switchLanguage(language)
+
+        expect(screen.getByTestId('back')).toHaveAttribute('href', '/')
+      },
+    )
   })
 })

@@ -4,6 +4,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import i18n from '../../i18n/i18nConfig'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
@@ -320,5 +321,20 @@ describe('Actionability scenario', () => {
         await i18n.changeLanguage('en')
       })
     }
+  })
+})
+
+describe('Actionability when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the last action, and the product in it, in the new language', async () => {
+    TestRenderer(<Actionability />)
+    fireEvent.click(button('Add Pears'))
+
+    await switchLanguage('fr')
+
+    expect(lastAction()).toHaveTextContent('Poires ajouté au panier')
   })
 })

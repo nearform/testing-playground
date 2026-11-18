@@ -15,13 +15,16 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { useLocale } from '../../utils/locale'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'notification'
 
 const NOTIFICATION_DURATION = 6000
 
-type NotificationType = { message: string; severity: AlertSeverity } | null
+// Only the type is kept: its message and title are translated as they are
+// drawn, so they follow a language switch
+type NotificationType = AlertSeverity | null
 
 const notificationTypes: Array<{
   key: AlertSeverity
@@ -52,21 +55,15 @@ const notificationTypes: Array<{
 
 const Notification = (): JSX.Element => {
   const { t } = useTranslation()
+  // An Intl locale, as not every language code is one (ptBr)
+  const locale = useLocale()
   const [notification, setNotification] = useState<NotificationType>(null)
   const [alert, setAlert] = useState<NotificationType>(null)
   const [isAlertVisible, setIsAlertVisible] = useState<boolean>(false)
 
   const generateNotification = (severity: AlertSeverity): void => {
-    const messages = {
-      success: t(`scenarios.${SLUG}.messages.success`),
-      info: t(`scenarios.${SLUG}.messages.info`),
-      warning: t(`scenarios.${SLUG}.messages.warning`),
-      error: t(`scenarios.${SLUG}.messages.error`),
-    }
-
-    setNotification({ message: messages[severity], severity })
-
-    setAlert({ message: messages[severity], severity })
+    setNotification(severity)
+    setAlert(severity)
     setIsAlertVisible(true)
 
     setTimeout(() => {
@@ -103,13 +100,15 @@ const Notification = (): JSX.Element => {
           {notification != null && (
             <Toast
               open
-              variant={notification.severity}
+              variant={notification}
               onOpenChange={(open) => {
                 if (!open) setNotification(null)
               }}
-              data-testid={`notification-${notification.severity}`}
+              data-testid={`notification-${notification}`}
             >
-              <ToastTitle>{notification.message}</ToastTitle>
+              <ToastTitle>
+                {t(`scenarios.${SLUG}.messages.${notification}`)}
+              </ToastTitle>
               <ToastClose />
             </Toast>
           )}
@@ -118,12 +117,14 @@ const Notification = (): JSX.Element => {
 
         {alert != null && (
           <Alert
-            severity={alert.severity}
-            title={alert.severity.toLocaleUpperCase()}
+            severity={alert}
+            title={t(`scenarios.${SLUG}.type.${alert}`).toLocaleUpperCase(
+              locale,
+            )}
             className='mt-8'
-            data-testid={`message-${alert.severity}`}
+            data-testid={`message-${alert}`}
           >
-            {alert.message}
+            {t(`scenarios.${SLUG}.messages.${alert}`)}
           </Alert>
         )}
       </PageSetup>

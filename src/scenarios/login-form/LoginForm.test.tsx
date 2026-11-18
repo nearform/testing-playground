@@ -1,9 +1,10 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 import '@testing-library/jest-dom'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import LoginForm from './LoginForm.scenario'
 
 describe('LoginForm component', () => {
@@ -109,5 +110,28 @@ describe('LoginForm component', () => {
 
     expect(screen.getByTestId('login-button')).toBeInTheDocument()
     expect(screen.queryByTestId('logout-button')).toBeNull()
+  })
+})
+
+describe('LoginForm when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the error in the new language', async () => {
+    TestRenderer(<LoginForm />)
+    fireEvent.change(screen.getByLabelText('Username'), {
+      target: { value: 'nobody' },
+    })
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'wrong' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('error-invalid-credentials')).toHaveTextContent(
+      'Les informations que vous avez fournies ne sont pas valides',
+    )
   })
 })

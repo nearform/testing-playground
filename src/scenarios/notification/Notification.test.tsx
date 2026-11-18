@@ -1,8 +1,9 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import React from 'react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import Notification from './Notification.scenario'
 
 describe('Notification component', () => {
@@ -35,4 +36,37 @@ describe('Notification component', () => {
       { timeout: 6000 }, // Notification displays for 6 seconds
     )
   }, 10000)
+})
+
+describe('Notification when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it.each([
+    {
+      language: 'fr',
+      title: 'SUCCÈS',
+      text: "Il s'agit d'un message de notification réussi",
+    },
+    {
+      language: 'ptBr',
+      title: 'SUCESSO',
+      text: 'Esta é uma mensagem de notificação bem-sucedida',
+    },
+  ])(
+    'shows the popup and the alert in $language',
+    async ({ language, title, text }) => {
+      TestRenderer(<Notification />)
+      fireEvent.click(screen.getByTestId('button-success'))
+      expect(screen.getByTestId('message-success')).toHaveTextContent('SUCCESS')
+
+      await switchLanguage(language)
+
+      const alert = screen.getByTestId('message-success')
+      expect(alert).toHaveTextContent(title)
+      expect(alert).toHaveTextContent(text)
+      expect(screen.getByTestId('notification-success')).toHaveTextContent(text)
+    },
+  )
 })

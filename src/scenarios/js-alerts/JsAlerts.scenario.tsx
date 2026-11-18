@@ -7,6 +7,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'js-alerts'
@@ -14,7 +15,8 @@ const SLUG = 'js-alerts'
 type DialogType = 'alert' | 'confirm' | 'prompt'
 
 interface Result {
-  message: string
+  // The key, not the text, so the result follows a language switch
+  message: Message
   severity: AlertSeverity
 }
 
@@ -31,18 +33,18 @@ const JsAlerts = (): JSX.Element => {
     alert: () => {
       window.alert(t(`scenarios.${SLUG}.dialog.alert`))
       return {
-        message: t(`scenarios.${SLUG}.result.alert`),
+        message: message(`scenarios.${SLUG}.result.alert`),
         severity: 'success',
       }
     },
     confirm: () =>
       window.confirm(t(`scenarios.${SLUG}.dialog.confirm`))
         ? {
-            message: t(`scenarios.${SLUG}.result.confirm-ok`),
+            message: message(`scenarios.${SLUG}.result.confirm-ok`),
             severity: 'success',
           }
         : {
-            message: t(`scenarios.${SLUG}.result.confirm-cancel`),
+            message: message(`scenarios.${SLUG}.result.confirm-cancel`),
             severity: 'warning',
           },
     prompt: () => {
@@ -52,18 +54,18 @@ const JsAlerts = (): JSX.Element => {
       )
       if (answer === null) {
         return {
-          message: t(`scenarios.${SLUG}.result.prompt-cancel`),
+          message: message(`scenarios.${SLUG}.result.prompt-cancel`),
           severity: 'warning',
         }
       }
       if (answer.trim() === '') {
         return {
-          message: t(`scenarios.${SLUG}.result.prompt-empty`),
+          message: message(`scenarios.${SLUG}.result.prompt-empty`),
           severity: 'info',
         }
       }
       return {
-        message: t(`scenarios.${SLUG}.result.prompt-ok`, { answer }),
+        message: message(`scenarios.${SLUG}.result.prompt-ok`, { answer }),
         severity: 'success',
       }
     },
@@ -99,7 +101,7 @@ const JsAlerts = (): JSX.Element => {
               title={t(`scenarios.${SLUG}.result.title`)}
               data-testid='result'
             >
-              {result.message}
+              {translateMessage(t, result.message)}
             </Alert>
           )}
         </div>

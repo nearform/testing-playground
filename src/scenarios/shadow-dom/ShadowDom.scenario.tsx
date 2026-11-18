@@ -8,6 +8,7 @@ import PageSetup from '../../components/PageSetup'
 import ShadowHost from './ShadowHost'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'shadow-dom'
@@ -84,15 +85,20 @@ const Section = ({
 const OpenShadowForm = (): JSX.Element => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
-  const [greeting, setGreeting] = useState<{ text: string; error: boolean }>()
+  const [greeting, setGreeting] = useState<{
+    text: Message
+    error: boolean
+  }>()
 
   const handleGreet = (): void => {
     const trimmed = name.trim()
     setGreeting(
       trimmed === ''
-        ? { text: t(`scenarios.${SLUG}.open.error`), error: true }
+        ? { text: message(`scenarios.${SLUG}.open.error`), error: true }
         : {
-            text: t(`scenarios.${SLUG}.open.greeting`, { name: trimmed }),
+            text: message(`scenarios.${SLUG}.open.greeting`, {
+              name: trimmed,
+            }),
             error: false,
           },
     )
@@ -125,7 +131,7 @@ const OpenShadowForm = (): JSX.Element => {
         data-testid='shadow-greeting'
         role='status'
       >
-        {greeting?.text}
+        {greeting !== undefined && translateMessage(t, greeting.text)}
       </p>
     </div>
   )

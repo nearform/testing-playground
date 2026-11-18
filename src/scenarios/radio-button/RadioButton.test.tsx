@@ -1,8 +1,9 @@
 import { fireEvent, screen } from '@testing-library/react'
 import React from 'react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import RadioButton from './RadioButton.scenario'
 
 describe('RadioButton component', () => {
@@ -65,9 +66,42 @@ describe('RadioButton component', () => {
     expect(screen.getByRole('radio', { name: 'Purple' })).not.toBeChecked()
   })
 
+  it('gives each radio its colour as its value', () => {
+    TestRenderer(<RadioButton />)
+    fireEvent.click(screen.getByRole('radio', { name: 'Red' }))
+
+    expect(screen.getByRole('radio', { name: 'Red' })).toHaveAttribute(
+      'value',
+      'red',
+    )
+    expect(screen.getByRole('radio', { name: 'Purple' })).toHaveAttribute(
+      'value',
+      'purple',
+    )
+  })
+
   it('disables the last radio button in the first group', () => {
     TestRenderer(<RadioButton />)
     const fourthRadioButton = screen.getByRole('radio', { name: 'White' })
     expect(fourthRadioButton).toBeDisabled()
+  })
+})
+
+describe('RadioButton when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('keeps the chosen colours picked, with their names in the new language', async () => {
+    TestRenderer(<RadioButton />)
+    fireEvent.click(screen.getByRole('radio', { name: 'Red' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Orange' }))
+
+    await switchLanguage('fr')
+
+    expect(screen.getByRole('radio', { name: 'Rouge' })).toBeChecked()
+    expect(screen.getByRole('radio', { name: 'Orange' })).toBeChecked()
+    expect(screen.getByRole('radio', { name: 'Violet' })).not.toBeChecked()
+    expect(screen.getByTestId('radio-button-group-2')).toBeInTheDocument()
   })
 })

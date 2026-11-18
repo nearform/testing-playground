@@ -7,6 +7,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'actionability'
@@ -74,9 +75,11 @@ const boxClasses =
 
 const Actionability = (): JSX.Element => {
   const { t } = useTranslation()
-  const [lastAction, setLastAction] = useState<string | null>(null)
-  const record = (path: string, values?: Record<string, unknown>): void => {
-    setLastAction(t(key(`result.${path}`), values))
+  // The message's key and values, not its text, so it follows a language
+  // switch
+  const [lastAction, setLastAction] = useState<Message | null>(null)
+  const record = (path: string, values?: Message['values']): void => {
+    setLastAction(message(key(`result.${path}`), values))
   }
 
   // Overlays
@@ -111,7 +114,9 @@ const Actionability = (): JSX.Element => {
               {t(key('result.title'))}
             </CardTitle>
             <p aria-live='polite' data-testid='last-action'>
-              {lastAction ?? t(key('result.none'))}
+              {lastAction === null
+                ? t(key('result.none'))
+                : translateMessage(t, lastAction)}
             </p>
           </section>
 
@@ -212,7 +217,9 @@ const Actionability = (): JSX.Element => {
                       variant='secondary'
                       onClick={() => {
                         setBasket((count) => count + 1)
-                        record('added', { product: name })
+                        record('added', {
+                          product: message(key(`sticky.products.${product}`)),
+                        })
                       }}
                     >
                       {t(key('sticky.add'), { product: name })}

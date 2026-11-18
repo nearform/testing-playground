@@ -1,10 +1,11 @@
-import { screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import FileUpload from './FileUpload.scenario'
 
 describe('FileUpload component', () => {
@@ -33,4 +34,35 @@ describe('FileUpload component', () => {
       { timeout: 10000 },
     )
   }, 12000)
+})
+
+describe('FileUpload when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.restoreAllMocks()
+  })
+
+  it('shows the upload result in the new language', async () => {
+    vi.useFakeTimers()
+    // The shortest upload: one second
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+    TestRenderer(<FileUpload />)
+    fireEvent.change(screen.getByTestId('select-file'), {
+      target: { files: [new File(['hello'], 'hello.txt')] },
+    })
+    fireEvent.click(screen.getByTestId('upload-button'))
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('upload-message')).toHaveTextContent(
+      'Fichier "hello.txt" téléchargé avec succès !',
+    )
+  })
 })

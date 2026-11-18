@@ -4,6 +4,7 @@ import React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import Hovers from './Hovers.scenario'
 
 describe('Hovers scenario', () => {
@@ -267,5 +268,38 @@ describe('Hovers scenario', () => {
         expect(screen.queryByTestId('submenu-products')).not.toBeInTheDocument()
       })
     })
+  })
+})
+
+describe('Hovers when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the last action in the new language', async () => {
+    TestRenderer(<Hovers />)
+    fireEvent.click(screen.getByTestId('menu-products'))
+    fireEvent.click(screen.getByTestId('menu-phones'))
+    fireEvent.click(screen.getByTestId('menu-android'))
+    expect(screen.getByTestId('hovers-result')).toHaveTextContent(
+      'Phones › Android',
+    )
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('hovers-result')).toHaveTextContent(
+      'Téléphones › Android choisi',
+    )
+  })
+
+  it('shows a file action in the new language', async () => {
+    TestRenderer(<Hovers />)
+    fireEvent.click(screen.getByRole('button', { name: /^Delete notes\.txt/ }))
+
+    await switchLanguage('fr')
+
+    expect(screen.getByTestId('hovers-result')).toHaveTextContent(
+      'notes.txt supprimé',
+    )
   })
 })

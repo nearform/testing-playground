@@ -4,6 +4,7 @@ import React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { switchLanguage } from '../../tests/switchLanguage'
 import ChallengingSelectors, {
   MEMBERS,
   UNREAD_MESSAGES,
@@ -366,5 +367,23 @@ describe('ChallengingSelectors scenario', () => {
         screen.queryByRole('button', { name: 'Save for later' }),
       ).not.toBeInTheDocument()
     })
+  })
+})
+
+describe('ChallengingSelectors when the language changes', () => {
+  afterEach(async () => {
+    await switchLanguage('en')
+  })
+
+  it('shows the last action, and the button in it, in the new language', async () => {
+    const user = userEvent.setup()
+    TestRenderer(<ChallengingSelectors />)
+    await user.click(screen.getAllByRole('button', { name: 'Checkout' })[1])
+
+    await switchLanguage('fr')
+
+    expect(lastAction()).toHaveTextContent(
+      'Commande passée avec le bouton bureau',
+    )
   })
 })

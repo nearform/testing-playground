@@ -18,6 +18,7 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { message, type Message, translateMessage } from '../../utils/message'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'challenging-selectors'
@@ -89,7 +90,9 @@ const fakeButtonClasses = [
 
 const ChallengingSelectors = (): JSX.Element => {
   const { t } = useTranslation()
-  const [lastAction, setLastAction] = useState<string | null>(null)
+  // The message's key and values, not its text, so it follows a language
+  // switch
+  const [lastAction, setLastAction] = useState<Message | null>(null)
 
   // Randomised IDs and classes
   const profileNames = useRandomNames(
@@ -100,7 +103,7 @@ const ChallengingSelectors = (): JSX.Element => {
 
   const saveProfile = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    setLastAction(t(key('result.saved-name'), { name: displayName }))
+    setLastAction(message(key('result.saved-name'), { name: displayName }))
   }
 
   // Identical buttons in every row
@@ -109,12 +112,12 @@ const ChallengingSelectors = (): JSX.Element => {
 
   const deleteMember = (member: Member): void => {
     setMembers((current) => current.filter((m) => m.email !== member.email))
-    setLastAction(t(key('result.deleted'), { name: member.name }))
+    setLastAction(message(key('result.deleted'), { name: member.name }))
   }
 
   const restoreMembers = (): void => {
     setMembers(shuffle(MEMBERS))
-    setLastAction(t(key('result.restored')))
+    setLastAction(message(key('result.restored')))
   }
 
   // Text split across elements
@@ -122,7 +125,7 @@ const ChallengingSelectors = (): JSX.Element => {
 
   const markAllRead = (): void => {
     setUnread(0)
-    setLastAction(t(key('result.marked-read')))
+    setLastAction(message(key('result.marked-read')))
   }
 
   // Fields only told apart by nearby text
@@ -130,12 +133,12 @@ const ChallengingSelectors = (): JSX.Element => {
   const [delivery, setDelivery] = useState<Address>(emptyAddress)
   const [billing, setBilling] = useState<Address>(emptyAddress)
 
-  const orEmpty = (value: string): string =>
-    value.trim() === '' ? t(key('result.empty')) : value
+  const orEmpty = (value: string): string | Message =>
+    value.trim() === '' ? message(key('result.empty')) : value
 
   const saveAddresses = (): void => {
     setLastAction(
-      t(key('result.saved-addresses'), {
+      message(key('result.saved-addresses'), {
         deliveryCity: orEmpty(delivery.city),
         deliveryPostcode: orEmpty(delivery.postcode),
         billingCity: orEmpty(billing.city),
@@ -180,7 +183,7 @@ const ChallengingSelectors = (): JSX.Element => {
 
   const subscribe = (form: 'labelled' | 'unlabelled', email: string): void => {
     setLastAction(
-      t(key(`result.subscribed-${form}`), { email: orEmpty(email) }),
+      message(key(`result.subscribed-${form}`), { email: orEmpty(email) }),
     )
   }
 
@@ -189,8 +192,8 @@ const ChallengingSelectors = (): JSX.Element => {
 
   const checkout = (variant: CheckoutVariant): void => {
     setLastAction(
-      t(key('result.checkout'), {
-        variant: t(key(`duplicates.variants.${variant}`)),
+      message(key('result.checkout'), {
+        variant: message(key(`duplicates.variants.${variant}`)),
       }),
     )
   }
@@ -213,7 +216,9 @@ const ChallengingSelectors = (): JSX.Element => {
               {t(key('result.title'))}
             </CardTitle>
             <p aria-live='polite' data-testid='last-action'>
-              {lastAction ?? t(key('result.none'))}
+              {lastAction === null
+                ? t(key('result.none'))
+                : translateMessage(t, lastAction)}
             </p>
           </section>
 
@@ -254,7 +259,7 @@ const ChallengingSelectors = (): JSX.Element => {
                 className={profileNames.reset}
                 onClick={() => {
                   setDisplayName('')
-                  setLastAction(t(key('result.reset-name')))
+                  setLastAction(message(key('result.reset-name')))
                 }}
               >
                 {t(key('random.reset'))}
@@ -289,7 +294,9 @@ const ChallengingSelectors = (): JSX.Element => {
                           className={rowClass.button}
                           onClick={() => {
                             setLastAction(
-                              t(key('result.editing'), { name: member.name }),
+                              message(key('result.editing'), {
+                                name: member.name,
+                              }),
                             )
                           }}
                         >
@@ -486,7 +493,7 @@ const ChallengingSelectors = (): JSX.Element => {
                     variant='secondary'
                     onClick={() => {
                       setMenuOpen(false)
-                      setLastAction(t(key('result.saved-for-later')))
+                      setLastAction(message(key('result.saved-for-later')))
                     }}
                   >
                     {t(key('duplicates.save-for-later'))}
