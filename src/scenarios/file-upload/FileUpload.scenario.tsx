@@ -1,5 +1,5 @@
 import { BsCloudUpload, Button, ProgressBar } from '@nearform/quantum'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Alert, { type AlertSeverity } from '../../components/Alert'
@@ -21,11 +21,25 @@ const FileUpload = (): JSX.Element => {
     text: Message
     severity: AlertSeverity
   } | null>(null)
+  // The upload in progress, so it can be stopped when another file is picked
+  // or the page is left, and never reports on a file no longer selected
+  const uploadTimer = useRef<number | null>(null)
+
+  const cancelUpload = (): void => {
+    if (uploadTimer.current !== null) {
+      window.clearTimeout(uploadTimer.current)
+      uploadTimer.current = null
+    }
+  }
+
+  useEffect(() => cancelUpload, [])
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     if (event.target.files != null && event.target.files.length > 0) {
+      cancelUpload()
+      setUploading(false)
       setFile(event.target.files[0])
       setUploadMessage(null)
     }
@@ -34,8 +48,10 @@ const FileUpload = (): JSX.Element => {
   const simulateFileUpload = (filename: string): void => {
     const min = 1000
     const max = 10000
-    setTimeout(
+    cancelUpload()
+    uploadTimer.current = window.setTimeout(
       () => {
+        uploadTimer.current = null
         setUploading(false)
         setUploadMessage({
           text: message(`scenarios.${SLUG}.upload-success`, { filename }),

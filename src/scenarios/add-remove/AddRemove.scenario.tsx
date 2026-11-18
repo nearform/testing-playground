@@ -17,6 +17,9 @@ interface InitialState {
   nextIndex: number
 }
 
+// A new object each time, so the component's save effects always run
+const emptyState = (): InitialState => ({ elements: [], nextIndex: 0 })
+
 // The buttons saved in sessionStorage, or none when nothing valid is saved
 // there (a missing, malformed or foreign value must not stop the page loading)
 const readStoredElements = (): number[] => {
@@ -62,15 +65,39 @@ export const loadInitialState = (search: string): InitialState => {
     }
   }
 
-  return { elements: [], nextIndex: 0 }
+  return emptyState()
+}
+
+// Defined here rather than inside AddRemove, so React keeps the same buttons
+// between renders: focus stays put and handles held by tests stay valid
+const ElementComponent = ({
+  index,
+  removeElement,
+}: {
+  index: number
+  removeElement: () => void
+}): JSX.Element => {
+  const { t } = useTranslation()
+
+  return (
+    <Button
+      variant='danger'
+      onClick={removeElement}
+      data-testid={`remove-element-${index + 1}`}
+    >
+      {t(`scenarios.${SLUG}.remove-element`)} {index + 1}
+    </Button>
+  )
 }
 
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
   const location = useLocation()
-  const [initialState] = useState(() => loadInitialState(location.search))
-  const [elements, setElements] = useState<number[]>(initialState.elements)
-  const [nextIndex, setNextIndex] = useState(initialState.nextIndex)
+  // The buttons and the next index live together, so one update changes both
+  // and two clicks handled in the same batch still get different numbers
+  const [{ elements, nextIndex }, setState] = useState(() =>
+    loadInitialState(location.search),
+  )
 
   // Save both whenever they change, so they cannot fall out of step
   useEffect(() => {
@@ -82,19 +109,21 @@ const AddRemove = (): JSX.Element => {
   }, [nextIndex])
 
   const addElement = (): void => {
-    setNextIndex((prevIndex) => prevIndex + 1)
-    setElements((prevElements) => [...prevElements, nextIndex])
+    setState((prev) => ({
+      elements: [...prev.elements, prev.nextIndex],
+      nextIndex: prev.nextIndex + 1,
+    }))
   }
 
   const removeElement = (indexToRemove: number): void => {
-    setElements((prevElements) => {
-      const newElements = prevElements.filter(
+    setState((prev) => {
+      const newElements = prev.elements.filter(
         (element) => element !== indexToRemove,
       )
-      if (newElements.length === 0) {
-        setNextIndex(0)
-      }
-      return newElements
+      // Numbering starts again from 1 once every button has gone
+      return newElements.length === 0
+        ? emptyState()
+        : { ...prev, elements: newElements }
     })
   }
 
@@ -102,30 +131,7 @@ const AddRemove = (): JSX.Element => {
     // Only this scenario's keys: other scenarios keep their session data
     sessionStorage.removeItem('elements')
     sessionStorage.removeItem('nextIndex')
-    setElements([]) // Clear elements in state as well
-    setNextIndex(0)
-  }
-
-  const ElementComponent = ({
-    index,
-    removeElement,
-  }: {
-    index: number
-    removeElement: () => void
-  }): JSX.Element => {
-    const { t } = useTranslation()
-
-    return (
-      <>
-        <Button
-          variant='danger'
-          onClick={removeElement}
-          data-testid={`remove-element-${index + 1}`}
-        >
-          {t(`scenarios.${SLUG}.remove-element`)} {index + 1}
-        </Button>
-      </>
-    )
+    setState(emptyState())
   }
 
   return (
@@ -152,8 +158,8 @@ const AddRemove = (): JSX.Element => {
           </Button>
         </div>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4'>
-          {elements.map((element, index) => (
-            <div key={index}>
+          {elements.map((element) => (
+            <div key={element}>
               <ElementComponent
                 index={element}
                 removeElement={() => {

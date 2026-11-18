@@ -28,8 +28,10 @@ const ScenarioInformation: React.FC<ScenarioInformationProps> = ({
       className={`flex flex-col gap-4 ${codeClass}`}
       data-testid='scenario-information'
     >
-      {summary.map((paragraph) => (
-        <p key={paragraph} className={proseClass}>
+      {/* Keyed by position: the lists never change, and two entries could
+          have the same text */}
+      {summary.map((paragraph, index) => (
+        <p key={index} className={proseClass}>
           {ReactHtmlParser(paragraph)}
         </p>
       ))}
@@ -37,16 +39,16 @@ const ScenarioInformation: React.FC<ScenarioInformationProps> = ({
           together without leaving gaps */}
       {sections.length > 0 && (
         <div className='gap-x-10 lg:columns-2'>
-          {sections.map(({ title, points }) => (
-            <section key={title} className='mb-4 break-inside-avoid'>
+          {sections.map(({ title, points }, index) => (
+            <section key={index} className='mb-4 break-inside-avoid'>
               <h3 className='mb-1 text-sm font-semibold'>
                 {ReactHtmlParser(title)}
               </h3>
               <ul
                 className={`${textClass} flex list-disc flex-col gap-1 pl-5 marker:text-foreground-muted dark:marker:text-foreground-muted-dark`}
               >
-                {points.map((point) => (
-                  <li key={point}>{ReactHtmlParser(point)}</li>
+                {points.map((point, index) => (
+                  <li key={index}>{ReactHtmlParser(point)}</li>
                 ))}
               </ul>
             </section>

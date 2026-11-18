@@ -98,30 +98,20 @@ const DragAndDropHard = (): JSX.Element => {
     )
 
     if (draggedShape != null) {
-      const updatedShapes: Shape[] = [...shapes]
-
-      // Check if the dropped shape matches the target shape
-      if (draggedShape.shape === targetShape) {
+      // Green on the matching shape, yellow on the wrong one
+      const isCorrect = draggedShape.shape === targetShape
+      if (isCorrect) {
         setTotalCorrectCount((prevCount) => prevCount + 1)
-
-        // Handle the possibility of find returning undefined
-        const updatedShape = updatedShapes.find(
-          (shape) => shape.id === draggedShape.id,
-        )
-        if (updatedShape != null) {
-          updatedShape.color = 'green'
-        }
-      } else {
-        // If dropped onto the wrong shape, turn the shape yellow
-        const updatedShape = updatedShapes.find(
-          (shape) => shape.id === draggedShape.id,
-        )
-        if (updatedShape != null) {
-          updatedShape.color = 'yellow'
-        }
       }
+      const color = isCorrect ? 'green' : 'yellow'
 
-      setShapes(updatedShapes)
+      // A new object for the dropped shape, so the previous state is left
+      // untouched
+      setShapes(
+        shapes.map((shape) =>
+          shape.id === draggedShape.id ? { ...shape, color } : shape,
+        ),
+      )
     }
   }
 

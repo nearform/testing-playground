@@ -91,4 +91,50 @@ describe('DragAndDropHard component', () => {
       expect(shape.style.backgroundColor).toBe('red')
     })
   })
+
+  describe('dropping a shape', () => {
+    const dropFirstShape = (onMatchingTarget: boolean): HTMLElement => {
+      const shape = screen.getByTestId(
+        (id: string) => id.startsWith('draggable-') && id.endsWith('-1'),
+      )
+      const isCircle = shape.getAttribute('data-testid')?.includes('circle')
+      const kind = isCircle === onMatchingTarget ? 'circle' : 'square'
+      fireEvent.drop(screen.getByTestId(`drop-${kind}`), {
+        dataTransfer: { getData: vi.fn(() => '1') },
+      })
+      return shape
+    }
+
+    it('turns it green on its own shape', () => {
+      TestRenderer(<DragAndDropHard />)
+
+      const shape = dropFirstShape(true)
+
+      expect(shape.style.backgroundColor).toBe('green')
+    })
+
+    it('turns it yellow on the other shape', () => {
+      TestRenderer(<DragAndDropHard />)
+
+      const shape = dropFirstShape(false)
+
+      expect(shape.style.backgroundColor).toBe('yellow')
+    })
+
+    it('leaves the other shapes as they were', () => {
+      TestRenderer(<DragAndDropHard />)
+
+      dropFirstShape(true)
+
+      const others = screen
+        .getAllByTestId(/^draggable-/)
+        .filter((shape) => !shape.getAttribute('data-testid')?.endsWith('-1'))
+      expect(others.map((shape) => shape.style.backgroundColor)).toEqual([
+        'red',
+        'red',
+        'red',
+        'red',
+      ])
+    })
+  })
 })

@@ -36,6 +36,58 @@ describe('FileUpload component', () => {
   }, 12000)
 })
 
+describe('FileUpload while an upload is in progress', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.restoreAllMocks()
+  })
+
+  const selectFile = (name: string): void => {
+    fireEvent.change(screen.getByTestId('select-file'), {
+      target: { files: [new File(['hello'], name)] },
+    })
+  }
+
+  // The longest upload, so it is still going when the test acts
+  const startLongestUpload = (name: string): void => {
+    vi.useFakeTimers()
+    vi.spyOn(Math, 'random').mockReturnValue(1)
+    selectFile(name)
+    fireEvent.click(screen.getByTestId('upload-button'))
+  }
+
+  it('does not report the earlier file once another is picked', () => {
+    TestRenderer(<FileUpload />)
+    startLongestUpload('a.txt')
+
+    selectFile('b.txt')
+    act(() => {
+      vi.runAllTimers()
+    })
+
+    expect(screen.getByTestId('selected-file-name')).toHaveTextContent('b.txt')
+    expect(screen.queryByTestId('upload-message')).toBeNull()
+  })
+
+  it('lets the newly picked file be uploaded', () => {
+    TestRenderer(<FileUpload />)
+    startLongestUpload('a.txt')
+
+    selectFile('b.txt')
+
+    expect(screen.getByTestId('upload-button')).toBeEnabled()
+  })
+
+  it('stops the upload when the page is left', () => {
+    const { unmount } = TestRenderer(<FileUpload />)
+    startLongestUpload('a.txt')
+
+    unmount()
+
+    expect(vi.getTimerCount()).toBe(0)
+  })
+})
+
 describe('FileUpload when the language changes', () => {
   afterEach(async () => {
     await switchLanguage('en')
