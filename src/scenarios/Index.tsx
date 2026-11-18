@@ -2,6 +2,7 @@ export { default as AccessibilityViolations } from './AccessibilityViolations.sc
 export { default as Actionability } from './Actionability.scenario'
 export { default as AddRemove } from './AddRemove.scenario'
 export { default as Autocomplete } from './Autocomplete.scenario'
+export { default as CanvasAndSvg } from './CanvasAndSvg.scenario'
 export { default as ChallengingSelectors } from './ChallengingSelectors.scenario'
 export { default as CheckBox } from './CheckBox.scenario'
 export { default as CookiesAndStorage } from './CookiesAndStorage.scenario'

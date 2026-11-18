@@ -198,6 +198,63 @@
         "too-short_other": "Digite pelo menos {{count}} caracteres"
       }
     },
+    "canvas-and-svg": {
+      "title": "Canvas e SVG",
+      "description": "Um bloco de desenho, um gráfico de barras e um jogo de alvo desenhados em canvas, além de um mapa SVG com dicas ao passar o mouse, cujo conteúdo não pode ser encontrado com as consultas normais ao DOM.",
+      "information": "Nada do que é desenhado em um canvas está no DOM: as barras, o alvo e o seu desenho são apenas pixels, então não há elemento nem texto para um localizador encontrar. Um teste precisa agir em coordenadas e conferir os resultados escritos abaixo de cada canvas. Cada canvas é exibido no tamanho em que é desenhado, então uma posição em pixels CSS a partir do canto superior esquerdo é a mesma posição em pixels do canvas: use <code>click({ position: { x, y } })</code> no Playwright ou <code>.click(x, y)</code> no Cypress. <strong>Bloco de desenho</strong>: um traço exige pressionar o botão, mover o ponteiro e soltar o botão, então um simples clique não desenha nada e não é contado. Controle-o com <code>page.mouse.move</code>, <code>page.mouse.down</code> e <code>page.mouse.up</code>, que usam coordenadas da página (some a posição da caixa delimitadora do canvas), ou dispare eventos de ponteiro no canvas. O número de traços e pontos aparece abaixo do bloco e nos atributos <code>data-strokes</code> e <code>data-points</code>. <strong>Gráfico de barras</strong>: o canvas tem 480 × 260 pixels, a barra <em>i</em> (contando a partir de 0) tem 50 pixels de largura e está centralizada em x = 75 + 70 × <em>i</em>, e o eixo fica em y = 230, então um clique em y = 225 sempre acerta uma barra. Um clique entre ou acima das barras informa que nenhuma barra foi clicada. <strong>Alvo</strong>: o alvo tem raio de 15 pixels e aparece em (60, 60), (340, 240), (200, 150), (320, 50) e (80, 250), nessa ordem. O centro atual fica nos atributos <code>data-target-x</code> e <code>data-target-y</code> do canvas, um atalho que um jogo de verdade não daria. <strong>Mapa dos bairros</strong>: o mapa é SVG, então as regiões são elementos, mas não têm papel nem nome acessível e o <code>svg</code> é uma única imagem para tecnologias assistivas, então localizadores por papel não encontram nada dentro dele. Encontre uma região com <code>[data-region=\"harbour\"]</code>. O XPath precisa de <code>//*[local-name()='polygon']</code>, porque os elementos SVG ficam em um namespace próprio. O Porto contorna a Cidade Velha, então o meio da sua caixa delimitadora, onde as ferramentas clicam e passam o mouse por padrão, fica na Cidade Velha: clique com um deslocamento, por exemplo perto da borda inferior. Os nomes no mapa ignoram o mouse e passam os cliques para a região de baixo, então uma ferramenta que verifica qual elemento está sob o ponteiro antes de clicar, como o Playwright, espera que um nome receba o clique e esgota o tempo. A dica só aparece enquanto o mouse está sobre uma região e o acompanha, então precisa de um hover em vez de um clique. <strong>Testes de captura de tela</strong>: tudo é desenhado em tamanho fixo e com cores fixas, qualquer que seja o tema, sem animação e sem nada aleatório, então as mesmas ações sempre geram a mesma imagem. Capture apenas o canvas ou o mapa em vez da página inteira, e espere pequenas diferenças entre navegadores, sistemas operacionais e fontes (suavização e texto): mantenha uma referência por navegador e plataforma, ou permita um pequeno limite de tolerância. Os pixels também podem ser lidos diretamente com <code>canvas.toDataURL()</code> ou <code>getContext('2d').getImageData()</code>.",
+      "pad": {
+        "title": "Bloco de desenho",
+        "intro": "Mantenha o botão do mouse pressionado e mova para desenhar. Cada linha desenhada é um traço.",
+        "label": "Bloco de desenho",
+        "clear": "Limpar",
+        "strokes_one": "{{count}} traço",
+        "strokes_other": "{{count}} traços",
+        "points_one": "{{count}} ponto",
+        "points_other": "{{count}} pontos"
+      },
+      "chart": {
+        "title": "Gráfico de pedidos",
+        "intro": "Clique em uma barra para ver quantos pedidos houve naquele mês.",
+        "label": "Gráfico de barras de pedidos por mês, de janeiro a junho",
+        "months": {
+          "jan": "Jan",
+          "feb": "Fev",
+          "mar": "Mar",
+          "apr": "Abr",
+          "may": "Mai",
+          "jun": "Jun"
+        },
+        "value_one": "{{month}}: {{count}} pedido",
+        "value_other": "{{month}}: {{count}} pedidos",
+        "none": "Clique em uma barra para ver o valor.",
+        "missed": "Nenhuma barra foi clicada."
+      },
+      "game": {
+        "title": "Tiro ao alvo",
+        "intro": "Clique no alvo. Cada vez que você acerta, ele muda de lugar.",
+        "label": "Jogo de alvo",
+        "reset": "Recomeçar",
+        "score": "Acertos: {{hits}} de {{total}}",
+        "misses_one": "{{count}} erro",
+        "misses_other": "{{count}} erros",
+        "done": "Todos os alvos acertados!"
+      },
+      "map": {
+        "title": "Mapa dos bairros",
+        "intro": "Aponte para um bairro para ver a população e clique para selecioná-lo.",
+        "label": "Mapa dos bairros da ilha",
+        "regions": {
+          "northfield": "Campo Norte",
+          "westmoor": "Charneca Oeste",
+          "old-town": "Cidade Velha",
+          "harbour": "Porto",
+          "eastvale": "Vale Leste"
+        },
+        "population": "População: {{population}}",
+        "selected": "Selecionado: {{name}} (população {{population}})",
+        "none": "Nenhum bairro selecionado."
+      }
+    },
     "challenging-selectors": {
       "title": "Seletores Difíceis",
       "description": "IDs aleatórios, botões idênticos, texto dividido e duplicatas ocultas que quebram seletores ingênuos.",
