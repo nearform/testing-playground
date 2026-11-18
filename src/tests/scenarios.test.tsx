@@ -68,7 +68,7 @@ describe('scenario sources', () => {
   it.each(Object.entries(sources))(
     '%s takes its slug from meta.ts and builds its text keys from it',
     (_path, source) => {
-      expect(source).toContain("import { SLUG } from './meta'")
+      expect(source).toMatch(/^import \{[^}]*\bSLUG\b[^}]*\} from '\.\/meta'$/m)
       expect(source).not.toMatch(/^const SLUG\b/m)
       expect(source).not.toMatch(/['"`]scenarios\.[a-z]/)
     },

@@ -1,4 +1,3 @@
-import { lazy } from 'react'
 import { fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -19,7 +18,7 @@ vi.mock('../scenarios/list', async (importOriginal) => {
       {
         slug: 'broken',
         difficulty: 'easy',
-        Component: lazy(load),
+        Component: React.lazy(load),
         load,
       },
     ],
