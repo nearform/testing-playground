@@ -3,6 +3,18 @@
     "company": "NearForm",
     "title": "Playground de Testes"
   },
+  "home": {
+    "title": "Pratique automação de testes nas partes da web que a tornam difícil",
+    "intro": "Cada cenário é uma pequena página construída em torno de algo que atrapalha testes automatizados: diálogos desenhados pelo navegador, elementos dentro de iframes e shadow roots, conteúdo que carrega tarde ou se move, arrastar e soltar, arquivos, relógios e muito mais. Use a ferramenta que preferir, como Playwright, Cypress, Selenium ou WebdriverIO, neste site.",
+    "steps-label": "Como usar o playground",
+    "steps": {
+      "choose": "Escolha um cenário abaixo. O cartão dele diz o que ele cobre e quão difícil é automatizá-lo.",
+      "read": "Leia a descrição e as informações dele, que explicam o que testar e as armadilhas a observar.",
+      "test": "Aponte seus testes para a página do cenário. Cada um tem seu próprio endereço, então um teste pode abri-lo diretamente."
+    },
+    "source": "O playground é open source:",
+    "source-link": "sugira ou adicione um cenário no GitHub"
+  },
   "common": {
     "copyright": "Direitos autorais © ",
     "learn-more": "Saiba mais",
@@ -239,7 +251,27 @@
     "add-remove": {
       "title": "Adicionar/Remover",
       "description": "Adicione e remova dinamicamente elementos da página",
-      "information": "Além de poder adicionar e remover dinamicamente elementos da página, você também pode adicionar `?initialElements=X` à URL para gerar elementos no carregamento.",
+      "information": {
+        "summary": "Adicionar Elemento adiciona um botão Remover Elemento numerado, e clicar em um deles o remove. Os botões ficam salvos no <code>sessionStorage</code>, então continuam lá depois de recarregar a página.",
+        "sections": [
+          {
+            "title": "Numeração",
+            "points": [
+              "Cada botão novo recebe o próximo número e os números não são reaproveitados, então remover o botão 2 de três deixa o 1 e o 3, e o próximo adicionado é o 4.",
+              "Depois que todos os botões são removidos, a numeração recomeça do 1.",
+              "O test id de cada botão inclui o número dele, como <code>remove-element-3</code>."
+            ]
+          },
+          {
+            "title": "Estado inicial",
+            "points": [
+              "Adicionar <code>?initialElements=5</code> à URL (<code>#/add-remove?initialElements=5</code>) abre a página com os botões de 1 a 5, o que poupa adicioná-los um por um.",
+              "O parâmetro só é usado quando a página carrega sem botões salvos, então recarregar com botões já no <code>sessionStorage</code> o ignora.",
+              "Limpar Armazenamento remove todos os botões esvaziando todo o <code>sessionStorage</code> do site, o que também apaga o que outros cenários salvaram nele. Cada aba tem seu próprio <code>sessionStorage</code>, então uma nova aba ou contexto do navegador sempre começa vazio."
+            ]
+          }
+        ]
+      },
       "add-element": "Adicionar Elemento",
       "clear-storage": "Limpar Armazenamento",
       "remove-element": "Remover Elemento"
@@ -615,7 +647,34 @@
     },
     "check-box": {
       "title": "Checkbox",
-      "description": "Cenários para testes utilizando checkbox.",
+      "description": "Marque caixas de seleção em um formulário, desenhadas como ícones e em uma árvore de pai e filhos.",
+      "information": {
+        "summary": "Três grupos de caixas de seleção, cada um com sua pegadinha. Nenhuma delas é um <code>&lt;input type=\"checkbox\"&gt;</code> nativo: são botões com <code>role=\"checkbox\"</code>, então leia o estado delas em <code>aria-checked</code> (ou com uma consulta por papel) e não em uma propriedade <code>checked</code>, e clique nelas em vez de usar o <code>check()</code> do Cypress, que só funciona com campos.",
+        "sections": [
+          {
+            "title": "Em um formulário",
+            "points": [
+              "A primeira caixa começa marcada e a segunda está desativada, então clicar nela não muda nada.",
+              "A caixa obrigatória mostra sua mensagem de erro e fica marcada com <code>aria-invalid=\"true\"</code> até ser marcada; marcá-la remove a mensagem do DOM."
+            ]
+          },
+          {
+            "title": "Como ícones",
+            "points": [
+              "O coração e o marcador não têm texto visível: seus nomes, Favorito e Marcador, vêm de <code>aria-label</code>.",
+              "O único sinal visual do estado deles é o ícone preenchido, então verifique <code>aria-checked</code> em vez da imagem."
+            ]
+          },
+          {
+            "title": "Pai e filhos",
+            "points": [
+              "Marcar o pai marca os dois filhos, e desmarcá-lo desmarca os dois.",
+              "Com só um filho marcado, o pai não está nem marcado nem desmarcado: ele tem <code>aria-checked=\"mixed\"</code> e <code>data-state=\"indeterminate\"</code>, e clicar nele então marca os dois filhos.",
+              "Os dois filhos se chamam Filho e compartilham <code>data-testid=\"child\"</code>, então diferencie-os pela posição."
+            ]
+          }
+        ]
+      },
       "scenario-form": "Formulário com campo obrigatório",
       "checked": "Selecionado",
       "required": "Obrigatório",
@@ -898,7 +957,26 @@
     "drag-and-drop": {
       "title": "Arrastar e Soltar",
       "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
-      "information": "Você pode arrastar uma quantidade infinita de caixas vermelhas e soltá-las na caixa cinza.",
+      "information": {
+        "summary": "Arraste a caixa vermelha <em>Arraste-me!</em> para a área cinza quantas vezes quiser: cada soltura adiciona uma caixa amarela numerada à área e um ao contador Total de Solturas.",
+        "sections": [
+          {
+            "title": "Como o arrasto funciona",
+            "points": [
+              "A página usa o arrastar e soltar nativo do HTML5 (<code>draggable</code> com os eventos <code>dragstart</code>, <code>dragover</code> e <code>drop</code> compartilhando um <code>dataTransfer</code>) em vez de seguir o mouse.",
+              "O <code>dragTo()</code> do Playwright o controla diretamente. O Cypress não tem comando de arrastar, e as ações de mouse do Selenium não iniciam um arrasto nativo em todos os navegadores, então com essas ferramentas pode ser preciso disparar <code>dragstart</code>, <code>dragover</code> e <code>drop</code> você mesmo com um <code>DataTransfer</code> compartilhado, ou usar um plugin.",
+              "Uma soltura só conta quando o arrasto começou na caixa vermelha, que coloca <code>smallBox</code> como <code>text/plain</code> no <code>dataTransfer</code>."
+            ]
+          },
+          {
+            "title": "Verificando o resultado",
+            "points": [
+              "Total de Solturas (<code>data-testid=\"total-drops\"</code>) conta cada soltura, e as caixas soltas se chamam Caixa 1, Caixa 2 e assim por diante.",
+              "A caixa vermelha nunca se move, então verifique o contador e as caixas novas em vez da posição da caixa vermelha."
+            ]
+          }
+        ]
+      },
       "box": "Caixa",
       "drag-me": "Arraste-me",
       "drop-here": "Solte aqui",
@@ -906,8 +984,28 @@
     },
     "drag-and-drop-hard": {
       "title": "Arrastar e Soltar (Difícil)",
-      "description": "Arraste as formas menores apropriadas para a forma maior.",
-      "information": "Um soltar correto resultará na forma ficando verde, caso contrário, a forma ficará amarela. Observação: as formas mudam a cada recarregamento.",
+      "description": "Separe cinco formas aleatórias arrastando cada uma para a forma maior que corresponde a ela.",
+      "information": {
+        "summary": "Cinco pequenas formas vermelhas, cada uma um círculo ou um quadrado, precisam ser soltas na forma grande correspondente: círculos no círculo e quadrados no quadrado. As formas que aparecem são aleatórias e mudam a cada carregamento.",
+        "sections": [
+          {
+            "title": "Soltando as formas",
+            "points": [
+              "Uma forma solta no alvo certo fica verde e soma um ao Total Correto; solta no alvo errado ela fica amarela e pode ser arrastada de novo para corrigir.",
+              "Uma forma verde está concluída e não pode mais ser arrastada, então o Total Correto chega a 5 quando todas as formas estão verdes.",
+              "As formas ficam no lugar e só mudam de cor, então verifique a cor ou o contador em vez de procurar uma forma dentro de um alvo."
+            ]
+          },
+          {
+            "title": "Encontrando as formas",
+            "points": [
+              "O test id de cada forma diz o que ela é e o número dela, como <code>draggable-circle-2</code> ou <code>draggable-square-4</code>, e os alvos são <code>drop-circle</code> e <code>drop-square</code>. Como a mistura é aleatória, encontre as formas pelo começo do test id em vez de uma lista fixa.",
+              "As formas não têm texto, então a cor delas (vermelha, amarela ou verde) só aparece no estilo <code>background-color</code> inline.",
+              "Como a versão fácil, esta usa o arrastar e soltar nativo do HTML5, com o número da forma como <code>shapeId</code> no <code>dataTransfer</code>."
+            ]
+          }
+        ]
+      },
       "total-correct": "Total Correto"
     },
     "dropdown": {
@@ -1022,8 +1120,28 @@
     },
     "dynamic-table": {
       "title": "Tabela Dinâmica",
-      "description": "Encontre os dados na barra verde dentro da tabela.",
-      "information": "Observação: os dados da tabela se atualizam a cada recarregamento.",
+      "description": "Encontre um processo em uma tabela cujas linhas e valores mudam a cada carregamento e compare sua CPU com a barra verde.",
+      "information": {
+        "summary": "A barra verde embaixo da tabela nomeia um dos quatro processos e mostra o valor de CPU dele, como <em>Chrome CPU: 23.4%</em>. A tarefa é encontrar a linha desse processo na tabela e verificar se a célula de CPU mostra o mesmo valor.",
+        "sections": [
+          {
+            "title": "O que muda a cada carregamento",
+            "points": [
+              "A ordem das linhas e todos os valores delas são aleatórios, e a barra verde escolhe um processo diferente a cada vez, então um teste não pode depender da posição de uma linha nem de um número fixo.",
+              "Os test ids das linhas, como <code>dynamic-table-row-0</code>, seguem a ordem na tela, então dizem onde a linha está, não qual processo ela tem.",
+              "Os nomes dos processos são traduzidos, então também mudam com o idioma."
+            ]
+          },
+          {
+            "title": "Encontrando o valor",
+            "points": [
+              "Leia o nome do processo na barra verde, encontre a linha cuja célula Nome corresponde a ele e depois leia a célula da coluna CPU dessa linha.",
+              "As colunas estão sempre na mesma ordem, mas encontrar a coluna CPU pelo cabeçalho fica mais perto de como uma tabela real, que muda, precisaria ser lida.",
+              "Os valores são texto com as unidades (<code>%</code>, <code>MB</code>, <code>Mbps</code> e <code>MB/s</code>), então compare-os como texto, ou tire a unidade antes de compará-los como números."
+            ]
+          }
+        ]
+      },
       "name": "Nome",
       "cpu": "CPU",
       "memory": "Memória",
@@ -1036,8 +1154,28 @@
     },
     "file-upload": {
       "title": "Upload de Arquivo",
-      "description": "Usando componentes comuns do navegador, faça o upload de um arquivo.",
-      "information": "O upload pode levar de 1 a 10 segundos, independentemente do tamanho, pois a função de upload é simulada.",
+      "description": "Escolha um arquivo por um campo de arquivo oculto e depois espere um envio simulado e lento terminar.",
+      "information": {
+        "summary": "Escolha qualquer arquivo, clique em Enviar e espere a mensagem de sucesso. Nada é enviado para lugar nenhum: o envio é simulado e leva de 1 a 10 segundos, ao acaso, qualquer que seja o tamanho do arquivo.",
+        "sections": [
+          {
+            "title": "Escolhendo um arquivo",
+            "points": [
+              "O <code>&lt;input type=\"file\"&gt;</code> de verdade (<code>data-testid=\"select-file\"</code>) está oculto, e o botão Selecionar Arquivo é o rótulo dele, que abre o seletor de arquivos do sistema. Em vez disso, defina o arquivo direto no campo, com <code>setInputFiles()</code> no Playwright ou <code>selectFile()</code> no Cypress (com <code>{ force: true }</code>, já que o campo está oculto).",
+              "Qualquer tipo e tamanho de arquivo é aceito, um de cada vez, e o nome do arquivo escolhido aparece embaixo.",
+              "O botão Enviar só aparece depois que um arquivo é escolhido."
+            ]
+          },
+          {
+            "title": "Esperando o envio",
+            "points": [
+              "Enquanto o envio acontece, o botão Enviar fica desativado e aparece uma barra de progresso sem valor (indeterminada).",
+              "Um envio pode levar até 10 segundos, mais do que os tempos limite padrão das asserções no Cypress (4 segundos) e no Playwright (5 segundos), então dê um tempo limite maior à mensagem de sucesso em vez de colocar uma espera fixa.",
+              "Escolher outro arquivo apaga a mensagem anterior."
+            ]
+          }
+        ]
+      },
       "please-select-file": "Por favor, selecione um arquivo.",
       "select-file": "Selecionar Arquivo",
       "selected-file": "Arquivo: \"{{ filename }}\"",
@@ -1046,14 +1184,61 @@
     },
     "file-download": {
       "title": "Download de Arquivo",
-      "description": "Utilize os componentes comuns do navegador para baixar um arquivo.",
-      "information": "Lorem ipsum",
+      "description": "Clique em um botão que baixa um arquivo de texto e depois verifique o arquivo salvo.",
+      "information": {
+        "summary": "O botão Baixar Arquivo salva um pequeno arquivo de texto chamado <code>file.txt</code> que contém <code>Sample content</code>. O arquivo é criado no navegador, não buscado em um servidor, então um teste precisa capturar o próprio download.",
+        "sections": [
+          {
+            "title": "Como o download funciona",
+            "points": [
+              "O botão cria uma URL <code>blob:</code> para o arquivo, clica em um link temporário com o atributo <code>download</code> e depois remove o link e revoga a URL na hora, então não há link na página para ler nem endereço para pedir de novo.",
+              "Nada muda na página depois de um download, então a única coisa a verificar é o arquivo."
+            ]
+          },
+          {
+            "title": "Verificando o arquivo",
+            "points": [
+              "No Playwright, espere o evento <code>download</code> durante o clique e depois verifique o <code>suggestedFilename()</code> e o conteúdo do arquivo salvo.",
+              "No Cypress, o arquivo é salvo na <code>downloadsFolder</code> (<code>cypress/downloads</code> por padrão), então leia-o de lá com <code>cy.readFile()</code>.",
+              "No Selenium e no WebdriverIO, defina a pasta de download do navegador nas opções dele e espere o arquivo aparecer lá, já que a gravação pode levar um momento."
+            ]
+          }
+        ]
+      },
       "download": "Baixar Arquivo"
     },
     "form-validation": {
       "title": "Validação de Formulário",
       "description": "Um formulário de cadastro com campos validados, para verificar as mensagens de erro exibidas para valores em formato incorreto.",
-      "information": "Os erros aparecem ao sair de um campo e ao enviar o formulário. Telefone e site são opcionais, mas devem ser válidos se preenchidos. A idade deve ser um número inteiro entre 18 e 120. A senha precisa de pelo menos 8 caracteres com uma letra maiúscula, uma minúscula e um número.",
+      "information": {
+        "summary": "Um formulário de cadastro que valida cada campo, para você verificar a mensagem de erro de cada tipo de engano. A validação própria do navegador está desligada (<code>novalidate</code>), então todas as mensagens vêm da página.",
+        "sections": [
+          {
+            "title": "Quando os erros aparecem",
+            "points": [
+              "Um campo é validado quando você sai dele e de novo quando o formulário é enviado; depois de validado, a mensagem dele se atualiza enquanto você digita.",
+              "Enviar com erros mostra quantos são no topo do formulário, em um alerta (<code>data-testid=\"form-error-summary\"</code>).",
+              "Um formulário válido mostra uma mensagem de sucesso com o seu nome, e Limpar esvazia todos os campos e mensagens."
+            ]
+          },
+          {
+            "title": "As regras",
+            "points": [
+              "O nome completo é obrigatório, tem pelo menos 2 caracteres e só pode ter letras, espaços, hifens e apóstrofos.",
+              "O e-mail é obrigatório e precisa ter o formato <code>name@example.com</code>.",
+              "Telefone e site são opcionais, mas precisam ser válidos se preenchidos: um telefone tem de 10 a 15 dígitos, pode começar com + e ter espaços, e um site precisa começar com <code>http://</code> ou <code>https://</code>.",
+              "A idade é obrigatória e precisa ser um número inteiro de 18 a 120.",
+              "A senha precisa ter pelo menos 8 caracteres com uma letra maiúscula, uma minúscula e um número, e Confirmar Senha precisa ser igual a ela."
+            ]
+          },
+          {
+            "title": "Encontrando as mensagens",
+            "points": [
+              "O test id de cada campo é o nome dele, como <code>email</code> ou <code>confirm-password</code>, e o erro e a dica acrescentam <code>-error</code> e <code>-hint</code>, como <code>email-error</code>."
+            ]
+          }
+        ]
+      },
       "submit-button": "Enviar",
       "reset-button": "Limpar",
       "error-summary_one": "Corrija o erro abaixo.",
@@ -1260,7 +1445,26 @@
     "infinite-scroll": {
       "title": "Rolagem infinita",
       "description": "Uma lista que carrega novos itens sempre que você chega ao final da página.",
-      "information": "Role até o final da lista para carregar o próximo lote de 10 itens. Um indicador de carregamento aparece por um instante antes dos novos itens, e a lista nunca termina, então espere pelos novos itens em vez de esperar pelo fim da lista.",
+      "information": {
+        "summary": "A lista começa com 10 itens e carrega mais 10 cada vez que você chega ao fim. Ela nunca acaba, então espere os novos itens aparecerem em vez do fim da lista.",
+        "sections": [
+          {
+            "title": "Carregando mais",
+            "points": [
+              "Mais itens carregam quando um marcador invisível abaixo do último item (<code>data-testid=\"scroll-sentinel\"</code>) entra na tela, então role até o fim da página ou role até esse marcador.",
+              "Uma mensagem de carregamento aparece por 0,8 segundo antes de cada lote de 10 ser adicionado, e o contador acima da lista (<code>data-testid=\"item-count\"</code>), como <em>Exibindo 20 itens</em>, aumenta.",
+              "Em uma janela muito alta, o marcador continua na tela depois que um lote carrega, então os lotes continuam carregando até ele sair da tela."
+            ]
+          },
+          {
+            "title": "Verificando os itens",
+            "points": [
+              "Os itens são numerados em ordem e cada um mostra seu lote, então o item 11 é o primeiro do lote 2; os test ids deles são <code>item-</code> e o número, como <code>item-11</code>.",
+              "Cada item é um <code>article</code> com <code>aria-posinset</code> igual ao número dele, e a lista não informa o tamanho (<code>aria-setsize=\"-1\"</code>), já que não tem fim."
+            ]
+          }
+        ]
+      },
       "feed-label": "Feed infinito",
       "count_one": "Exibindo {{count}} item",
       "count_other": "Exibindo {{count}} itens",
@@ -1272,7 +1476,32 @@
     "js-alerts": {
       "title": "Alertas JS",
       "description": "Lide com as caixas de diálogo nativas alert, confirm e prompt do navegador, que não fazem parte da página.",
-      "information": "Cada botão abre uma das caixas de diálogo JavaScript nativas do navegador. Elas são desenhadas pelo navegador e não pela página, por isso não podem ser encontradas no DOM: escute a caixa de diálogo, verifique sua mensagem e depois aceite ou descarte (digitando uma resposta no prompt antes). O resultado da sua escolha é exibido na página quando a caixa de diálogo fecha.",
+      "information": {
+        "summary": "Cada botão abre um dos diálogos JavaScript do próprio navegador: um alerta, uma confirmação ou um prompt. Eles são desenhados pelo navegador e não pela página, então não estão no DOM e não podem ser encontrados com seletores.",
+        "sections": [
+          {
+            "title": "Lidando com um diálogo",
+            "points": [
+              "Prepare um tratamento para o diálogo antes de clicar no botão que o abre, verifique a mensagem e depois aceite ou dispense o diálogo; enquanto ele está aberto, a página não pode ser usada.",
+              "O Playwright dispensa os diálogos sozinho, a menos que você trate o evento <code>dialog</code>. O Cypress aceita alertas e confirmações sozinho, permite verificá-los com os eventos <code>window:alert</code> e <code>window:confirm</code> e precisa de um stub de <code>window.prompt</code> para responder a um prompt. O Selenium muda para o diálogo com <code>switchTo().alert()</code>."
+            ]
+          },
+          {
+            "title": "Cada diálogo",
+            "points": [
+              "O alerta só tem o botão OK.",
+              "A confirmação pergunta <em>Deseja continuar?</em>, e OK e Cancelar dão resultados diferentes.",
+              "O prompt pede o seu nome com <em>Testador</em> já preenchido. Aceitar, digitar sua própria resposta antes, enviar vazio e cancelar dão, cada um, um resultado diferente."
+            ]
+          },
+          {
+            "title": "O resultado",
+            "points": [
+              "Depois que o diálogo fecha, o painel Resultado (<code>data-testid=\"result\"</code>) mostra o que você fez, como <em>Você clicou em Cancelar</em> ou <em>Você digitou: Testador</em>."
+            ]
+          }
+        ]
+      },
       "button": {
         "alert": "Abrir alerta JS",
         "confirm": "Abrir confirmação JS",
@@ -1342,7 +1571,27 @@
     "login-form": {
       "title": "Formulário de Login",
       "description": "Um formulário de login típico com nome de usuário e senha.",
-      "information": "O nome de usuário é '<strong>admin</strong>' e a senha é '<strong>Passw0rd!</strong>'.",
+      "information": {
+        "summary": "Entre com o nome de usuário <strong>admin</strong> e a senha <strong>Passw0rd!</strong>. Qualquer outra combinação mostra um erro.",
+        "sections": [
+          {
+            "title": "Entrando",
+            "points": [
+              "Os dois valores precisam ser exatamente iguais, então diferenciam maiúsculas de minúsculas e espaços contam.",
+              "Apertar Enter no campo de senha também faz login, assim como o botão Login.",
+              "Um login com falha mostra <em>As credenciais fornecidas são inválidas</em> e mantém o que foi digitado; um login bem-sucedido troca o formulário por uma mensagem e um botão Logout."
+            ]
+          },
+          {
+            "title": "Continuando logado",
+            "points": [
+              "O login salva <code>username</code> e <code>isLoggedIn</code> no <code>localStorage</code>, então a página continua logada depois de recarregar ou em uma nova aba.",
+              "Se os seus testes compartilham uma sessão do navegador (como no Selenium, ou no Cypress com o isolamento de testes desligado), esse estado passa de um teste para o próximo, então faça logout ou limpe o <code>localStorage</code> antes; para começar um teste já logado, defina <code>username</code> e <code>isLoggedIn</code> (como <code>true</code>) antes de a página carregar.",
+              "O logout remove as duas chaves e esvazia o formulário."
+            ]
+          }
+        ]
+      },
       "logged-in-message": "Você está atualmente logado!",
       "invalid-credentials": "As credenciais fornecidas são inválidas",
       "login-button": "Login",
@@ -1705,8 +1954,28 @@
     },
     "notification": {
       "title": "Notificação",
-      "description": "Verifique as alertas que são enviadas como um popup e também fazem parte da página principal.",
-      "information": "Clique em qualquer um dos botões para acionar uma notificação desse tipo. O popup permanece visível por 6 segundos.",
+      "description": "Dispare notificações que aparecem como popup e como mensagem na página e depois somem sozinhas.",
+      "information": {
+        "summary": "Cada botão mostra sua mensagem duas vezes: como um popup sobre a página e como um alerta embaixo dos botões. Os dois somem sozinhos depois de 6 segundos.",
+        "sections": [
+          {
+            "title": "O popup e o alerta",
+            "points": [
+              "O popup fica em uma região de notificações (chamada <em>Notifications (F8)</em>) e tem um test id formado por <code>notification-</code> e o tipo, como <code>notification-success</code>.",
+              "O alerta embaixo dos botões tem um test id formado por <code>message-</code> e o tipo, e o tipo em maiúsculas como título, como <em>SUCCESS</em>.",
+              "O popup pode ser fechado antes com o botão de fechar, mas o alerta não: ele sempre fica os 6 segundos inteiros."
+            ]
+          },
+          {
+            "title": "O tempo",
+            "points": [
+              "Os quatro botões ficam desativados enquanto o alerta é mostrado, então só uma notificação aparece por vez: espere o alerta sumir antes de disparar a próxima.",
+              "O cronômetro do popup pausa enquanto o ponteiro está sobre ele ou ele está em foco, então um teste que passa o mouse sobre ele ou clica nele o mantém aberto por mais de 6 segundos, enquanto o alerta some na hora certa.",
+              "Em vez de esperar 6 segundos, o controle de relógio do seu framework (como <code>page.clock</code> no Playwright ou <code>cy.clock()</code> no Cypress) pode adiantar o tempo."
+            ]
+          }
+        ]
+      },
       "generate-notification": "Gerar Notificação",
       "type": {
         "success": "Sucesso",
@@ -1806,8 +2075,27 @@
     },
     "radio-button": {
       "title": "Botão de Rádio",
-      "description": "Um conjunto de botões de rádio para verificar.",
-      "information": "Dependendo do primeiro botão de rádio clicado, um segundo conjunto aparecerá e mudará com base no primeiro clicado.",
+      "description": "Escolha uma cor primária e depois uma cor secundária de um segundo grupo que depende da primeira escolha.",
+      "information": {
+        "summary": "Escolher uma cor primária mostra um segundo grupo de cores secundárias, e as opções dele dependem da cor primária escolhida.",
+        "sections": [
+          {
+            "title": "Os dois grupos",
+            "points": [
+              "Vermelho oferece Roxo e Laranja, Azul oferece Roxo e Verde, e Amarelo oferece Laranja e Verde.",
+              "Branco está desativado e não pode ser escolhido.",
+              "O test id de cada botão de opção tem o grupo e a posição dele, como <code>radio-button-group-2-1</code>, e o segundo grupo muda com a primeira escolha, então o mesmo test id é Roxo depois de Vermelho, mas Laranja depois de Amarelo: verifique também o rótulo."
+            ]
+          },
+          {
+            "title": "Não são botões de opção nativos",
+            "points": [
+              "Como as caixas do cenário Checkbox, estes são botões com <code>role=\"radio\"</code> e <code>aria-checked</code> em vez de <code>&lt;input type=\"radio\"&gt;</code>, então clique neles em vez de usar o <code>check()</code> do Cypress, e leia o estado em <code>aria-checked</code>.",
+              "Cada grupo é um <code>radiogroup</code>: o Tab entra nele uma vez só, e as setas então passam para o próximo botão e o escolhem, pulando o Branco, que está desativado."
+            ]
+          }
+        ]
+      },
       "first-set": "Cores Primárias",
       "second-set": "Cores Secundárias",
       "first": {
@@ -1825,7 +2113,26 @@
     "shadow-dom": {
       "title": "Shadow DOM",
       "description": "Elementos escondidos dentro de shadow roots abertas, aninhadas e fechadas, para verificar como suas ferramentas acessam o shadow DOM.",
-      "information": "Seletores comuns param na fronteira de uma shadow root. A shadow root aberta pode ser atravessada pela maioria das ferramentas, o exemplo aninhado exige dois passos, o conteúdo do slot fica no light DOM mesmo sendo exibido dentro de uma shadow root, e a shadow root fechada não pode ser acessada por host.shadowRoot.",
+      "information": {
+        "summary": "Quatro exemplos escondidos dentro de shadow roots. Seletores comuns param no limite de uma shadow root, então cada um testa como a sua ferramenta chega lá dentro.",
+        "sections": [
+          {
+            "title": "Cada exemplo",
+            "points": [
+              "A shadow root aberta contém um pequeno formulário. Os locators do Playwright entram sozinhos em shadow roots abertas, o Cypress entra com <code>.shadow()</code> ou a opção <code>includeShadowDom</code>, e o Selenium pela shadow root do host.",
+              "O exemplo aninhado tem uma shadow root dentro de outra, então são dois passos: entrar no host externo e depois no interno.",
+              "O botão no slot aparece dentro de uma shadow root, mas pertence ao light DOM, então seletores comuns o encontram a partir da página.",
+              "A shadow root fechada não pode ser alcançada por <code>host.shadowRoot</code>, que é <code>null</code>, e os locators do Playwright também não a atravessam. Chegue ao botão dela de outro jeito, como usando o Tab no teclado ou clicando onde ele aparece na tela."
+            ]
+          },
+          {
+            "title": "Verificando o resultado",
+            "points": [
+              "Cada exemplo mostra seu resultado onde você pode verificá-lo: a saudação, o contador e a contagem do botão no slot ficam ao lado deles, e a contagem da root fechada fica do lado de fora, no light DOM (<code>data-testid=\"closed-shadow-status\"</code>)."
+            ]
+          }
+        ]
+      },
       "open": {
         "title": "Shadow root aberta",
         "description": "Um pequeno formulário renderizado dentro de uma shadow root aberta.",
@@ -1899,7 +2206,28 @@
     },
     "slider-page": {
       "title": "Deslizadores",
-      "description": "Uma variedade de deslizadores para interação.",
+      "description": "Defina valores com um deslizador simples, um deslizador de faixa com duas alças e um deslizador ligado a um campo numérico.",
+      "information": {
+        "summary": "Estes deslizadores não são elementos <code>&lt;input type=\"range\"&gt;</code>, então não dá para preencher um valor: cada alça é um elemento com <code>role=\"slider\"</code> que se move arrastando ou pelo teclado. Os três vão de 1 a 100, de 1 em 1.",
+        "sections": [
+          {
+            "title": "Movendo uma alça",
+            "points": [
+              "O valor de uma alça está em <code>aria-valuenow</code>, e seus limites em <code>aria-valuemin</code> e <code>aria-valuemax</code>.",
+              "Com a alça em foco, as setas a movem de 1 em 1, Shift com uma seta ou Page Up e Page Down a movem de 10 em 10, e Home e End vão para 1 e 100.",
+              "Arrastar também funciona, mas onde a alça para depende da largura do deslizador, então arrastar um número fixo de pixels dá valores diferentes em telas diferentes: o teclado é mais confiável."
+            ]
+          },
+          {
+            "title": "Cada deslizador",
+            "points": [
+              "O deslizador básico mostra seu valor ao lado do rótulo; esse valor não tem test id próprio, então procure-o dentro de <code>basic-slider-container</code>.",
+              "O deslizador de faixa tem duas alças, em 1 e 25 no início, que podem se encontrar no mesmo valor; seus valores ficam sempre em ordem, então a primeira alça guarda o menor.",
+              "O último deslizador está ligado ao campo numérico ao lado (<code>data-testid=\"input-slider-text\"</code>): digitar um número move a alça, e mover a alça muda o número. Um número fora de 1 a 100 é ajustado ao limite mais próximo, então digitar 150 define 100."
+            ]
+          }
+        ]
+      },
       "basic-slider": "Deslizador Básico",
       "range-slider": "Deslizador com Faixa",
       "slider-with-input": "Deslizador com Entrada",
@@ -2017,8 +2345,27 @@
     },
     "tooltip-page": {
       "title": "Tooltip",
-      "description": "Cenários para testes utilizando tooltip.",
-      "information": "Passe o mouse sobre os elementos desta página para ver o tooltip.",
+      "description": "Mostre tooltips em um botão desativado, em um botão cujo tooltip contém um link e em um texto cortado.",
+      "information": {
+        "summary": "Cada tooltip só aparece enquanto o ponteiro está sobre o elemento dele ou o elemento tem o foco do teclado, então um teste precisa passar o mouse (ou dar foco) primeiro. Ele aparece 100 ms depois que o mouse chega e é removido do DOM quando o ponteiro sai ou o Escape é pressionado.",
+        "sections": [
+          {
+            "title": "Cada tooltip",
+            "points": [
+              "O botão de excluir está desativado, e botões desativados não disparam eventos de ponteiro, então o tooltip dele é acionado pelo elemento em volta (<code>data-testid=\"delete-button\"</code>): passe o mouse sobre ele, e não sobre o botão.",
+              "O tooltip de Mais informações contém um link. Ele continua aberto enquanto o ponteiro vai do botão até ele, então vá direto para o link antes de clicar.",
+              "O texto longo é cortado com reticências, e o tooltip dele o mostra inteiro. O texto completo continua no DOM, então uma busca pelo texto funciona mesmo sem ele estar todo visível."
+            ]
+          },
+          {
+            "title": "Encontrando um tooltip",
+            "points": [
+              "Um tooltip aberto tem <code>role=\"tooltip\"</code>, então encontre-o por esse papel e verifique o texto, em vez de depender da posição ou do estilo dele.",
+              "Cada tooltip aparece ao lado do seu elemento, dentro da página, e não no final do <code>&lt;body&gt;</code>."
+            ]
+          }
+        ]
+      },
       "no-permission": "Você não tem permissão para fazer isso",
       "more-information": "Mais informações",
       "more-information-msg": "Para mais informações, clique aqui:",
@@ -2027,7 +2374,34 @@
     },
     "various-inputs": {
       "title": "Várias entradas",
-      "description": "Todos os diferentes tipos de entradas HTML nesta página com uma saída que pode ser usada para verificar",
+      "description": "Todos os tipos comuns de campos HTML, cada um com uma saída que repete o que você digita para que você possa verificar.",
+      "information": {
+        "summary": "Cada linha tem um campo nativo à esquerda e, à direita, uma saída somente leitura que mostra exatamente o que o campo contém, para que você possa digitar em um e verificar o outro.",
+        "sections": [
+          {
+            "title": "Os campos",
+            "points": [
+              "Há campos de texto, senha, número, data e texto de várias linhas, cada um com um test id com o nome do seu tipo: <code>text-input</code>, <code>password-input</code>, <code>number-input</code>, <code>date-input</code> e <code>textarea-input</code>.",
+              "As saídas são caixas de texto simples somente leitura, então a senha aparece em texto puro.",
+              "Quando o que é digitado no campo de número não é um número válido, o valor dele fica vazio, e a saída também."
+            ]
+          },
+          {
+            "title": "Datas",
+            "points": [
+              "A aparência do campo de data e o jeito de digitar nele dependem do navegador e do idioma, mas o valor, que a saída mostra, é sempre <code>yyyy-mm-dd</code>.",
+              "A maioria dos frameworks consegue defini-lo diretamente com um valor nesse formato, como <code>2025-01-31</code>, em vez de digitar o dia, o mês e o ano separadamente."
+            ]
+          },
+          {
+            "title": "Limpando",
+            "points": [
+              "Cada campo de uma linha mostra seu próprio botão de limpar quando tem um valor; o campo de várias linhas não tem.",
+              "O botão Limpar Tudo, no topo, esvazia todos os campos de uma vez."
+            ]
+          }
+        ]
+      },
       "input": "Entrada",
       "output": "Saída",
       "text": "Texto",

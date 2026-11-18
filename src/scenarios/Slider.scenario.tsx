@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { translateInformation } from '../utils/information'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'slider-page'
@@ -106,6 +107,7 @@ const SliderPage: React.FC = () => {
       <PageSetup
         title={t(`scenarios.${SLUG}.title`)}
         description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col gap-12'>
           <BasicSlider />
