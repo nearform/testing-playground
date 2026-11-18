@@ -1,11 +1,12 @@
 import { Button, CardTitle, Input } from '@nearform/quantum'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 import {
   CLOSING_HOUR,
   OPENING_HOUR,
@@ -57,17 +58,6 @@ const ACTIVITY_EVENTS = [
   'wheel',
   'scroll',
 ] as const
-
-const locales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
-
-const useLocale = (): string => {
-  const { i18n } = useTranslation()
-  return locales[i18n.language] ?? 'en-GB'
-}
 
 // The current time, re-read every TICK. Everything on the page works out its
 // state from this and a start time, rather than counting ticks, so jumping
@@ -205,7 +195,11 @@ const CountdownSection = (): JSX.Element => {
 const SessionSection = (): JSX.Element => {
   const { t } = useTranslation()
   const now = useNow()
-  const [lastActivity, setLastActivity] = useState(() => Date.now())
+  // Kept in a ref, not state: mousemove, wheel and scroll fire many times a
+  // second, and re-rendering for each would be wasted. The time stays exact,
+  // and the page re-renders on its TICK anyway.
+  const lastActivity = useRef(Date.now())
+  const [, rerender] = useReducer((count: number) => count + 1, 0)
   const stayButton = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -215,9 +209,12 @@ const SessionSection = (): JSX.Element => {
     // even if the page has not re-rendered since the clock jumped.
     const onActivity = (): void => {
       const at = Date.now()
-      setLastActivity((previous) =>
-        at - previous >= IDLE_WARNING ? previous : at,
-      )
+      const previous = lastActivity.current
+      if (at - previous >= IDLE_WARNING) return
+      lastActivity.current = at
+      // Re-render only when the shown idle time could have changed, so it
+      // resets straight away after a pause but not on every pointer move
+      if (at - previous >= TICK) rerender()
     }
     ACTIVITY_EVENTS.forEach((name) => {
       window.addEventListener(name, onActivity, { passive: true })
@@ -229,7 +226,7 @@ const SessionSection = (): JSX.Element => {
     }
   }, [])
 
-  const idle = Math.max(0, now - lastActivity)
+  const idle = Math.max(0, now - lastActivity.current)
   const signedOut = idle >= IDLE_WARNING + LOGOUT_GRACE
   const warning = !signedOut && idle >= IDLE_WARNING
 
@@ -238,7 +235,8 @@ const SessionSection = (): JSX.Element => {
   }, [warning])
 
   const restart = (): void => {
-    setLastActivity(Date.now())
+    lastActivity.current = Date.now()
+    rerender()
   }
 
   return (
@@ -533,4 +531,7 @@ const TimeAndTimers = (): JSX.Element => {
   )
 }
 
-export default defineScenario(TimeAndTimers, { difficulty: 'hard' })
+export default defineScenario(TimeAndTimers, {
+  slug: 'time-and-timers',
+  difficulty: 'hard',
+})

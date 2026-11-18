@@ -16,7 +16,8 @@ export interface ServiceStatus {
 // - offline: the browser says it has no connection (navigator.onLine is false)
 // - network: the browser thinks it is online but the request never got a
 //   response (DNS failure, a blocked request, a dropped connection)
-// - server: a response came back, but with an error status
+// - server: a response came back, but with an error status or a body that
+//   is not the expected JSON (a proxy, captive portal or SPA fallback page)
 export type RequestErrorKey = 'offline' | 'network' | 'server'
 
 export class HttpError extends Error {
@@ -29,6 +30,13 @@ export class HttpError extends Error {
   }
 }
 
+export class InvalidResponseError extends Error {
+  constructor() {
+    super('The response was not valid JSON')
+    this.name = 'InvalidResponseError'
+  }
+}
+
 export const isOnline = (): boolean =>
   typeof navigator === 'undefined' || navigator.onLine !== false
 
@@ -36,7 +44,7 @@ export const classifyRequestError = (
   error: unknown,
   online: boolean,
 ): RequestErrorKey => {
-  if (error instanceof HttpError) {
+  if (error instanceof HttpError || error instanceof InvalidResponseError) {
     return 'server'
   }
   return online ? 'network' : 'offline'
@@ -44,14 +52,21 @@ export const classifyRequestError = (
 
 // fetch rejects (with a TypeError) when there is no network, and resolves for
 // any response the server sends, so an error status is turned into a
-// rejection here. no-store stops the browser answering from its cache, which
-// would hide that the network is down.
+// rejection here. The body is read before it is parsed, so a connection
+// dropped while reading stays a network error while a body that is not JSON
+// counts as the server's fault. no-store stops the browser answering from its
+// cache, which would hide that the network is down.
 export const requestStatus = async (): Promise<ServiceStatus> => {
   const response = await fetch(STATUS_URL, { cache: 'no-store' })
   if (!response.ok) {
     throw new HttpError(response.status)
   }
-  return (await response.json()) as ServiceStatus
+  const body = await response.text()
+  try {
+    return JSON.parse(body) as ServiceStatus
+  } catch {
+    throw new InvalidResponseError()
+  }
 }
 
 // A 24-hour HH:MM:SS time in the browser's time zone. It does not depend on

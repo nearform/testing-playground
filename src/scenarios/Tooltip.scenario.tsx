@@ -69,4 +69,7 @@ const TooltipPage = (): JSX.Element => {
   )
 }
 
-export default defineScenario(TooltipPage, { difficulty: 'easy' })
+export default defineScenario(TooltipPage, {
+  slug: 'tooltip-page',
+  difficulty: 'easy',
+})

@@ -162,4 +162,7 @@ const CheckBox = (): JSX.Element => {
   )
 }
 
-export default defineScenario(CheckBox, { difficulty: 'easy' })
+export default defineScenario(CheckBox, {
+  slug: 'check-box',
+  difficulty: 'easy',
+})

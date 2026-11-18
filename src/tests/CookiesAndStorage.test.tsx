@@ -349,6 +349,32 @@ describe('Cookies and storage scenario', () => {
         screen.getByTestId(`live-local-${PREFERENCES_KEY}`),
       ).toHaveTextContent('{}')
     })
+
+    it('shows the consent and preferences another tab saved', () => {
+      renderPage()
+      setCookie('custom')
+      localStorage.setItem(
+        PREFERENCES_KEY,
+        '{"analytics":true,"marketing":false}',
+      )
+
+      act(() => {
+        window.dispatchEvent(new StorageEvent('storage'))
+      })
+
+      expect(screen.getByTestId('consent-status')).toHaveAttribute(
+        'data-consent',
+        'custom',
+      )
+      expect(screen.getByTestId('preference-analytics')).toHaveAttribute(
+        'data-allowed',
+        'true',
+      )
+      expect(screen.getByTestId('preference-marketing')).toHaveAttribute(
+        'data-allowed',
+        'false',
+      )
+    })
   })
 
   describe('clear everything', () => {

@@ -277,6 +277,18 @@ describe('TimeAndTimers scenario', () => {
         expect(byTestId('idle-time')).toHaveTextContent('Idle for 09:59')
       })
 
+      it('shows the idle time reset as soon as there is activity', async () => {
+        render()
+        await wait(MINUTE)
+        expect(byTestId('idle-time')).toHaveTextContent('Idle for 01:00')
+
+        act(() => {
+          fireEvent.mouseMove(window)
+        })
+
+        expect(byTestId('idle-time')).toHaveTextContent('Idle for 00:00')
+      })
+
       it('ignores activity once the warning is showing', async () => {
         render()
         await wait(IDLE_WARNING)

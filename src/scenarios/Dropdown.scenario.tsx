@@ -193,4 +193,7 @@ const Dropdown = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Dropdown, { difficulty: 'easy' })
+export default defineScenario(Dropdown, {
+  slug: 'dropdown',
+  difficulty: 'easy',
+})

@@ -264,4 +264,7 @@ const Geolocation = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Geolocation, { difficulty: 'medium' })
+export default defineScenario(Geolocation, {
+  slug: 'geolocation',
+  difficulty: 'medium',
+})

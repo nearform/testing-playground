@@ -498,4 +498,7 @@ const ChallengingSelectors = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ChallengingSelectors, { difficulty: 'medium' })
+export default defineScenario(ChallengingSelectors, {
+  slug: 'challenging-selectors',
+  difficulty: 'medium',
+})

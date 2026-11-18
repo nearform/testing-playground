@@ -429,5 +429,6 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
 }
 
 export default defineScenario(OfflineAndNetworkStatus, {
+  slug: 'offline-and-network-status',
   difficulty: 'medium',
 })

@@ -294,4 +294,7 @@ const ShadowDom = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ShadowDom, { difficulty: 'hard' })
+export default defineScenario(ShadowDom, {
+  slug: 'shadow-dom',
+  difficulty: 'hard',
+})

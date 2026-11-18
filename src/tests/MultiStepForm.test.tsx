@@ -244,6 +244,28 @@ describe('MultiStepForm scenario', () => {
     expect(screen.getByTestId('review-city')).toHaveTextContent('Paris')
   })
 
+  it('returns to the review after an edit from it adds the company step', async () => {
+    seedCompletedAddress()
+    const user = renderForm('?step=preferences')
+    await user.click(screen.getByTestId('skip-button'))
+    await user.click(
+      screen.getByRole('link', { name: 'Edit Personal details' }),
+    )
+    await user.click(screen.getByTestId('account-type-business'))
+    await user.click(screen.getByTestId('next-button'))
+    expect(currentStep()).toBe('company')
+    expect(screen.getByTestId('location')).toHaveTextContent(
+      '?step=company&from=review',
+    )
+    await user.type(screen.getByTestId('company-name'), 'Analytical Engines')
+    await user.selectOptions(screen.getByTestId('company-size'), '10-49')
+
+    await user.click(screen.getByTestId('next-button'))
+
+    expect(currentStep()).toBe('review')
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\?step=review$/)
+  })
+
   it('confirms the submission and clears the saved answers', async () => {
     seedCompletedAddress()
     const user = renderForm('?step=preferences')

@@ -126,6 +126,47 @@ describe('Clipboard scenario', () => {
       expect(screen.queryByTestId('copy-status')).not.toBeInTheDocument()
     })
 
+    it('keeps the latest "Copied!" for its full time when copies overlap', async () => {
+      vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
+      const fake = installClipboard()
+      const pending: Array<() => void> = []
+      fake.clipboard.writeText.mockImplementation(
+        async () =>
+          await new Promise<void>((resolve) => {
+            pending.push(resolve)
+          }),
+      )
+      TestRenderer(<Clipboard />)
+      // Both copies start before either write finishes
+      await clickAndSettle('button-copy-snippet')
+      await clickAndSettle('button-copy-api-key')
+      const [finishSnippet, finishApiKey] = pending
+
+      await act(async () => {
+        finishSnippet()
+      })
+      act(() => {
+        vi.advanceTimersByTime(COPIED_RESET_MS / 2)
+      })
+      await act(async () => {
+        finishApiKey()
+      })
+      act(() => {
+        vi.advanceTimersByTime(COPIED_RESET_MS / 2)
+      })
+
+      const apiKey = screen.getByTestId('button-copy-api-key')
+      expect(apiKey).toHaveAttribute('data-copied', 'true')
+      expect(screen.getByTestId('button-copy-snippet')).toHaveAttribute(
+        'data-copied',
+        'false',
+      )
+      act(() => {
+        vi.advanceTimersByTime(COPIED_RESET_MS / 2)
+      })
+      expect(apiKey).toHaveAttribute('data-copied', 'false')
+    })
+
     it('explains when permission to write is denied', async () => {
       const fake = installClipboard()
       fake.clipboard.writeText.mockRejectedValueOnce(denied())

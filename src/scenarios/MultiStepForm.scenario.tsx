@@ -195,8 +195,8 @@ const MultiStepForm = (): JSX.Element => {
   const requested = searchParams.get(STEP_PARAM)
   const step = resolveStep(requested, data, progress)
   const steps = getSteps(data)
-  const returnToReview =
-    searchParams.get(FROM_PARAM) === 'review' && step !== 'review'
+  const fromReview = searchParams.get(FROM_PARAM) === 'review'
+  const returnToReview = fromReview && step !== 'review'
   const errors = attemptedStep === step ? validateStep(step, data) : {}
   const errorCount = Object.keys(errors).length
 
@@ -211,12 +211,29 @@ const MultiStepForm = (): JSX.Element => {
   }, [data, progress, submittedName])
 
   // Correct the URL when it asks for a step that cannot be shown yet, or for
-  // no step at all, so the address bar always names the step on screen
+  // no step at all, so the address bar always names the step on screen. A
+  // return to review is kept until review is reached, so an edit from review
+  // that adds a step (such as Company) goes back to review once it is done.
   useEffect(() => {
-    if (submittedName === null && requested !== step) {
-      setSearchParams({ [STEP_PARAM]: step }, { replace: true })
+    if (
+      submittedName === null &&
+      (requested !== step || fromReview !== returnToReview)
+    ) {
+      setSearchParams(
+        returnToReview
+          ? { [STEP_PARAM]: step, [FROM_PARAM]: 'review' }
+          : { [STEP_PARAM]: step },
+        { replace: true },
+      )
     }
-  }, [requested, step, submittedName, setSearchParams])
+  }, [
+    requested,
+    step,
+    fromReview,
+    returnToReview,
+    submittedName,
+    setSearchParams,
+  ])
 
   // Move focus to the new step's heading, so keyboard and screen reader users
   // start at the top of it. Not on first load, where focus is left alone.
@@ -265,12 +282,18 @@ const MultiStepForm = (): JSX.Element => {
       return
     }
     markProgress(true)
-    goTo(returnToReview ? 'review' : nextStep(step, data))
+    goTo(
+      returnToReview ? 'review' : nextStep(step, data),
+      returnToReview ? 'review' : undefined,
+    )
   }
 
   const handleSkip = (): void => {
     markProgress(false)
-    goTo(returnToReview ? 'review' : nextStep(step, data))
+    goTo(
+      returnToReview ? 'review' : nextStep(step, data),
+      returnToReview ? 'review' : undefined,
+    )
   }
 
   const handleStartOver = (): void => {
@@ -727,4 +750,7 @@ const Review = ({ data, progress, steps }: ReviewProps): JSX.Element => {
   )
 }
 
-export default defineScenario(MultiStepForm, { difficulty: 'medium' })
+export default defineScenario(MultiStepForm, {
+  slug: 'multi-step-form',
+  difficulty: 'medium',
+})

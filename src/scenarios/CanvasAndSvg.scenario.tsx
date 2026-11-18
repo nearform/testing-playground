@@ -12,6 +12,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 import type { ChartLayout, Point, Size } from '../utils/canvas'
 import {
   barAt,
@@ -155,12 +156,6 @@ const MAP_TEXT = '#111827'
 const MAP_TEXT_SELECTED = '#ffffff'
 // How far the tooltip sits from the mouse
 const TOOLTIP_OFFSET = 12
-
-const numberLocales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
 
 type Draw = (context: CanvasRenderingContext2D) => void
 
@@ -497,11 +492,12 @@ interface Tooltip {
 }
 
 const DistrictMap = (): JSX.Element => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const frame = useRef<HTMLDivElement>(null)
   const [selected, setSelected] = useState<Region | null>(null)
   const [tooltip, setTooltip] = useState<Tooltip | null>(null)
-  const numbers = new Intl.NumberFormat(numberLocales[i18n.language] ?? 'en-GB')
+  const locale = useLocale()
+  const numbers = new Intl.NumberFormat(locale)
 
   const name = (region: Region): string => t(key(`map.regions.${region.id}`))
 
@@ -628,4 +624,7 @@ const CanvasAndSvg = (): JSX.Element => {
   )
 }
 
-export default defineScenario(CanvasAndSvg, { difficulty: 'hard' })
+export default defineScenario(CanvasAndSvg, {
+  slug: 'canvas-and-svg',
+  difficulty: 'hard',
+})

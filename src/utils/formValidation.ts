@@ -48,6 +48,24 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const PHONE_PATTERN = /^\+?[0-9 ]+$/
 const INTEGER_PATTERN = /^-?\d+$/
 
+export const MIN_PHONE_DIGITS = 10
+export const MAX_PHONE_DIGITS = 15
+
+// Shared with the multi-step form, so both scenarios accept the same input.
+// Both take a trimmed, non-empty value.
+export const isValidEmail = (value: string): boolean =>
+  EMAIL_PATTERN.test(value)
+
+export const phoneNumberError = (
+  value: string,
+): 'phone-invalid' | 'phone-length' | undefined => {
+  if (!PHONE_PATTERN.test(value)) return 'phone-invalid'
+  const digits = value.replace(/\D/g, '').length
+  if (digits < MIN_PHONE_DIGITS || digits > MAX_PHONE_DIGITS)
+    return 'phone-length'
+  return undefined
+}
+
 const isValidUrl = (value: string): boolean => {
   try {
     const url = new URL(value)
@@ -84,16 +102,13 @@ export const validateField = (
 
     case 'email':
       if (value === '') return 'email-required'
-      if (!EMAIL_PATTERN.test(value)) return 'email-invalid'
+      if (!isValidEmail(value)) return 'email-invalid'
       return undefined
 
     case 'phone': {
       // Optional field: only validate when something has been entered
       if (value === '') return undefined
-      if (!PHONE_PATTERN.test(value)) return 'phone-invalid'
-      const digits = value.replace(/\D/g, '').length
-      if (digits < 10 || digits > 15) return 'phone-length'
-      return undefined
+      return phoneNumberError(value)
     }
 
     case 'age': {

@@ -19,6 +19,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 
 export type Status = 'paid' | 'pending' | 'overdue' | 'cancelled'
 
@@ -146,13 +147,6 @@ interface Query extends Filters {
 const sameQuery = (a: Query, b: Query): boolean =>
   (Object.keys(a) as Array<keyof Query>).every((key) => a[key] === b[key])
 
-// The app's language codes are not all valid locales, so map them to one
-const locales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
-
 const badgeVariants: Record<Status, 'success' | 'info' | 'error' | 'disabled'> =
   {
     paid: 'success',
@@ -174,8 +168,8 @@ const nativeSelectClasses = [
 const COLUMN_COUNT = 6
 
 const PaginatedTable = (): JSX.Element => {
-  const { t, i18n } = useTranslation()
-  const locale = locales[i18n.language] ?? 'en-GB'
+  const { t } = useTranslation()
+  const locale = useLocale()
   const key = (path: string): string => `scenarios.paginated-table.${path}`
 
   // What is typed, and what is searched for once typing pauses
@@ -597,4 +591,7 @@ const PaginatedTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(PaginatedTable, { difficulty: 'medium' })
+export default defineScenario(PaginatedTable, {
+  slug: 'paginated-table',
+  difficulty: 'medium',
+})

@@ -57,4 +57,7 @@ const FileDownload: React.FC = (): JSX.Element => {
   )
 }
 
-export default defineScenario(FileDownload, { difficulty: 'medium' })
+export default defineScenario(FileDownload, {
+  slug: 'file-download',
+  difficulty: 'medium',
+})

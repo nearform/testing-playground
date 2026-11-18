@@ -365,4 +365,7 @@ const BrokenImagesAndLinks = (): JSX.Element => {
   )
 }
 
-export default defineScenario(BrokenImagesAndLinks, { difficulty: 'easy' })
+export default defineScenario(BrokenImagesAndLinks, {
+  slug: 'broken-images-and-links',
+  difficulty: 'easy',
+})

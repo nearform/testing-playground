@@ -30,14 +30,22 @@ i18n
     console.log(e)
   })
 
+// Storage can be blocked or full, as getSavedLanguage allows for: the
+// language still changes, it just is not remembered
+const saveLanguage = (language: string): void => {
+  try {
+    localStorage.setItem('language', language)
+  } catch {
+    // Not saved
+  }
+}
+
 const originalChangeLanguage = i18n.changeLanguage.bind(i18n)
-i18n.changeLanguage = async (newLanguage: string) => {
-  return await new Promise((resolve) => {
-    void originalChangeLanguage(newLanguage).then((t) => {
-      localStorage.setItem('language', newLanguage)
-      resolve(t)
-    })
-  })
+i18n.changeLanguage = async (...args) => {
+  const t = await originalChangeLanguage(...args)
+  const [language] = args
+  if (language !== undefined) saveLanguage(language)
+  return t
 }
 
 export default i18n

@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import {
   HttpError,
+  InvalidResponseError,
   STATUS_URL,
   classifyRequestError,
   formatTime,
@@ -13,6 +14,12 @@ describe('classifyRequestError', () => {
   it('reports an error status from the server as a server error', () => {
     expect(classifyRequestError(new HttpError(500), true)).toBe('server')
     expect(classifyRequestError(new HttpError(404), false)).toBe('server')
+  })
+
+  it('reports a response that is not valid JSON as a server error', () => {
+    expect(classifyRequestError(new InvalidResponseError(), true)).toBe(
+      'server',
+    )
   })
 
   it('reports a failed request as offline when the browser is offline', () => {
@@ -67,6 +74,15 @@ describe('requestStatus', () => {
 
     expect(error).toBeInstanceOf(HttpError)
     expect(error).toHaveProperty('status', 503)
+  })
+
+  it('rejects with an InvalidResponseError when the body is not JSON', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response('<!doctype html><html></html>')),
+    )
+
+    await expect(requestStatus()).rejects.toBeInstanceOf(InvalidResponseError)
   })
 
   it('passes on the error when the request gets no response', async () => {
