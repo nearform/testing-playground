@@ -202,6 +202,13 @@ const MouseInteractions = (): JSX.Element => {
     setLastInteraction({ type: 'button', ...press })
   }
 
+  // The back and forward buttons go through history when released, which
+  // would leave the page and lose the result just reported
+  const cancelHistoryButton = (event: MouseEvent<HTMLDivElement>): void => {
+    const button = mouseButtons[event.button]
+    if (button === 'back' || button === 'forward') event.preventDefault()
+  }
+
   const buttonName = (button: MouseButton): string =>
     t(`scenarios.mouse-interactions.buttons.names.${button}`)
 
@@ -410,6 +417,9 @@ const MouseInteractions = (): JSX.Element => {
             </p>
             <div
               onMouseDown={readButton}
+              // Chromium navigates on mouseup, others may on auxclick
+              onMouseUp={cancelHistoryButton}
+              onAuxClick={cancelHistoryButton}
               // Right-clicks are reported here, not answered with a menu
               onContextMenu={(event) => event.preventDefault()}
               className={targetClasses}

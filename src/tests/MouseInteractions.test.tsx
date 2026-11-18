@@ -352,6 +352,36 @@ describe('MouseInteractions scenario', () => {
       expect(fireEvent.contextMenu(target())).toBe(false)
     })
 
+    it.each([
+      { button: 3, name: 'Back' },
+      { button: 4, name: 'Forward' },
+    ])('stops the $name button going through history', ({ button }) => {
+      TestRenderer(<MouseInteractions />)
+
+      // fireEvent returns false when the event's default was prevented
+      expect(fireEvent.mouseUp(target(), { button })).toBe(false)
+      expect(
+        fireEvent(
+          target(),
+          new MouseEvent('auxclick', {
+            button,
+            bubbles: true,
+            cancelable: true,
+          }),
+        ),
+      ).toBe(false)
+    })
+
+    it.each([
+      { button: 0, name: 'Left' },
+      { button: 1, name: 'Middle' },
+      { button: 2, name: 'Right' },
+    ])('leaves the $name button release alone', ({ button }) => {
+      TestRenderer(<MouseInteractions />)
+
+      expect(fireEvent.mouseUp(target(), { button })).toBe(true)
+    })
+
     it('ignores unknown buttons', () => {
       TestRenderer(<MouseInteractions />)
 
