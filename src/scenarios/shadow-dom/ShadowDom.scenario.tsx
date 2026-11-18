@@ -6,12 +6,9 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import ShadowHost from './ShadowHost'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'shadow-dom'
+import { SLUG } from './meta'
 
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content needs a stylesheet of its
@@ -300,7 +297,4 @@ const ShadowDom = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ShadowDom, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default ShadowDom

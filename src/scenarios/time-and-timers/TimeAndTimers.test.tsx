@@ -15,6 +15,7 @@ import TimeAndTimers, {
   THROTTLE_INTERVAL,
   TICK,
 } from './TimeAndTimers.scenario'
+import { DIFFICULTY } from './meta'
 
 const MINUTE = 60 * 1000
 const HOUR = 60 * MINUTE
@@ -58,7 +59,7 @@ const render = (date: Date = WEDNESDAY_MORNING): void => {
 
 describe('TimeAndTimers scenario', () => {
   it('is a hard scenario', () => {
-    expect(TimeAndTimers.difficulty).toBe('hard')
+    expect(DIFFICULTY).toBe('hard')
   })
 
   it.each([

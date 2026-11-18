@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import {
   type RequestErrorKey,
@@ -15,9 +14,7 @@ import {
   isOnline,
   requestStatus,
 } from './networkStatus'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'offline-and-network-status'
+import { SLUG } from './meta'
 
 const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
@@ -430,7 +427,4 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
   )
 }
 
-export default defineScenario(OfflineAndNetworkStatus, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default OfflineAndNetworkStatus

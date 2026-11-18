@@ -6,11 +6,8 @@ import { useTranslation } from 'react-i18next'
 import FrameHost, { EMPTY_FRAME_DOCUMENT, useFrameTheme } from './FrameHost'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'iframes'
+import { SLUG } from './meta'
 
 // Page styles (Tailwind/Quantum) live in the page's document and do not reach
 // into a frame's document, so each frame gets a stylesheet of its own. Its
@@ -419,7 +416,4 @@ const Iframes = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Iframes, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default Iframes

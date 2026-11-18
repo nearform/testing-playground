@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'dynamic-loading'
+import { SLUG } from './meta'
 
 // Every step waits a different random time in this range, so a test that
 // sleeps for a fixed time is sometimes too short and always too slow
@@ -323,7 +320,4 @@ const DynamicLoading = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DynamicLoading, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default DynamicLoading

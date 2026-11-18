@@ -3,11 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'drag-and-drop'
+import { SLUG } from './meta'
 
 const DragAndDrop = (): JSX.Element => {
   const { t } = useTranslation()
@@ -88,7 +85,4 @@ const DragAndDrop = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DragAndDrop, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default DragAndDrop

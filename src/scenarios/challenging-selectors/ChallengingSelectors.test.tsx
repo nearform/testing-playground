@@ -10,6 +10,7 @@ import ChallengingSelectors, {
   UNREAD_MESSAGES,
   randomToken,
 } from './ChallengingSelectors.scenario'
+import { DIFFICULTY } from './meta'
 
 const lastAction = (): HTMLElement => screen.getByTestId('last-action')
 
@@ -43,7 +44,7 @@ afterEach(() => {
 
 describe('ChallengingSelectors scenario', () => {
   it('is a medium scenario', () => {
-    expect(ChallengingSelectors.difficulty).toBe('medium')
+    expect(DIFFICULTY).toBe('medium')
   })
 
   it('starts with no action', () => {

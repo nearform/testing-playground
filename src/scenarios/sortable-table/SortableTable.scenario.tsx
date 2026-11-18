@@ -12,16 +12,13 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import {
   useDateTimeFormat,
   useLocale,
   useNumberFormat,
 } from '../../utils/locale'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'sortable-table'
+import { SLUG } from './meta'
 
 interface Employee {
   id: number
@@ -277,7 +274,4 @@ const SortableTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(SortableTable, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default SortableTable

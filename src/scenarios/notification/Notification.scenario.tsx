@@ -13,12 +13,9 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { useLocale } from '../../utils/locale'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'notification'
+import { SLUG } from './meta'
 
 const NOTIFICATION_DURATION = 6000
 
@@ -132,7 +129,4 @@ const Notification = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Notification, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default Notification

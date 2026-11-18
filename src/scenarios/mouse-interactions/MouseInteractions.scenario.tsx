@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'mouse-interactions'
+import { SLUG } from './meta'
 
 // How long the hold button has to be held down before it confirms
 export const HOLD_DURATION = 1000
@@ -435,7 +432,4 @@ const MouseInteractions = (): JSX.Element => {
   )
 }
 
-export default defineScenario(MouseInteractions, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default MouseInteractions

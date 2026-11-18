@@ -16,6 +16,7 @@ import BrokenImagesAndLinks, {
   type ImageStatus,
 } from './BrokenImagesAndLinks.scenario'
 import { scenarios } from '../list'
+import { DIFFICULTY } from './meta'
 
 // Every key path under an object, e.g. "links.items.route"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -56,7 +57,7 @@ const renderPage = (): void => {
 
 describe('Broken images and links scenario', () => {
   it('is an easy scenario', () => {
-    expect(BrokenImagesAndLinks.difficulty).toBe('easy')
+    expect(DIFFICULTY).toBe('easy')
   })
 
   it.each([

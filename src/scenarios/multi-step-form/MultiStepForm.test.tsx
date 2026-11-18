@@ -10,6 +10,7 @@ import fr from './locales/fr.json'
 import ptBr from './locales/pt-br.json'
 import MultiStepForm from './MultiStepForm.scenario'
 import { STORAGE_KEY, emptyWizardData } from './multiStepForm'
+import { DIFFICULTY } from './meta'
 
 type User = ReturnType<typeof userEvent.setup>
 
@@ -86,7 +87,7 @@ describe('MultiStepForm scenario', () => {
   })
 
   it('is a medium scenario', () => {
-    expect(MultiStepForm.difficulty).toBe('medium')
+    expect(DIFFICULTY).toBe('medium')
   })
 
   it.each([

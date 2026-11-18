@@ -5,11 +5,8 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'geolocation'
+import { SLUG } from './meta'
 
 interface City {
   id: string
@@ -264,7 +261,4 @@ const Geolocation = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Geolocation, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default Geolocation

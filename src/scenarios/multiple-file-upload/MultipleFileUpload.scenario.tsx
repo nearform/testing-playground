@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import type { FormattedSize, Rejection } from './fileUpload'
 import {
   ACCEPT,
@@ -25,9 +24,7 @@ import {
 } from './fileUpload'
 import { translateInformation } from '../../utils/information'
 import { useLocale } from '../../utils/locale'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'multiple-file-upload'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -411,7 +408,4 @@ const MultipleFileUpload = (): JSX.Element => {
   )
 }
 
-export default defineScenario(MultipleFileUpload, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default MultipleFileUpload

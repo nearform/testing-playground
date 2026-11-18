@@ -12,11 +12,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'various-inputs'
+import { SLUG } from './meta'
 
 interface InputFieldProps {
   label: string
@@ -148,7 +145,4 @@ const VariousInputs: React.FC = (): JSX.Element => {
   )
 }
 
-export default defineScenario(VariousInputs, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default VariousInputs

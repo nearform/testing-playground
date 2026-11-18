@@ -6,13 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
 import { storageKey } from '../../utils/storage'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'modal-dialogs'
+import { SLUG } from './meta'
 
 // Remembers that the welcome modal has been dismissed, so it only opens on
 // the first visit
@@ -652,7 +649,4 @@ const ModalDialogs = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ModalDialogs, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default ModalDialogs

@@ -25,7 +25,10 @@
     "easy": "Fácil",
     "medium": "Médio",
     "hard": "Difícil",
-    "playground": "Recreio"
+    "playground": "Recreio",
+    "load-error-title": "Não foi possível carregar esta página",
+    "load-error-body": "Parte da página não pôde ser baixada. Verifique sua conexão, ou o site pode ter acabado de ser atualizado: recarregue para tentar novamente.",
+    "reload": "Recarregar a página"
   },
   "navigation": {
     "back_to_main_page": "Voltar para a Página Principal"

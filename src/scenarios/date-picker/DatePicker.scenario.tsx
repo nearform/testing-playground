@@ -1,12 +1,17 @@
 import { Button, CardTitle, Input } from '@nearform/quantum'
 import type { KeyboardEvent, ReactNode, RefObject } from 'react'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import type { DateRange } from '../../utils/dates'
 import {
@@ -26,9 +31,7 @@ import {
   startOfMonth,
   toIsoDate,
 } from '../../utils/dates'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'date-picker'
+import { SLUG } from './meta'
 
 // How many years after this one appointments and trips can be booked into
 export const BOOKING_YEARS = 2
@@ -46,6 +49,32 @@ const triggerClasses = [
 
 const capitalise = (text: string, locale: string): string =>
   text.charAt(0).toLocaleUpperCase(locale) + text.slice(1)
+
+// The month and weekday names and the full-date format of a language, worked
+// out once per language rather than on every render of the calendar
+const calendarNames = (
+  intl: string,
+  weekStart: number,
+): {
+  monthNames: string[]
+  weekdays: Array<{ short: string; long: string }>
+  fullDate: Intl.DateTimeFormat
+} => {
+  const month = new Intl.DateTimeFormat(intl, { month: 'long' })
+  const shortDay = new Intl.DateTimeFormat(intl, { weekday: 'short' })
+  const longDay = new Intl.DateTimeFormat(intl, { weekday: 'long' })
+  return {
+    monthNames: Array.from({ length: 12 }, (_, index) =>
+      capitalise(month.format(new Date(2000, index, 1)), intl),
+    ),
+    // 1 January 2023 was a Sunday
+    weekdays: Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(2023, 0, 1 + ((weekStart + index) % 7))
+      return { short: shortDay.format(date), long: longDay.format(date) }
+    }),
+    fullDate: new Intl.DateTimeFormat(intl, { dateStyle: 'full' }),
+  }
+}
 
 const CalendarIcon = (): JSX.Element => (
   <svg
@@ -169,27 +198,10 @@ const CalendarPopup = ({
     }
   }, [anchor])
 
-  const monthNames = Array.from({ length: 12 }, (_, month) =>
-    capitalise(
-      new Intl.DateTimeFormat(locale.intl, { month: 'long' }).format(
-        new Date(2000, month, 1),
-      ),
-      locale.intl,
-    ),
+  const { monthNames, weekdays, fullDate } = useMemo(
+    () => calendarNames(locale.intl, locale.weekStart),
+    [locale.intl, locale.weekStart],
   )
-  // 1 January 2023 was a Sunday
-  const weekdays = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date(2023, 0, 1 + ((locale.weekStart + index) % 7))
-    return {
-      short: new Intl.DateTimeFormat(locale.intl, { weekday: 'short' }).format(
-        date,
-      ),
-      long: new Intl.DateTimeFormat(locale.intl, { weekday: 'long' }).format(
-        date,
-      ),
-    }
-  })
-  const fullDate = new Intl.DateTimeFormat(locale.intl, { dateStyle: 'full' })
 
   const shown = startOfMonth(focused)
   const canGoBack = compareDays(shown, startOfMonth(min)) > 0
@@ -747,7 +759,4 @@ const DatePicker = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DatePicker, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default DatePicker

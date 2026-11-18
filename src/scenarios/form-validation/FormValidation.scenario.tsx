@@ -24,11 +24,8 @@ import {
   validateField,
   validateForm,
 } from '../../utils/formValidation'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'form-validation'
+import { SLUG } from './meta'
 
 interface FieldConfig {
   name: FormField
@@ -231,7 +228,4 @@ const FormValidation = (): JSX.Element => {
   )
 }
 
-export default defineScenario(FormValidation, {
-  slug: SLUG,
-  difficulty: 'medium',
-})
+export default FormValidation

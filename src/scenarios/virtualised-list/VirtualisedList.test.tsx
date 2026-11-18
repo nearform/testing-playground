@@ -23,6 +23,7 @@ import VirtualisedList, {
 } from './VirtualisedList.scenario'
 import { parseInformation } from '../../utils/information'
 import { itemOffsets } from './virtualList'
+import { DIFFICULTY } from './meta'
 
 // Every key path under an object, e.g. "grid.result.none"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -75,7 +76,7 @@ const renderPage = (): void => {
 
 describe('Virtualised list scenario', () => {
   it('is a hard scenario', () => {
-    expect(VirtualisedList.difficulty).toBe('hard')
+    expect(DIFFICULTY).toBe('hard')
   })
 
   it.each([

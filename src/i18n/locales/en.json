@@ -25,7 +25,10 @@
     "easy": "Easy",
     "medium": "Medium",
     "hard": "Hard",
-    "playground": "Playground"
+    "playground": "Playground",
+    "load-error-title": "This page could not be loaded",
+    "load-error-body": "Part of the page failed to download. Check your connection, or the site may have just been updated: reload to try again.",
+    "reload": "Reload the page"
   },
   "navigation": {
     "back_to_main_page": "Back to Main Page"

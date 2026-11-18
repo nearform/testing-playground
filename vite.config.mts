@@ -4,7 +4,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/testing-playground/#',
   build: {
-    minify: false,
+    // Minified for size; the source maps keep the shipped code readable in
+    // the browser's developer tools
+    sourcemap: true,
   },
   plugins: [react()],
   test: {

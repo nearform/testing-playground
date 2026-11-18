@@ -4,11 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'radio-button'
+import { SLUG } from './meta'
 
 // The values are fixed ids (the colours' English names), not their
 // translated names, so a choice stays picked when the language changes; only
@@ -85,7 +82,4 @@ const RadioButton = (): JSX.Element => {
   )
 }
 
-export default defineScenario(RadioButton, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default RadioButton

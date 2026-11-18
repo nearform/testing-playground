@@ -12,11 +12,8 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'dropdown'
+import { SLUG } from './meta'
 
 interface Option {
   value: string
@@ -196,7 +193,4 @@ const Dropdown = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Dropdown, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default Dropdown

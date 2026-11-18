@@ -11,11 +11,8 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'broken-images-and-links'
+import { SLUG } from './meta'
 
 // Static files for this scenario live in public/broken-images-and-links. The
 // paths are relative to the page, so they work under the GitHub Pages path
@@ -367,7 +364,4 @@ const BrokenImagesAndLinks = (): JSX.Element => {
   )
 }
 
-export default defineScenario(BrokenImagesAndLinks, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default BrokenImagesAndLinks

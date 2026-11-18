@@ -1,12 +1,19 @@
 import { Button, CardTitle, Input } from '@nearform/quantum'
-import React, { useEffect, useRef, useState } from 'react'
+import React, {
+  type ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
-import { useLocale } from '../../utils/locale'
+import { useDateTimeFormat, useLocale } from '../../utils/locale'
 import {
   CLOSING_HOUR,
   OPENING_HOUR,
@@ -15,9 +22,7 @@ import {
   formatDuration,
   shopStatus,
 } from './time'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'time-and-timers'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -64,8 +69,11 @@ const ACTIVITY_EVENTS = [
 
 // The current time, re-read every TICK. Everything on the page works out its
 // state from this and a start time, rather than counting ticks, so jumping
-// the clock forward lands on the right state straight away.
-const useNow = (): number => {
+// the clock forward lands on the right state straight away. One clock serves
+// the whole page, so every section ticks together on a single timer.
+const NowContext = createContext<number | null>(null)
+
+const ClockProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
     const timer = setInterval(() => {
@@ -75,7 +83,36 @@ const useNow = (): number => {
       clearInterval(timer)
     }
   }, [])
+  // Only the sections that read the clock re-render on each tick: the
+  // children are the same elements every time
+  return <NowContext.Provider value={now}>{children}</NowContext.Provider>
+}
+
+const useNow = (): number => {
+  const now = useContext(NowContext)
+  if (now === null) throw new Error('useNow must be used inside ClockProvider')
   return now
+}
+
+// Hours on the shop sign, e.g. 09:00
+const HOURS_FORMAT: Intl.DateTimeFormatOptions = {
+  hour: '2-digit',
+  minute: '2-digit',
+}
+const DATE_FORMAT: Intl.DateTimeFormatOptions = {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}
+const TIME_FORMAT: Intl.DateTimeFormatOptions = {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+}
+const ABSOLUTE_FORMAT: Intl.DateTimeFormatOptions = {
+  dateStyle: 'medium',
+  timeStyle: 'medium',
 }
 
 const sectionClasses = 'flex flex-col gap-4'
@@ -84,14 +121,13 @@ const boxClasses =
 
 const ClockSection = (): JSX.Element => {
   const { t } = useTranslation()
-  const locale = useLocale()
+  const hoursFormat = useDateTimeFormat(HOURS_FORMAT)
+  const dateFormat = useDateTimeFormat(DATE_FORMAT)
+  const timeFormat = useDateTimeFormat(TIME_FORMAT)
   const date = new Date(useNow())
   const status = shopStatus(date)
   const hours = (hour: number): string =>
-    new Intl.DateTimeFormat(locale, {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(new Date(2000, 0, 1, hour))
+    hoursFormat.format(new Date(2000, 0, 1, hour))
 
   return (
     <section className={sectionClasses} aria-labelledby='clock-title'>
@@ -108,20 +144,11 @@ const ClockSection = (): JSX.Element => {
             data-testid='current-date'
             className='font-semibold'
           >
-            {new Intl.DateTimeFormat(locale, {
-              weekday: 'long',
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            }).format(date)}
+            {dateFormat.format(date)}
           </time>
           ,{' '}
           <span data-testid='current-time' className='font-semibold'>
-            {new Intl.DateTimeFormat(locale, {
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-            }).format(date)}
+            {timeFormat.format(date)}
           </span>
         </p>
         <p
@@ -197,6 +224,7 @@ const CountdownSection = (): JSX.Element => {
 
 const SessionSection = (): JSX.Element => {
   const { t } = useTranslation()
+  const now = useNow()
   // The exact time of the last activity. Only the activity handler and the
   // tick read it; the page shows the idle time they work out from it, kept in
   // state, so rendering never reads the ref.
@@ -205,10 +233,12 @@ const SessionSection = (): JSX.Element => {
   const [idle, setIdle] = useState(0)
   const stayButton = useRef<HTMLButtonElement>(null)
 
+  // On each tick of the page's clock
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIdle(Math.max(0, Date.now() - lastActivity.current))
-    }, TICK)
+    setIdle(Math.max(0, now - lastActivity.current))
+  }, [now])
+
+  useEffect(() => {
     // Activity only counts while no warning is due: once the warning is up,
     // only Stay signed in keeps the session, and once signed out only Sign
     // in again starts a new one. This reads the clock itself, so it is right
@@ -225,7 +255,6 @@ const SessionSection = (): JSX.Element => {
       window.addEventListener(name, onActivity, { passive: true })
     })
     return () => {
-      clearInterval(timer)
       ACTIVITY_EVENTS.forEach((name) => {
         window.removeEventListener(name, onActivity)
       })
@@ -317,18 +346,17 @@ const RelativeSection = (): JSX.Element => {
     { id: 0, at: Date.now() },
   ])
 
+  const relativeFormat = useMemo(
+    () => new Intl.RelativeTimeFormat(locale, { numeric: 'always' }),
+    [locale],
+  )
+  const absolute = useDateTimeFormat(ABSOLUTE_FORMAT)
+
   const relative = (at: number): string => {
     const elapsed = elapsedSince(Math.max(0, now - at))
     if (elapsed === null) return t(key('relative.just-now'))
-    return new Intl.RelativeTimeFormat(locale, { numeric: 'always' }).format(
-      -elapsed.value,
-      elapsed.unit,
-    )
+    return relativeFormat.format(-elapsed.value, elapsed.unit)
   }
-  const absolute = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'medium',
-  })
 
   return (
     <section className={sectionClasses} aria-labelledby='relative-title'>
@@ -512,31 +540,30 @@ const TimeAndTimers = (): JSX.Element => {
   const { t } = useTranslation()
 
   return (
-    <Layout>
-      <PageSetup
-        title={t(key('title'))}
-        description={t(key('description'))}
-        information={translateInformation(t, key('information'))}
-      >
-        <div className='flex flex-col gap-10'>
-          <ClockSection />
-          <CountdownSection />
-          <SessionSection />
-          <RelativeSection />
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('rate.title'))}</CardTitle>
-            <div className='grid gap-6 md:grid-cols-2'>
-              <DebounceSection />
-              <ThrottleSection />
-            </div>
-          </section>
-        </div>
-      </PageSetup>
-    </Layout>
+    <ClockProvider>
+      <Layout>
+        <PageSetup
+          title={t(key('title'))}
+          description={t(key('description'))}
+          information={translateInformation(t, key('information'))}
+        >
+          <div className='flex flex-col gap-10'>
+            <ClockSection />
+            <CountdownSection />
+            <SessionSection />
+            <RelativeSection />
+            <section className={sectionClasses}>
+              <CardTitle>{t(key('rate.title'))}</CardTitle>
+              <div className='grid gap-6 md:grid-cols-2'>
+                <DebounceSection />
+                <ThrottleSection />
+              </div>
+            </section>
+          </div>
+        </PageSetup>
+      </Layout>
+    </ClockProvider>
   )
 }
 
-export default defineScenario(TimeAndTimers, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default TimeAndTimers

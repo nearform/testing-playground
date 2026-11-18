@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { storageKey } from '../../utils/storage'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'login-form'
+import { SLUG } from './meta'
 
 // Where the login is saved in localStorage. Tests seed or read these.
 export const USERNAME_KEY = storageKey('username')
@@ -145,7 +142,4 @@ const LoginForm = (): JSX.Element => {
   )
 }
 
-export default defineScenario(LoginForm, {
-  slug: SLUG,
-  difficulty: 'easy',
-})
+export default LoginForm

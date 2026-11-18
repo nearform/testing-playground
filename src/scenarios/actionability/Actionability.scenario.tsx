@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
-import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
-
-// The scenario's route, and where its texts live in the locale files
-const SLUG = 'actionability'
+import { SLUG } from './meta'
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -376,7 +373,4 @@ const Actionability = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Actionability, {
-  slug: SLUG,
-  difficulty: 'hard',
-})
+export default Actionability
