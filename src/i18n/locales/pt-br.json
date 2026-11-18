@@ -20,6 +20,67 @@
     "back_to_main_page": "Voltar para a Página Principal"
   },
   "scenarios": {
+    "accessibility-violations": {
+      "title": "Violações de Acessibilidade",
+      "description": "Um formulário de inscrição em newsletter cheio de problemas de acessibilidade propositais, com um interruptor para uma versão corrigida, para praticar verificações de acessibilidade automáticas e manuais.",
+      "information": "Todos os problemas de acessibilidade desta página são propositais, e ativar <strong>Mostrar a versão corrigida</strong> (ou abrir <code>#/accessibility-violations?version=fixed</code>) corrige todos eles, então a mesma varredura pode ser feita nas duas versões. Os problemas estão todos dentro da seção Inscrição na newsletter, cujo ID é <code>accessibility-violations-area</code>. Limite a varredura a ela, com <code>.include('#accessibility-violations-area')</code> no <code>@axe-core/playwright</code> ou <code>cy.checkA11y('#accessibility-violations-area')</code> no <code>cypress-axe</code>, para que nada do resto do playground se misture. Na versão quebrada, uma varredura do axe-core informa estes IDs de regra como violações, e na versão corrigida não informa nenhum: <code>label</code> (o campo Endereço de e-mail não tem rótulo); <code>image-alt</code> (a foto de perfil não tem texto alternativo); <code>heading-order</code> (Seus dados pula de um título de nível 2 para um de nível 4); <code>aria-required-attr</code> (a caixa do resumo semanal não tem aria-checked); <code>aria-valid-attr-value</code> (Mais opções define aria-expanded como yes ou no em vez de true ou false); <code>scrollable-region-focusable</code> (a caixa dos termos rola, mas não recebe foco, então não pode ser rolada pelo teclado); <code>color-contrast</code> (a nota de privacidade é cinza-claro sobre branco); <code>button-name</code> (o botão de ajuda é um ícone sem nome); <code>link-name</code> (o link do GitHub é um ícone sem nome). Ela também informa <code>duplicate-id-aria</code> (os rótulos Nome e Sobrenome compartilham o mesmo ID, então os dois campos se chamam Nome), mas em <code>incomplete</code> e não em <code>violations</code>: o axe-core marca essa regra como precisando de revisão, então um teste que só olha <code>violations</code> nunca a vê. O que torna a automação difícil: <code>heading-order</code> é uma boa prática e não uma regra WCAG, então uma varredura limitada com <code>withTags(['wcag2a', 'wcag2aa'])</code> não a encontra. <code>color-contrast</code> e <code>scrollable-region-focusable</code> dependem do layout da página, então só são encontradas em um navegador real e nunca no jsdom. Uma regra pode falhar em vários elementos e novas versões do axe-core adicionam regras, então verifique os IDs de regra esperados em vez do número de violações. Dois problemas não podem ser encontrados por nenhum scanner e precisam de um teste com o teclado. A caixa Mensagem fica com a tecla Tab para si, como alguns editores de código que indentam, então depois que recebe o foco nem Tab nem Shift+Tab saem dela: uma armadilha de teclado. O botão Inscrever-se é uma <code>div</code> com um tratador de clique, então não pode ser alcançado com Tab e só funciona com o mouse. Os mesmos problemas aparecem em Problemas esperados, com um atributo <code>data-rule</code> em cada regra, e a lista fica vazia na versão corrigida. Uma varredura sem erros não prova que a página é acessível: só mostra que os problemas que um scanner consegue encontrar sumiram.",
+      "version": {
+        "title": "Versão",
+        "switch": "Mostrar a versão corrigida",
+        "status": {
+          "broken": "Mostrando a versão quebrada",
+          "fixed": "Mostrando a versão corrigida"
+        }
+      },
+      "expected": {
+        "title": "Problemas esperados",
+        "explanation": "O que uma varredura da seção Inscrição na newsletter deve encontrar na versão mostrada.",
+        "axe": "Violações do axe-core",
+        "review": "Revisão necessária no axe-core (incomplete)",
+        "manual": "Encontrados apenas testando com o teclado",
+        "none": "Nenhum: a versão corrigida não tem problemas conhecidos."
+      },
+      "rules": {
+        "label": "o campo Endereço de e-mail não tem rótulo",
+        "duplicate-id-aria": "os rótulos Nome e Sobrenome compartilham o mesmo ID, então os dois campos se chamam Nome",
+        "image-alt": "a foto de perfil não tem texto alternativo",
+        "heading-order": "Seus dados pula de um título de nível 2 para um de nível 4",
+        "aria-required-attr": "a caixa do resumo semanal não tem aria-checked",
+        "aria-valid-attr-value": "Mais opções define aria-expanded como yes ou no em vez de true ou false",
+        "scrollable-region-focusable": "a caixa dos termos rola, mas não recebe foco, então não pode ser rolada pelo teclado",
+        "color-contrast": "a nota de privacidade é cinza-claro sobre branco",
+        "button-name": "o botão de ajuda é um ícone sem nome",
+        "link-name": "o link do GitHub é um ícone sem nome"
+      },
+      "manual": {
+        "keyboard-trap": "Armadilha de teclado: Tab e Shift+Tab nunca saem da caixa Mensagem",
+        "mouse-only": "Só com o mouse: o botão Inscrever-se não pode ser alcançado com Tab"
+      },
+      "form": {
+        "title": "Inscrição na newsletter",
+        "intro": "Inscreva-se na nossa newsletter semanal.",
+        "details": "Seus dados",
+        "email": "Endereço de e-mail",
+        "first-name": "Nome",
+        "last-name": "Sobrenome",
+        "photo": "Sua foto de perfil",
+        "photo-alt": "Foto de perfil padrão",
+        "preferences": "Preferências",
+        "digest": "Quero receber o resumo semanal",
+        "more-options": "Mais opções",
+        "more-options-text": "Você também pode escolher receber um resumo mensal.",
+        "terms": "Termos e condições",
+        "terms-clause": "Cláusula {{number}}: só usaremos seu endereço de e-mail para enviar esta newsletter, e você pode cancelar a inscrição a qualquer momento pelo link no final de cada e-mail.",
+        "message": "Mensagem (opcional)",
+        "finish": "Concluir",
+        "privacy": "Nunca compartilharemos seu endereço de e-mail com ninguém.",
+        "help": "Ajuda",
+        "help-text": "Preencha seus dados e pressione Inscrever-se. Você pode cancelar a inscrição a qualquer momento.",
+        "github": "Testing Playground no GitHub",
+        "subscribe": "Inscrever-se",
+        "subscribed": "Obrigado, sua inscrição foi feita."
+      }
+    },
     "actionability": {
       "title": "Acionabilidade",
       "description": "Sobreposições, botões em movimento, mudanças de layout e elementos presentes que não podem ser clicados com segurança.",

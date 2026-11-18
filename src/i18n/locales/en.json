@@ -19,6 +19,67 @@
     "back_to_main_page": "Back to Main Page"
   },
   "scenarios": {
+    "accessibility-violations": {
+      "title": "Accessibility Violations",
+      "description": "A newsletter sign-up form full of deliberate accessibility problems, with a switch to a fixed version, for practising automated and manual accessibility checks.",
+      "information": "Every accessibility problem on this page is deliberate, and switching on <strong>Show the fixed version</strong> (or opening <code>#/accessibility-violations?version=fixed</code>) fixes all of them, so the same scan can be run against both versions. The problems are all inside the Newsletter sign-up section, whose ID is <code>accessibility-violations-area</code>. Limit the scan to it, with <code>.include('#accessibility-violations-area')</code> in <code>@axe-core/playwright</code> or <code>cy.checkA11y('#accessibility-violations-area')</code> in <code>cypress-axe</code>, so that nothing from the rest of the playground mixes in. In the broken version an axe-core scan reports these rule IDs as violations, and in the fixed version it reports none: <code>label</code> (the Email address field has no label); <code>image-alt</code> (the profile picture has no alt text); <code>heading-order</code> (Your details jumps from a level 2 to a level 4 heading); <code>aria-required-attr</code> (the weekly digest checkbox has no aria-checked); <code>aria-valid-attr-value</code> (More options sets aria-expanded to yes or no instead of true or false); <code>scrollable-region-focusable</code> (the terms box scrolls but cannot be focused, so it cannot be scrolled with the keyboard); <code>color-contrast</code> (the privacy note is light grey on white); <code>button-name</code> (the help button is an icon with no name); <code>link-name</code> (the GitHub link is an icon with no name). It also reports <code>duplicate-id-aria</code> (the First name and Last name labels share an ID, so both fields are named First name), but under <code>incomplete</code> rather than <code>violations</code>: axe-core marks that rule as needing review, so a test that only looks at <code>violations</code> never sees it. What makes this tricky to automate: <code>heading-order</code> is a best practice rather than a WCAG rule, so a scan limited with <code>withTags(['wcag2a', 'wcag2aa'])</code> misses it. <code>color-contrast</code> and <code>scrollable-region-focusable</code> depend on how the page is laid out, so they are only found in a real browser and never in jsdom. One rule can fail on several elements and new axe-core versions add rules, so assert on the rule IDs you expect rather than on the number of violations. Two problems cannot be found by any scanner and need a keyboard test. The Message box keeps the Tab key for itself, the way some code editors indent, so once it has focus neither Tab nor Shift+Tab leaves it: a keyboard trap. The Subscribe button is a <code>div</code> with a click handler, so it cannot be reached with Tab and only works with a mouse. The same problems are listed under Expected problems, with a <code>data-rule</code> attribute on each rule, and the list empties in the fixed version. A clean scan does not prove a page is accessible: it only shows that the problems a scanner can find are gone.",
+      "version": {
+        "title": "Version",
+        "switch": "Show the fixed version",
+        "status": {
+          "broken": "Showing the broken version",
+          "fixed": "Showing the fixed version"
+        }
+      },
+      "expected": {
+        "title": "Expected problems",
+        "explanation": "What a scan of the Newsletter sign-up section should find in the version shown.",
+        "axe": "axe-core violations",
+        "review": "axe-core needs review (incomplete)",
+        "manual": "Found only by testing with a keyboard",
+        "none": "None: the fixed version has no known problems."
+      },
+      "rules": {
+        "label": "the Email address field has no label",
+        "duplicate-id-aria": "the First name and Last name labels share an ID, so both fields are named First name",
+        "image-alt": "the profile picture has no alt text",
+        "heading-order": "Your details jumps from a level 2 to a level 4 heading",
+        "aria-required-attr": "the weekly digest checkbox has no aria-checked",
+        "aria-valid-attr-value": "More options sets aria-expanded to yes or no instead of true or false",
+        "scrollable-region-focusable": "the terms box scrolls but cannot be focused, so it cannot be scrolled with the keyboard",
+        "color-contrast": "the privacy note is light grey on white",
+        "button-name": "the help button is an icon with no name",
+        "link-name": "the GitHub link is an icon with no name"
+      },
+      "manual": {
+        "keyboard-trap": "Keyboard trap: Tab and Shift+Tab never leave the Message box",
+        "mouse-only": "Mouse only: the Subscribe button cannot be reached with Tab"
+      },
+      "form": {
+        "title": "Newsletter sign-up",
+        "intro": "Sign up for our weekly newsletter.",
+        "details": "Your details",
+        "email": "Email address",
+        "first-name": "First name",
+        "last-name": "Last name",
+        "photo": "Your profile picture",
+        "photo-alt": "Default profile picture",
+        "preferences": "Preferences",
+        "digest": "Send me the weekly digest",
+        "more-options": "More options",
+        "more-options-text": "You can also choose to receive a monthly summary instead.",
+        "terms": "Terms and conditions",
+        "terms-clause": "Clause {{number}}: we will only use your email address to send you this newsletter, and you can unsubscribe at any time from the link at the bottom of every email.",
+        "message": "Message (optional)",
+        "finish": "Finish",
+        "privacy": "We will never share your email address with anyone.",
+        "help": "Help",
+        "help-text": "Fill in your details and press Subscribe. You can unsubscribe at any time.",
+        "github": "Testing Playground on GitHub",
+        "subscribe": "Subscribe",
+        "subscribed": "Thanks, you are now subscribed."
+      }
+    },
     "actionability": {
       "title": "Actionability",
       "description": "Overlays, moving buttons, layout shift and elements that are present but cannot safely be clicked.",
