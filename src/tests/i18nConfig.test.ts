@@ -1,19 +1,19 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import i18n, { isSupportedLanguage } from '../i18n/i18nConfig'
+import i18n, { isSupportedLanguage, LANGUAGE_KEY } from '../i18n/i18nConfig'
 
 describe('i18n changeLanguage', () => {
   afterEach(async () => {
     vi.restoreAllMocks()
     await i18n.changeLanguage('en')
-    localStorage.removeItem('language')
+    localStorage.removeItem(LANGUAGE_KEY)
   })
 
   it('remembers the chosen language', async () => {
     await i18n.changeLanguage('fr')
 
     expect(i18n.language).toBe('fr')
-    expect(localStorage.getItem('language')).toBe('fr')
+    expect(localStorage.getItem(LANGUAGE_KEY)).toBe('fr')
   })
 
   it('does not remember a language the app has no texts for', async () => {
@@ -21,7 +21,7 @@ describe('i18n changeLanguage', () => {
 
     await i18n.changeLanguage('pt-BR')
 
-    expect(localStorage.getItem('language')).toBe('fr')
+    expect(localStorage.getItem(LANGUAGE_KEY)).toBe('fr')
   })
 
   it('still changes the language when it cannot be saved', async () => {

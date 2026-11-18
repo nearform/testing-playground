@@ -12,4 +12,4 @@
 
 ## O modal de boas-vindas
 
-- Um modal de boas-vindas abre _sozinho_ na sua primeira visita e só pode ser fechado pelo seu botão; essa escolha é lembrada no `localStorage` na chave `modal-dialogs-entry-dismissed`, então os testes precisam fechá-lo ou definir essa chave antes de a página carregar.
+- Um modal de boas-vindas abre _sozinho_ na sua primeira visita e só pode ser fechado pelo seu botão; essa escolha é lembrada no `localStorage` na chave `tp:modal-dialogs-entry-dismissed`, então os testes precisam fechá-lo ou definir essa chave antes de a página carregar.

@@ -3,7 +3,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
-import i18n from '../../i18n/i18nConfig'
+import i18n, { LANGUAGE_KEY } from '../../i18n/i18nConfig'
 import DynamicLoading, {
   MAX_DELAY,
   MIN_DELAY,
@@ -145,7 +145,7 @@ describe('DynamicLoading scenario', () => {
         await act(async () => {
           await i18n.changeLanguage('en')
         })
-        localStorage.removeItem('language')
+        localStorage.removeItem(LANGUAGE_KEY)
       }
     })
   })

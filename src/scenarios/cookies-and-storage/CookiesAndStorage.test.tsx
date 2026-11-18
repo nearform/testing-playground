@@ -3,6 +3,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
+import { COOKIE_PATH } from '../../utils/storage'
 import en from './locales/en.json'
 import fr from './locales/fr.json'
 import ptBr from './locales/pt-br.json'
@@ -58,6 +59,8 @@ describe('Cookies and storage scenario', () => {
     vi.useRealTimers()
     document.cookie = `${CONSENT_COOKIE}=; max-age=0; path=/`
     document.cookie = 'other_app=; max-age=0; path=/'
+    document.cookie = 'cookie_consent=; max-age=0; path=/'
+    vi.restoreAllMocks()
     localStorage.removeItem(PREFERENCES_KEY)
     sessionStorage.removeItem(SESSION_NOTE_KEY)
   })
@@ -208,6 +211,28 @@ describe('Cookies and storage scenario', () => {
         )
       },
     )
+
+    it("ignores another site's unprefixed cookie_consent cookie", () => {
+      document.cookie = 'cookie_consent=accepted; path=/'
+      renderPage()
+
+      waitForBanner()
+
+      expect(screen.getByTestId('cookie-banner')).toBeInTheDocument()
+    })
+
+    it('uses the most specific cookie when two share its name', () => {
+      // Browsers list the cookie on the longer path (this site's) first
+      vi.spyOn(Document.prototype, 'cookie', 'get').mockReturnValue(
+        `${CONSENT_COOKIE}=rejected; ${CONSENT_COOKIE}=accepted`,
+      )
+      renderPage()
+
+      expect(screen.getByTestId('consent-status')).toHaveAttribute(
+        'data-consent',
+        'rejected',
+      )
+    })
 
     it('follows the cookie when no preferences are saved', () => {
       setCookie('accepted')
@@ -467,5 +492,6 @@ describe('Cookies and storage scenario', () => {
     expect(snippet).toHaveTextContent(call)
     expect(snippet).toHaveTextContent(CONSENT_COOKIE)
     expect(snippet).toHaveTextContent(window.location.href)
+    expect(snippet).toHaveTextContent(`path: '${COOKIE_PATH}'`)
   })
 })

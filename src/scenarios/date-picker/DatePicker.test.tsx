@@ -4,7 +4,7 @@ import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
-import i18n from '../../i18n/i18nConfig'
+import i18n, { LANGUAGE_KEY } from '../../i18n/i18nConfig'
 import DatePicker, { NO_VALUE } from './DatePicker.scenario'
 
 // Wednesday 18 November 2026, mid-morning local time. Only Date is faked, so
@@ -48,7 +48,7 @@ describe('Date picker scenario', () => {
     vi.useRealTimers()
     vi.restoreAllMocks()
     if (i18n.language !== 'en') await setLanguage('en')
-    localStorage.removeItem('language')
+    localStorage.removeItem(LANGUAGE_KEY)
   })
 
   describe('appointment picker', () => {

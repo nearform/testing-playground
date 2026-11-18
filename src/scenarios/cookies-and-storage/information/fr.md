@@ -2,8 +2,9 @@ Presque tous les sites réels affichent une bannière de consentement aux cookie
 
 ## Où l'état est conservé
 
-- Le choix est mémorisé dans le cookie `cookie_consent` (`accepted`, `rejected` ou `custom`), et les choix d'analyse et de marketing sont conservés dans `localStorage` sous `cookie_preferences`, si bien que les deux survivent à un rechargement.
-- La note de session est conservée dans `sessionStorage`, qui appartient à un seul onglet : elle survit à un rechargement mais disparaît dans un nouvel onglet ou un nouveau contexte de navigateur.
+- Le choix est mémorisé dans le cookie `tp_cookie_consent` (`accepted`, `rejected` ou `custom`), et les choix d'analyse et de marketing sont conservés dans `localStorage` sous `tp:cookie_preferences`, si bien que les deux survivent à un rechargement.
+- Le chemin du cookie est `/testing-playground` : pour le définir depuis un test, indiquez ce chemin en plus du domaine ; un cookie sur `/` n'est utilisé que s'il n'y en a aucun sur le chemin du playground.
+- La note de session est conservée dans `sessionStorage` sous `tp:session_note`, qui appartient à un seul onglet : elle survit à un rechargement mais disparaît dans un nouvel onglet ou un nouveau contexte de navigateur.
 
 ## Garder les tests indépendants
 

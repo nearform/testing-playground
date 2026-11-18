@@ -4,7 +4,7 @@ Le formulaire est découpé en étapes : informations personnelles, informations
 
 - Suivant ajoute une entrée à l'historique : le bouton Précédent du navigateur revient donc d'une étape, comme le bouton Retour du formulaire.
 - Une étape ne peut être affichée que lorsque toutes les étapes précédentes sont terminées. Ouvrir `?step=review` sur une page vierge affiche la première étape à la place, et l'URL est corrigée avec `history.replaceState`. Attendez que l'URL ou le titre de l'étape se stabilise plutôt que de vérifier juste après la navigation.
-- Pour accéder directement à une étape plus loin, remplissez les étapes précédentes via l'interface, ou renseignez la clé `multi-step-form` de `sessionStorage` avant le chargement de la page, par exemple avec `page.addInitScript()` dans Playwright ou `onBeforeLoad` dans Cypress. Les données doivent être valides et les étapes précédentes listées dans `completed` (ou `skipped`, pour l'étape facultative).
+- Pour accéder directement à une étape plus loin, remplissez les étapes précédentes via l'interface, ou renseignez la clé `tp:multi-step-form` de `sessionStorage` avant le chargement de la page, par exemple avec `page.addInitScript()` dans Playwright ou `onBeforeLoad` dans Cypress. Les données doivent être valides et les étapes précédentes listées dans `completed` (ou `skipped`, pour l'étape facultative).
 
 ## Validation et contenu conditionnel
 

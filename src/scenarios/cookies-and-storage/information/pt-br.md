@@ -2,8 +2,9 @@ Quase todo site real mostra um banner de consentimento de cookies na primeira vi
 
 ## Onde o estado é guardado
 
-- A escolha fica guardada no cookie `cookie_consent` (`accepted`, `rejected` ou `custom`), e as escolhas de análise e marketing ficam no `localStorage` em `cookie_preferences`, então ambas sobrevivem a um recarregamento.
-- A nota de sessão fica no `sessionStorage`, que pertence a uma única aba: ela sobrevive a um recarregamento, mas some em uma nova aba ou em um novo contexto do navegador.
+- A escolha fica guardada no cookie `tp_cookie_consent` (`accepted`, `rejected` ou `custom`), e as escolhas de análise e marketing ficam no `localStorage` em `tp:cookie_preferences`, então ambas sobrevivem a um recarregamento.
+- O caminho do cookie é `/testing-playground`, então ao defini-lo em um teste informe esse caminho além do domínio; um cookie em `/` só é usado quando não há nenhum no caminho do playground.
+- A nota de sessão fica no `sessionStorage` em `tp:session_note`, que pertence a uma única aba: ela sobrevive a um recarregamento, mas some em uma nova aba ou em um novo contexto do navegador.
 
 ## Mantendo os testes independentes
 

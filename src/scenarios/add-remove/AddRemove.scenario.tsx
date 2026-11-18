@@ -7,9 +7,14 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { storageKey } from '../../utils/storage'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'add-remove'
+
+// Where the buttons are saved in sessionStorage. Tests seed or read these.
+export const ELEMENTS_KEY = storageKey('elements')
+export const NEXT_INDEX_KEY = storageKey('nextIndex')
 
 interface InitialState {
   elements: number[]
@@ -23,7 +28,7 @@ const emptyState = (): InitialState => ({ elements: [], nextIndex: 0 })
 // The buttons saved in sessionStorage, or none when nothing valid is saved
 // there (a missing, malformed or foreign value must not stop the page loading)
 const readStoredElements = (): number[] => {
-  const stored = sessionStorage.getItem('elements')
+  const stored = sessionStorage.getItem(ELEMENTS_KEY)
   if (stored === null) return []
   try {
     const parsed: unknown = JSON.parse(stored)
@@ -44,7 +49,10 @@ export const loadInitialState = (search: string): InitialState => {
   if (elements.length > 0) {
     // Never reuse a saved button's number, even if the saved index is stale
     const afterSaved = Math.max(...elements) + 1
-    const storedIndex = parseInt(sessionStorage.getItem('nextIndex') ?? '', 10)
+    const storedIndex = parseInt(
+      sessionStorage.getItem(NEXT_INDEX_KEY) ?? '',
+      10,
+    )
     return {
       elements,
       nextIndex: isNaN(storedIndex)
@@ -101,11 +109,11 @@ const AddRemove = (): JSX.Element => {
 
   // Save both whenever they change, so they cannot fall out of step
   useEffect(() => {
-    sessionStorage.setItem('elements', JSON.stringify(elements))
+    sessionStorage.setItem(ELEMENTS_KEY, JSON.stringify(elements))
   }, [elements])
 
   useEffect(() => {
-    sessionStorage.setItem('nextIndex', nextIndex.toString())
+    sessionStorage.setItem(NEXT_INDEX_KEY, nextIndex.toString())
   }, [nextIndex])
 
   const addElement = (): void => {
@@ -129,8 +137,8 @@ const AddRemove = (): JSX.Element => {
 
   const clearStorage = (): void => {
     // Only this scenario's keys: other scenarios keep their session data
-    sessionStorage.removeItem('elements')
-    sessionStorage.removeItem('nextIndex')
+    sessionStorage.removeItem(ELEMENTS_KEY)
+    sessionStorage.removeItem(NEXT_INDEX_KEY)
     setState(emptyState())
   }
 

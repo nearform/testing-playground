@@ -8,6 +8,6 @@ Connectez-vous avec le nom d'utilisateur **admin** et le mot de passe **Passw0rd
 
 ## Rester connecté
 
-- La connexion enregistre `username` et `isLoggedIn` dans `localStorage` : la page est donc toujours connectée après un rechargement ou dans un nouvel onglet.
-- Si vos tests partagent une session de navigateur (comme dans Selenium, ou dans Cypress avec l'isolation des tests désactivée), cet état passe d'un test au suivant : déconnectez-vous ou videz `localStorage` d'abord. Pour commencer un test déjà connecté, définissez `username` et `isLoggedIn` (à `true`) avant le chargement de la page.
+- La connexion enregistre `tp:username` et `tp:isLoggedIn` dans `localStorage` : la page est donc toujours connectée après un rechargement ou dans un nouvel onglet.
+- Si vos tests partagent une session de navigateur (comme dans Selenium, ou dans Cypress avec l'isolation des tests désactivée), cet état passe d'un test au suivant : déconnectez-vous ou videz `localStorage` d'abord. Pour commencer un test déjà connecté, définissez `tp:username` et `tp:isLoggedIn` (à `true`) avant le chargement de la page.
 - Se déconnecter supprime les deux clés et vide le formulaire.

@@ -3,6 +3,7 @@
 // test on their own.
 
 import { isValidEmail, phoneNumberError } from '../../utils/formValidation'
+import { storageKey } from '../../utils/storage'
 
 export const ACCOUNT_TYPES = ['personal', 'business'] as const
 export type AccountType = (typeof ACCOUNT_TYPES)[number]
@@ -197,7 +198,7 @@ export const previousStep = (step: StepId, data: WizardData): StepId => {
   return steps[Math.max(steps.indexOf(step) - 1, 0)]
 }
 
-export const STORAGE_KEY = 'multi-step-form'
+export const STORAGE_KEY = storageKey('multi-step-form')
 
 export interface SavedWizard {
   data: WizardData

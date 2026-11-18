@@ -15,18 +15,21 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { COOKIE_PATH, cookieName, storageKey } from '../../utils/storage'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'cookies-and-storage'
 
-// Where the scenario keeps its state. Tests seed or read these directly.
-export const CONSENT_COOKIE = 'cookie_consent'
-export const PREFERENCES_KEY = 'cookie_preferences'
-export const SESSION_NOTE_KEY = 'session_note'
+// Where the scenario keeps its state. Tests seed or read these directly. The
+// names are prefixed, and the cookie scoped to the playground's path, because
+// the shared nearform.github.io origin also hosts other sites.
+export const CONSENT_COOKIE = cookieName('cookie_consent')
+export const PREFERENCES_KEY = storageKey('cookie_preferences')
+export const SESSION_NOTE_KEY = storageKey('session_note')
 // Tabs tell each other about consent changes on this channel: changing only
 // the cookie fires no storage event, and saving preferences that are the same
 // as before fires none either
-export const SYNC_CHANNEL = 'cookies-and-storage'
+export const SYNC_CHANNEL = storageKey('cookies-and-storage')
 
 // Real banners are often injected by a third-party script after the page has
 // loaded, so this one only appears after a short delay too
@@ -61,22 +64,22 @@ const decodeCookieValue = (value: string): string => {
   }
 }
 
-const readCookies = (): Record<string, string> =>
-  Object.fromEntries(
-    document.cookie
-      .split(';')
-      .map((pair) => pair.trim())
-      .filter((pair) => pair !== '')
-      .map((pair) => {
-        const separator = pair.indexOf('=')
-        return separator === -1
-          ? [pair, '']
-          : [
-              pair.slice(0, separator),
-              decodeCookieValue(pair.slice(separator + 1)),
-            ]
-      }),
-  )
+// Browsers list cookies with longer paths first, so when two cookies share a
+// name (one on this site's path, one on `/` set by another site or a test)
+// the first one, the most specific, is kept
+const readCookies = (): Record<string, string> => {
+  const cookies: Record<string, string> = {}
+  for (const pair of document.cookie.split(';')) {
+    const trimmed = pair.trim()
+    if (trimmed === '') continue
+    const separator = trimmed.indexOf('=')
+    const name = separator === -1 ? trimmed : trimmed.slice(0, separator)
+    if (Object.hasOwn(cookies, name)) continue
+    cookies[name] =
+      separator === -1 ? '' : decodeCookieValue(trimmed.slice(separator + 1))
+  }
+  return cookies
+}
 
 const readConsent = (): Consent | null => {
   const value = readCookies()[CONSENT_COOKIE]
@@ -84,11 +87,11 @@ const readConsent = (): Consent | null => {
 }
 
 const writeConsent = (consent: Consent): void => {
-  document.cookie = `${CONSENT_COOKIE}=${consent}; max-age=${CONSENT_MAX_AGE}; path=/; SameSite=Lax`
+  document.cookie = `${CONSENT_COOKIE}=${consent}; max-age=${CONSENT_MAX_AGE}; path=${COOKIE_PATH}; SameSite=Lax`
 }
 
 const deleteConsent = (): void => {
-  document.cookie = `${CONSENT_COOKIE}=; max-age=0; path=/; SameSite=Lax`
+  document.cookie = `${CONSENT_COOKIE}=; max-age=0; path=${COOKIE_PATH}; SameSite=Lax`
 }
 
 const preferencesFor = (consent: Consent | null): Preferences => ({
@@ -153,9 +156,14 @@ const consentSeverity: Record<Consent | 'none', AlertSeverity> = {
 
 const seedPreferences = '{"analytics":true,"marketing":false}'
 
-const playwrightSnippet = (origin: string, href: string): string =>
+const playwrightSnippet = (hostname: string, href: string): string =>
   `await context.addCookies([
-  { name: '${CONSENT_COOKIE}', value: 'custom', url: '${origin}' },
+  {
+    name: '${CONSENT_COOKIE}',
+    value: 'custom',
+    domain: '${hostname}',
+    path: '${COOKIE_PATH}',
+  },
 ])
 await page.addInitScript(() => {
   localStorage.setItem('${PREFERENCES_KEY}', '${seedPreferences}')
@@ -163,7 +171,10 @@ await page.addInitScript(() => {
 await page.goto('${href}')`
 
 const cypressSnippet = (hostname: string, href: string): string =>
-  `cy.setCookie('${CONSENT_COOKIE}', 'custom', { domain: '${hostname}' })
+  `cy.setCookie('${CONSENT_COOKIE}', 'custom', {
+  domain: '${hostname}',
+  path: '${COOKIE_PATH}',
+})
 cy.visit('${href}', {
   onBeforeLoad(win) {
     win.localStorage.setItem('${PREFERENCES_KEY}', '${seedPreferences}')
@@ -284,7 +295,7 @@ const CookiesAndStorage = (): JSX.Element => {
     { id: 'session', entries: snapshot.session },
   ]
 
-  const { origin, hostname, href } = window.location
+  const { hostname, href } = window.location
 
   return (
     <Layout>
@@ -454,7 +465,7 @@ const CookiesAndStorage = (): JSX.Element => {
               language='ts'
               data-testid='snippet-playwright'
             >
-              {playwrightSnippet(origin, href)}
+              {playwrightSnippet(hostname, href)}
             </CodeBlock>
             <CodeBlock
               label='Cypress'

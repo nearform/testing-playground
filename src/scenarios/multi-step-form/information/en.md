@@ -4,7 +4,7 @@ The form is split into steps: personal details, company details (business accoun
 
 - Next adds a history entry, so the browser's back button goes back a step, just like the form's Back button.
 - A step can only be shown once every step before it is finished. Opening `?step=review` on a fresh page lands on the first step instead, and the URL is corrected with `history.replaceState`. Wait for the URL or the step heading to settle rather than asserting straight after navigating.
-- To deep-link to a later step, either fill in the earlier steps through the UI, or seed the `multi-step-form` key in `sessionStorage` before the page loads, for example with `page.addInitScript()` in Playwright or `onBeforeLoad` in Cypress. The data must be valid and the earlier steps listed as `completed` (or `skipped`, for the optional step).
+- To deep-link to a later step, either fill in the earlier steps through the UI, or seed the `tp:multi-step-form` key in `sessionStorage` before the page loads, for example with `page.addInitScript()` in Playwright or `onBeforeLoad` in Cypress. The data must be valid and the earlier steps listed as `completed` (or `skipped`, for the optional step).
 
 ## Validation and conditional content
 

@@ -7,9 +7,14 @@ import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { defineScenario } from '../../utils/defineScenario'
 import { translateInformation } from '../../utils/information'
+import { storageKey } from '../../utils/storage'
 
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'login-form'
+
+// Where the login is saved in localStorage. Tests seed or read these.
+export const USERNAME_KEY = storageKey('username')
+export const LOGGED_IN_KEY = storageKey('isLoggedIn')
 
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
@@ -22,8 +27,8 @@ const LoginForm = (): JSX.Element => {
 
   useEffect(() => {
     // Read login state from localStorage on component mount
-    const storedUsername = localStorage.getItem('username')
-    const storedLoggedIn = localStorage.getItem('isLoggedIn')
+    const storedUsername = localStorage.getItem(USERNAME_KEY)
+    const storedLoggedIn = localStorage.getItem(LOGGED_IN_KEY)
 
     if (storedUsername != null && storedLoggedIn != null) {
       setUsername(storedUsername)
@@ -38,14 +43,14 @@ const LoginForm = (): JSX.Element => {
       // Clear error, mark as logged in, and save to localStorage
       setInvalidCredentials(false)
       setLoggedIn(true)
-      localStorage.setItem('username', username)
-      localStorage.setItem('isLoggedIn', JSON.stringify(true))
+      localStorage.setItem(USERNAME_KEY, username)
+      localStorage.setItem(LOGGED_IN_KEY, JSON.stringify(true))
     } else {
       // Set error message, mark as not logged in, and clear localStorage
       setInvalidCredentials(true)
       setLoggedIn(false)
-      localStorage.removeItem('username')
-      localStorage.removeItem('isLoggedIn')
+      localStorage.removeItem(USERNAME_KEY)
+      localStorage.removeItem(LOGGED_IN_KEY)
     }
   }
 
@@ -55,8 +60,8 @@ const LoginForm = (): JSX.Element => {
     setPassword('')
     setInvalidCredentials(false)
     setLoggedIn(false)
-    localStorage.removeItem('username')
-    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem(USERNAME_KEY)
+    localStorage.removeItem(LOGGED_IN_KEY)
   }
 
   return (
