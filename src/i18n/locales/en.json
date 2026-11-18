@@ -66,6 +66,50 @@
       "favorite": "Favorite",
       "bookmark": "Bookmark"
     },
+    "date-picker": {
+      "title": "Date Picker",
+      "description": "A custom calendar date picker: single dates, disabled days, a date range and a field you can type into or pick from.",
+      "information": "Each picker opens its calendar in a popup that is added at the end of the page's <code>&lt;body&gt;</code>, not next to its field, so look for it from the whole document rather than inside the field's container. There is no typing into the appointment or trip pickers: to reach a date in another month, use the previous and next month buttons or the month and year lists, and check which month is showing first. Which days can be picked depends on today's date, read from the browser's clock when the page opens, so a test that picks \"next Monday\" or \"the 15th of this month\" gets a different date (or a disabled one) on a different day unless the clock is faked. Disabled days are still shown and can be focused, but they are marked <code>aria-disabled</code>, struck through, and clicking them does nothing. Each day is a button whose text is just the day number, whose accessible name is the full date in the current language (e.g. \"Friday, November 20, 2026\") and which has a <code>data-date</code> attribute in ISO format. Appointments and trips can be booked up to the end of {{lastYear}}. The trip picker stays open after the first day and closes after the last; picking a day before the first starts again from there. The date of birth field follows the current language's format (MM/DD/YYYY in English, DD/MM/YYYY in French and Portuguese), so 03/04/2000 is 4 March in English but 3 April in French, and the text is only checked when Enter is pressed or the field loses focus; dates in the future or before {{minYear}} are refused. The week starts on Sunday in English and Portuguese and on Monday in French, so the same date is in a different column. Under each picker the chosen value is shown in ISO format (YYYY-MM-DD), the same in every language: assert on that rather than on the displayed text. In the calendar the arrow keys move by day and week, Page Up and Page Down by month, Home and End to the start and end of the week, Enter picks the focused day and Escape closes it.",
+      "iso-value": "Value (ISO):",
+      "clear": "Clear",
+      "calendar": {
+        "previous-month": "Previous month",
+        "next-month": "Next month",
+        "month": "Month",
+        "year": "Year"
+      },
+      "appointment": {
+        "title": "Appointment",
+        "instructions": "Book a weekday from today onwards. Weekends and past days cannot be picked.",
+        "label": "Appointment date",
+        "placeholder": "Choose a date",
+        "calendar": "Choose an appointment date"
+      },
+      "trip": {
+        "title": "Trip",
+        "instructions": "Pick the first and then the last day of your trip, from today onwards.",
+        "label": "Trip dates",
+        "placeholder": "Choose dates",
+        "calendar": "Choose trip dates",
+        "pick-start": "Pick the first day",
+        "pick-end": "Pick the last day",
+        "start": "Start (ISO):",
+        "end": "End (ISO):"
+      },
+      "birth-date": {
+        "title": "Date of birth",
+        "instructions": "Type the date as {{format}} and press Enter, or pick it from the calendar.",
+        "label": "Date of birth",
+        "format": "MM/DD/YYYY",
+        "open-calendar": "Choose date of birth",
+        "calendar": "Choose date of birth",
+        "errors": {
+          "invalid": "Enter a real date as {{format}}",
+          "future": "Date of birth cannot be in the future",
+          "too-early": "Date of birth cannot be before {{year}}"
+        }
+      }
+    },
     "drag-and-drop": {
       "title": "Drag and Drop",
       "description": "Drag elements from one side of the page and drop them on the other side.",
