@@ -21,8 +21,10 @@ export const TICK = 1000
 // How long the offer lasts after the page loads
 export const OFFER_DURATION = 5 * 60 * 1000
 // How long without any activity before the session warning appears, and how
-// long the warning stays before the session is signed out
-export const IDLE_WARNING = 5 * 60 * 1000
+// long the warning stays before the session is signed out. The warning covers
+// the whole page, so it comes well after the offer expires: a test can jump
+// past the offer's end and still click around the page.
+export const IDLE_WARNING = 10 * 60 * 1000
 export const LOGOUT_GRACE = 60 * 1000
 // How long the search waits after the last key press before it runs
 export const DEBOUNCE_DELAY = 500
@@ -435,10 +437,19 @@ const ThrottleSection = (): JSX.Element => {
   const { t } = useTranslation()
   const [saves, setSaves] = useState(0)
   const [ignored, setIgnored] = useState(0)
-  const [coolingDown, setCoolingDown] = useState(false)
-  // A ref, so clicks in quick succession all see the latest save
+  // A ref, so clicks in quick succession all see the latest save, and state,
+  // so the label re-renders when it changes
   const lastSave = useRef<number | null>(null)
+  const [lastSaveAt, setLastSaveAt] = useState<number | null>(null)
+  // Re-renders the label as soon as the cooldown ends, rather than on the
+  // next tick
+  const [, setCooldownEnded] = useState(0)
   const cooldown = useRef<ReturnType<typeof setTimeout>>()
+  useNow()
+  // Worked out from the clock, like the check in save, so the two agree
+  // even when the clock jumps without firing timers
+  const coolingDown =
+    lastSaveAt !== null && Date.now() - lastSaveAt < THROTTLE_INTERVAL
 
   useEffect(
     () => () => {
@@ -457,11 +468,11 @@ const ThrottleSection = (): JSX.Element => {
       return
     }
     lastSave.current = at
+    setLastSaveAt(at)
     setSaves((count) => count + 1)
-    setCoolingDown(true)
     clearTimeout(cooldown.current)
     cooldown.current = setTimeout(() => {
-      setCoolingDown(false)
+      setCooldownEnded((count) => count + 1)
     }, THROTTLE_INTERVAL)
   }
 

@@ -194,6 +194,20 @@ describe('TimeAndTimers scenario', () => {
         )
       })
 
+      it('leaves the page clickable when the offer expires', async () => {
+        render()
+
+        // No activity at all, as when a test jumps the clock
+        await wait(OFFER_DURATION)
+
+        expect(byTestId('offer-countdown')).toHaveAttribute(
+          'data-state',
+          'expired',
+        )
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+        expect(OFFER_DURATION).toBeLessThan(IDLE_WARNING)
+      })
+
       it('can be claimed before it expires', async () => {
         render()
         await wait(MINUTE)
@@ -218,12 +232,12 @@ describe('TimeAndTimers scenario', () => {
     })
 
     describe('session timeout', () => {
-      it('warns after five idle minutes', async () => {
+      it('warns after ten idle minutes', async () => {
         render()
 
         await wait(IDLE_WARNING - TICK)
         expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
-        expect(byTestId('idle-time')).toHaveTextContent('Idle for 04:59')
+        expect(byTestId('idle-time')).toHaveTextContent('Idle for 09:59')
 
         await wait(TICK)
         const dialog = screen.getByRole('alertdialog', {
@@ -246,19 +260,22 @@ describe('TimeAndTimers scenario', () => {
         )
       })
 
-      it.each(['keyDown', 'mouseMove', 'pointerDown', 'scroll'] as const)(
-        'restarts the idle time on %s',
-        async (event) => {
-          render()
-          await wait(IDLE_WARNING - MINUTE)
+      it.each([
+        'keyDown',
+        'mouseMove',
+        'pointerDown',
+        'wheel',
+        'scroll',
+      ] as const)('restarts the idle time on %s', async (event) => {
+        render()
+        await wait(IDLE_WARNING - MINUTE)
 
-          fireEvent[event](window)
-          await wait(IDLE_WARNING - TICK)
+        fireEvent[event](window)
+        await wait(IDLE_WARNING - TICK)
 
-          expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
-          expect(byTestId('idle-time')).toHaveTextContent('Idle for 04:59')
-        },
-      )
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+        expect(byTestId('idle-time')).toHaveTextContent('Idle for 09:59')
+      })
 
       it('ignores activity once the warning is showing', async () => {
         render()
@@ -397,6 +414,20 @@ describe('TimeAndTimers scenario', () => {
     })
 
     describe('throttled button', () => {
+      it('is ready again when the clock jumps without firing timers', async () => {
+        render()
+        fireEvent.click(button('Save'))
+
+        // Like page.clock.setSystemTime: the time moves on, no timer fires
+        act(() => {
+          vi.setSystemTime(Date.now() + THROTTLE_INTERVAL)
+        })
+        fireEvent.click(button('Save'))
+
+        expect(byTestId('save-count')).toHaveTextContent('Saved 2 times')
+        expect(byTestId('ignored-count')).toHaveTextContent('0 clicks ignored')
+      })
+
       it('ignores clicks until the interval has passed', async () => {
         render()
 
