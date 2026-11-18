@@ -695,6 +695,61 @@
         "error": "Esta é uma mensagem de notificação de erro"
       }
     },
+    "paginated-table": {
+      "title": "Tabela paginada",
+      "description": "Encontre faturas nas páginas de uma tabela com busca, filtros, seleção de linhas e uma ação em massa.",
+      "information": "A tabela tem 143 faturas, exibidas de 10, 25 ou 50 em 50. Cada mudança (uma nova página, tamanho de página, busca ou filtro) carrega por um tempo aleatório de {{min}} a {{max}} ms, e durante o carregamento as linhas antigas continuam na tela: a tabela fica marcada com <code>aria-busy=\"true\"</code>, uma camada com um indicador de carregamento a cobre e a paginação, o tamanho de página e as caixas de seleção ficam desativados. Verificar as linhas logo após um clique pode ler a página antiga, então espere o carregamento terminar ou o resumo da contagem de linhas mudar. A busca só é feita depois de uma pausa de {{debounce}} ms na digitação, e então carrega de novo; ela procura no número da fatura ou no cliente, ignorando maiúsculas e acentos (\"cafe\" encontra \"Café Étoile\"). Uma nova busca, filtro ou tamanho de página volta para a página 1, e as duas pontas do período são incluídas. A paginação mostra a primeira e a última página e as vizinhas da página atual, com … no lugar das outras, então a página que você quer pode ainda não ter um botão; a página atual é marcada com <code>aria-current=\"page\"</code>. As linhas selecionadas continuam selecionadas quando você muda de página ou de filtro, mesmo que não apareçam mais, e a contagem de selecionadas as inclui. A caixa do cabeçalho só seleciona as linhas da página atual, e fica parcialmente marcada quando só algumas estão. Marcar faturas como pagas as altera na hora, então com um filtro de status elas podem sumir da página. Quando nada corresponde, a tabela mostra uma mensagem com um botão para limpar os filtros, e a paginação é removida. O resumo, as datas e os valores são escritos e formatados de forma diferente em cada idioma.",
+      "filters": {
+        "search": "Buscar",
+        "search-placeholder": "Número da fatura ou cliente",
+        "status": "Status",
+        "all-statuses": "Todos os status",
+        "from": "Emitida a partir de",
+        "to": "Emitida até"
+      },
+      "statuses": {
+        "paid": "Paga",
+        "pending": "Pendente",
+        "overdue": "Vencida",
+        "cancelled": "Cancelada"
+      },
+      "columns": {
+        "id": "Fatura",
+        "customer": "Cliente",
+        "issued": "Emitida em",
+        "status": "Status",
+        "amount": "Valor"
+      },
+      "selection": {
+        "page": "Selecionar todas as faturas desta página",
+        "row": "Selecionar {{id}}",
+        "count_one": "{{count}} fatura selecionada",
+        "count_other": "{{count}} faturas selecionadas",
+        "mark-paid": "Marcar como pagas",
+        "clear": "Limpar seleção",
+        "marked_one": "{{count}} fatura marcada como paga",
+        "marked_other": "{{count}} faturas marcadas como pagas"
+      },
+      "loading": "Carregando faturas",
+      "empty": {
+        "title": "Nenhuma fatura corresponde à sua busca",
+        "hint": "Tente outra busca, ou altere ou limpe os filtros.",
+        "clear": "Limpar filtros"
+      },
+      "summary": {
+        "showing": "Mostrando {{start}}–{{end}} de {{total}}",
+        "none": "Nenhuma fatura para mostrar"
+      },
+      "page-size": "Linhas por página",
+      "pagination": {
+        "label": "Paginação",
+        "first": "Primeira",
+        "previous": "Anterior",
+        "next": "Próxima",
+        "last": "Última",
+        "page": "Página {{page}}"
+      }
+    },
     "radio-button": {
       "title": "Botão de Rádio",
       "description": "Um conjunto de botões de rádio para verificar.",

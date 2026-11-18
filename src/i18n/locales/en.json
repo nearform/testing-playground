@@ -694,6 +694,61 @@
         "error": "This is an error notification message"
       }
     },
+    "paginated-table": {
+      "title": "Paginated Table",
+      "description": "Find invoices across the pages of a table with search, filters, row selection and a bulk action.",
+      "information": "The table holds 143 invoices, shown 10, 25 or 50 at a time. Every change (a new page, page size, search or filter) loads for a random {{min}} to {{max}} ms, and while it loads the old rows stay on screen: the table is marked <code>aria-busy=\"true\"</code>, an overlay with a spinner covers it and the pager, page size and checkboxes are disabled. Checking the rows straight after a click can read the old page, so wait for the load to finish or for the row count summary to change. The search box only searches once typing has paused for {{debounce}} ms, and then loads again; it matches the invoice number or the customer, ignoring case and accents (\"cafe\" finds \"Café Étoile\"). A new search, filter or page size goes back to page 1, and both ends of the date range are included. The pager shows the first and last pages and those either side of the current one, with … for the rest, so the page you want may not have a button yet; the current page is marked <code>aria-current=\"page\"</code>. Selected rows stay selected when you change page or filter, even when they are no longer shown, and the selected count includes them. The checkbox in the header only selects the rows on the current page, and is partly checked when only some of them are. Marking invoices as paid changes them straight away, so with a status filter on they can disappear from the page. When nothing matches, the table shows a message with a button to clear the filters, and the pager is removed. The summary, dates and amounts are worded and formatted differently in each language.",
+      "filters": {
+        "search": "Search",
+        "search-placeholder": "Invoice number or customer",
+        "status": "Status",
+        "all-statuses": "All statuses",
+        "from": "Issued from",
+        "to": "Issued to"
+      },
+      "statuses": {
+        "paid": "Paid",
+        "pending": "Pending",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "columns": {
+        "id": "Invoice",
+        "customer": "Customer",
+        "issued": "Issued",
+        "status": "Status",
+        "amount": "Amount"
+      },
+      "selection": {
+        "page": "Select all invoices on this page",
+        "row": "Select {{id}}",
+        "count_one": "{{count}} invoice selected",
+        "count_other": "{{count}} invoices selected",
+        "mark-paid": "Mark as paid",
+        "clear": "Clear selection",
+        "marked_one": "{{count}} invoice marked as paid",
+        "marked_other": "{{count}} invoices marked as paid"
+      },
+      "loading": "Loading invoices",
+      "empty": {
+        "title": "No invoices match your search",
+        "hint": "Try a different search, or change or clear the filters.",
+        "clear": "Clear filters"
+      },
+      "summary": {
+        "showing": "Showing {{start}}–{{end}} of {{total}}",
+        "none": "No invoices to show"
+      },
+      "page-size": "Rows per page",
+      "pagination": {
+        "label": "Pagination",
+        "first": "First",
+        "previous": "Previous",
+        "next": "Next",
+        "last": "Last",
+        "page": "Page {{page}}"
+      }
+    },
     "radio-button": {
       "title": "Radio Button",
       "description": "A set of radio buttons to check against.",
