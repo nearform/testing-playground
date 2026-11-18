@@ -20,6 +20,90 @@
     "back_to_main_page": "Retour à la page principale"
   },
   "scenarios": {
+    "actionability": {
+      "title": "Actionnabilité",
+      "description": "Superpositions, boutons en mouvement, décalages de mise en page et éléments présents mais impossibles à cliquer sans risque.",
+      "information": "Chaque élément de cette page est dans le DOM et semble cliquable, mais un vrai clic dessus le rate ou touche autre chose. C’est de là que viennent les erreurs comme « element click intercepted », « element is not stable », « element is outside of the viewport » et « element does not receive pointer events ». Dans la section Superpositions, le bouton Accepter les conditions est recouvert en permanence par un élément transparent, donc le clic est toujours intercepté : le test doit le signaler au lieu de réussir avec un clic forcé ou en JavaScript, qui cacherait un bug qu’un utilisateur rencontrerait. Le bouton Continuer est recouvert par une superposition de chargement transparente pendant quelques secondes après le chargement de la page, donc un test doit attendre qu’elle disparaisse, et non attendre une durée fixe. L’en-tête collant reste en haut de la fenêtre pendant que vous faites défiler la liste des produits, donc un outil qui fait défiler un bouton jusqu’en haut de la fenêtre avant de cliquer cliquera sur l’en-tête. Dans Éléments en mouvement, un bouton ne s’arrête jamais, donc une vérification de stabilité n’aboutit jamais et un clic à son ancienne position le rate ; l’autre bouge pendant quelques secondes puis s’immobilise, donc attendre qu’il soit stable fonctionne, et le panneau Dernière action indique si vous l’avez cliqué pendant qu’il bougeait. Dans Décalage de mise en page, une bannière est insérée au-dessus de Confirmer la commande quelques secondes après le chargement, et son bouton Passer à premium arrive exactement là où se trouvait Confirmer la commande, donc un clic dont la position a été calculée trop tôt passe à premium au lieu de confirmer. Le bouton J’accepte se trouve dans une boîte défilante et non dans la page, donc c’est la boîte qu’il faut faire défiler pour que le bouton soit visible. Enfin, un bouton a pointer-events: none, donc le pointeur le traverse, et un autre n’a ni largeur ni hauteur, donc il est dans le DOM avec du texte mais n’est pas visible. Les clics sur ces deux boutons ne fonctionnent qu’en JavaScript, ce qu’un utilisateur ne peut pas faire. Le panneau Dernière action en haut indique ce que chaque clic a réellement touché.",
+      "result": {
+        "title": "Dernière action",
+        "none": "Rien pour l’instant",
+        "intercepted": "Le clic a été intercepté par une superposition transparente",
+        "accepted": "Conditions acceptées",
+        "continued": "Poursuivi après la disparition de la superposition",
+        "sticky-header": "Le clic est tombé sur l’en-tête collant",
+        "added": "{{product}} ajouté au panier",
+        "caught": "Bouton qui ne s’arrête jamais attrapé",
+        "clicked-moving": "Bouton qui s’immobilise cliqué pendant qu’il bougeait encore",
+        "clicked-settled": "Bouton qui s’immobilise cliqué après son arrêt",
+        "upgraded": "Passé à premium : la bannière est arrivée sous le clic",
+        "confirmed": "Commande confirmée",
+        "agreed": "Conditions acceptées après avoir fait défiler la boîte",
+        "pointer-events": "Bouton pointer-events: none cliqué",
+        "zero-size": "Bouton de taille nulle cliqué"
+      },
+      "overlay": {
+        "title": "Superpositions",
+        "instructions": "Les deux boutons sont recouverts par un élément invisible qui reçoit le clic.",
+        "permanent-title": "Toujours recouvert",
+        "accept": "Accepter les conditions",
+        "timed-title": "Recouvert pendant le chargement",
+        "waiting": "En attente de la disparition de la superposition de chargement…",
+        "cleared": "La superposition de chargement a disparu",
+        "continue": "Continuer",
+        "restart": "Afficher à nouveau la superposition"
+      },
+      "sticky": {
+        "title": "Votre panier",
+        "basket_one": "{{count}} article",
+        "basket_other": "{{count}} articles",
+        "instructions": "Cet en-tête reste en haut de la fenêtre pendant que vous faites défiler les produits.",
+        "add": "Ajouter {{product}}",
+        "products": {
+          "apples": "Pommes",
+          "bananas": "Bananes",
+          "carrots": "Carottes",
+          "dates": "Dattes",
+          "eggs": "Œufs",
+          "flour": "Farine",
+          "grapes": "Raisins",
+          "honey": "Miel",
+          "lemons": "Citrons",
+          "milk": "Lait",
+          "oats": "Flocons d’avoine",
+          "pears": "Poires"
+        }
+      },
+      "moving": {
+        "title": "Éléments en mouvement",
+        "instructions": "Le premier bouton ne s’arrête jamais. Le second bouge pendant quelques secondes puis s’immobilise.",
+        "endless": "Attrape-moi",
+        "settling": "Attends-moi",
+        "moving": "Le second bouton bouge encore",
+        "settled": "Le second bouton s’est immobilisé",
+        "restart": "Le faire bouger à nouveau"
+      },
+      "shift": {
+        "title": "Décalage de mise en page",
+        "instructions": "Une bannière est ajoutée au-dessus du bouton peu après le chargement de la page.",
+        "confirm": "Confirmer la commande",
+        "upgrade": "Passer à premium",
+        "offer": "Offre limitée : livraison premium à moitié prix",
+        "restart": "Charger à nouveau la bannière"
+      },
+      "scroll": {
+        "title": "Conteneur défilant",
+        "instructions": "Le bouton est en bas de cette boîte, qui défile indépendamment de la page.",
+        "label": "Conditions générales",
+        "clause": "Clause {{number}} : vous acceptez de garder vos tests fiables et vos attentes explicites.",
+        "agree": "J’accepte"
+      },
+      "unclickable": {
+        "title": "Présents mais pas cliquables",
+        "instructions": "Un bouton ignore le pointeur et l’autre n’a pas de taille. Il y a deux boutons ici, même si vous n’en voyez qu’un.",
+        "pointer-events": "Ignore le pointeur",
+        "zero-size": "Bouton de taille nulle"
+      }
+    },
     "description": "Description",
     "scenario": "Scénario",
     "information": "Information",

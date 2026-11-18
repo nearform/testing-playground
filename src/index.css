@@ -2,3 +2,14 @@
 @plugin '@nearform/quantum/tailwind-plugin';
 @source '../node_modules/@nearform/quantum';
 @custom-variant dark (&:is(.dark, .dark *));
+
+/* Used by the Actionability scenario's moving buttons */
+@keyframes actionability-slide {
+  0%,
+  100% {
+    left: 0.5rem;
+  }
+  50% {
+    left: calc(100% - 9.5rem);
+  }
+}
