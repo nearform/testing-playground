@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'js-alerts'
+
 type DialogType = 'alert' | 'confirm' | 'prompt'
 
 interface Result {
@@ -26,41 +29,41 @@ const JsAlerts = (): JSX.Element => {
   // written to the page once the dialog is closed.
   const openDialog: Record<DialogType, () => Result> = {
     alert: () => {
-      window.alert(t('scenarios.js-alerts.dialog.alert'))
+      window.alert(t(`scenarios.${SLUG}.dialog.alert`))
       return {
-        message: t('scenarios.js-alerts.result.alert'),
+        message: t(`scenarios.${SLUG}.result.alert`),
         severity: 'success',
       }
     },
     confirm: () =>
-      window.confirm(t('scenarios.js-alerts.dialog.confirm'))
+      window.confirm(t(`scenarios.${SLUG}.dialog.confirm`))
         ? {
-            message: t('scenarios.js-alerts.result.confirm-ok'),
+            message: t(`scenarios.${SLUG}.result.confirm-ok`),
             severity: 'success',
           }
         : {
-            message: t('scenarios.js-alerts.result.confirm-cancel'),
+            message: t(`scenarios.${SLUG}.result.confirm-cancel`),
             severity: 'warning',
           },
     prompt: () => {
       const answer = window.prompt(
-        t('scenarios.js-alerts.dialog.prompt'),
-        t('scenarios.js-alerts.dialog.prompt-default'),
+        t(`scenarios.${SLUG}.dialog.prompt`),
+        t(`scenarios.${SLUG}.dialog.prompt-default`),
       )
       if (answer === null) {
         return {
-          message: t('scenarios.js-alerts.result.prompt-cancel'),
+          message: t(`scenarios.${SLUG}.result.prompt-cancel`),
           severity: 'warning',
         }
       }
       if (answer.trim() === '') {
         return {
-          message: t('scenarios.js-alerts.result.prompt-empty'),
+          message: t(`scenarios.${SLUG}.result.prompt-empty`),
           severity: 'info',
         }
       }
       return {
-        message: t('scenarios.js-alerts.result.prompt-ok', { answer }),
+        message: t(`scenarios.${SLUG}.result.prompt-ok`, { answer }),
         severity: 'success',
       }
     },
@@ -69,9 +72,9 @@ const JsAlerts = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.js-alerts.title')}
-        description={t('scenarios.js-alerts.description')}
-        information={translateInformation(t, 'scenarios.js-alerts.information')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           {dialogTypes.map((type) => (
@@ -84,7 +87,7 @@ const JsAlerts = (): JSX.Element => {
               }}
               data-testid={`button-${type}`}
             >
-              {t(`scenarios.js-alerts.button.${type}`)}
+              {t(`scenarios.${SLUG}.button.${type}`)}
             </Button>
           ))}
         </div>
@@ -93,7 +96,7 @@ const JsAlerts = (): JSX.Element => {
           {result != null && (
             <Alert
               severity={result.severity}
-              title={t('scenarios.js-alerts.result.title')}
+              title={t(`scenarios.${SLUG}.result.title`)}
               data-testid='result'
             >
               {result.message}
@@ -106,6 +109,6 @@ const JsAlerts = (): JSX.Element => {
 }
 
 export default defineScenario(JsAlerts, {
-  slug: 'js-alerts',
+  slug: SLUG,
   difficulty: 'medium',
 })

@@ -11,6 +11,7 @@ import CookiesAndStorage, {
   CONSENT_COOKIE,
   PREFERENCES_KEY,
   SESSION_NOTE_KEY,
+  SYNC_CHANNEL,
 } from '../scenarios/CookiesAndStorage.scenario'
 
 // Every key path under an object, e.g. "banner.title"
@@ -348,6 +349,52 @@ describe('Cookies and storage scenario', () => {
       expect(
         screen.getByTestId(`live-local-${PREFERENCES_KEY}`),
       ).toHaveTextContent('{}')
+    })
+
+    it('shows a consent change another tab made without a storage event', async () => {
+      setCookie('accepted')
+      localStorage.setItem(
+        PREFERENCES_KEY,
+        '{"analytics":true,"marketing":true}',
+      )
+      renderPage()
+      // The other tab saves the same preferences as custom: only the cookie
+      // changes, so the browser fires no storage event
+      setCookie('custom')
+      const otherTab = new BroadcastChannel(SYNC_CHANNEL)
+      const received = new BroadcastChannel(SYNC_CHANNEL)
+
+      await act(async () => {
+        await new Promise<void>((resolve) => {
+          received.onmessage = () => {
+            resolve()
+          }
+          otherTab.postMessage('changed')
+        })
+      })
+      otherTab.close()
+      received.close()
+
+      expect(screen.getByTestId('consent-status')).toHaveAttribute(
+        'data-consent',
+        'custom',
+      )
+    })
+
+    it('tells other tabs when consent is saved', async () => {
+      renderPage()
+      waitForBanner()
+      const otherTab = new BroadcastChannel(SYNC_CHANNEL)
+      const message = new Promise<unknown>((resolve) => {
+        otherTab.onmessage = (event: MessageEvent) => {
+          resolve(event.data)
+        }
+      })
+
+      click('button-accept-all')
+
+      await expect(message).resolves.toBe('changed')
+      otherTab.close()
     })
 
     it('shows the consent and preferences another tab saved', () => {

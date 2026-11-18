@@ -14,6 +14,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'broken-images-and-links'
+
 // Static files for this scenario live in public/broken-images-and-links. The
 // paths are relative to the page, so they work under the GitHub Pages path
 // too, where a file that is not there returns a real 404.
@@ -147,8 +150,7 @@ cy.get('a[href^="http"]').each(($a) => {
     .should('be.lessThan', 400)
 })`
 
-const key = (name: string): string =>
-  `scenarios.broken-images-and-links.${name}`
+const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
 const BrokenImagesAndLinks = (): JSX.Element => {
   const { t } = useTranslation()
@@ -366,6 +368,6 @@ const BrokenImagesAndLinks = (): JSX.Element => {
 }
 
 export default defineScenario(BrokenImagesAndLinks, {
-  slug: 'broken-images-and-links',
+  slug: SLUG,
   difficulty: 'easy',
 })

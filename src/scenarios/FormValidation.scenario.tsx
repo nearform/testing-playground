@@ -15,12 +15,16 @@ import PageSetup from '../components/PageSetup'
 import type { FormErrors, FormField, FormValues } from '../utils/formValidation'
 import {
   FORM_FIELDS,
+  PHONE_DIGIT_LIMITS,
   emptyFormValues,
   validateField,
   validateForm,
 } from '../utils/formValidation'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'form-validation'
 
 interface FieldConfig {
   name: FormField
@@ -131,12 +135,9 @@ const FormValidation = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.form-validation.title')}
-        description={t('scenarios.form-validation.description')}
-        information={translateInformation(
-          t,
-          'scenarios.form-validation.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <form
           noValidate
@@ -150,14 +151,14 @@ const FormValidation = (): JSX.Element => {
               data-testid='form-error-summary'
               role='alert'
             >
-              {t('scenarios.form-validation.error-summary', {
+              {t(`scenarios.${SLUG}.error-summary`, {
                 count: errorCount,
               })}
             </Alert>
           )}
           {submitted && (
             <Alert severity='success' data-testid='form-success' role='status'>
-              {t('scenarios.form-validation.success', {
+              {t(`scenarios.${SLUG}.success`, {
                 name: values.fullName.trim(),
               })}
             </Alert>
@@ -166,17 +167,20 @@ const FormValidation = (): JSX.Element => {
             const error = touched[name] ? errors[name] : undefined
             const errorText =
               error !== undefined
-                ? t(`scenarios.form-validation.errors.${error}`)
+                ? t(`scenarios.${SLUG}.errors.${error}`, PHONE_DIGIT_LIMITS)
                 : undefined
             return (
               <FormGroup
                 key={name}
                 required={required}
-                description={t(`scenarios.form-validation.hints.${testId}`)}
+                description={t(
+                  `scenarios.${SLUG}.hints.${testId}`,
+                  PHONE_DIGIT_LIMITS,
+                )}
                 error={errorText}
               >
                 <Label>
-                  {t(`scenarios.form-validation.fields.${testId}`)}
+                  {t(`scenarios.${SLUG}.fields.${testId}`)}
                   {required && ' *'}
                 </Label>
                 <Input
@@ -206,7 +210,7 @@ const FormValidation = (): JSX.Element => {
           })}
           <div className='mt-2 flex gap-4'>
             <Button type='submit' variant='primary' data-testid='submit-button'>
-              {t('scenarios.form-validation.submit-button')}
+              {t(`scenarios.${SLUG}.submit-button`)}
             </Button>
             <Button
               type='button'
@@ -214,7 +218,7 @@ const FormValidation = (): JSX.Element => {
               onClick={handleReset}
               data-testid='reset-button'
             >
-              {t('scenarios.form-validation.reset-button')}
+              {t(`scenarios.${SLUG}.reset-button`)}
             </Button>
           </div>
         </form>
@@ -224,6 +228,6 @@ const FormValidation = (): JSX.Element => {
 }
 
 export default defineScenario(FormValidation, {
-  slug: 'form-validation',
+  slug: SLUG,
   difficulty: 'medium',
 })

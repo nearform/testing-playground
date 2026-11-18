@@ -9,6 +9,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'modal-dialogs'
+
 // Remembers that the welcome modal has been dismissed, so it only opens on
 // the first visit
 export const ENTRY_STORAGE_KEY = 'modal-dialogs-entry-dismissed'
@@ -185,7 +188,7 @@ const Modal = ({
           {dismissible && (
             <button
               type='button'
-              aria-label={t('scenarios.modal-dialogs.close')}
+              aria-label={t(`scenarios.${SLUG}.close`)}
               data-testid={`${id}-close`}
               className='rounded px-2 text-xl leading-none'
               onClick={() => {
@@ -239,30 +242,30 @@ const BasicModal = (): JSX.Element => {
   const [closedWith, setClosedWith] = useState<CloseReason | null>(null)
 
   return (
-    <Section title={t('scenarios.modal-dialogs.basic.title')}>
+    <Section title={t(`scenarios.${SLUG}.basic.title`)}>
       <Button
         onClick={() => {
           setOpen(true)
         }}
         data-testid='basic-open'
       >
-        {t('scenarios.modal-dialogs.basic.open')}
+        {t(`scenarios.${SLUG}.basic.open`)}
       </Button>
       <Result id='basic'>
         {closedWith === null
-          ? t('scenarios.modal-dialogs.basic.not-closed')
-          : t(`scenarios.modal-dialogs.basic.closed.${closedWith}`)}
+          ? t(`scenarios.${SLUG}.basic.not-closed`)
+          : t(`scenarios.${SLUG}.basic.closed.${closedWith}`)}
       </Result>
       {open && (
         <Modal
           id='basic'
-          title={t('scenarios.modal-dialogs.basic.modal-title')}
+          title={t(`scenarios.${SLUG}.basic.modal-title`)}
           onClose={(reason) => {
             setOpen(false)
             setClosedWith(reason)
           }}
         >
-          <p>{t('scenarios.modal-dialogs.basic.modal-body')}</p>
+          <p>{t(`scenarios.${SLUG}.basic.modal-body`)}</p>
         </Modal>
       )}
     </Section>
@@ -279,7 +282,7 @@ const ConfirmDelete = (): JSX.Element => {
   const [result, setResult] = useState<string | null>(null)
 
   const name = (number: number): string =>
-    t('scenarios.modal-dialogs.confirm.item', { number })
+    t(`scenarios.${SLUG}.confirm.item`, { number })
 
   const finish = (confirmed: boolean): void => {
     if (pending === null) return
@@ -289,8 +292,8 @@ const ConfirmDelete = (): JSX.Element => {
     setResult(
       t(
         confirmed
-          ? 'scenarios.modal-dialogs.confirm.deleted'
-          : 'scenarios.modal-dialogs.confirm.cancelled',
+          ? `scenarios.${SLUG}.confirm.deleted`
+          : `scenarios.${SLUG}.confirm.cancelled`,
         { item: name(pending) },
       ),
     )
@@ -298,10 +301,10 @@ const ConfirmDelete = (): JSX.Element => {
   }
 
   return (
-    <Section title={t('scenarios.modal-dialogs.confirm.title')}>
+    <Section title={t(`scenarios.${SLUG}.confirm.title`)}>
       {items.length === 0 ? (
         <p data-testid='confirm-empty'>
-          {t('scenarios.modal-dialogs.confirm.empty')}
+          {t(`scenarios.${SLUG}.confirm.empty`)}
         </p>
       ) : (
         <ul className='flex w-full max-w-sm flex-col gap-2'>
@@ -315,7 +318,7 @@ const ConfirmDelete = (): JSX.Element => {
               <Button
                 variant='danger'
                 size='sm'
-                aria-label={t('scenarios.modal-dialogs.confirm.delete-item', {
+                aria-label={t(`scenarios.${SLUG}.confirm.delete-item`, {
                   item: name(item),
                 })}
                 onClick={() => {
@@ -323,7 +326,7 @@ const ConfirmDelete = (): JSX.Element => {
                 }}
                 data-testid={`delete-${item}`}
               >
-                {t('scenarios.modal-dialogs.confirm.delete')}
+                {t(`scenarios.${SLUG}.confirm.delete`)}
               </Button>
             </li>
           ))}
@@ -338,7 +341,7 @@ const ConfirmDelete = (): JSX.Element => {
           }}
           data-testid='confirm-restore'
         >
-          {t('scenarios.modal-dialogs.confirm.restore')}
+          {t(`scenarios.${SLUG}.confirm.restore`)}
         </Button>
       )}
       {result !== null && <Result id='confirm'>{result}</Result>}
@@ -346,7 +349,7 @@ const ConfirmDelete = (): JSX.Element => {
         <Modal
           id='confirm'
           role='alertdialog'
-          title={t('scenarios.modal-dialogs.confirm.modal-title')}
+          title={t(`scenarios.${SLUG}.confirm.modal-title`)}
           onClose={() => {
             finish(false)
           }}
@@ -361,7 +364,7 @@ const ConfirmDelete = (): JSX.Element => {
                 }}
                 data-testid='confirm-cancel'
               >
-                {t('scenarios.modal-dialogs.cancel')}
+                {t(`scenarios.${SLUG}.cancel`)}
               </Button>
               <Button
                 variant='danger'
@@ -370,13 +373,13 @@ const ConfirmDelete = (): JSX.Element => {
                 }}
                 data-testid='confirm-delete'
               >
-                {t('scenarios.modal-dialogs.confirm.delete')}
+                {t(`scenarios.${SLUG}.confirm.delete`)}
               </Button>
             </>
           }
         >
           <p>
-            {t('scenarios.modal-dialogs.confirm.modal-body', {
+            {t(`scenarios.${SLUG}.confirm.modal-body`, {
               item: name(pending),
             })}
           </p>
@@ -417,14 +420,14 @@ const FormModal = (): JSX.Element => {
   }
 
   return (
-    <Section title={t('scenarios.modal-dialogs.form.title')}>
+    <Section title={t(`scenarios.${SLUG}.form.title`)}>
       <Button onClick={openModal} data-testid='form-open'>
-        {t('scenarios.modal-dialogs.form.open')}
+        {t(`scenarios.${SLUG}.form.open`)}
       </Button>
       <Result id='form'>
         {profile === null
-          ? t('scenarios.modal-dialogs.form.empty')
-          : t('scenarios.modal-dialogs.form.saved', {
+          ? t(`scenarios.${SLUG}.form.empty`)
+          : t(`scenarios.${SLUG}.form.saved`, {
               name: profile.name,
               email: profile.email === '' ? '—' : profile.email,
             })}
@@ -432,7 +435,7 @@ const FormModal = (): JSX.Element => {
       {open && (
         <Modal
           id='form'
-          title={t('scenarios.modal-dialogs.form.modal-title')}
+          title={t(`scenarios.${SLUG}.form.modal-title`)}
           onClose={() => {
             setOpen(false)
           }}
@@ -445,7 +448,7 @@ const FormModal = (): JSX.Element => {
           >
             <div className='flex flex-col gap-2'>
               <Label htmlFor='form-name'>
-                {t('scenarios.modal-dialogs.form.name')}
+                {t(`scenarios.${SLUG}.form.name`)}
               </Label>
               <Input
                 id='form-name'
@@ -463,13 +466,13 @@ const FormModal = (): JSX.Element => {
               />
               {error && (
                 <p id='form-error' role='alert' data-testid='form-error'>
-                  {t('scenarios.modal-dialogs.form.name-required')}
+                  {t(`scenarios.${SLUG}.form.name-required`)}
                 </p>
               )}
             </div>
             <div className='flex flex-col gap-2'>
               <Label htmlFor='form-email'>
-                {t('scenarios.modal-dialogs.form.email')}
+                {t(`scenarios.${SLUG}.form.email`)}
               </Label>
               <Input
                 id='form-email'
@@ -492,10 +495,10 @@ const FormModal = (): JSX.Element => {
                 }}
                 data-testid='form-cancel'
               >
-                {t('scenarios.modal-dialogs.cancel')}
+                {t(`scenarios.${SLUG}.cancel`)}
               </Button>
               <Button type='submit' data-testid='form-save'>
-                {t('scenarios.modal-dialogs.form.save')}
+                {t(`scenarios.${SLUG}.form.save`)}
               </Button>
             </div>
           </form>
@@ -513,19 +516,19 @@ const StackedModals = (): JSX.Element => {
   const [secondOpen, setSecondOpen] = useState(false)
 
   return (
-    <Section title={t('scenarios.modal-dialogs.stacked.title')}>
+    <Section title={t(`scenarios.${SLUG}.stacked.title`)}>
       <Button
         onClick={() => {
           setFirstOpen(true)
         }}
         data-testid='stacked-open'
       >
-        {t('scenarios.modal-dialogs.stacked.open')}
+        {t(`scenarios.${SLUG}.stacked.open`)}
       </Button>
       {firstOpen && (
         <Modal
           id='stacked-first'
-          title={t('scenarios.modal-dialogs.stacked.first-title')}
+          title={t(`scenarios.${SLUG}.stacked.first-title`)}
           onClose={() => {
             setFirstOpen(false)
           }}
@@ -536,11 +539,11 @@ const StackedModals = (): JSX.Element => {
               }}
               data-testid='stacked-open-second'
             >
-              {t('scenarios.modal-dialogs.stacked.open-second')}
+              {t(`scenarios.${SLUG}.stacked.open-second`)}
             </Button>
           }
         >
-          <p>{t('scenarios.modal-dialogs.stacked.first-body')}</p>
+          <p>{t(`scenarios.${SLUG}.stacked.first-body`)}</p>
         </Modal>
       )}
       {/* A sibling of the first modal rather than its child, but opened
@@ -548,7 +551,7 @@ const StackedModals = (): JSX.Element => {
       {firstOpen && secondOpen && (
         <Modal
           id='stacked-second'
-          title={t('scenarios.modal-dialogs.stacked.second-title')}
+          title={t(`scenarios.${SLUG}.stacked.second-title`)}
           onClose={() => {
             setSecondOpen(false)
           }}
@@ -560,11 +563,11 @@ const StackedModals = (): JSX.Element => {
               }}
               data-testid='stacked-second-done'
             >
-              {t('scenarios.modal-dialogs.stacked.done')}
+              {t(`scenarios.${SLUG}.stacked.done`)}
             </Button>
           }
         >
-          <p>{t('scenarios.modal-dialogs.stacked.second-body')}</p>
+          <p>{t(`scenarios.${SLUG}.stacked.second-body`)}</p>
         </Modal>
       )}
     </Section>
@@ -581,8 +584,8 @@ const EntryModal = (): JSX.Element => {
   const [open, setOpen] = useState(() => !entryDismissed())
 
   return (
-    <Section title={t('scenarios.modal-dialogs.entry.title')}>
-      <p>{t('scenarios.modal-dialogs.entry.explanation')}</p>
+    <Section title={t(`scenarios.${SLUG}.entry.title`)}>
+      <p>{t(`scenarios.${SLUG}.entry.explanation`)}</p>
       <Button
         variant='secondary'
         onClick={() => {
@@ -591,13 +594,13 @@ const EntryModal = (): JSX.Element => {
         }}
         data-testid='entry-reset'
       >
-        {t('scenarios.modal-dialogs.entry.reset')}
+        {t(`scenarios.${SLUG}.entry.reset`)}
       </Button>
       {open && (
         <Modal
           id='entry'
           dismissible={false}
-          title={t('scenarios.modal-dialogs.entry.modal-title')}
+          title={t(`scenarios.${SLUG}.entry.modal-title`)}
           onClose={() => {}}
           footer={
             <Button
@@ -608,11 +611,11 @@ const EntryModal = (): JSX.Element => {
               }}
               data-testid='entry-dismiss'
             >
-              {t('scenarios.modal-dialogs.entry.dismiss')}
+              {t(`scenarios.${SLUG}.entry.dismiss`)}
             </Button>
           }
         >
-          <p>{t('scenarios.modal-dialogs.entry.modal-body')}</p>
+          <p>{t(`scenarios.${SLUG}.entry.modal-body`)}</p>
         </Modal>
       )}
     </Section>
@@ -625,12 +628,9 @@ const ModalDialogs = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.modal-dialogs.title')}
-        description={t('scenarios.modal-dialogs.description')}
-        information={translateInformation(
-          t,
-          'scenarios.modal-dialogs.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <BasicModal />
@@ -645,6 +645,6 @@ const ModalDialogs = (): JSX.Element => {
 }
 
 export default defineScenario(ModalDialogs, {
-  slug: 'modal-dialogs',
+  slug: SLUG,
   difficulty: 'medium',
 })

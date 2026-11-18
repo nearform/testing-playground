@@ -6,6 +6,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'drag-and-drop'
+
 const DragAndDrop = (): JSX.Element => {
   const { t } = useTranslation()
   const [dropCount, setDropCount] = useState(0)
@@ -25,7 +28,7 @@ const DragAndDrop = (): JSX.Element => {
       setDropCount((prevCount) => prevCount + 1)
       setGrid((prevGrid) => [
         ...prevGrid,
-        `${t('scenarios.drag-and-drop.box')} ${prevGrid.length + 1}`,
+        `${t(`scenarios.${SLUG}.box`)} ${prevGrid.length + 1}`,
       ])
     }
   }
@@ -33,12 +36,9 @@ const DragAndDrop = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.drag-and-drop.title')}
-        description={t('scenarios.drag-and-drop.description')}
-        information={translateInformation(
-          t,
-          'scenarios.drag-and-drop.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex items-center justify-center'>
           {/* Small draggable box on the left */}
@@ -48,7 +48,7 @@ const DragAndDrop = (): JSX.Element => {
             className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-grey-900 text-sm shadow'
             data-testid='draggable-box'
           >
-            {t('scenarios.drag-and-drop.drag-me')}!
+            {t(`scenarios.${SLUG}.drag-me`)}!
           </div>
 
           {/* Larger drop target grid on the right */}
@@ -66,7 +66,7 @@ const DragAndDrop = (): JSX.Element => {
               }
               data-testid='drop-target'
             >
-              {grid.length === 0 && t('scenarios.drag-and-drop.drop-here')}
+              {grid.length === 0 && t(`scenarios.${SLUG}.drop-here`)}
             </div>
 
             {/* Render placeholder boxes in the grid */}
@@ -82,7 +82,7 @@ const DragAndDrop = (): JSX.Element => {
         </div>
 
         <p className='mt-2.5 text-center' data-testid='total-drops'>
-          {t('scenarios.drag-and-drop.total-drops')}: {dropCount}
+          {t(`scenarios.${SLUG}.total-drops`)}: {dropCount}
         </p>
       </PageSetup>
     </Layout>
@@ -90,6 +90,6 @@ const DragAndDrop = (): JSX.Element => {
 }
 
 export default defineScenario(DragAndDrop, {
-  slug: 'drag-and-drop',
+  slug: SLUG,
   difficulty: 'medium',
 })

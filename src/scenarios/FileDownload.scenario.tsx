@@ -7,6 +7,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'file-download'
+
 const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = useTranslation()
 
@@ -16,7 +19,7 @@ const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
       leftSideChild={<BsCloudDownload aria-hidden='true' />}
       onClick={onClick}
     >
-      {t('scenarios.file-download.download')}
+      {t(`scenarios.${SLUG}.download`)}
     </Button>
   )
 }
@@ -42,12 +45,9 @@ const FileDownload: React.FC = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.file-download.title')}
-        description={t('scenarios.file-download.description')}
-        information={translateInformation(
-          t,
-          'scenarios.file-download.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div>
           <DownloadButton onClick={handleDownload} />
@@ -58,6 +58,6 @@ const FileDownload: React.FC = (): JSX.Element => {
 }
 
 export default defineScenario(FileDownload, {
-  slug: 'file-download',
+  slug: SLUG,
   difficulty: 'medium',
 })

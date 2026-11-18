@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'add-remove'
+
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
   const [elements, setElements] = useState<number[]>(() => {
@@ -88,7 +91,7 @@ const AddRemove = (): JSX.Element => {
           onClick={removeElement}
           data-testid={`remove-element-${index + 1}`}
         >
-          {t('scenarios.add-remove.remove-element')} {index + 1}
+          {t(`scenarios.${SLUG}.remove-element`)} {index + 1}
         </Button>
       </>
     )
@@ -97,12 +100,9 @@ const AddRemove = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.add-remove.title')}
-        description={t('scenarios.add-remove.description')}
-        information={translateInformation(
-          t,
-          'scenarios.add-remove.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex gap-4 mb-4'>
           <Button
@@ -110,14 +110,14 @@ const AddRemove = (): JSX.Element => {
             onClick={addElement}
             data-testid='add-element'
           >
-            {t('scenarios.add-remove.add-element')}
+            {t(`scenarios.${SLUG}.add-element`)}
           </Button>
           <Button
             variant='secondary'
             onClick={clearStorage}
             data-testid='clear-storage'
           >
-            {t('scenarios.add-remove.clear-storage')}
+            {t(`scenarios.${SLUG}.clear-storage`)}
           </Button>
         </div>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4'>
@@ -138,6 +138,6 @@ const AddRemove = (): JSX.Element => {
 }
 
 export default defineScenario(AddRemove, {
-  slug: 'add-remove',
+  slug: SLUG,
   difficulty: 'easy',
 })

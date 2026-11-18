@@ -19,7 +19,10 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
-import { useLocale } from '../utils/locale'
+import { useDateTimeFormat, useNumberFormat } from '../utils/locale'
+
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'paginated-table'
 
 export type Status = 'paid' | 'pending' | 'overdue' | 'cancelled'
 
@@ -169,8 +172,7 @@ const COLUMN_COUNT = 6
 
 const PaginatedTable = (): JSX.Element => {
   const { t } = useTranslation()
-  const locale = useLocale()
-  const key = (path: string): string => `scenarios.paginated-table.${path}`
+  const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
   // What is typed, and what is searched for once typing pauses
   const [searchText, setSearchText] = useState('')
@@ -247,11 +249,11 @@ const PaginatedTable = (): JSX.Element => {
         ? 'indeterminate'
         : false
 
-  const dateFormat = new Intl.DateTimeFormat(locale, {
+  const dateFormat = useDateTimeFormat({
     dateStyle: 'medium',
     timeZone: 'UTC',
   })
-  const moneyFormat = new Intl.NumberFormat(locale, {
+  const moneyFormat = useNumberFormat({
     style: 'currency',
     currency: 'GBP',
   })
@@ -592,6 +594,6 @@ const PaginatedTable = (): JSX.Element => {
 }
 
 export default defineScenario(PaginatedTable, {
-  slug: 'paginated-table',
+  slug: SLUG,
   difficulty: 'medium',
 })

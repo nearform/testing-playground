@@ -15,7 +15,7 @@ import BrokenImagesAndLinks, {
   imageStatus,
   type ImageStatus,
 } from '../scenarios/BrokenImagesAndLinks.scenario'
-import * as Scenario from '../scenarios/Index'
+import { scenarios } from '../scenarios/list'
 
 // Every key path under an object, e.g. "links.items.route"
 const keyPaths = (value: unknown, prefix = ''): string[] =>
@@ -34,9 +34,7 @@ const publicFiles = Object.keys(
 const existsInPublic = (path: string): boolean => publicFiles.includes(path)
 
 // The routes the router registers
-const scenarioRoutes = Object.values(Scenario).map(
-  (component) => `/${component.slug}`,
-)
+const scenarioRoutes = scenarios.map((component) => `/${component.slug}`)
 
 const fakeImage = (complete: boolean, naturalWidth: number): HTMLImageElement =>
   ({ complete, naturalWidth }) as HTMLImageElement

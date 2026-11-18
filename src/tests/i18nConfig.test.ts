@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import i18n from '../i18n/i18nConfig'
+import i18n, { isSupportedLanguage } from '../i18n/i18nConfig'
 
 describe('i18n changeLanguage', () => {
   afterEach(async () => {
@@ -16,6 +16,14 @@ describe('i18n changeLanguage', () => {
     expect(localStorage.getItem('language')).toBe('fr')
   })
 
+  it('does not remember a language the app has no texts for', async () => {
+    await i18n.changeLanguage('fr')
+
+    await i18n.changeLanguage('pt-BR')
+
+    expect(localStorage.getItem('language')).toBe('fr')
+  })
+
   it('still changes the language when it cannot be saved', async () => {
     // setup.ts may replace localStorage with a plain object, so the spy goes
     // on whichever object really holds setItem
@@ -28,5 +36,15 @@ describe('i18n changeLanguage', () => {
 
     await expect(i18n.changeLanguage('fr')).resolves.toBeTypeOf('function')
     expect(i18n.language).toBe('fr')
+  })
+})
+
+describe('isSupportedLanguage', () => {
+  it.each(['en', 'fr', 'ptBr'])('accepts %s', (language) => {
+    expect(isSupportedLanguage(language)).toBe(true)
+  })
+
+  it.each(['pt-BR', 'de', 'toString', ''])('rejects %j', (language) => {
+    expect(isSupportedLanguage(language)).toBe(false)
   })
 })

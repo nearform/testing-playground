@@ -9,6 +9,9 @@ import ShadowHost from '../components/ShadowHost'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'shadow-dom'
+
 // Page styles (Tailwind/Quantum) live in the document's stylesheet and do not
 // reach inside a shadow root, so the shadow content needs a stylesheet of its
 // own: this is the one place the app keeps hand-written CSS. Its colours are
@@ -87,9 +90,9 @@ const OpenShadowForm = (): JSX.Element => {
     const trimmed = name.trim()
     setGreeting(
       trimmed === ''
-        ? { text: t('scenarios.shadow-dom.open.error'), error: true }
+        ? { text: t(`scenarios.${SLUG}.open.error`), error: true }
         : {
-            text: t('scenarios.shadow-dom.open.greeting', { name: trimmed }),
+            text: t(`scenarios.${SLUG}.open.greeting`, { name: trimmed }),
             error: false,
           },
     )
@@ -98,7 +101,7 @@ const OpenShadowForm = (): JSX.Element => {
   return (
     <div className='card'>
       <label className='label' htmlFor='shadow-name-input'>
-        {t('scenarios.shadow-dom.open.label')}
+        {t(`scenarios.${SLUG}.open.label`)}
       </label>
       <div className='row'>
         <input
@@ -114,7 +117,7 @@ const OpenShadowForm = (): JSX.Element => {
           data-testid='shadow-greet-button'
           onClick={handleGreet}
         >
-          {t('scenarios.shadow-dom.open.button')}
+          {t(`scenarios.${SLUG}.open.button`)}
         </button>
       </div>
       <p
@@ -135,13 +138,13 @@ const InnerCounter = (): JSX.Element => {
   return (
     <div className='card'>
       <span className='label' data-testid='inner-shadow-text'>
-        {t('scenarios.shadow-dom.nested.inner-text')}
+        {t(`scenarios.${SLUG}.nested.inner-text`)}
       </span>
       <div className='row'>
         <button
           type='button'
           data-testid='shadow-decrement'
-          aria-label={t('scenarios.shadow-dom.nested.decrement')}
+          aria-label={t(`scenarios.${SLUG}.nested.decrement`)}
           onClick={() => {
             setCount((c) => c - 1)
           }}
@@ -154,7 +157,7 @@ const InnerCounter = (): JSX.Element => {
         <button
           type='button'
           data-testid='shadow-increment'
-          aria-label={t('scenarios.shadow-dom.nested.increment')}
+          aria-label={t(`scenarios.${SLUG}.nested.increment`)}
           onClick={() => {
             setCount((c) => c + 1)
           }}
@@ -174,20 +177,17 @@ const ShadowDom = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.shadow-dom.title')}
-        description={t('scenarios.shadow-dom.description')}
-        information={translateInformation(
-          t,
-          'scenarios.shadow-dom.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div
           className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${SHADOW_THEME}`}
         >
           <Section
             testId='open-section'
-            title={t('scenarios.shadow-dom.open.title')}
-            description={t('scenarios.shadow-dom.open.description')}
+            title={t(`scenarios.${SLUG}.open.title`)}
+            description={t(`scenarios.${SLUG}.open.description`)}
           >
             <ShadowHost
               testId='open-shadow-host'
@@ -198,8 +198,8 @@ const ShadowDom = (): JSX.Element => {
 
           <Section
             testId='nested-section'
-            title={t('scenarios.shadow-dom.nested.title')}
-            description={t('scenarios.shadow-dom.nested.description')}
+            title={t(`scenarios.${SLUG}.nested.title`)}
+            description={t(`scenarios.${SLUG}.nested.description`)}
           >
             <ShadowHost
               testId='outer-shadow-host'
@@ -207,7 +207,7 @@ const ShadowDom = (): JSX.Element => {
               shadowContent={
                 <div className='card'>
                   <span className='label' data-testid='outer-shadow-text'>
-                    {t('scenarios.shadow-dom.nested.outer-text')}
+                    {t(`scenarios.${SLUG}.nested.outer-text`)}
                   </span>
                   <ShadowHost
                     testId='inner-shadow-host'
@@ -221,8 +221,8 @@ const ShadowDom = (): JSX.Element => {
 
           <Section
             testId='slot-section'
-            title={t('scenarios.shadow-dom.slot.title')}
-            description={t('scenarios.shadow-dom.slot.description')}
+            title={t(`scenarios.${SLUG}.slot.title`)}
+            description={t(`scenarios.${SLUG}.slot.description`)}
           >
             <ShadowHost
               testId='slot-shadow-host'
@@ -230,7 +230,7 @@ const ShadowDom = (): JSX.Element => {
               shadowContent={
                 <div className='card'>
                   <span className='label' data-testid='slot-shadow-text'>
-                    {t('scenarios.shadow-dom.slot.shadow-text')}
+                    {t(`scenarios.${SLUG}.slot.shadow-text`)}
                   </span>
                   <slot />
                 </div>
@@ -246,10 +246,10 @@ const ShadowDom = (): JSX.Element => {
                     setSlottedClicks((c) => c + 1)
                   }}
                 >
-                  {t('scenarios.shadow-dom.slot.button')}
+                  {t(`scenarios.${SLUG}.slot.button`)}
                 </Button>
                 <p className='text-sm' data-testid='slotted-status'>
-                  {t('scenarios.shadow-dom.slot.status', {
+                  {t(`scenarios.${SLUG}.slot.status`, {
                     count: slottedClicks,
                   })}
                 </p>
@@ -259,8 +259,8 @@ const ShadowDom = (): JSX.Element => {
 
           <Section
             testId='closed-section'
-            title={t('scenarios.shadow-dom.closed.title')}
-            description={t('scenarios.shadow-dom.closed.description')}
+            title={t(`scenarios.${SLUG}.closed.title`)}
+            description={t(`scenarios.${SLUG}.closed.description`)}
           >
             <ShadowHost
               testId='closed-shadow-host'
@@ -275,7 +275,7 @@ const ShadowDom = (): JSX.Element => {
                       setClosedClicks((c) => c + 1)
                     }}
                   >
-                    {t('scenarios.shadow-dom.closed.button')}
+                    {t(`scenarios.${SLUG}.closed.button`)}
                   </button>
                 </div>
               }
@@ -285,7 +285,7 @@ const ShadowDom = (): JSX.Element => {
               data-testid='closed-shadow-status'
               role='status'
             >
-              {t('scenarios.shadow-dom.closed.status', { count: closedClicks })}
+              {t(`scenarios.${SLUG}.closed.status`, { count: closedClicks })}
             </p>
           </Section>
         </div>
@@ -295,6 +295,6 @@ const ShadowDom = (): JSX.Element => {
 }
 
 export default defineScenario(ShadowDom, {
-  slug: 'shadow-dom',
+  slug: SLUG,
   difficulty: 'hard',
 })

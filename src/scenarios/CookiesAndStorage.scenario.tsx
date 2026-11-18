@@ -7,7 +7,7 @@ import {
   Link,
   Switch,
 } from '@nearform/quantum'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Alert, { type AlertSeverity } from '../components/Alert'
@@ -16,10 +16,17 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'cookies-and-storage'
+
 // Where the scenario keeps its state. Tests seed or read these directly.
 export const CONSENT_COOKIE = 'cookie_consent'
 export const PREFERENCES_KEY = 'cookie_preferences'
 export const SESSION_NOTE_KEY = 'session_note'
+// Tabs tell each other about consent changes on this channel: changing only
+// the cookie fires no storage event, and saving preferences that are the same
+// as before fires none either
+export const SYNC_CHANNEL = 'cookies-and-storage'
 
 // Real banners are often injected by a third-party script after the page has
 // loaded, so this one only appears after a short delay too
@@ -38,7 +45,7 @@ export interface Preferences {
 
 const CATEGORIES = ['analytics', 'marketing'] as const
 
-const key = (name: string): string => `scenarios.cookies-and-storage.${name}`
+const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
 const isConsent = (value: string | undefined): value is Consent =>
   CONSENT_VALUES.includes(value as Consent)
@@ -198,9 +205,11 @@ const CookiesAndStorage = (): JSX.Element => {
     }
   }, [consent])
 
-  // Another tab changing localStorage fires a storage event here. Cookies are
+  // Another tab changing localStorage fires a storage event here, and one
+  // saving or clearing consent also posts on the sync channel. Cookies are
   // shared between tabs too, so consent and preferences are re-read along with
   // the live panel, keeping the whole page in step with the other tab.
+  const channel = useRef<BroadcastChannel | null>(null)
   useEffect(() => {
     const syncFromStorage = (): void => {
       const current = readConsent()
@@ -209,10 +218,21 @@ const CookiesAndStorage = (): JSX.Element => {
       refresh()
     }
     window.addEventListener('storage', syncFromStorage)
+    // Older browsers have no BroadcastChannel; the storage event still works
+    if (typeof BroadcastChannel !== 'undefined') {
+      channel.current = new BroadcastChannel(SYNC_CHANNEL)
+      channel.current.onmessage = syncFromStorage
+    }
     return () => {
       window.removeEventListener('storage', syncFromStorage)
+      channel.current?.close()
+      channel.current = null
     }
   }, [refresh])
+
+  const notifyOtherTabs = (): void => {
+    channel.current?.postMessage('changed')
+  }
 
   const panel: Panel = preferencesOpen
     ? 'preferences'
@@ -227,6 +247,7 @@ const CookiesAndStorage = (): JSX.Element => {
     setPreferences(chosen)
     setPreferencesOpen(false)
     refresh()
+    notifyOtherTabs()
   }
 
   const openPreferences = (): void => {
@@ -251,6 +272,7 @@ const CookiesAndStorage = (): JSX.Element => {
     setSavedNote(null)
     setNoteInput('')
     refresh()
+    notifyOtherTabs()
   }
 
   const liveSections: Array<{
@@ -578,6 +600,6 @@ const CookiesAndStorage = (): JSX.Element => {
 }
 
 export default defineScenario(CookiesAndStorage, {
-  slug: 'cookies-and-storage',
+  slug: SLUG,
   difficulty: 'medium',
 })

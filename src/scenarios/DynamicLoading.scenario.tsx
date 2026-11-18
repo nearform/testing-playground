@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'dynamic-loading'
+
 // Every step waits a different random time in this range, so a test that
 // sleeps for a fixed time is sometimes too short and always too slow
 export const MIN_DELAY = 1000
@@ -37,7 +40,7 @@ const useDelay = (): ((callback: () => void, ms: number) => void) => {
 
 const LoadingSpinner = ({ id }: { id: string }): JSX.Element => {
   const { t } = useTranslation()
-  const label = t('scenarios.dynamic-loading.loading')
+  const label = t(`scenarios.${SLUG}.loading`)
   // A status takes its name only from aria-label, not from Quantum's hidden
   // label text, so set both to keep it findable by role and name
   return (
@@ -72,18 +75,18 @@ const RenderedAfterLoading = (): JSX.Element => {
   }
 
   return (
-    <Section title={t('scenarios.dynamic-loading.rendered.title')}>
+    <Section title={t(`scenarios.${SLUG}.rendered.title`)}>
       <Button
         onClick={start}
         disabled={state === 'loading'}
         data-testid='rendered-start'
       >
-        {t('scenarios.dynamic-loading.start')}
+        {t(`scenarios.${SLUG}.start`)}
       </Button>
       {state === 'loading' && <LoadingSpinner id='rendered' />}
       {state === 'done' && (
         <p data-testid='rendered-element'>
-          {t('scenarios.dynamic-loading.rendered.result')}
+          {t(`scenarios.${SLUG}.rendered.result`)}
         </p>
       )}
     </Section>
@@ -105,13 +108,13 @@ const HiddenUntilLoaded = (): JSX.Element => {
   }
 
   return (
-    <Section title={t('scenarios.dynamic-loading.hidden.title')}>
+    <Section title={t(`scenarios.${SLUG}.hidden.title`)}>
       <Button
         onClick={start}
         disabled={state === 'loading'}
         data-testid='hidden-start'
       >
-        {t('scenarios.dynamic-loading.start')}
+        {t(`scenarios.${SLUG}.start`)}
       </Button>
       {state === 'loading' && <LoadingSpinner id='hidden' />}
       {/* An inline style rather than a class, so it is hidden whatever CSS
@@ -120,7 +123,7 @@ const HiddenUntilLoaded = (): JSX.Element => {
         data-testid='hidden-element'
         style={state === 'done' ? undefined : { display: 'none' }}
       >
-        {t('scenarios.dynamic-loading.hidden.result')}
+        {t(`scenarios.${SLUG}.hidden.result`)}
       </p>
     </Section>
   )
@@ -141,25 +144,25 @@ const EnabledAfterDelay = (): JSX.Element => {
     setBusy(true)
     setMessageKey(
       next
-        ? 'scenarios.dynamic-loading.enable.enabling'
-        : 'scenarios.dynamic-loading.enable.disabling',
+        ? `scenarios.${SLUG}.enable.enabling`
+        : `scenarios.${SLUG}.enable.disabling`,
     )
     delay(() => {
       setEnabled(next)
       setBusy(false)
       setMessageKey(
         next
-          ? 'scenarios.dynamic-loading.enable.enabled'
-          : 'scenarios.dynamic-loading.enable.disabled',
+          ? `scenarios.${SLUG}.enable.enabled`
+          : `scenarios.${SLUG}.enable.disabled`,
       )
     }, randomDelay())
   }
 
   return (
-    <Section title={t('scenarios.dynamic-loading.enable.title')}>
+    <Section title={t(`scenarios.${SLUG}.enable.title`)}>
       <div className='flex w-full max-w-sm flex-col gap-2'>
         <Label htmlFor='enable-input'>
-          {t('scenarios.dynamic-loading.enable.label')}
+          {t(`scenarios.${SLUG}.enable.label`)}
         </Label>
         <Input
           id='enable-input'
@@ -172,8 +175,8 @@ const EnabledAfterDelay = (): JSX.Element => {
       <Button onClick={toggle} disabled={busy} data-testid='enable-toggle'>
         {t(
           enabled
-            ? 'scenarios.dynamic-loading.enable.disable'
-            : 'scenarios.dynamic-loading.enable.enable',
+            ? `scenarios.${SLUG}.enable.disable`
+            : `scenarios.${SLUG}.enable.enable`,
         )}
       </Button>
       {busy && <LoadingSpinner id='enable' />}
@@ -209,14 +212,14 @@ const RemovedAndAdded = (): JSX.Element => {
       setBusy(false)
       setMessageKey(
         next
-          ? 'scenarios.dynamic-loading.remove.added'
-          : 'scenarios.dynamic-loading.remove.removed',
+          ? `scenarios.${SLUG}.remove.added`
+          : `scenarios.${SLUG}.remove.removed`,
       )
     }, randomDelay())
   }
 
   return (
-    <Section title={t('scenarios.dynamic-loading.remove.title')}>
+    <Section title={t(`scenarios.${SLUG}.remove.title`)}>
       {present && (
         <label
           key={generation}
@@ -224,14 +227,14 @@ const RemovedAndAdded = (): JSX.Element => {
           data-testid='removable-element'
         >
           <input type='checkbox' data-testid='removable-checkbox' />
-          {t('scenarios.dynamic-loading.remove.checkbox')}
+          {t(`scenarios.${SLUG}.remove.checkbox`)}
         </label>
       )}
       <Button onClick={toggle} disabled={busy} data-testid='remove-toggle'>
         {t(
           present
-            ? 'scenarios.dynamic-loading.remove.remove'
-            : 'scenarios.dynamic-loading.remove.add',
+            ? `scenarios.${SLUG}.remove.remove`
+            : `scenarios.${SLUG}.remove.add`,
         )}
       </Button>
       {busy && <LoadingSpinner id='remove' />}
@@ -247,10 +250,10 @@ const RemovedAndAdded = (): JSX.Element => {
 type TextState = 'idle' | 'loading' | 'processing' | 'done'
 
 const textKeys: Record<TextState, string> = {
-  idle: 'scenarios.dynamic-loading.text.idle',
-  loading: 'scenarios.dynamic-loading.text.loading',
-  processing: 'scenarios.dynamic-loading.text.processing',
-  done: 'scenarios.dynamic-loading.text.done',
+  idle: `scenarios.${SLUG}.text.idle`,
+  loading: `scenarios.${SLUG}.text.loading`,
+  processing: `scenarios.${SLUG}.text.processing`,
+  done: `scenarios.${SLUG}.text.done`,
 }
 
 // Text that says "Loading..." and then something else that is still not the
@@ -277,9 +280,9 @@ const ChangingText = (): JSX.Element => {
   const busy = state === 'loading' || state === 'processing'
 
   return (
-    <Section title={t('scenarios.dynamic-loading.text.title')}>
+    <Section title={t(`scenarios.${SLUG}.text.title`)}>
       <Button onClick={load} disabled={busy} data-testid='text-start'>
-        {t('scenarios.dynamic-loading.text.load')}
+        {t(`scenarios.${SLUG}.text.load`)}
       </Button>
       <p aria-live='polite' aria-busy={busy} data-testid='text-status'>
         {t(textKeys[state])}
@@ -294,16 +297,12 @@ const DynamicLoading = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.dynamic-loading.title')}
-        description={t('scenarios.dynamic-loading.description')}
-        information={translateInformation(
-          t,
-          'scenarios.dynamic-loading.information',
-          {
-            min: MIN_DELAY / 1000,
-            max: MAX_DELAY / 1000,
-          },
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`, {
+          min: MIN_DELAY / 1000,
+          max: MAX_DELAY / 1000,
+        })}
       >
         <div className='grid gap-10 md:grid-cols-2'>
           <RenderedAfterLoading />
@@ -318,6 +317,6 @@ const DynamicLoading = (): JSX.Element => {
 }
 
 export default defineScenario(DynamicLoading, {
-  slug: 'dynamic-loading',
+  slug: SLUG,
   difficulty: 'medium',
 })

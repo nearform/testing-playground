@@ -5,18 +5,24 @@ import enTranslation from './locales/en.json'
 import frTranslation from './locales/fr.json'
 import ptBrTranslation from './locales/pt-br.json'
 
-const getSavedLanguage = (): string => {
-  try {
-    return localStorage.getItem('language') ?? 'en'
-  } catch {
-    return 'en'
-  }
-}
-
 const resources = {
   en: { translation: enTranslation },
   fr: { translation: frTranslation },
   ptBr: { translation: ptBrTranslation },
+}
+
+// Only languages with texts are saved or restored: any other (such as the
+// BCP 47 form `pt-BR` instead of the app's `ptBr`) would show raw keys
+export const isSupportedLanguage = (language: string): boolean =>
+  Object.hasOwn(resources, language)
+
+const getSavedLanguage = (): string => {
+  try {
+    const saved = localStorage.getItem('language')
+    return saved !== null && isSupportedLanguage(saved) ? saved : 'en'
+  } catch {
+    return 'en'
+  }
 }
 
 i18n
@@ -44,7 +50,9 @@ const originalChangeLanguage = i18n.changeLanguage.bind(i18n)
 i18n.changeLanguage = async (...args) => {
   const t = await originalChangeLanguage(...args)
   const [language] = args
-  if (language !== undefined) saveLanguage(language)
+  if (language !== undefined && isSupportedLanguage(language)) {
+    saveLanguage(language)
+  }
   return t
 }
 

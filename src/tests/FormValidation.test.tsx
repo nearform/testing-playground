@@ -75,6 +75,20 @@ describe('FormValidation scenario', () => {
     expect(age).not.toHaveAttribute('aria-invalid', 'true')
   })
 
+  it('states the phone digit limits in the hint and the error', async () => {
+    const user = renderForm()
+    expect(screen.getByTestId('phone-hint')).toHaveTextContent(
+      'Optional, 10 to 15 digits, may start with +',
+    )
+
+    await user.type(screen.getByTestId('phone'), '12345')
+    await user.tab()
+
+    expect(screen.getByTestId('phone-error')).toHaveTextContent(
+      'Phone number must contain between 10 and 15 digits',
+    )
+  })
+
   it('lists every invalid field when an empty form is submitted', async () => {
     const user = renderForm()
 

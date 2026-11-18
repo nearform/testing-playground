@@ -15,6 +15,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'dropdown'
+
 interface Option {
   value: string
   disabled?: boolean
@@ -59,22 +62,22 @@ const Dropdown = (): JSX.Element => {
   const [country, setCountry] = useState('')
 
   const fruitLabel = (value: string): string =>
-    t(`scenarios.dropdown.fruits.${value}`)
+    t(`scenarios.${SLUG}.fruits.${value}`)
   const colourLabel = (value: string): string =>
-    t(`scenarios.dropdown.colours.${value}`)
+    t(`scenarios.${SLUG}.colours.${value}`)
   const countryLabel = (value: string): string =>
-    t(`scenarios.dropdown.countries.${value}`)
+    t(`scenarios.${SLUG}.countries.${value}`)
 
-  const none = t('scenarios.dropdown.result.none')
+  const none = t(`scenarios.${SLUG}.result.none`)
   const results = [
     {
       id: 'native-select',
-      label: t('scenarios.dropdown.native.label'),
+      label: t(`scenarios.${SLUG}.native.label`),
       value: fruit === '' ? none : fruitLabel(fruit),
     },
     {
       id: 'native-multi-select',
-      label: t('scenarios.dropdown.multi.label'),
+      label: t(`scenarios.${SLUG}.multi.label`),
       value:
         selectedColours.length === 0
           ? none
@@ -82,7 +85,7 @@ const Dropdown = (): JSX.Element => {
     },
     {
       id: 'custom-select',
-      label: t('scenarios.dropdown.custom.label'),
+      label: t(`scenarios.${SLUG}.custom.label`),
       value: country === '' ? none : countryLabel(country),
     },
   ]
@@ -90,15 +93,15 @@ const Dropdown = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.dropdown.title')}
-        description={t('scenarios.dropdown.description')}
-        information={translateInformation(t, 'scenarios.dropdown.information')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
           <section className='flex flex-col gap-2'>
-            <CardTitle>{t('scenarios.dropdown.native.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.native.title`)}</CardTitle>
             <Label htmlFor='native-select'>
-              {t('scenarios.dropdown.native.label')}
+              {t(`scenarios.${SLUG}.native.label`)}
             </Label>
             <select
               id='native-select'
@@ -112,7 +115,7 @@ const Dropdown = (): JSX.Element => {
               {/* A placeholder that cannot be picked again once a fruit is
                   chosen */}
               <option value='' disabled>
-                {t('scenarios.dropdown.native.placeholder')}
+                {t(`scenarios.${SLUG}.native.placeholder`)}
               </option>
               {fruits.map(({ value, disabled }) => (
                 <option key={value} value={value} disabled={disabled}>
@@ -123,9 +126,9 @@ const Dropdown = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-2'>
-            <CardTitle>{t('scenarios.dropdown.multi.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.multi.title`)}</CardTitle>
             <Label htmlFor='native-multi-select'>
-              {t('scenarios.dropdown.multi.label')}
+              {t(`scenarios.${SLUG}.multi.label`)}
             </Label>
             <select
               id='native-multi-select'
@@ -149,16 +152,16 @@ const Dropdown = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-2'>
-            <CardTitle>{t('scenarios.dropdown.custom.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.custom.title`)}</CardTitle>
             <Label htmlFor='custom-select'>
-              {t('scenarios.dropdown.custom.label')}
+              {t(`scenarios.${SLUG}.custom.label`)}
             </Label>
             {/* Not a <select>: the options are rendered in a portal at the end
                 of <body>, and only while the list is open */}
             <Select value={country} onValueChange={setCountry}>
               <SelectTrigger id='custom-select' data-testid='custom-select'>
                 <SelectValue
-                  placeholder={t('scenarios.dropdown.custom.placeholder')}
+                  placeholder={t(`scenarios.${SLUG}.custom.placeholder`)}
                 />
               </SelectTrigger>
               <SelectContent data-testid='custom-select-options'>
@@ -178,7 +181,7 @@ const Dropdown = (): JSX.Element => {
         </div>
 
         <section className='mt-8 flex flex-col gap-2' aria-live='polite'>
-          <CardTitle>{t('scenarios.dropdown.result.title')}</CardTitle>
+          <CardTitle>{t(`scenarios.${SLUG}.result.title`)}</CardTitle>
           <dl className='grid grid-cols-[auto_1fr] gap-x-4 gap-y-1'>
             {results.map(({ id, label, value }) => (
               <React.Fragment key={id}>
@@ -194,6 +197,6 @@ const Dropdown = (): JSX.Element => {
 }
 
 export default defineScenario(Dropdown, {
-  slug: 'dropdown',
+  slug: SLUG,
   difficulty: 'easy',
 })

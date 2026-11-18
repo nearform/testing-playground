@@ -7,6 +7,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'hovers'
+
 // How long the pointer has to rest on a menu item before its submenu opens,
 // and how long the menu stays open after the pointer leaves it
 const MENU_OPEN_DELAY = 200
@@ -52,7 +55,7 @@ const Hovers = (): JSX.Element => {
 
   useEffect(() => clearMenuTimer, [])
 
-  const menuLabel = (id: string): string => t(`scenarios.hovers.menu.${id}`)
+  const menuLabel = (id: string): string => t(`scenarios.${SLUG}.menu.${id}`)
 
   // Resting on an item opens its submenu (after a delay); resting on an item
   // without one closes any submenu a sibling opened
@@ -78,7 +81,7 @@ const Hovers = (): JSX.Element => {
     clearMenuTimer()
     setOpenMenus([])
     setLastAction(
-      t('scenarios.hovers.result.chose', {
+      t(`scenarios.${SLUG}.result.chose`, {
         name: path.map(menuLabel).join(' › '),
       }),
     )
@@ -145,13 +148,13 @@ const Hovers = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.hovers.title')}
-        description={t('scenarios.hovers.description')}
-        information={translateInformation(t, 'scenarios.hovers.information')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col gap-10'>
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.hovers.profiles.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.profiles.title`)}</CardTitle>
             <ul className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
               {profiles.map(({ id, name, role }) => (
                 <li key={id}>
@@ -174,17 +177,17 @@ const Hovers = (): JSX.Element => {
                       >
                         <p className='font-semibold'>{name}</p>
                         <p className='text-sm'>
-                          {t(`scenarios.hovers.profiles.roles.${role}`)}
+                          {t(`scenarios.${SLUG}.profiles.roles.${role}`)}
                         </p>
                         <Button
                           size='sm'
                           onClick={() => {
                             setLastAction(
-                              t('scenarios.hovers.result.viewed', { name }),
+                              t(`scenarios.${SLUG}.result.viewed`, { name }),
                             )
                           }}
                         >
-                          {t('scenarios.hovers.profiles.view')}
+                          {t(`scenarios.${SLUG}.profiles.view`)}
                         </Button>
                       </div>
                     )}
@@ -195,10 +198,10 @@ const Hovers = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.hovers.files.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.files.title`)}</CardTitle>
             {files.length === 0 ? (
               <p data-testid='files-empty'>
-                {t('scenarios.hovers.files.empty')}
+                {t(`scenarios.${SLUG}.files.empty`)}
               </p>
             ) : (
               <ul className='flex flex-col divide-y-2 divide-border rounded-lg border-2 border-border dark:divide-border-dark dark:border-border-dark'>
@@ -226,21 +229,23 @@ const Hovers = (): JSX.Element => {
                       <Button
                         size='xs'
                         variant='secondary'
-                        aria-label={t('scenarios.hovers.files.open-label', {
+                        aria-label={t(`scenarios.${SLUG}.files.open-label`, {
                           name: file,
                         })}
                         onClick={() => {
                           setLastAction(
-                            t('scenarios.hovers.result.opened', { name: file }),
+                            t(`scenarios.${SLUG}.result.opened`, {
+                              name: file,
+                            }),
                           )
                         }}
                       >
-                        {t('scenarios.hovers.files.open')}
+                        {t(`scenarios.${SLUG}.files.open`)}
                       </Button>
                       <Button
                         size='xs'
                         variant='danger'
-                        aria-label={t('scenarios.hovers.files.delete-label', {
+                        aria-label={t(`scenarios.${SLUG}.files.delete-label`, {
                           name: file,
                         })}
                         onClick={() => {
@@ -248,13 +253,13 @@ const Hovers = (): JSX.Element => {
                             current.filter((f) => f !== file),
                           )
                           setLastAction(
-                            t('scenarios.hovers.result.deleted', {
+                            t(`scenarios.${SLUG}.result.deleted`, {
                               name: file,
                             }),
                           )
                         }}
                       >
-                        {t('scenarios.hovers.files.delete')}
+                        {t(`scenarios.${SLUG}.files.delete`)}
                       </Button>
                     </span>
                   </li>
@@ -264,12 +269,12 @@ const Hovers = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-4'>
-            <CardTitle>{t('scenarios.hovers.menu.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.menu.title`)}</CardTitle>
             {/* Leaves room for the open submenus so they do not cover the
                 result underneath */}
             <div className='min-h-60'>
               <nav
-                aria-label={t('scenarios.hovers.menu.title')}
+                aria-label={t(`scenarios.${SLUG}.menu.title`)}
                 onMouseEnter={clearMenuTimer}
                 onMouseLeave={leaveMenu}
                 className='inline-block'
@@ -280,9 +285,9 @@ const Hovers = (): JSX.Element => {
           </section>
 
           <section className='flex flex-col gap-2' aria-live='polite'>
-            <CardTitle>{t('scenarios.hovers.result.title')}</CardTitle>
+            <CardTitle>{t(`scenarios.${SLUG}.result.title`)}</CardTitle>
             <p data-testid='hovers-result'>
-              {lastAction ?? t('scenarios.hovers.result.none')}
+              {lastAction ?? t(`scenarios.${SLUG}.result.none`)}
             </p>
           </section>
         </div>
@@ -292,6 +297,6 @@ const Hovers = (): JSX.Element => {
 }
 
 export default defineScenario(Hovers, {
-  slug: 'hovers',
+  slug: SLUG,
   difficulty: 'medium',
 })

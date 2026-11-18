@@ -17,6 +17,7 @@ import Alert from '../components/Alert'
 import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
+import { PHONE_DIGIT_LIMITS } from '../utils/formValidation'
 import { translateInformation } from '../utils/information'
 import type {
   StepId,
@@ -42,6 +43,9 @@ import {
   resolveStep,
   validateStep,
 } from '../utils/multiStepForm'
+
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'multi-step-form'
 
 const STEP_PARAM = 'step'
 const FROM_PARAM = 'from'
@@ -77,7 +81,7 @@ const nativeSelectClasses = [
   'dark:hover:border-border-hover-dark dark:focus-visible:shadow-brandGreen10',
 ].join(' ')
 
-const key = (path: string): string => `scenarios.multi-step-form.${path}`
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 const loadSaved = (): ReturnType<typeof parseSaved> => {
   try {
@@ -109,7 +113,11 @@ const TextField = ({
   return (
     <FormGroup
       required
-      error={error !== undefined ? t(key(`errors.${error}`)) : undefined}
+      error={
+        error !== undefined
+          ? t(key(`errors.${error}`), PHONE_DIGIT_LIMITS)
+          : undefined
+      }
     >
       <Label>{t(key(`fields.${id}`))} *</Label>
       <Input
@@ -155,7 +163,11 @@ const SelectField = ({
   return (
     <FormGroup
       required
-      error={error !== undefined ? t(key(`errors.${error}`)) : undefined}
+      error={
+        error !== undefined
+          ? t(key(`errors.${error}`), PHONE_DIGIT_LIMITS)
+          : undefined
+      }
     >
       <Label>{t(key(`fields.${id}`))} *</Label>
       <select
@@ -195,8 +207,8 @@ const MultiStepForm = (): JSX.Element => {
   const requested = searchParams.get(STEP_PARAM)
   const step = resolveStep(requested, data, progress)
   const steps = getSteps(data)
-  const fromReview = searchParams.get(FROM_PARAM) === 'review'
-  const returnToReview = fromReview && step !== 'review'
+  const returnToReview =
+    searchParams.get(FROM_PARAM) === 'review' && step !== 'review'
   const errors = attemptedStep === step ? validateStep(step, data) : {}
   const errorCount = Object.keys(errors).length
 
@@ -212,28 +224,13 @@ const MultiStepForm = (): JSX.Element => {
 
   // Correct the URL when it asks for a step that cannot be shown yet, or for
   // no step at all, so the address bar always names the step on screen. A
-  // return to review is kept until review is reached, so an edit from review
-  // that adds a step (such as Company) goes back to review once it is done.
+  // return to review is dropped here: a link that asks for one before the
+  // earlier steps are done has no review to return to.
   useEffect(() => {
-    if (
-      submittedName === null &&
-      (requested !== step || fromReview !== returnToReview)
-    ) {
-      setSearchParams(
-        returnToReview
-          ? { [STEP_PARAM]: step, [FROM_PARAM]: 'review' }
-          : { [STEP_PARAM]: step },
-        { replace: true },
-      )
+    if (submittedName === null && requested !== step) {
+      setSearchParams({ [STEP_PARAM]: step }, { replace: true })
     }
-  }, [
-    requested,
-    step,
-    fromReview,
-    returnToReview,
-    submittedName,
-    setSearchParams,
-  ])
+  }, [requested, step, submittedName, setSearchParams])
 
   // Move focus to the new step's heading, so keyboard and screen reader users
   // start at the top of it. Not on first load, where focus is left alone.
@@ -259,15 +256,26 @@ const MultiStepForm = (): JSX.Element => {
     )
   }
 
-  const markProgress = (completed: boolean): void => {
-    setProgress((current) => ({
+  // Records the step as completed or skipped, then moves on. After an edit
+  // from review it goes back to review, unless the edit added a step that
+  // still needs filling in (such as Company after switching to a business
+  // account): then it goes there, still on the way back to review.
+  const finishStep = (completed: boolean): void => {
+    const updated: WizardProgress = {
       completed: completed
-        ? [...current.completed.filter((s) => s !== step), step]
-        : current.completed.filter((s) => s !== step),
+        ? [...progress.completed.filter((s) => s !== step), step]
+        : progress.completed.filter((s) => s !== step),
       skipped: completed
-        ? current.skipped.filter((s) => s !== step)
-        : [...current.skipped.filter((s) => s !== step), step],
-    }))
+        ? progress.skipped.filter((s) => s !== step)
+        : [...progress.skipped.filter((s) => s !== step), step],
+    }
+    setProgress(updated)
+    if (!returnToReview) {
+      goTo(nextStep(step, data))
+      return
+    }
+    const target = resolveStep('review', data, updated)
+    goTo(target, target === 'review' ? undefined : 'review')
   }
 
   const handleNext = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -281,19 +289,11 @@ const MultiStepForm = (): JSX.Element => {
       document.getElementById(focusId(firstInvalid))?.focus()
       return
     }
-    markProgress(true)
-    goTo(
-      returnToReview ? 'review' : nextStep(step, data),
-      returnToReview ? 'review' : undefined,
-    )
+    finishStep(true)
   }
 
   const handleSkip = (): void => {
-    markProgress(false)
-    goTo(
-      returnToReview ? 'review' : nextStep(step, data),
-      returnToReview ? 'review' : undefined,
-    )
+    finishStep(false)
   }
 
   const handleStartOver = (): void => {
@@ -324,7 +324,9 @@ const MultiStepForm = (): JSX.Element => {
   const errorFor = (field: WizardField): string | undefined => errors[field]
   const errorText = (field: WizardField): string | undefined => {
     const error = errorFor(field)
-    return error !== undefined ? t(key(`errors.${error}`)) : undefined
+    return error !== undefined
+      ? t(key(`errors.${error}`), PHONE_DIGIT_LIMITS)
+      : undefined
   }
 
   const stepStatus = (s: StepId): 'current' | 'done' | 'skipped' | 'todo' => {
@@ -751,6 +753,6 @@ const Review = ({ data, progress, steps }: ReviewProps): JSX.Element => {
 }
 
 export default defineScenario(MultiStepForm, {
-  slug: 'multi-step-form',
+  slug: SLUG,
   difficulty: 'medium',
 })

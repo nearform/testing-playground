@@ -14,7 +14,10 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
-import { useLocale } from '../utils/locale'
+import { useDateTimeFormat, useLocale, useNumberFormat } from '../utils/locale'
+
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'sortable-table'
 
 interface Employee {
   id: number
@@ -140,15 +143,15 @@ const SortableTable = (): JSX.Element => {
   const locale = useLocale()
 
   const departmentLabel = (department: string): string =>
-    t(`scenarios.sortable-table.departments.${department}`)
+    t(`scenarios.${SLUG}.departments.${department}`)
   const columnLabel = (key: SortKey): string =>
-    t(`scenarios.sortable-table.columns.${key}`)
+    t(`scenarios.${SLUG}.columns.${key}`)
 
-  const dateFormat = new Intl.DateTimeFormat(locale, {
+  const dateFormat = useDateTimeFormat({
     dateStyle: 'medium',
     timeZone: 'UTC',
   })
-  const moneyFormat = new Intl.NumberFormat(locale, {
+  const moneyFormat = useNumberFormat({
     style: 'currency',
     currency: 'GBP',
     maximumFractionDigits: 0,
@@ -191,12 +194,9 @@ const SortableTable = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.sortable-table.title')}
-        description={t('scenarios.sortable-table.description')}
-        information={translateInformation(
-          t,
-          'scenarios.sortable-table.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='flex flex-col gap-6'>
           <Table data-testid='sortable-table' bordered>
@@ -217,7 +217,7 @@ const SortableTable = (): JSX.Element => {
                 ))}
                 {/* Not sortable: no button and no aria-sort */}
                 <TableHead data-testid='header-email'>
-                  {t('scenarios.sortable-table.columns.email')}
+                  {t(`scenarios.${SLUG}.columns.email`)}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -238,7 +238,7 @@ const SortableTable = (): JSX.Element => {
                   </TableCell>
                   <TableCell align='right' data-testid='cell-salary'>
                     {employee.salary === null
-                      ? t('scenarios.sortable-table.no-salary')
+                      ? t(`scenarios.${SLUG}.no-salary`)
                       : moneyFormat.format(employee.salary)}
                   </TableCell>
                   <TableCell data-testid='cell-email'>
@@ -252,8 +252,8 @@ const SortableTable = (): JSX.Element => {
           <div className='flex flex-wrap items-center justify-between gap-4'>
             <p aria-live='polite' data-testid='sort-status'>
               {sort === null
-                ? t('scenarios.sortable-table.status.unsorted')
-                : t(`scenarios.sortable-table.status.${sort.direction}`, {
+                ? t(`scenarios.${SLUG}.status.unsorted`)
+                : t(`scenarios.${SLUG}.status.${sort.direction}`, {
                     column: columnLabel(sort.key),
                   })}
             </p>
@@ -264,7 +264,7 @@ const SortableTable = (): JSX.Element => {
                 setSort(null)
               }}
             >
-              {t('scenarios.sortable-table.reset')}
+              {t(`scenarios.${SLUG}.reset`)}
             </Button>
           </div>
         </div>
@@ -274,6 +274,6 @@ const SortableTable = (): JSX.Element => {
 }
 
 export default defineScenario(SortableTable, {
-  slug: 'sortable-table',
+  slug: SLUG,
   difficulty: 'medium',
 })

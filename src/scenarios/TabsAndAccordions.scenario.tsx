@@ -15,7 +15,10 @@ import {
   resolveTab,
 } from '../utils/tabs'
 
-const key = (path: string): string => `scenarios.tabs-and-accordions.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'tabs-and-accordions'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 // The URL parameters holding each tab list's selected tab, so a test can link
 // straight to one, e.g. ?product=reviews&report=monthly
@@ -436,6 +439,6 @@ const TabsAndAccordions = (): JSX.Element => {
 }
 
 export default defineScenario(TabsAndAccordions, {
-  slug: 'tabs-and-accordions',
+  slug: SLUG,
   difficulty: 'easy',
 })

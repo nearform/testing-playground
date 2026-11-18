@@ -7,7 +7,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
-import { useLocale } from '../utils/locale'
+import { useNumberFormat } from '../utils/locale'
 import {
   type VisibleRange,
   columnName,
@@ -18,7 +18,10 @@ import {
   variableRange,
 } from '../utils/virtualList'
 
-const key = (path: string): string => `scenarios.virtualised-list.${path}`
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'virtualised-list'
+
+const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
 export const ROW_COUNT = 10_000
 // Height of the scrolling area of each list and of the grid
@@ -106,11 +109,8 @@ export const cellName = (row: number, column: number): string =>
   `${columnName(column)}${row}`
 
 const useFormatNumber = (): ((value: number) => string) => {
-  const locale = useLocale()
-  return useMemo(() => {
-    const formatter = new Intl.NumberFormat(locale)
-    return (value: number) => formatter.format(value)
-  }, [locale])
+  const formatter = useNumberFormat()
+  return useMemo(() => (value: number) => formatter.format(value), [formatter])
 }
 
 const range = (start: number, end: number): number[] =>
@@ -688,6 +688,6 @@ const VirtualisedList = (): JSX.Element => {
 }
 
 export default defineScenario(VirtualisedList, {
-  slug: 'virtualised-list',
+  slug: SLUG,
   difficulty: 'hard',
 })

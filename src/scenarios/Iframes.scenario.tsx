@@ -12,6 +12,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'iframes'
+
 // Page styles (Tailwind/Quantum) live in the page's document and do not reach
 // into a frame's document, so each frame gets a stylesheet of its own. Its
 // colours are still Quantum's, copied in from FRAME_THEME by FrameHost.
@@ -165,7 +168,7 @@ const FrameForm = ({ onSend }: FrameFormProps): JSX.Element => {
       }}
     >
       <label className='label' htmlFor='frame-name-input'>
-        {t('scenarios.iframes.form.label')}
+        {t(`scenarios.${SLUG}.form.label`)}
       </label>
       <div className='row'>
         <input
@@ -178,11 +181,11 @@ const FrameForm = ({ onSend }: FrameFormProps): JSX.Element => {
           }}
         />
         <button type='submit' data-testid='frame-send-button'>
-          {t('scenarios.iframes.form.button')}
+          {t(`scenarios.${SLUG}.form.button`)}
         </button>
       </div>
       <p className='output error' role='alert' data-testid='frame-form-error'>
-        {error ? t('scenarios.iframes.form.error') : ''}
+        {error ? t(`scenarios.${SLUG}.form.error`) : ''}
       </p>
     </form>
   )
@@ -195,7 +198,7 @@ const InnerCounter = (): JSX.Element => {
   return (
     <>
       <span className='label' data-testid='inner-frame-text'>
-        {t('scenarios.iframes.nested.inner-text')}
+        {t(`scenarios.${SLUG}.nested.inner-text`)}
       </span>
       <div className='row'>
         <button
@@ -205,7 +208,7 @@ const InnerCounter = (): JSX.Element => {
             setCount((value) => value + 1)
           }}
         >
-          {t('scenarios.iframes.nested.button')}
+          {t(`scenarios.${SLUG}.nested.button`)}
         </button>
         <span
           className='count'
@@ -253,7 +256,7 @@ const RichTextEditor = (): JSX.Element => {
       readContent(body)
     })
     const paragraph = frameDocument.createElement('p')
-    paragraph.textContent = t('scenarios.iframes.editor.initial')
+    paragraph.textContent = t(`scenarios.${SLUG}.editor.initial`)
     body.replaceChildren(paragraph)
     readContent(body)
     setEditorDocument(frameDocument)
@@ -265,7 +268,7 @@ const RichTextEditor = (): JSX.Element => {
   useEffect(() => {
     editorDocument?.body.setAttribute(
       'aria-label',
-      t('scenarios.iframes.editor.label'),
+      t(`scenarios.${SLUG}.editor.label`),
     )
   }, [editorDocument, t])
 
@@ -287,7 +290,7 @@ const RichTextEditor = (): JSX.Element => {
     <div className='flex flex-col gap-3'>
       <div
         role='toolbar'
-        aria-label={t('scenarios.iframes.editor.toolbar')}
+        aria-label={t(`scenarios.${SLUG}.editor.toolbar`)}
         className='flex flex-wrap gap-2'
       >
         {EDITOR_COMMANDS.map((command) => (
@@ -305,7 +308,7 @@ const RichTextEditor = (): JSX.Element => {
             }}
             data-testid={`editor-${command}`}
           >
-            {t(`scenarios.iframes.editor.${command}`)}
+            {t(`scenarios.${SLUG}.editor.${command}`)}
           </Button>
         ))}
         <Button
@@ -315,24 +318,24 @@ const RichTextEditor = (): JSX.Element => {
           onClick={clear}
           data-testid='editor-clear'
         >
-          {t('scenarios.iframes.editor.clear')}
+          {t(`scenarios.${SLUG}.editor.clear`)}
         </Button>
       </div>
       <iframe
         ref={frameRef}
         id='editor-frame'
         name='editor-frame'
-        title={t('scenarios.iframes.editor.frame-title')}
+        title={t(`scenarios.${SLUG}.editor.frame-title`)}
         srcDoc={EMPTY_FRAME_DOCUMENT}
         onLoad={handleLoad}
         className={`h-48 ${FRAME_CLASSES}`}
         data-testid='editor-frame'
       />
       <p className='text-sm' aria-live='polite' data-testid='editor-word-count'>
-        {t('scenarios.iframes.editor.words', { count: words })}
+        {t(`scenarios.${SLUG}.editor.words`, { count: words })}
       </p>
       <div className='flex flex-col gap-1'>
-        <span className='text-sm'>{t('scenarios.iframes.editor.html')}</span>
+        <span className='text-sm'>{t(`scenarios.${SLUG}.editor.html`)}</span>
         <pre
           className='overflow-x-auto rounded-sm border-2 border-border p-2 text-sm whitespace-pre-wrap dark:border-border-dark'
           data-testid='editor-html'
@@ -351,19 +354,19 @@ const Iframes = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.iframes.title')}
-        description={t('scenarios.iframes.description')}
-        information={translateInformation(t, 'scenarios.iframes.information')}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${FRAME_THEME}`}>
           <Section
             testId='form-section'
-            title={t('scenarios.iframes.form.title')}
-            description={t('scenarios.iframes.form.description')}
+            title={t(`scenarios.${SLUG}.form.title`)}
+            description={t(`scenarios.${SLUG}.form.description`)}
           >
             <FrameHost
               name='form-frame'
-              title={t('scenarios.iframes.form.frame-title')}
+              title={t(`scenarios.${SLUG}.form.frame-title`)}
               className={`h-40 ${FRAME_CLASSES}`}
               styles={FRAME_STYLES}
             >
@@ -375,28 +378,28 @@ const Iframes = (): JSX.Element => {
             </FrameHost>
             <p className='mt-2' role='status' data-testid='frame-message'>
               {message === null
-                ? t('scenarios.iframes.form.no-message')
-                : t('scenarios.iframes.form.message', { name: message })}
+                ? t(`scenarios.${SLUG}.form.no-message`)
+                : t(`scenarios.${SLUG}.form.message`, { name: message })}
             </p>
           </Section>
 
           <Section
             testId='nested-section'
-            title={t('scenarios.iframes.nested.title')}
-            description={t('scenarios.iframes.nested.description')}
+            title={t(`scenarios.${SLUG}.nested.title`)}
+            description={t(`scenarios.${SLUG}.nested.description`)}
           >
             <FrameHost
               name='outer-frame'
-              title={t('scenarios.iframes.nested.outer-title')}
+              title={t(`scenarios.${SLUG}.nested.outer-title`)}
               className={`h-48 ${FRAME_CLASSES}`}
               styles={FRAME_STYLES}
             >
               <span className='label' data-testid='outer-frame-text'>
-                {t('scenarios.iframes.nested.outer-text')}
+                {t(`scenarios.${SLUG}.nested.outer-text`)}
               </span>
               <FrameHost
                 name='inner-frame'
-                title={t('scenarios.iframes.nested.inner-title')}
+                title={t(`scenarios.${SLUG}.nested.inner-title`)}
                 styles={FRAME_STYLES}
               >
                 <InnerCounter />
@@ -407,8 +410,8 @@ const Iframes = (): JSX.Element => {
           <div className='md:col-span-2'>
             <Section
               testId='editor-section'
-              title={t('scenarios.iframes.editor.title')}
-              description={t('scenarios.iframes.editor.description')}
+              title={t(`scenarios.${SLUG}.editor.title`)}
+              description={t(`scenarios.${SLUG}.editor.description`)}
             >
               <RichTextEditor />
             </Section>
@@ -420,6 +423,6 @@ const Iframes = (): JSX.Element => {
 }
 
 export default defineScenario(Iframes, {
-  slug: 'iframes',
+  slug: SLUG,
   difficulty: 'hard',
 })

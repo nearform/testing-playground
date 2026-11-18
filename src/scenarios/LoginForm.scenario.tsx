@@ -8,6 +8,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'login-form'
+
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
 
@@ -37,7 +40,7 @@ const LoginForm = (): JSX.Element => {
       localStorage.setItem('isLoggedIn', JSON.stringify(true))
     } else {
       // Set error message, mark as not logged in, and clear localStorage
-      setError(t('scenarios.login-form.invalid-credentials'))
+      setError(t(`scenarios.${SLUG}.invalid-credentials`))
       setLoggedIn(false)
       localStorage.removeItem('username')
       localStorage.removeItem('isLoggedIn')
@@ -57,19 +60,16 @@ const LoginForm = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.login-form.title')}
-        description={t('scenarios.login-form.description')}
-        information={translateInformation(
-          t,
-          'scenarios.login-form.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='mx-auto flex max-w-xl flex-col items-center justify-center gap-4'>
           {!isLoggedIn && (
             <>
               <div className='w-full'>
                 <Input
-                  labelText={t('scenarios.login-form.username')}
+                  labelText={t(`scenarios.${SLUG}.username`)}
                   variant='primary'
                   type='text'
                   value={username}
@@ -85,7 +85,7 @@ const LoginForm = (): JSX.Element => {
               </div>
               <div className='w-full'>
                 <Input
-                  labelText={t('scenarios.login-form.password')}
+                  labelText={t(`scenarios.${SLUG}.password`)}
                   variant='primary'
                   type='password'
                   value={password}
@@ -114,21 +114,21 @@ const LoginForm = (): JSX.Element => {
                 onClick={handleLogin}
                 data-testid='login-button'
               >
-                {t('scenarios.login-form.login-button')}
+                {t(`scenarios.${SLUG}.login-button`)}
               </Button>
             </>
           )}
           {isLoggedIn && (
             <>
               <Alert severity='success' data-testid='logged-in-success'>
-                {t('scenarios.login-form.logged-in-message')}
+                {t(`scenarios.${SLUG}.logged-in-message`)}
               </Alert>
               <Button
                 variant='secondary'
                 onClick={handleLogout}
                 data-testid='logout-button'
               >
-                {t('scenarios.login-form.logout-button')}
+                {t(`scenarios.${SLUG}.logout-button`)}
               </Button>
             </>
           )}
@@ -139,6 +139,6 @@ const LoginForm = (): JSX.Element => {
 }
 
 export default defineScenario(LoginForm, {
-  slug: 'login-form',
+  slug: SLUG,
   difficulty: 'easy',
 })

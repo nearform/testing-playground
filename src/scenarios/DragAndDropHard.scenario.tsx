@@ -6,6 +6,9 @@ import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
 
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'drag-and-drop-hard'
+
 interface Shape {
   id: number
   shape: 'circle' | 'square'
@@ -123,12 +126,9 @@ const DragAndDropHard = (): JSX.Element => {
   return (
     <Layout>
       <PageSetup
-        title={t('scenarios.drag-and-drop-hard.title')}
-        description={t('scenarios.drag-and-drop-hard.description')}
-        information={translateInformation(
-          t,
-          'scenarios.drag-and-drop-hard.information',
-        )}
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
       >
         <div className='mx-auto max-w-6xl'>
           <div className='flex flex-wrap items-center justify-center'>
@@ -155,8 +155,7 @@ const DragAndDropHard = (): JSX.Element => {
             />
           </div>
           <div className='mt-4 text-center' data-testid='total-count'>
-            {t('scenarios.drag-and-drop-hard.total-correct')}:{' '}
-            {totalCorrectCount}
+            {t(`scenarios.${SLUG}.total-correct`)}: {totalCorrectCount}
           </div>
         </div>
       </PageSetup>
@@ -165,6 +164,6 @@ const DragAndDropHard = (): JSX.Element => {
 }
 
 export default defineScenario(DragAndDropHard, {
-  slug: 'drag-and-drop-hard',
+  slug: SLUG,
   difficulty: 'hard',
 })
