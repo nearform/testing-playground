@@ -26,7 +26,8 @@ const LoginForm = (): JSX.Element => {
 
     if (storedUsername != null && storedLoggedIn != null) {
       setUsername(storedUsername)
-      setLoggedIn(JSON.parse(storedLoggedIn))
+      // Compared rather than parsed, so an unexpected value cannot throw
+      setLoggedIn(storedLoggedIn === 'true')
     }
   }, [])
 

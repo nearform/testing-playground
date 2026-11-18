@@ -17,13 +17,26 @@ interface InitialState {
   nextIndex: number
 }
 
+// The buttons saved in sessionStorage, or none when nothing valid is saved
+// there (a missing, malformed or foreign value must not stop the page loading)
+const readStoredElements = (): number[] => {
+  const stored = sessionStorage.getItem('elements')
+  if (stored === null) return []
+  try {
+    const parsed: unknown = JSON.parse(stored)
+    return Array.isArray(parsed) && parsed.every(Number.isInteger)
+      ? (parsed as number[])
+      : []
+  } catch {
+    return []
+  }
+}
+
 // The buttons saved in sessionStorage or, when there are none and the URL has
 // ?initialElements=N, buttons 1 to N. Worked out once, as the page loads, so
 // emptying the list later does not bring the URL's buttons back.
 export const loadInitialState = (search: string): InitialState => {
-  const storedElements = sessionStorage.getItem('elements')
-  const elements: number[] =
-    storedElements !== null ? JSON.parse(storedElements) : []
+  const elements = readStoredElements()
 
   if (elements.length > 0) {
     // Never reuse a saved button's number, even if the saved index is stale
@@ -86,7 +99,9 @@ const AddRemove = (): JSX.Element => {
   }
 
   const clearStorage = (): void => {
-    sessionStorage.clear()
+    // Only this scenario's keys: other scenarios keep their session data
+    sessionStorage.removeItem('elements')
+    sessionStorage.removeItem('nextIndex')
     setElements([]) // Clear elements in state as well
     setNextIndex(0)
   }

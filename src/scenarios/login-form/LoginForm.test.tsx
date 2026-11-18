@@ -100,4 +100,14 @@ describe('LoginForm component', () => {
     expect(screen.queryByTestId('logged-in-success')).toBeNull()
     expect(screen.queryByTestId('logout-button')).toBeNull()
   })
+
+  it('shows the login form when the saved login state is not valid JSON', () => {
+    localStorage.setItem('username', 'admin')
+    localStorage.setItem('isLoggedIn', 'yes')
+
+    TestRenderer(<LoginForm />)
+
+    expect(screen.getByTestId('login-button')).toBeInTheDocument()
+    expect(screen.queryByTestId('logout-button')).toBeNull()
+  })
 })
