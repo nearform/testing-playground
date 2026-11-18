@@ -1,0 +1,43 @@
+{
+  "title": "Seletor de data",
+  "description": "Um seletor de data com calendário personalizado: datas simples, dias desativados, um período e um campo em que se pode digitar ou escolher a data.",
+  "iso-value": "Valor (ISO):",
+  "clear": "Limpar",
+  "calendar": {
+    "previous-month": "Mês anterior",
+    "next-month": "Próximo mês",
+    "month": "Mês",
+    "year": "Ano"
+  },
+  "appointment": {
+    "title": "Consulta",
+    "instructions": "Marque um dia útil a partir de hoje. Fins de semana e dias passados não podem ser escolhidos.",
+    "label": "Data da consulta",
+    "placeholder": "Escolha uma data",
+    "calendar": "Escolha a data da consulta"
+  },
+  "trip": {
+    "title": "Viagem",
+    "instructions": "Escolha o primeiro e depois o último dia da sua viagem, a partir de hoje.",
+    "label": "Datas da viagem",
+    "placeholder": "Escolha as datas",
+    "calendar": "Escolha as datas da viagem",
+    "pick-start": "Escolha o primeiro dia",
+    "pick-end": "Escolha o último dia",
+    "start": "Início (ISO):",
+    "end": "Fim (ISO):"
+  },
+  "birth-date": {
+    "title": "Data de nascimento",
+    "instructions": "Digite a data no formato {{format}} e pressione Enter, ou escolha-a no calendário.",
+    "label": "Data de nascimento",
+    "format": "DD/MM/AAAA",
+    "open-calendar": "Escolher data de nascimento",
+    "calendar": "Escolher data de nascimento",
+    "errors": {
+      "invalid": "Digite uma data válida no formato {{format}}",
+      "future": "A data de nascimento não pode estar no futuro",
+      "too-early": "A data de nascimento não pode ser anterior a {{year}}"
+    }
+  }
+}

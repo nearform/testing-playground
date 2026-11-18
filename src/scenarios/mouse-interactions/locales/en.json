@@ -1,0 +1,65 @@
+{
+  "title": "Mouse Interactions",
+  "description": "Double-click, right-click, click and hold, and click with different mouse buttons and modifier keys.",
+  "double-click": {
+    "title": "Double-click",
+    "instructions": "Only a double-click counts here: single clicks are ignored.",
+    "label": "Double-click me",
+    "count": "Double-clicks: {{count}}"
+  },
+  "context-menu": {
+    "title": "Context menu",
+    "instructions": "Right-click the note to open its menu. The browser's own menu does not appear.",
+    "note": "Remember to water the plants",
+    "pinned": "Pinned",
+    "highlighted": "Highlighted",
+    "menu-label": "Note actions",
+    "actions": {
+      "pin": "Pin",
+      "unpin": "Unpin",
+      "highlight": "Highlight",
+      "unhighlight": "Remove highlight",
+      "delete": "Delete"
+    },
+    "deleted": "The note has been deleted.",
+    "restore": "Restore note"
+  },
+  "hold": {
+    "title": "Click and hold",
+    "instructions": "Press and hold the button for {{seconds}} second to confirm. Letting go or moving off it sooner does not count.",
+    "label": "Hold to confirm",
+    "progress": "Hold progress",
+    "state": {
+      "idle": "Not confirmed",
+      "holding": "Keep holding…",
+      "confirmed": "Confirmed",
+      "released-early": "Released too early, try again"
+    }
+  },
+  "buttons": {
+    "title": "Mouse buttons and modifiers",
+    "instructions": "Click the box with any mouse button, holding Shift, Control, Alt or Meta if you like.",
+    "label": "Click me with any button",
+    "none": "Not clicked yet",
+    "button": "Button",
+    "modifiers": "Held with",
+    "no-modifiers": "Nothing",
+    "names": {
+      "left": "Left",
+      "middle": "Middle",
+      "right": "Right",
+      "back": "Back",
+      "forward": "Forward"
+    }
+  },
+  "result": {
+    "title": "Last interaction",
+    "none": "Nothing yet",
+    "double-click": "Double-clicked the target",
+    "context-menu": "Chose “{{action}}” from the context menu",
+    "hold-confirmed": "Held the button long enough to confirm",
+    "hold-early": "Let go of the hold button too early",
+    "button": "{{button}} button click",
+    "button-with": "{{button}} button click with {{modifiers}}"
+  }
+}

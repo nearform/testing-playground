@@ -1,0 +1,32 @@
+{
+  "title": "Key Presses",
+  "description": "Interact with the page by pressing keys on the keyboard.",
+  "reader": {
+    "title": "Key reader",
+    "label": "Press any key in this box",
+    "none": "No key pressed yet",
+    "pressed": "You pressed: {{key}}",
+    "key": "Key",
+    "code": "Code",
+    "modifiers": "Held with",
+    "no-modifiers": "Nothing",
+    "history": "Recent keys:",
+    "clear": "Clear"
+  },
+  "counter": {
+    "title": "Counter",
+    "label": "Counter",
+    "instructions": "Focus the counter, then use the arrow keys to change it. Hold Shift to move in steps of 10. Home and End jump to 0 and 100, and Escape resets it to 50."
+  },
+  "hold": {
+    "title": "Hold to confirm",
+    "label": "Hold Space to confirm",
+    "instructions": "Focus the box below and hold Space down for {{seconds}} second to confirm.",
+    "state": {
+      "idle": "Not confirmed",
+      "holding": "Keep holding…",
+      "confirmed": "Confirmed",
+      "released-early": "Released too early, try again"
+    }
+  }
+}

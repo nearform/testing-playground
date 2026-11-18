@@ -1,0 +1,54 @@
+{
+  "title": "Paginated Table",
+  "description": "Find invoices across the pages of a table with search, filters, row selection and a bulk action.",
+  "filters": {
+    "search": "Search",
+    "search-placeholder": "Invoice number or customer",
+    "status": "Status",
+    "all-statuses": "All statuses",
+    "from": "Issued from",
+    "to": "Issued to"
+  },
+  "statuses": {
+    "paid": "Paid",
+    "pending": "Pending",
+    "overdue": "Overdue",
+    "cancelled": "Cancelled"
+  },
+  "columns": {
+    "id": "Invoice",
+    "customer": "Customer",
+    "issued": "Issued",
+    "status": "Status",
+    "amount": "Amount"
+  },
+  "selection": {
+    "page": "Select all invoices on this page",
+    "row": "Select {{id}}",
+    "count_one": "{{count}} invoice selected",
+    "count_other": "{{count}} invoices selected",
+    "mark-paid": "Mark as paid",
+    "clear": "Clear selection",
+    "marked_one": "{{count}} invoice marked as paid",
+    "marked_other": "{{count}} invoices marked as paid"
+  },
+  "loading": "Loading invoices",
+  "empty": {
+    "title": "No invoices match your search",
+    "hint": "Try a different search, or change or clear the filters.",
+    "clear": "Clear filters"
+  },
+  "summary": {
+    "showing": "Showing {{start}}–{{end}} of {{total}}",
+    "none": "No invoices to show"
+  },
+  "page-size": "Rows per page",
+  "pagination": {
+    "label": "Pagination",
+    "first": "First",
+    "previous": "Previous",
+    "next": "Next",
+    "last": "Last",
+    "page": "Page {{page}}"
+  }
+}

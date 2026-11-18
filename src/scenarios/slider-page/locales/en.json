@@ -1,0 +1,8 @@
+{
+  "title": "Sliders",
+  "description": "Set values with a single slider, a two-handle range slider and a slider tied to a number box.",
+  "basic-slider": "Basic Slider",
+  "range-slider": "Slider with Range",
+  "slider-with-input": "Slider with input",
+  "value": "Value"
+}

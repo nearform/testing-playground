@@ -1,0 +1,42 @@
+{
+  "title": "Listas suspensas",
+  "description": "Escolha opções em um select nativo, em uma seleção múltipla e em uma lista suspensa personalizada.",
+  "native": {
+    "title": "Select nativo",
+    "label": "Fruta",
+    "placeholder": "Escolha uma fruta"
+  },
+  "multi": {
+    "title": "Seleção múltipla nativa",
+    "label": "Cores"
+  },
+  "custom": {
+    "title": "Lista suspensa personalizada",
+    "label": "País",
+    "placeholder": "Escolha um país"
+  },
+  "fruits": {
+    "apple": "Maçã",
+    "banana": "Banana",
+    "cherry": "Cereja",
+    "durian": "Durião (esgotado)"
+  },
+  "colours": {
+    "red": "Vermelho",
+    "green": "Verde",
+    "blue": "Azul",
+    "yellow": "Amarelo",
+    "purple": "Roxo"
+  },
+  "countries": {
+    "brazil": "Brasil",
+    "france": "França",
+    "ireland": "Irlanda",
+    "portugal": "Portugal (indisponível)",
+    "united-kingdom": "Reino Unido"
+  },
+  "result": {
+    "title": "Selecionado",
+    "none": "Nada selecionado"
+  }
+}

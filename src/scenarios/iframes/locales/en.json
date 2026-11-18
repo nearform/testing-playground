@@ -1,0 +1,38 @@
+{
+  "title": "IFrames",
+  "description": "Forms, nested frames and a rich text editor that live inside iframes, so you have to switch into a frame to reach them.",
+  "form": {
+    "title": "Form in a frame",
+    "description": "Send a name from a form inside a frame to the page around it.",
+    "frame-title": "Form frame",
+    "label": "Your name",
+    "button": "Send",
+    "error": "Please enter a name",
+    "no-message": "No message from the frame yet",
+    "message": "The frame says: Hello, {{name}}!"
+  },
+  "nested": {
+    "title": "Nested frames",
+    "description": "A counter inside a frame that is itself inside another frame.",
+    "outer-title": "Outer frame",
+    "inner-title": "Inner frame",
+    "outer-text": "Outer frame",
+    "inner-text": "Inner frame",
+    "button": "Add one"
+  },
+  "editor": {
+    "title": "Rich text editor",
+    "description": "Type in the editor's frame, then format the selected text with the toolbar outside it.",
+    "frame-title": "Rich text editor",
+    "label": "Editor content",
+    "toolbar": "Formatting",
+    "initial": "Select some of this text and make it bold.",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "clear": "Clear",
+    "words_one": "{{count}} word",
+    "words_other": "{{count}} words",
+    "html": "HTML"
+  }
+}

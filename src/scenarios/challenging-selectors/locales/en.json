@@ -1,0 +1,83 @@
+{
+  "title": "Challenging Selectors",
+  "description": "Random IDs, identical buttons, split text and hidden duplicates that break naïve selectors.",
+  "result": {
+    "title": "Last action",
+    "none": "Nothing yet",
+    "empty": "(empty)",
+    "saved-name": "Saved display name “{{name}}”",
+    "reset-name": "Cleared the display name",
+    "editing": "Editing {{name}}",
+    "deleted": "Deleted {{name}}",
+    "restored": "Restored every team member",
+    "marked-read": "Marked all messages as read",
+    "saved-addresses": "Saved delivery address {{deliveryCity}}, {{deliveryPostcode}} and billing address {{billingCity}}, {{billingPostcode}}",
+    "subscribed-labelled": "Subscribed {{email}} with the labelled form",
+    "subscribed-unlabelled": "Subscribed {{email}} with the unlabelled form",
+    "checkout": "Checked out with the {{variant}} button",
+    "saved-for-later": "Saved the basket for later"
+  },
+  "random": {
+    "title": "Randomised IDs and classes",
+    "instructions": "The IDs and class names in this form change every time the page loads.",
+    "label": "Display name",
+    "save": "Save",
+    "reset": "Clear"
+  },
+  "rows": {
+    "title": "Identical buttons in every row",
+    "instructions": "Each row has the same Edit and Delete buttons, and the rows are shuffled on every load.",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "actions": "Actions"
+    },
+    "roles": {
+      "admin": "Admin",
+      "editor": "Editor",
+      "viewer": "Viewer"
+    },
+    "edit": "Edit",
+    "delete": "Delete",
+    "restore": "Restore all members"
+  },
+  "split": {
+    "title": "Text split across elements",
+    "instructions": "These sentences are made of several elements, so no single element holds the whole text.",
+    "hello": "Hello",
+    "world": "world",
+    "unread": "Hi <name>Ada</name>, you have <count>{{count}}</count> unread messages.",
+    "mark-read": "<part>Mark</part> <part>all</part> as <strong>read</strong>"
+  },
+  "addresses": {
+    "title": "Fields told apart by nearby text",
+    "instructions": "Both blocks have the same fields, and their labels are not linked to the inputs.",
+    "delivery": "Delivery address",
+    "billing": "Billing address",
+    "city": "City",
+    "postcode": "Postcode",
+    "save": "Save addresses"
+  },
+  "compare": {
+    "title": "Labelled and unlabelled forms",
+    "instructions": "The same newsletter form twice: once with accessible names and test IDs, once without.",
+    "labelled-title": "Labelled form",
+    "unlabelled-title": "Unlabelled form",
+    "email": "Email address",
+    "email-placeholder": "Email address",
+    "subscribe": "Subscribe"
+  },
+  "duplicates": {
+    "title": "Hidden duplicates",
+    "instructions": "The Checkout button is in the page more than once, but only one copy is visible at a time.",
+    "checkout": "Checkout",
+    "more": "More options",
+    "save-for-later": "Save for later",
+    "variants": {
+      "mobile": "mobile",
+      "desktop": "desktop",
+      "menu": "More options"
+    }
+  }
+}

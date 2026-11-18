@@ -1,0 +1,35 @@
+{
+  "title": "Shadow DOM",
+  "description": "Elements hidden inside open, nested and closed shadow roots, so you can check how your tools reach into the shadow DOM.",
+  "open": {
+    "title": "Open shadow root",
+    "description": "A small form rendered inside an open shadow root.",
+    "label": "Your name",
+    "button": "Greet",
+    "greeting": "Hello, {{name}}!",
+    "error": "Please enter a name"
+  },
+  "nested": {
+    "title": "Nested shadow roots",
+    "description": "A counter inside a shadow root that is itself inside another shadow root.",
+    "outer-text": "Outer shadow root",
+    "inner-text": "Inner shadow root",
+    "increment": "Increment",
+    "decrement": "Decrement"
+  },
+  "slot": {
+    "title": "Slotted content",
+    "description": "Light DOM content projected into a shadow root through a slot.",
+    "shadow-text": "Shadow root with a slot",
+    "button": "Click me",
+    "status_one": "Slotted button clicked {{count}} time",
+    "status_other": "Slotted button clicked {{count}} times"
+  },
+  "closed": {
+    "title": "Closed shadow root",
+    "description": "A button inside a closed shadow root. Only the result below is in the light DOM.",
+    "button": "Hidden button",
+    "status_one": "Hidden button clicked {{count}} time",
+    "status_other": "Hidden button clicked {{count}} times"
+  }
+}

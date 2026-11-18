@@ -1,0 +1,35 @@
+{
+  "title": "Shadow DOM",
+  "description": "Elementos escondidos dentro de shadow roots abertas, aninhadas e fechadas, para verificar como suas ferramentas acessam o shadow DOM.",
+  "open": {
+    "title": "Shadow root aberta",
+    "description": "Um pequeno formulário renderizado dentro de uma shadow root aberta.",
+    "label": "Seu nome",
+    "button": "Cumprimentar",
+    "greeting": "Olá, {{name}}!",
+    "error": "Por favor, informe um nome"
+  },
+  "nested": {
+    "title": "Shadow roots aninhadas",
+    "description": "Um contador dentro de uma shadow root que está dentro de outra shadow root.",
+    "outer-text": "Shadow root externa",
+    "inner-text": "Shadow root interna",
+    "increment": "Incrementar",
+    "decrement": "Decrementar"
+  },
+  "slot": {
+    "title": "Conteúdo em slot",
+    "description": "Conteúdo do light DOM projetado em uma shadow root por meio de um slot.",
+    "shadow-text": "Shadow root com um slot",
+    "button": "Clique aqui",
+    "status_one": "Botão do slot clicado {{count}} vez",
+    "status_other": "Botão do slot clicado {{count}} vezes"
+  },
+  "closed": {
+    "title": "Shadow root fechada",
+    "description": "Um botão dentro de uma shadow root fechada. Apenas o resultado abaixo está no light DOM.",
+    "button": "Botão escondido",
+    "status_one": "Botão escondido clicado {{count}} vez",
+    "status_other": "Botão escondido clicado {{count}} vezes"
+  }
+}

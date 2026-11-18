@@ -1,0 +1,44 @@
+{
+  "title": "Geolocation",
+  "description": "Find the browser's location, then follow it as it moves.",
+  "button": {
+    "get-location": "Get my location",
+    "start-watching": "Start watching",
+    "stop-watching": "Stop watching"
+  },
+  "status": {
+    "title": "Status",
+    "idle": "Your location has not been requested yet",
+    "locating": "Finding your location...",
+    "located": "Location found"
+  },
+  "errors": {
+    "permission-denied": "Permission to access your location was denied",
+    "position-unavailable": "Your location could not be determined",
+    "timeout": "Finding your location took too long",
+    "unsupported": "Geolocation is not supported by this browser",
+    "unknown": "An unknown error occurred while finding your location"
+  },
+  "watch-updates_one": "Watching your location: {{count}} update received",
+  "watch-updates_other": "Watching your location: {{count}} updates received",
+  "details": {
+    "title": "Your location",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "accuracy": "Accuracy",
+    "nearest-city": "Nearest city",
+    "distance": "Distance to city",
+    "metres": "{{value}} m",
+    "kilometres": "{{value}} km"
+  },
+  "cities": {
+    "london": "London",
+    "dublin": "Dublin",
+    "paris": "Paris",
+    "lisbon": "Lisbon",
+    "new-york": "New York",
+    "sao-paulo": "São Paulo",
+    "tokyo": "Tokyo",
+    "sydney": "Sydney"
+  }
+}

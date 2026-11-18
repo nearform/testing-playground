@@ -1,0 +1,56 @@
+{
+  "title": "Canvas e SVG",
+  "description": "Um bloco de desenho, um gráfico de barras e um jogo de alvo desenhados em canvas, além de um mapa SVG com dicas ao passar o mouse, cujo conteúdo não pode ser encontrado com as consultas normais ao DOM.",
+  "pad": {
+    "title": "Bloco de desenho",
+    "intro": "Mantenha o botão do mouse pressionado e mova para desenhar. Cada linha desenhada é um traço.",
+    "label": "Bloco de desenho",
+    "clear": "Limpar",
+    "strokes_one": "{{count}} traço",
+    "strokes_other": "{{count}} traços",
+    "points_one": "{{count}} ponto",
+    "points_other": "{{count}} pontos"
+  },
+  "chart": {
+    "title": "Gráfico de pedidos",
+    "intro": "Clique em uma barra para ver quantos pedidos houve naquele mês.",
+    "label": "Gráfico de barras de pedidos por mês, de janeiro a junho",
+    "months": {
+      "jan": "Jan",
+      "feb": "Fev",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "Mai",
+      "jun": "Jun"
+    },
+    "value_one": "{{month}}: {{count}} pedido",
+    "value_other": "{{month}}: {{count}} pedidos",
+    "none": "Clique em uma barra para ver o valor.",
+    "missed": "Nenhuma barra foi clicada."
+  },
+  "game": {
+    "title": "Tiro ao alvo",
+    "intro": "Clique no alvo. Cada vez que você acerta, ele muda de lugar.",
+    "label": "Jogo de alvo",
+    "reset": "Recomeçar",
+    "score": "Acertos: {{hits}} de {{total}}",
+    "misses_one": "{{count}} erro",
+    "misses_other": "{{count}} erros",
+    "done": "Todos os alvos acertados!"
+  },
+  "map": {
+    "title": "Mapa dos bairros",
+    "intro": "Aponte para um bairro para ver a população e clique para selecioná-lo.",
+    "label": "Mapa dos bairros da ilha",
+    "regions": {
+      "northfield": "Campo Norte",
+      "westmoor": "Charneca Oeste",
+      "old-town": "Cidade Velha",
+      "harbour": "Porto",
+      "eastvale": "Vale Leste"
+    },
+    "population": "População: {{population}}",
+    "selected": "Selecionado: {{name}} (população {{population}})",
+    "none": "Nenhum bairro selecionado."
+  }
+}

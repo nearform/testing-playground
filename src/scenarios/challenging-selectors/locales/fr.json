@@ -1,0 +1,83 @@
+{
+  "title": "Sélecteurs difficiles",
+  "description": "Des ID aléatoires, des boutons identiques, du texte découpé et des doublons cachés qui font échouer les sélecteurs naïfs.",
+  "result": {
+    "title": "Dernière action",
+    "none": "Rien pour l’instant",
+    "empty": "(vide)",
+    "saved-name": "Nom d’affichage « {{name}} » enregistré",
+    "reset-name": "Nom d’affichage effacé",
+    "editing": "Modification de {{name}}",
+    "deleted": "{{name}} supprimé(e)",
+    "restored": "Tous les membres de l’équipe ont été restaurés",
+    "marked-read": "Tous les messages ont été marqués comme lus",
+    "saved-addresses": "Adresse de livraison {{deliveryCity}}, {{deliveryPostcode}} et adresse de facturation {{billingCity}}, {{billingPostcode}} enregistrées",
+    "subscribed-labelled": "{{email}} inscrit avec le formulaire avec libellés",
+    "subscribed-unlabelled": "{{email}} inscrit avec le formulaire sans libellés",
+    "checkout": "Commande passée avec le bouton {{variant}}",
+    "saved-for-later": "Panier mis de côté"
+  },
+  "random": {
+    "title": "ID et classes aléatoires",
+    "instructions": "Les ID et noms de classe de ce formulaire changent à chaque chargement de la page.",
+    "label": "Nom d’affichage",
+    "save": "Enregistrer",
+    "reset": "Effacer"
+  },
+  "rows": {
+    "title": "Boutons identiques sur chaque ligne",
+    "instructions": "Chaque ligne a les mêmes boutons Modifier et Supprimer, et les lignes sont mélangées à chaque chargement.",
+    "columns": {
+      "name": "Nom",
+      "email": "E-mail",
+      "role": "Rôle",
+      "actions": "Actions"
+    },
+    "roles": {
+      "admin": "Administrateur",
+      "editor": "Éditeur",
+      "viewer": "Lecteur"
+    },
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "restore": "Restaurer tous les membres"
+  },
+  "split": {
+    "title": "Texte découpé en plusieurs éléments",
+    "instructions": "Ces phrases sont faites de plusieurs éléments, donc aucun élément ne contient tout le texte.",
+    "hello": "Bonjour",
+    "world": "le monde",
+    "unread": "Salut <name>Ada</name>, vous avez <count>{{count}}</count> messages non lus.",
+    "mark-read": "<part>Tout</part> <part>marquer</part> comme <strong>lu</strong>"
+  },
+  "addresses": {
+    "title": "Champs distingués par le texte voisin",
+    "instructions": "Les deux blocs ont les mêmes champs, et leurs libellés ne sont pas liés aux champs.",
+    "delivery": "Adresse de livraison",
+    "billing": "Adresse de facturation",
+    "city": "Ville",
+    "postcode": "Code postal",
+    "save": "Enregistrer les adresses"
+  },
+  "compare": {
+    "title": "Formulaires avec et sans libellés",
+    "instructions": "Le même formulaire de newsletter deux fois : une fois avec des noms accessibles et des ID de test, une fois sans.",
+    "labelled-title": "Formulaire avec libellés",
+    "unlabelled-title": "Formulaire sans libellés",
+    "email": "Adresse e-mail",
+    "email-placeholder": "Adresse e-mail",
+    "subscribe": "S’inscrire"
+  },
+  "duplicates": {
+    "title": "Doublons cachés",
+    "instructions": "Le bouton Commander est présent plusieurs fois dans la page, mais une seule copie est visible à la fois.",
+    "checkout": "Commander",
+    "more": "Plus d’options",
+    "save-for-later": "Mettre de côté",
+    "variants": {
+      "mobile": "mobile",
+      "desktop": "bureau",
+      "menu": "Plus d’options"
+    }
+  }
+}

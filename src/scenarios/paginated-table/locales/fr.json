@@ -1,0 +1,54 @@
+{
+  "title": "Tableau paginé",
+  "description": "Retrouvez des factures sur les pages d'un tableau grâce à la recherche, aux filtres, à la sélection de lignes et à une action groupée.",
+  "filters": {
+    "search": "Rechercher",
+    "search-placeholder": "Numéro de facture ou client",
+    "status": "Statut",
+    "all-statuses": "Tous les statuts",
+    "from": "Émise à partir du",
+    "to": "Émise jusqu'au"
+  },
+  "statuses": {
+    "paid": "Payée",
+    "pending": "En attente",
+    "overdue": "En retard",
+    "cancelled": "Annulée"
+  },
+  "columns": {
+    "id": "Facture",
+    "customer": "Client",
+    "issued": "Émise le",
+    "status": "Statut",
+    "amount": "Montant"
+  },
+  "selection": {
+    "page": "Sélectionner toutes les factures de cette page",
+    "row": "Sélectionner {{id}}",
+    "count_one": "{{count}} facture sélectionnée",
+    "count_other": "{{count}} factures sélectionnées",
+    "mark-paid": "Marquer comme payées",
+    "clear": "Effacer la sélection",
+    "marked_one": "{{count}} facture marquée comme payée",
+    "marked_other": "{{count}} factures marquées comme payées"
+  },
+  "loading": "Chargement des factures",
+  "empty": {
+    "title": "Aucune facture ne correspond à votre recherche",
+    "hint": "Essayez une autre recherche, ou modifiez ou effacez les filtres.",
+    "clear": "Effacer les filtres"
+  },
+  "summary": {
+    "showing": "Affichage de {{start}} à {{end}} sur {{total}}",
+    "none": "Aucune facture à afficher"
+  },
+  "page-size": "Lignes par page",
+  "pagination": {
+    "label": "Pagination",
+    "first": "Première",
+    "previous": "Précédente",
+    "next": "Suivante",
+    "last": "Dernière",
+    "page": "Page {{page}}"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "title": "Geolocalização",
+  "description": "Encontre a localização do navegador e acompanhe-a enquanto ela muda.",
+  "button": {
+    "get-location": "Obter minha localização",
+    "start-watching": "Começar a acompanhar",
+    "stop-watching": "Parar de acompanhar"
+  },
+  "status": {
+    "title": "Status",
+    "idle": "Sua localização ainda não foi solicitada",
+    "locating": "Procurando sua localização...",
+    "located": "Localização encontrada"
+  },
+  "errors": {
+    "permission-denied": "A permissão para acessar sua localização foi negada",
+    "position-unavailable": "Não foi possível determinar sua localização",
+    "timeout": "A busca pela sua localização demorou demais",
+    "unsupported": "A geolocalização não é suportada por este navegador",
+    "unknown": "Ocorreu um erro desconhecido ao buscar sua localização"
+  },
+  "watch-updates_one": "Acompanhando sua localização: {{count}} atualização recebida",
+  "watch-updates_other": "Acompanhando sua localização: {{count}} atualizações recebidas",
+  "details": {
+    "title": "Sua localização",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "accuracy": "Precisão",
+    "nearest-city": "Cidade mais próxima",
+    "distance": "Distância até a cidade",
+    "metres": "{{value}} m",
+    "kilometres": "{{value}} km"
+  },
+  "cities": {
+    "london": "Londres",
+    "dublin": "Dublin",
+    "paris": "Paris",
+    "lisbon": "Lisboa",
+    "new-york": "Nova York",
+    "sao-paulo": "São Paulo",
+    "tokyo": "Tóquio",
+    "sydney": "Sydney"
+  }
+}

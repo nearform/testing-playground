@@ -1,0 +1,11 @@
+{
+  "title": "Défilement infini",
+  "description": "Une liste qui charge de nouveaux éléments chaque fois que vous atteignez le bas de la page.",
+  "feed-label": "Fil infini",
+  "count_one": "{{count}} élément affiché",
+  "count_other": "{{count}} éléments affichés",
+  "item-title": "Élément {{number}}",
+  "item-description": "Ceci est le contenu de l'élément {{number}}. Continuez à faire défiler pour en charger davantage.",
+  "batch": "Lot {{batch}}",
+  "loading": "Chargement d'autres éléments..."
+}

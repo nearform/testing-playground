@@ -1,0 +1,42 @@
+{
+  "title": "Listes déroulantes",
+  "description": "Choisissez des options dans un select natif, une sélection multiple et une liste déroulante personnalisée.",
+  "native": {
+    "title": "Select natif",
+    "label": "Fruit",
+    "placeholder": "Choisissez un fruit"
+  },
+  "multi": {
+    "title": "Sélection multiple native",
+    "label": "Couleurs"
+  },
+  "custom": {
+    "title": "Liste déroulante personnalisée",
+    "label": "Pays",
+    "placeholder": "Choisissez un pays"
+  },
+  "fruits": {
+    "apple": "Pomme",
+    "banana": "Banane",
+    "cherry": "Cerise",
+    "durian": "Durian (en rupture de stock)"
+  },
+  "colours": {
+    "red": "Rouge",
+    "green": "Vert",
+    "blue": "Bleu",
+    "yellow": "Jaune",
+    "purple": "Violet"
+  },
+  "countries": {
+    "brazil": "Brésil",
+    "france": "France",
+    "ireland": "Irlande",
+    "portugal": "Portugal (indisponible)",
+    "united-kingdom": "Royaume-Uni"
+  },
+  "result": {
+    "title": "Sélection",
+    "none": "Aucune sélection"
+  }
+}

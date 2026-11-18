@@ -1,0 +1,12 @@
+{
+  "title": "Várias entradas",
+  "description": "Todos os tipos comuns de campos HTML, cada um com uma saída que repete o que você digita para que você possa verificar.",
+  "input": "Entrada",
+  "output": "Saída",
+  "text": "Texto",
+  "password": "Senha",
+  "number": "Número",
+  "date": "Data",
+  "textarea": "Área de Texto",
+  "clear-all": "Limpar Tudo"
+}

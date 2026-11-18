@@ -1,0 +1,12 @@
+{
+  "title": "Various Inputs",
+  "description": "Every common type of HTML input, each with an output that mirrors what you type so you can check it.",
+  "input": "Input",
+  "output": "Output",
+  "text": "Text",
+  "password": "Password",
+  "number": "Number",
+  "date": "Date",
+  "textarea": "TextArea",
+  "clear-all": "Clear All"
+}

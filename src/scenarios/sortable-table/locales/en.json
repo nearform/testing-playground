@@ -1,0 +1,26 @@
+{
+  "title": "Sortable Table",
+  "description": "Sort a table by clicking its column headers.",
+  "columns": {
+    "name": "Name",
+    "department": "Department",
+    "started": "Start date",
+    "projects": "Projects",
+    "salary": "Salary",
+    "email": "Email"
+  },
+  "departments": {
+    "engineering": "Engineering",
+    "design": "Design",
+    "sales": "Sales",
+    "support": "Support",
+    "marketing": "Marketing"
+  },
+  "no-salary": "Contractor",
+  "status": {
+    "unsorted": "Not sorted",
+    "asc": "Sorted by {{column}}, ascending",
+    "desc": "Sorted by {{column}}, descending"
+  },
+  "reset": "Reset sorting"
+}

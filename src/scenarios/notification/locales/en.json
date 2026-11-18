@@ -1,0 +1,17 @@
+{
+  "title": "Notification",
+  "description": "Trigger notifications that show as a popup and as a message on the page, then disappear by themselves.",
+  "generate-notification": "Generate Notification",
+  "type": {
+    "success": "Success",
+    "info": "Info",
+    "warning": "Warning",
+    "error": "Error"
+  },
+  "messages": {
+    "success": "This is a successful notification message",
+    "info": "This is an info notification message",
+    "warning": "This is a warning notification message",
+    "error": "This is an error notification message"
+  }
+}

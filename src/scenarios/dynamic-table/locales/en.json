@@ -1,0 +1,13 @@
+{
+  "title": "Dynamic Table",
+  "description": "Find a process in a table whose rows and values change on every load, and check its CPU against the green bar.",
+  "name": "Name",
+  "cpu": "CPU",
+  "memory": "Memory",
+  "network": "Network",
+  "disk": "Disk",
+  "chrome": "Chrome",
+  "docker": "Docker",
+  "system": "System",
+  "slack": "Slack"
+}

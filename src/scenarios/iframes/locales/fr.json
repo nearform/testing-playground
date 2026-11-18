@@ -1,0 +1,38 @@
+{
+  "title": "IFrames",
+  "description": "Des formulaires, des cadres imbriqués et un éditeur de texte enrichi placés dans des iframes : il faut basculer dans un cadre pour les atteindre.",
+  "form": {
+    "title": "Formulaire dans un cadre",
+    "description": "Envoyez un nom depuis un formulaire dans un cadre vers la page qui l'entoure.",
+    "frame-title": "Cadre du formulaire",
+    "label": "Votre nom",
+    "button": "Envoyer",
+    "error": "Veuillez saisir un nom",
+    "no-message": "Aucun message du cadre pour l'instant",
+    "message": "Le cadre dit : Bonjour, {{name}} !"
+  },
+  "nested": {
+    "title": "Cadres imbriqués",
+    "description": "Un compteur dans un cadre qui se trouve lui-même dans un autre cadre.",
+    "outer-title": "Cadre extérieur",
+    "inner-title": "Cadre intérieur",
+    "outer-text": "Cadre extérieur",
+    "inner-text": "Cadre intérieur",
+    "button": "Ajouter un"
+  },
+  "editor": {
+    "title": "Éditeur de texte enrichi",
+    "description": "Saisissez du texte dans le cadre de l'éditeur, puis mettez en forme la sélection avec la barre d'outils à l'extérieur.",
+    "frame-title": "Éditeur de texte enrichi",
+    "label": "Contenu de l'éditeur",
+    "toolbar": "Mise en forme",
+    "initial": "Sélectionnez une partie de ce texte et mettez-la en gras.",
+    "bold": "Gras",
+    "italic": "Italique",
+    "underline": "Souligné",
+    "clear": "Effacer",
+    "words_one": "{{count}} mot",
+    "words_other": "{{count}} mots",
+    "html": "HTML"
+  }
+}

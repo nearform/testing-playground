@@ -1,0 +1,21 @@
+{
+  "title": "Preenchimento automático",
+  "description": "Escolha um valor entre as sugestões que aparecem enquanto você digita.",
+  "no-matches": "Nenhum resultado",
+  "nothing-selected": "nada",
+  "selected": "Selecionado: {{value}}",
+  "country": {
+    "title": "Países",
+    "label": "País",
+    "placeholder": "Comece a digitar um país"
+  },
+  "city": {
+    "title": "Cidades (servidor lento)",
+    "slow-notice": "As sugestões vêm de um servidor fictício lento, então levam até {{wait}} ms para aparecer depois que você para de digitar.",
+    "label": "Cidade",
+    "placeholder": "Comece a digitar uma cidade",
+    "loading": "Aguardando o servidor…",
+    "too-short_one": "Digite pelo menos {{count}} caractere",
+    "too-short_other": "Digite pelo menos {{count}} caracteres"
+  }
+}

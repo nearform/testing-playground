@@ -1,0 +1,70 @@
+{
+  "title": "Broken Images and Links",
+  "description": "A gallery and a list of links where some work and some do not, including a 404 image, an image with an invalid URL, a lazy-loaded image, missing pages and anchor links.",
+  "nav": {
+    "title": "On this page"
+  },
+  "images": {
+    "title": "Gallery",
+    "explanation": "Two of these images load. One points to a file that does not exist, and one has a URL that cannot be parsed.",
+    "mountain": {
+      "alt": "Mountains under a blue sky",
+      "caption": "Mountains"
+    },
+    "lake": {
+      "alt": "A lake surrounded by grass",
+      "caption": "Lake"
+    },
+    "missing": {
+      "alt": "A sunset over the sea",
+      "caption": "Sunset"
+    },
+    "invalid": {
+      "alt": "A photo from an invalid address",
+      "caption": "Invalid address"
+    },
+    "lazy": {
+      "alt": "A row of pine trees",
+      "caption": "Forest"
+    }
+  },
+  "check": {
+    "button": "Check images",
+    "status": {
+      "loaded": "Loaded",
+      "broken": "Broken",
+      "pending": "Not loaded yet"
+    }
+  },
+  "links": {
+    "title": "Links",
+    "explanation": "Some of these links lead to a page and some lead nowhere.",
+    "kind": {
+      "route": "page in this app",
+      "static": "static page",
+      "external": "external site",
+      "anchor": "section on this page"
+    },
+    "items": {
+      "route": "Cookies and storage scenario",
+      "unknown-route": "Retired scenario",
+      "static": "About the gallery",
+      "missing-static": "Old gallery",
+      "external": "Testing Playground on GitHub",
+      "missing-external": "Missing GitHub page",
+      "anchor-images": "Gallery",
+      "anchor-links": "Links",
+      "anchor-lazy-image": "Lazy-loaded image",
+      "anchor-reviews": "Reviews"
+    }
+  },
+  "snippets": {
+    "title": "Checking in a test",
+    "explanation": "Examples of checking every image and external link on a page."
+  },
+  "lazy": {
+    "title": "Lazy-loaded image",
+    "explanation": "This image has loading=\"lazy\", so the browser only requests it when it is scrolled near the viewport.",
+    "scroll-hint": "Scroll down: there is a lazy-loaded image below."
+  }
+}

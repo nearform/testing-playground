@@ -1,0 +1,10 @@
+{
+  "title": "Formulário de Login",
+  "description": "Um formulário de login típico com nome de usuário e senha.",
+  "logged-in-message": "Você está atualmente logado!",
+  "invalid-credentials": "As credenciais fornecidas são inválidas",
+  "login-button": "Login",
+  "logout-button": "Logout",
+  "username": "Nome de Usuário",
+  "password": "Senha"
+}

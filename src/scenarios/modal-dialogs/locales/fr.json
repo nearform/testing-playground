@@ -1,0 +1,59 @@
+{
+  "title": "Boîtes de dialogue modales",
+  "description": "Ouvrez, utilisez et fermez des boîtes de dialogue dessinées dans la page, dont une qui apparaît d'elle-même au chargement.",
+  "close": "Fermer",
+  "cancel": "Annuler",
+  "basic": {
+    "title": "Modale simple",
+    "open": "Ouvrir la modale",
+    "modal-title": "Bonjour depuis une modale",
+    "modal-body": "Fermez-moi avec le bouton de fermeture, la touche Échap ou un clic à l'extérieur.",
+    "not-closed": "La modale n'a pas encore été fermée",
+    "closed": {
+      "button": "Fermée avec le bouton de fermeture",
+      "escape": "Fermée avec la touche Échap",
+      "backdrop": "Fermée par un clic sur le fond"
+    }
+  },
+  "confirm": {
+    "title": "Confirmer avant de supprimer",
+    "item": "Facture n° {{number}}",
+    "delete": "Supprimer",
+    "delete-item": "Supprimer {{item}}",
+    "modal-title": "Supprimer l'élément ?",
+    "modal-body": "{{item}} sera définitivement supprimée.",
+    "deleted": "{{item}} a été supprimée",
+    "cancelled": "La suppression de {{item}} a été annulée",
+    "empty": "Il ne reste aucun élément",
+    "restore": "Restaurer les éléments"
+  },
+  "form": {
+    "title": "Modale avec un formulaire",
+    "open": "Modifier le profil",
+    "modal-title": "Modifier le profil",
+    "name": "Nom",
+    "email": "E-mail",
+    "name-required": "Le nom est obligatoire",
+    "save": "Enregistrer",
+    "empty": "Aucun profil enregistré pour l'instant",
+    "saved": "Profil enregistré : {{name}} ({{email}})"
+  },
+  "stacked": {
+    "title": "Modales empilées",
+    "open": "Ouvrir la première modale",
+    "first-title": "Première modale",
+    "first-body": "Cette modale peut en ouvrir une autre par-dessus.",
+    "open-second": "Ouvrir la deuxième modale",
+    "second-title": "Deuxième modale",
+    "second-body": "Je suis au-dessus de la première modale. Fermez-moi pour y revenir.",
+    "done": "Terminé"
+  },
+  "entry": {
+    "title": "Modale de bienvenue",
+    "explanation": "Une modale de bienvenue s'ouvre d'elle-même lors de votre première visite sur cette page et la bloque jusqu'à ce que vous la validiez.",
+    "reset": "Afficher à nouveau la modale de bienvenue",
+    "modal-title": "Bienvenue !",
+    "modal-body": "Cette modale s'est ouverte d'elle-même au chargement de la page. Vous devez la valider avant de pouvoir utiliser la page.",
+    "dismiss": "Entrer dans le playground"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Curseurs",
+  "description": "Réglez des valeurs avec un curseur simple, un curseur de plage à deux poignées et un curseur lié à un champ numérique.",
+  "basic-slider": "Curseur de base",
+  "range-slider": "Curseur avec Plage",
+  "slider-with-input": "Curseur avec entrée",
+  "value": "Valeur"
+}

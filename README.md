@@ -17,16 +17,27 @@ npm run lint  # oxlint
 
 ## To add a new scenario
 
-1. Create `MyScenario.scenario.tsx` in the [scenarios](./src/scenarios) folder. Name its slug once, as `const SLUG = 'my-scenario'`, and build its text keys from it.
-2. Export it with its slug and difficulty (`easy`, `medium` or `hard`). The slug is both its URL and the key of its texts in the locale files:
+Each scenario is one folder in [scenarios](./src/scenarios), named after its slug, which holds everything that belongs to it:
+
+```
+src/scenarios/my-scenario/
+  MyScenario.scenario.tsx   the page
+  MyScenario.test.tsx       its tests
+  myHelper.ts               any helpers only this scenario uses, with their tests
+  locales/                  its texts: en.json, fr.json and pt-br.json
+  information/              its information: en.md, fr.md and pt-br.md
+```
+
+1. Create `src/scenarios/my-scenario/MyScenario.scenario.tsx`. Name its slug once, as `const SLUG = 'my-scenario'`, and build its text keys from it. The folder must have the same name as the slug.
+2. Export it with its slug and difficulty (`easy`, `medium` or `hard`). The slug is both its URL and the key of its texts:
    `export default defineScenario(MyScenario, { slug: SLUG, difficulty: 'easy' })`
 3. Add it to the [index](./src/scenarios/Index.tsx) file:
-   `export { default as MyScenario } from './MyScenario.scenario'`
-4. Add its texts under `scenarios.my-scenario` in every locale file in [locales](./src/i18n/locales) (`en`, `fr` and `pt-br`): its `title`, `description` and any on-page text. Write its information in Markdown as `my-scenario.md` in each language's folder in [information](./src/i18n/information) (`en`, `fr` and `pt-br`).
-5. Pass its information to the page with ``information={translateInformation(t, `scenarios.${SLUG}.information`)}`` on `PageSetup`.
-6. Add tests for it in [tests](./src/tests).
+   `export { default as MyScenario } from './my-scenario/MyScenario.scenario'`
+4. Add its texts (`title`, `description` and any on-page text) to `locales/en.json`, `locales/fr.json` and `locales/pt-br.json` in its folder, with the same keys in each. They are read as `scenarios.my-scenario.<key>`.
+5. Write its information in Markdown as `information/en.md`, `information/fr.md` and `information/pt-br.md` in its folder, and pass it to the page with ``information={translateInformation(t, `scenarios.${SLUG}.information`)}`` on `PageSetup`.
+6. Add its tests beside it as `MyScenario.test.tsx`.
 
-All the routes and the cards on the front page are generated from the index, so there is nothing else to register.
+All the routes and the cards on the front page are generated from the index, and the texts and information are found from the folder, so there is nothing else to register. Texts shared by the whole site stay in [locales](./src/i18n/locales).
 
 ### Writing the information
 

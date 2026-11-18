@@ -1,0 +1,43 @@
+{
+  "title": "Sélecteur de date",
+  "description": "Un sélecteur de date avec calendrier personnalisé : dates simples, jours désactivés, une période et un champ où l'on peut saisir ou choisir la date.",
+  "iso-value": "Valeur (ISO) :",
+  "clear": "Effacer",
+  "calendar": {
+    "previous-month": "Mois précédent",
+    "next-month": "Mois suivant",
+    "month": "Mois",
+    "year": "Année"
+  },
+  "appointment": {
+    "title": "Rendez-vous",
+    "instructions": "Réservez un jour de semaine à partir d'aujourd'hui. Les week-ends et les jours passés ne peuvent pas être choisis.",
+    "label": "Date du rendez-vous",
+    "placeholder": "Choisir une date",
+    "calendar": "Choisir la date du rendez-vous"
+  },
+  "trip": {
+    "title": "Voyage",
+    "instructions": "Choisissez le premier puis le dernier jour de votre voyage, à partir d'aujourd'hui.",
+    "label": "Dates du voyage",
+    "placeholder": "Choisir les dates",
+    "calendar": "Choisir les dates du voyage",
+    "pick-start": "Choisissez le premier jour",
+    "pick-end": "Choisissez le dernier jour",
+    "start": "Début (ISO) :",
+    "end": "Fin (ISO) :"
+  },
+  "birth-date": {
+    "title": "Date de naissance",
+    "instructions": "Saisissez la date au format {{format}} et appuyez sur Entrée, ou choisissez-la dans le calendrier.",
+    "label": "Date de naissance",
+    "format": "JJ/MM/AAAA",
+    "open-calendar": "Choisir la date de naissance",
+    "calendar": "Choisir la date de naissance",
+    "errors": {
+      "invalid": "Saisissez une date valide au format {{format}}",
+      "future": "La date de naissance ne peut pas être dans le futur",
+      "too-early": "La date de naissance ne peut pas être antérieure à {{year}}"
+    }
+  }
+}

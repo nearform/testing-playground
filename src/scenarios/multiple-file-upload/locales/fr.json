@@ -1,0 +1,45 @@
+{
+  "title": "Envoi de plusieurs fichiers",
+  "description": "Choisissez plusieurs fichiers à la fois, et ajoutez des images par une zone de dépôt avec un champ caché, des contrôles de type et de taille, des aperçus, une barre de progression par fichier et des boutons de suppression.",
+  "units": {
+    "b": "{{value}} o",
+    "kb": "{{value}} Ko",
+    "mb": "{{value}} Mo"
+  },
+  "multiple": {
+    "title": "Plusieurs fichiers",
+    "instructions": "Choisissez un ou plusieurs fichiers de n'importe quel type. Chaque fichier choisi est listé ci-dessous.",
+    "label": "Choisir des fichiers",
+    "count_one": "{{count}} fichier sélectionné",
+    "count_other": "{{count}} fichiers sélectionnés",
+    "list-label": "Fichiers sélectionnés",
+    "item": "{{name}} ({{size}}, {{type}})",
+    "unknown-type": "type inconnu"
+  },
+  "drop-zone": {
+    "title": "Zone de dépôt d'images",
+    "instructions": "Déposez des images sur la zone ou parcourez vos fichiers. Seules les images PNG, JPEG, GIF et WebP de {{max}} au plus sont acceptées. Chaque image est envoyée séparément ; validez une fois qu'elles sont toutes terminées.",
+    "prompt": "Glissez-déposez des images ici, ou",
+    "release": "Relâchez pour ajouter les fichiers",
+    "browse": "Parcourir les fichiers",
+    "input-label": "Choisir des images à envoyer",
+    "list-label": "Images à envoyer",
+    "preview": "Aperçu de {{name}}",
+    "progress": "Progression de l'envoi de {{name}}",
+    "uploading": "Envoi… {{progress}} %",
+    "uploaded": "Envoyé",
+    "remove": "Retirer {{name}}",
+    "submit": "Valider",
+    "wait": "Attendez la fin de tous les envois avant de valider.",
+    "empty": "Ajoutez au moins une image avant de valider.",
+    "submitted_one": "{{count}} image envoyée : {{names}}",
+    "submitted_other": "{{count}} images envoyées : {{names}}"
+  },
+  "errors": {
+    "title_one": "{{count}} fichier n'a pas été ajouté :",
+    "title_other": "{{count}} fichiers n'ont pas été ajoutés :",
+    "type": "{{name}} n'est pas une image PNG, JPEG, GIF ou WebP.",
+    "size": "{{name}} fait {{size}}, au-delà de la limite de {{max}}.",
+    "duplicate": "{{name}} a déjà été ajouté."
+  }
+}

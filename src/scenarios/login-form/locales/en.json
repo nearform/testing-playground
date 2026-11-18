@@ -1,0 +1,10 @@
+{
+  "title": "Login Form",
+  "description": "A typical login form with username and password.",
+  "logged-in-message": "You are currently logged in!",
+  "invalid-credentials": "The credentials you have provided are invalid",
+  "login-button": "Login",
+  "logout-button": "Logout",
+  "username": "Username",
+  "password": "Password"
+}

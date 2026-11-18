@@ -1,0 +1,73 @@
+{
+  "title": "Accessibility Violations",
+  "description": "A newsletter sign-up form full of deliberate accessibility problems, with a switch to a fixed version, for practising automated and manual accessibility checks.",
+  "version": {
+    "title": "Version",
+    "switch": "Show the fixed version",
+    "status": {
+      "broken": "Showing the broken version",
+      "fixed": "Showing the fixed version"
+    }
+  },
+  "expected": {
+    "title": "Expected problems",
+    "explanation": "What a scan of the Newsletter sign-up section should find in the version shown, and how each problem is reported.",
+    "columns": {
+      "rule": "Rule",
+      "problem": "What is wrong",
+      "found": "Reported as"
+    },
+    "found": {
+      "rules": "Violation",
+      "review": "Needs review (incomplete)",
+      "manual": "Keyboard test only"
+    },
+    "none": "None: the fixed version has no known problems."
+  },
+  "rules": {
+    "label": "The Email address field has no label",
+    "duplicate-id-aria": "The First name and Last name labels share an ID, so both fields are named First name",
+    "image-alt": "The profile picture has no alt text",
+    "heading-order": "Your details jumps from a level 2 to a level 4 heading",
+    "aria-required-attr": "The weekly digest checkbox has no aria-checked",
+    "aria-valid-attr-value": "More options sets aria-expanded to yes or no instead of true or false",
+    "scrollable-region-focusable": "The terms box scrolls but cannot be focused, so it cannot be scrolled with the keyboard",
+    "color-contrast": "The privacy note is light grey on white",
+    "button-name": "The help button is an icon with no name",
+    "link-name": "The GitHub link is an icon with no name"
+  },
+  "manual": {
+    "keyboard-trap": {
+      "name": "Keyboard trap",
+      "problem": "Tab and Shift+Tab never leave the Message box"
+    },
+    "mouse-only": {
+      "name": "Mouse only",
+      "problem": "The Subscribe button cannot be reached with Tab"
+    }
+  },
+  "form": {
+    "title": "Newsletter sign-up",
+    "intro": "Sign up for our weekly newsletter.",
+    "details": "Your details",
+    "email": "Email address",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "photo": "Your profile picture",
+    "photo-alt": "Default profile picture",
+    "preferences": "Preferences",
+    "digest": "Send me the weekly digest",
+    "more-options": "More options",
+    "more-options-text": "You can also choose to receive a monthly summary instead.",
+    "terms": "Terms and conditions",
+    "terms-clause": "Clause {{number}}: we will only use your email address to send you this newsletter, and you can unsubscribe at any time from the link at the bottom of every email.",
+    "message": "Message (optional)",
+    "finish": "Finish",
+    "privacy": "We will never share your email address with anyone.",
+    "help": "Help",
+    "help-text": "Fill in your details and press Subscribe. You can unsubscribe at any time.",
+    "github": "Testing Playground on GitHub",
+    "subscribe": "Subscribe",
+    "subscribed": "Thanks, you are now subscribed."
+  }
+}

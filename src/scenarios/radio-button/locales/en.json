@@ -1,0 +1,17 @@
+{
+  "title": "Radio Button",
+  "description": "Pick a primary colour, then a secondary colour from a second set that depends on the first choice.",
+  "first-set": "Primary Colours",
+  "second-set": "Secondary Colours",
+  "first": {
+    "first": "Red",
+    "second": "Blue",
+    "third": "Yellow",
+    "fourth": "White"
+  },
+  "second": {
+    "first": "Purple",
+    "second": "Orange",
+    "third": "Green"
+  }
+}

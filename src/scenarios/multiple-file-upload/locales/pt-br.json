@@ -1,0 +1,45 @@
+{
+  "title": "Envio de Vários Arquivos",
+  "description": "Escolha vários arquivos de uma vez e adicione imagens por uma área de soltar com um campo oculto, verificação de tipo e tamanho, pré-visualizações, uma barra de progresso por arquivo e botões de remover.",
+  "units": {
+    "b": "{{value}} B",
+    "kb": "{{value}} KB",
+    "mb": "{{value}} MB"
+  },
+  "multiple": {
+    "title": "Vários arquivos",
+    "instructions": "Escolha um ou mais arquivos de qualquer tipo. Cada arquivo escolhido é listado abaixo.",
+    "label": "Escolher arquivos",
+    "count_one": "{{count}} arquivo selecionado",
+    "count_other": "{{count}} arquivos selecionados",
+    "list-label": "Arquivos selecionados",
+    "item": "{{name}} ({{size}}, {{type}})",
+    "unknown-type": "tipo desconhecido"
+  },
+  "drop-zone": {
+    "title": "Área de soltar imagens",
+    "instructions": "Solte imagens na área ou procure-as. Só são aceitas imagens PNG, JPEG, GIF e WebP de até {{max}} cada. Cada imagem é enviada separadamente; envie o formulário quando todas terminarem.",
+    "prompt": "Arraste e solte imagens aqui, ou",
+    "release": "Solte para adicionar os arquivos",
+    "browse": "Procurar arquivos",
+    "input-label": "Escolher imagens para enviar",
+    "list-label": "Imagens para enviar",
+    "preview": "Pré-visualização de {{name}}",
+    "progress": "Progresso do envio de {{name}}",
+    "uploading": "Enviando… {{progress}}%",
+    "uploaded": "Enviado",
+    "remove": "Remover {{name}}",
+    "submit": "Enviar",
+    "wait": "Aguarde todos os envios terminarem antes de enviar.",
+    "empty": "Adicione pelo menos uma imagem antes de enviar.",
+    "submitted_one": "{{count}} imagem enviada: {{names}}",
+    "submitted_other": "{{count}} imagens enviadas: {{names}}"
+  },
+  "errors": {
+    "title_one": "{{count}} arquivo não foi adicionado:",
+    "title_other": "{{count}} arquivos não foram adicionados:",
+    "type": "{{name}} não é uma imagem PNG, JPEG, GIF ou WebP.",
+    "size": "{{name}} tem {{size}}, acima do limite de {{max}}.",
+    "duplicate": "{{name}} já foi adicionado."
+  }
+}

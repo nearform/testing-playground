@@ -1,0 +1,88 @@
+{
+  "title": "Abas e acordeões",
+  "description": "Alterne entre abas e expanda ou recolha seções de acordeões, algumas das quais mantêm o conteúdo oculto na página e outras o removem.",
+  "notes-label": "Notas (troque de aba e volte para ver se são mantidas)",
+  "product": {
+    "title": "Abas que mantêm os painéis ocultos",
+    "explanation": "Todos os painéis estão na página, mas apenas o selecionado é visível. A aba Avaliações carrega após um pequeno atraso e a aba Arquivo está desativada.",
+    "label": "Detalhes do produto",
+    "tabs": {
+      "overview": "Visão geral",
+      "specifications": "Especificações",
+      "reviews": "Avaliações",
+      "archive": "Arquivo"
+    },
+    "panels": {
+      "overview": "A mochila Trailblazer comporta 28 litros e tem um compartimento acolchoado para notebook.",
+      "specifications": "Peso: 1,2 kg. Dimensões: 50 × 30 × 20 cm. Material: náilon reciclado.",
+      "archive": "Os modelos antigos não estão mais disponíveis."
+    },
+    "reviews-loading": "Carregando avaliações…",
+    "reviews": {
+      "1": "“Confortável mesmo cheia.” 5 estrelas",
+      "2": "“O compartimento cabe um notebook de 16 polegadas.” 4 estrelas",
+      "3": "“Queria que tivesse mais bolsos.” 3 estrelas"
+    }
+  },
+  "report": {
+    "title": "Abas que renderizam apenas o painel selecionado",
+    "explanation": "Apenas o painel selecionado está na página. Os outros são removidos, junto com o que foi digitado neles.",
+    "label": "Período do relatório",
+    "tabs": {
+      "daily": "Diário",
+      "weekly": "Semanal",
+      "monthly": "Mensal"
+    },
+    "panels": {
+      "daily": "Hoje: 42 pedidos, 3 devoluções.",
+      "weekly": "Esta semana: 287 pedidos, 19 devoluções.",
+      "monthly": "Este mês: 1.204 pedidos, 71 devoluções."
+    }
+  },
+  "faq": {
+    "title": "Acordeão com uma seção aberta por vez",
+    "explanation": "Abrir uma seção fecha a que estava aberta. Clicar na seção aberta a fecha.",
+    "items": {
+      "shipping": {
+        "title": "Quanto tempo leva a entrega?",
+        "body": "Os pedidos chegam em 3 a 5 dias úteis."
+      },
+      "returns": {
+        "title": "Posso devolver um item?",
+        "body": "Sim, em até 30 dias após a entrega, desde que não tenha sido usado."
+      },
+      "warranty": {
+        "title": "Existe garantia?",
+        "body": "Todo produto tem dois anos de garantia contra defeitos."
+      }
+    }
+  },
+  "settings": {
+    "title": "Acordeão com várias seções abertas",
+    "explanation": "Qualquer número de seções pode ficar aberto ao mesmo tempo.",
+    "expand-all": "Expandir tudo",
+    "collapse-all": "Recolher tudo",
+    "items": {
+      "profile": {
+        "title": "Perfil",
+        "body": "Seu nome e sua foto são exibidos para outros usuários."
+      },
+      "notifications": {
+        "title": "Notificações",
+        "body": "As notificações por e-mail são enviadas uma vez por dia."
+      },
+      "privacy": {
+        "title": "Privacidade",
+        "body": "Seu perfil é visível apenas para as pessoas que você segue."
+      }
+    }
+  },
+  "details": {
+    "title": "Divulgação nativa",
+    "explanation": "Os próprios elementos <details> e <summary> do navegador, para comparação. Um começa fechado e o outro aberto.",
+    "closed-summary": "O que é uma divulgação?",
+    "closed-body": "Um controle que mostra e oculta uma parte do conteúdo.",
+    "open-summary": "Por que comparar com o elemento nativo?",
+    "open-body": "Ele não precisa de script nem de ARIA, mas seu estado é o atributo open, e não aria-expanded."
+  }
+}

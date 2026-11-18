@@ -1,0 +1,83 @@
+{
+  "title": "Actionnabilité",
+  "description": "Superpositions, boutons en mouvement, décalages de mise en page et éléments présents mais impossibles à cliquer sans risque.",
+  "result": {
+    "title": "Dernière action",
+    "none": "Rien pour l’instant",
+    "intercepted": "Le clic a été intercepté par une superposition transparente",
+    "accepted": "Conditions acceptées",
+    "continued": "Poursuivi après la disparition de la superposition",
+    "sticky-header": "Le clic est tombé sur l’en-tête collant",
+    "added": "{{product}} ajouté au panier",
+    "caught": "Bouton qui ne s’arrête jamais attrapé",
+    "clicked-moving": "Bouton qui s’immobilise cliqué pendant qu’il bougeait encore",
+    "clicked-settled": "Bouton qui s’immobilise cliqué après son arrêt",
+    "upgraded": "Passé à premium : la bannière est arrivée sous le clic",
+    "confirmed": "Commande confirmée",
+    "agreed": "Conditions acceptées après avoir fait défiler la boîte",
+    "pointer-events": "Bouton pointer-events: none cliqué",
+    "zero-size": "Bouton de taille nulle cliqué"
+  },
+  "overlay": {
+    "title": "Superpositions",
+    "instructions": "Les deux boutons sont recouverts par un élément invisible qui reçoit le clic.",
+    "permanent-title": "Toujours recouvert",
+    "accept": "Accepter les conditions",
+    "timed-title": "Recouvert pendant le chargement",
+    "waiting": "En attente de la disparition de la superposition de chargement…",
+    "cleared": "La superposition de chargement a disparu",
+    "continue": "Continuer",
+    "restart": "Afficher à nouveau la superposition"
+  },
+  "sticky": {
+    "title": "Votre panier",
+    "basket_one": "{{count}} article",
+    "basket_other": "{{count}} articles",
+    "instructions": "Cet en-tête reste en haut de la fenêtre pendant que vous faites défiler les produits.",
+    "add": "Ajouter {{product}}",
+    "products": {
+      "apples": "Pommes",
+      "bananas": "Bananes",
+      "carrots": "Carottes",
+      "dates": "Dattes",
+      "eggs": "Œufs",
+      "flour": "Farine",
+      "grapes": "Raisins",
+      "honey": "Miel",
+      "lemons": "Citrons",
+      "milk": "Lait",
+      "oats": "Flocons d’avoine",
+      "pears": "Poires"
+    }
+  },
+  "moving": {
+    "title": "Éléments en mouvement",
+    "instructions": "Le premier bouton ne s’arrête jamais. Le second bouge pendant quelques secondes puis s’immobilise.",
+    "endless": "Attrape-moi",
+    "settling": "Attends-moi",
+    "moving": "Le second bouton bouge encore",
+    "settled": "Le second bouton s’est immobilisé",
+    "restart": "Le faire bouger à nouveau"
+  },
+  "shift": {
+    "title": "Décalage de mise en page",
+    "instructions": "Une bannière est ajoutée au-dessus du bouton peu après le chargement de la page.",
+    "confirm": "Confirmer la commande",
+    "upgrade": "Passer à premium",
+    "offer": "Offre limitée : livraison premium à moitié prix",
+    "restart": "Charger à nouveau la bannière"
+  },
+  "scroll": {
+    "title": "Conteneur défilant",
+    "instructions": "Le bouton est en bas de cette boîte, qui défile indépendamment de la page.",
+    "label": "Conditions générales",
+    "clause": "Clause {{number}} : vous acceptez de garder vos tests fiables et vos attentes explicites.",
+    "agree": "J’accepte"
+  },
+  "unclickable": {
+    "title": "Présents mais pas cliquables",
+    "instructions": "Un bouton ignore le pointeur et l’autre n’a pas de taille. Il y a deux boutons ici, même si vous n’en voyez qu’un.",
+    "pointer-events": "Ignore le pointeur",
+    "zero-size": "Bouton de taille nulle"
+  }
+}

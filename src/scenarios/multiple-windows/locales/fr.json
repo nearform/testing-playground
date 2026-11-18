@@ -1,0 +1,58 @@
+{
+  "title": "Fenêtres multiples",
+  "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",
+  "new-tab": {
+    "title": "Nouvel onglet",
+    "description": "Un lien qui ouvre une page dans un nouvel onglet.",
+    "link": "Ouvrir un nouvel onglet"
+  },
+  "named": {
+    "title": "Fenêtre nommée",
+    "description": "Les deux liens s'ouvrent dans une fenêtre portant le même nom, donc le second clic réutilise la fenêtre ouverte par le premier.",
+    "named-one-link": "Ouvrir la page un",
+    "named-two-link": "Ouvrir la page deux",
+    "none": "Aucune page ouverte pour l'instant",
+    "last": "Dernière ouverte : {{page}}"
+  },
+  "popup": {
+    "title": "Fenêtre pop-up",
+    "description": "Ouvrez une fenêtre pop-up, envoyez-en un message à cette page, et regardez-la se fermer.",
+    "open": "Ouvrir la pop-up",
+    "close": "Fermer la pop-up",
+    "status": {
+      "not-opened": "La pop-up n'a pas été ouverte",
+      "open": "La pop-up est ouverte",
+      "closed": "La pop-up est fermée",
+      "blocked": "La pop-up a été bloquée par le navigateur"
+    },
+    "messages": "Messages de la pop-up",
+    "no-messages": "Aucun message pour l'instant"
+  },
+  "windows": {
+    "new-tab": {
+      "document-title": "Nouvel onglet | Testing Playground",
+      "heading": "Nouvel onglet",
+      "text": "Cette page s'est ouverte dans un nouvel onglet. Revenez à la fenêtre d'origine pour continuer."
+    },
+    "popup": {
+      "document-title": "Fenêtre pop-up | Testing Playground",
+      "heading": "Fenêtre pop-up",
+      "text": "Envoyez un message à la fenêtre qui a ouvert cette pop-up. La pop-up se ferme une fois le message envoyé.",
+      "label": "Message",
+      "button": "Envoyer et fermer",
+      "error": "Veuillez saisir un message",
+      "sent": "Message envoyé",
+      "no-opener": "Cette fenêtre n'a pas été ouverte depuis le scénario Fenêtres multiples, il n'y a donc nulle part où envoyer un message."
+    },
+    "named-one": {
+      "document-title": "Page un | Testing Playground",
+      "heading": "Page un",
+      "text": "Ceci est la page un de la fenêtre nommée."
+    },
+    "named-two": {
+      "document-title": "Page deux | Testing Playground",
+      "heading": "Page deux",
+      "text": "Ceci est la page deux de la fenêtre nommée."
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "title": "Seletores Difíceis",
+  "description": "IDs aleatórios, botões idênticos, texto dividido e duplicatas ocultas que quebram seletores ingênuos.",
+  "result": {
+    "title": "Última ação",
+    "none": "Nada ainda",
+    "empty": "(vazio)",
+    "saved-name": "Nome de exibição “{{name}}” salvo",
+    "reset-name": "Nome de exibição apagado",
+    "editing": "Editando {{name}}",
+    "deleted": "{{name}} excluído(a)",
+    "restored": "Todos os membros da equipe foram restaurados",
+    "marked-read": "Todas as mensagens foram marcadas como lidas",
+    "saved-addresses": "Endereço de entrega {{deliveryCity}}, {{deliveryPostcode}} e endereço de cobrança {{billingCity}}, {{billingPostcode}} salvos",
+    "subscribed-labelled": "{{email}} inscrito pelo formulário com rótulos",
+    "subscribed-unlabelled": "{{email}} inscrito pelo formulário sem rótulos",
+    "checkout": "Compra finalizada pelo botão {{variant}}",
+    "saved-for-later": "Carrinho salvo para depois"
+  },
+  "random": {
+    "title": "IDs e classes aleatórios",
+    "instructions": "Os IDs e nomes de classe deste formulário mudam toda vez que a página carrega.",
+    "label": "Nome de exibição",
+    "save": "Salvar",
+    "reset": "Limpar"
+  },
+  "rows": {
+    "title": "Botões idênticos em todas as linhas",
+    "instructions": "Cada linha tem os mesmos botões Editar e Excluir, e as linhas são embaralhadas a cada carregamento.",
+    "columns": {
+      "name": "Nome",
+      "email": "E-mail",
+      "role": "Função",
+      "actions": "Ações"
+    },
+    "roles": {
+      "admin": "Administrador",
+      "editor": "Editor",
+      "viewer": "Leitor"
+    },
+    "edit": "Editar",
+    "delete": "Excluir",
+    "restore": "Restaurar todos os membros"
+  },
+  "split": {
+    "title": "Texto dividido em vários elementos",
+    "instructions": "Estas frases são feitas de vários elementos, então nenhum elemento sozinho contém o texto inteiro.",
+    "hello": "Olá",
+    "world": "mundo",
+    "unread": "Oi <name>Ada</name>, você tem <count>{{count}}</count> mensagens não lidas.",
+    "mark-read": "<part>Marcar</part> <part>todas</part> como <strong>lidas</strong>"
+  },
+  "addresses": {
+    "title": "Campos diferenciados pelo texto próximo",
+    "instructions": "Os dois blocos têm os mesmos campos, e os rótulos não estão ligados aos campos.",
+    "delivery": "Endereço de entrega",
+    "billing": "Endereço de cobrança",
+    "city": "Cidade",
+    "postcode": "CEP",
+    "save": "Salvar endereços"
+  },
+  "compare": {
+    "title": "Formulários com e sem rótulos",
+    "instructions": "O mesmo formulário de newsletter duas vezes: uma com nomes acessíveis e IDs de teste, outra sem.",
+    "labelled-title": "Formulário com rótulos",
+    "unlabelled-title": "Formulário sem rótulos",
+    "email": "Endereço de e-mail",
+    "email-placeholder": "Endereço de e-mail",
+    "subscribe": "Inscrever-se"
+  },
+  "duplicates": {
+    "title": "Duplicatas ocultas",
+    "instructions": "O botão Finalizar compra aparece mais de uma vez na página, mas só uma cópia fica visível por vez.",
+    "checkout": "Finalizar compra",
+    "more": "Mais opções",
+    "save-for-later": "Salvar para depois",
+    "variants": {
+      "mobile": "de celular",
+      "desktop": "de desktop",
+      "menu": "de Mais opções"
+    }
+  }
+}

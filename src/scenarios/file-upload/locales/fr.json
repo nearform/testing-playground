@@ -1,0 +1,9 @@
+{
+  "title": "Téléchargement de fichier",
+  "description": "Choisissez un fichier par un champ de fichier masqué, puis attendez la fin d'un envoi simulé et lent.",
+  "please-select-file": "Veuillez sélectionner un fichier.",
+  "select-file": "Sélectionner un fichier",
+  "selected-file": "Fichier : \"{{ filename }}\"",
+  "upload-button": "Télécharger",
+  "upload-success": "Fichier \"{{ filename }}\" téléchargé avec succès !"
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Tooltips",
+  "description": "Show tooltips on a disabled button, on a button whose tooltip holds a link and on text that is cut short.",
+  "no-permission": "You don't have permission to do this",
+  "more-information": "More info",
+  "more-information-msg": "For more information, click here:",
+  "really-long-text": "A really really long text example",
+  "delete": "Delete"
+}

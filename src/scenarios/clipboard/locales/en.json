@@ -1,0 +1,58 @@
+{
+  "title": "Clipboard",
+  "description": "Copy values to the clipboard, read it back and see how pages can change or block a paste.",
+  "unavailable": {
+    "title": "Clipboard unavailable"
+  },
+  "errors": {
+    "unavailable": "The Clipboard API is not available. It needs a secure context (HTTPS or localhost) and a browser that supports it.",
+    "permission-denied": "Permission to use the clipboard was denied. Grant the clipboard permission, and make sure the page has focus.",
+    "unknown": "An unknown error occurred while using the clipboard"
+  },
+  "copy": {
+    "title": "Copy values",
+    "explanation": "Each button copies its value to the clipboard.",
+    "values": {
+      "snippet": "Code snippet",
+      "api-key": "API key",
+      "share-link": "Share link"
+    },
+    "button": "Copy",
+    "button-label": "Copy {{name}}",
+    "copied": "Copied!",
+    "copied-message": "{{name}} copied to the clipboard",
+    "failed": "Copy failed"
+  },
+  "paste": {
+    "title": "Read the clipboard",
+    "explanation": "Reads the text on the clipboard and shows it below.",
+    "button": "Paste from clipboard",
+    "reading": "Reading the clipboard...",
+    "result-title": "Clipboard",
+    "empty": "The clipboard is empty or holds no text",
+    "characters_one": "Pasted {{count}} character:",
+    "characters_other": "Pasted {{count}} characters:",
+    "failed": "Paste failed"
+  },
+  "paste-handling": {
+    "title": "Paste handling",
+    "explanation": "These fields change what happens when text is pasted into them.",
+    "notes-label": "Notes (pasted text is cleaned up into plain text)",
+    "notes-formatting-removed": "Pasted as plain text: the formatting was removed",
+    "notes-plain": "Pasted as plain text",
+    "password-label": "Password",
+    "confirm-label": "Confirm password",
+    "paste-blocked-title": "Paste blocked",
+    "paste-blocked": "Pasting is not allowed here. Type the password again.",
+    "match": "The passwords match",
+    "mismatch": "The passwords do not match"
+  },
+  "copy-blocked": {
+    "title": "Blocked copying",
+    "explanation": "Both fields hold the same reference, but copying from the second one is blocked.",
+    "allowed-label": "Reference (can be copied)",
+    "blocked-label": "Reference (copying blocked)",
+    "blocked-title": "Copy blocked",
+    "blocked": "Copying from this field is not allowed"
+  }
+}

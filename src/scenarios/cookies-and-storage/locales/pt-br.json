@@ -1,0 +1,70 @@
+{
+  "title": "Cookies e armazenamento",
+  "description": "Responda a um banner de consentimento de cookies, salve preferências de cookies, guarde uma nota só para esta aba e veja os cookies e o armazenamento mudarem.",
+  "banner": {
+    "title": "Usamos cookies",
+    "text": "Usamos cookies necessários para que este site funcione. Com a sua permissão, também gostaríamos de definir cookies de análise e de marketing. Você pode mudar sua escolha a qualquer momento."
+  },
+  "preferences": {
+    "title": "Preferências de cookies",
+    "text": "Escolha quais cookies opcionais permitir. Os cookies necessários estão sempre ativos."
+  },
+  "categories": {
+    "necessary": {
+      "label": "Necessários",
+      "description": "Precisos para o site funcionar, por isso não podem ser desativados."
+    },
+    "analytics": {
+      "label": "Análise",
+      "description": "Ajudam a entender como o site é usado."
+    },
+    "marketing": {
+      "label": "Marketing",
+      "description": "Usados para mostrar anúncios relevantes em outros sites."
+    }
+  },
+  "button": {
+    "accept-all": "Aceitar todos",
+    "reject-all": "Rejeitar todos",
+    "manage": "Gerenciar preferências",
+    "save-preferences": "Salvar preferências",
+    "cancel": "Cancelar",
+    "cookie-settings": "Configurações de cookies",
+    "reload": "Recarregar página",
+    "refresh": "Atualizar",
+    "clear": "Limpar tudo"
+  },
+  "consent": {
+    "title": "Consentimento de cookies",
+    "status-title": "Sua escolha",
+    "status": {
+      "none": "Você ainda não fez uma escolha",
+      "accepted": "Você aceitou todos os cookies",
+      "rejected": "Você rejeitou todos os cookies opcionais",
+      "custom": "Você escolheu quais cookies permitir"
+    },
+    "allowed": "Permitidos",
+    "blocked": "Bloqueados"
+  },
+  "session": {
+    "title": "Somente nesta sessão",
+    "explanation": "Esta nota é salva no sessionStorage, então é mantida quando a página é recarregada, mas não em uma nova aba.",
+    "label": "Nota da sessão",
+    "save": "Salvar nota",
+    "empty": "Nada salvo nesta aba",
+    "saved": "Salvo nesta aba: {{note}}",
+    "new-tab": "Abrir esta página em uma nova aba"
+  },
+  "live": {
+    "title": "Cookies e armazenamento atuais",
+    "explanation": "O que este cenário armazenou neste momento. Alterações feitas fora da página aparecem depois de clicar em Atualizar.",
+    "cookies": "Cookies",
+    "local": "localStorage",
+    "session": "sessionStorage",
+    "empty": "Nada armazenado"
+  },
+  "seeding": {
+    "title": "Pular o banner nos seus testes",
+    "explanation": "Defina o cookie de consentimento (e as preferências, se houver) antes de a página carregar, e o banner nunca aparece. Os dois exemplos apontam para esta página."
+  }
+}

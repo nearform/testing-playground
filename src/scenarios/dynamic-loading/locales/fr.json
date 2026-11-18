@@ -1,0 +1,40 @@
+{
+  "title": "Chargement dynamique",
+  "description": "Des éléments qui apparaissent, disparaissent et changent d’état après un délai aléatoire.",
+  "start": "Démarrer",
+  "loading": "Chargement",
+  "rendered": {
+    "title": "Élément ajouté après le chargement",
+    "result": "Bonjour le monde !"
+  },
+  "hidden": {
+    "title": "Élément masqué affiché après le chargement",
+    "result": "Me voici !"
+  },
+  "enable": {
+    "title": "Activé après un délai",
+    "label": "Message",
+    "enable": "Activer",
+    "disable": "Désactiver",
+    "enabling": "Activation…",
+    "disabling": "Désactivation…",
+    "enabled": "Il est activé !",
+    "disabled": "Il est désactivé !"
+  },
+  "remove": {
+    "title": "Supprimé puis ajouté à nouveau",
+    "checkbox": "Une case à cocher",
+    "remove": "Supprimer",
+    "add": "Ajouter",
+    "removed": "Elle a disparu !",
+    "added": "Elle est revenue !"
+  },
+  "text": {
+    "title": "Texte qui change",
+    "load": "Charger les données",
+    "idle": "Rien de chargé pour le moment",
+    "loading": "Chargement...",
+    "processing": "Chargement en cours...",
+    "done": "Données chargées : 42 enregistrements"
+  }
+}

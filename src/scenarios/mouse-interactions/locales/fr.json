@@ -1,0 +1,65 @@
+{
+  "title": "Interactions avec la souris",
+  "description": "Double-cliquez, faites un clic droit, cliquez en maintenant, et cliquez avec différents boutons de la souris et touches de modification.",
+  "double-click": {
+    "title": "Double-clic",
+    "instructions": "Seul un double-clic compte ici : les clics simples sont ignorés.",
+    "label": "Double-cliquez-moi",
+    "count": "Double-clics : {{count}}"
+  },
+  "context-menu": {
+    "title": "Menu contextuel",
+    "instructions": "Faites un clic droit sur la note pour ouvrir son menu. Le menu du navigateur n'apparaît pas.",
+    "note": "Penser à arroser les plantes",
+    "pinned": "Épinglée",
+    "highlighted": "Surlignée",
+    "menu-label": "Actions de la note",
+    "actions": {
+      "pin": "Épingler",
+      "unpin": "Désépingler",
+      "highlight": "Surligner",
+      "unhighlight": "Retirer le surlignage",
+      "delete": "Supprimer"
+    },
+    "deleted": "La note a été supprimée.",
+    "restore": "Restaurer la note"
+  },
+  "hold": {
+    "title": "Cliquer et maintenir",
+    "instructions": "Appuyez sur le bouton et maintenez-le enfoncé pendant {{seconds}} seconde pour confirmer. Relâcher ou sortir du bouton plus tôt ne compte pas.",
+    "label": "Maintenir pour confirmer",
+    "progress": "Progression du maintien",
+    "state": {
+      "idle": "Non confirmé",
+      "holding": "Continuez à maintenir…",
+      "confirmed": "Confirmé",
+      "released-early": "Relâché trop tôt, réessayez"
+    }
+  },
+  "buttons": {
+    "title": "Boutons de la souris et touches de modification",
+    "instructions": "Cliquez sur la zone avec n'importe quel bouton de la souris, en maintenant Shift, Control, Alt ou Meta si vous le souhaitez.",
+    "label": "Cliquez-moi avec n'importe quel bouton",
+    "none": "Pas encore cliqué",
+    "button": "Bouton",
+    "modifiers": "Maintenu avec",
+    "no-modifiers": "Rien",
+    "names": {
+      "left": "Gauche",
+      "middle": "Milieu",
+      "right": "Droit",
+      "back": "Précédent",
+      "forward": "Suivant"
+    }
+  },
+  "result": {
+    "title": "Dernière interaction",
+    "none": "Rien pour l'instant",
+    "double-click": "Double-clic sur la cible",
+    "context-menu": "« {{action}} » choisi dans le menu contextuel",
+    "hold-confirmed": "Bouton maintenu assez longtemps pour confirmer",
+    "hold-early": "Bouton à maintenir relâché trop tôt",
+    "button": "Clic : bouton {{button}}",
+    "button-with": "Clic : bouton {{button}}, avec {{modifiers}}"
+  }
+}

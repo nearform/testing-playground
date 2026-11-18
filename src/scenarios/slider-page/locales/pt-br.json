@@ -1,0 +1,8 @@
+{
+  "title": "Deslizadores",
+  "description": "Defina valores com um deslizador simples, um deslizador de faixa com duas alças e um deslizador ligado a um campo numérico.",
+  "basic-slider": "Deslizador Básico",
+  "range-slider": "Deslizador com Faixa",
+  "slider-with-input": "Deslizador com Entrada",
+  "value": "Valor"
+}

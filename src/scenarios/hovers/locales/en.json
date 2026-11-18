@@ -1,0 +1,38 @@
+{
+  "title": "Hovers",
+  "description": "Interact with elements that only appear while the mouse is over something.",
+  "profiles": {
+    "title": "Profiles",
+    "view": "View profile",
+    "roles": {
+      "tester": "Tester",
+      "developer": "Developer",
+      "designer": "Designer"
+    }
+  },
+  "files": {
+    "title": "Files",
+    "open": "Open",
+    "open-label": "Open {{name}}",
+    "delete": "Delete",
+    "delete-label": "Delete {{name}}",
+    "empty": "There are no files left. Reload the page to get them back."
+  },
+  "menu": {
+    "title": "Menu",
+    "products": "Products",
+    "laptops": "Laptops",
+    "phones": "Phones",
+    "android": "Android",
+    "ios": "iOS",
+    "tablets": "Tablets"
+  },
+  "result": {
+    "title": "Last action",
+    "none": "Nothing yet",
+    "viewed": "Viewed the profile of {{name}}",
+    "opened": "Opened {{name}}",
+    "deleted": "Deleted {{name}}",
+    "chose": "Chose {{name}}"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "title": "Multiple File Upload",
+  "description": "Choose several files at once, and add images through a drop zone with a hidden input, type and size checks, previews, a progress bar per file and remove buttons.",
+  "units": {
+    "b": "{{value}} B",
+    "kb": "{{value}} KB",
+    "mb": "{{value}} MB"
+  },
+  "multiple": {
+    "title": "Multiple files",
+    "instructions": "Choose one or more files of any type. Every file chosen is listed below.",
+    "label": "Choose files",
+    "count_one": "{{count}} file selected",
+    "count_other": "{{count}} files selected",
+    "list-label": "Selected files",
+    "item": "{{name}} ({{size}}, {{type}})",
+    "unknown-type": "unknown type"
+  },
+  "drop-zone": {
+    "title": "Image drop zone",
+    "instructions": "Drop images on the zone or browse for them. Only PNG, JPEG, GIF and WebP images up to {{max}} each are accepted. Each image uploads on its own; submit once they have all finished.",
+    "prompt": "Drag and drop images here, or",
+    "release": "Release to add the files",
+    "browse": "Browse files",
+    "input-label": "Choose images to upload",
+    "list-label": "Images to upload",
+    "preview": "Preview of {{name}}",
+    "progress": "Upload progress for {{name}}",
+    "uploading": "Uploading… {{progress}}%",
+    "uploaded": "Uploaded",
+    "remove": "Remove {{name}}",
+    "submit": "Submit",
+    "wait": "Wait for every upload to finish before submitting.",
+    "empty": "Add at least one image before submitting.",
+    "submitted_one": "{{count}} image submitted: {{names}}",
+    "submitted_other": "{{count}} images submitted: {{names}}"
+  },
+  "errors": {
+    "title_one": "{{count}} file was not added:",
+    "title_other": "{{count}} files were not added:",
+    "type": "{{name}} is not a PNG, JPEG, GIF or WebP image.",
+    "size": "{{name}} is {{size}}, over the {{max}} limit.",
+    "duplicate": "{{name}} has already been added."
+  }
+}

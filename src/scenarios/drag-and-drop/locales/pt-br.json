@@ -1,0 +1,8 @@
+{
+  "title": "Arrastar e Soltar",
+  "description": "Arraste elementos de um lado da página e solte-os do outro lado.",
+  "box": "Caixa",
+  "drag-me": "Arraste-me",
+  "drop-here": "Solte aqui",
+  "total-drops": "Total de Solturas"
+}
