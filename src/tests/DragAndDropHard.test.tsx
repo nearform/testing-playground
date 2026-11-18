@@ -47,4 +47,48 @@ describe('DragAndDropHard component', () => {
       )
     })
   })
+
+  describe('dragging over a target', () => {
+    // The first shape and the target it belongs on
+    const firstShapeAndTarget = (): {
+      shape: HTMLElement
+      target: HTMLElement
+    } => {
+      const shape = screen.getByTestId(
+        (id: string) => id.startsWith('draggable-') && id.endsWith('-1'),
+      )
+      const kind = shape.getAttribute('data-testid')?.includes('circle')
+        ? 'circle'
+        : 'square'
+      return { shape, target: screen.getByTestId(`drop-${kind}`) }
+    }
+
+    it('lets the shape be dropped there', () => {
+      TestRenderer(<DragAndDropHard />)
+      const { target } = firstShapeAndTarget()
+
+      // fireEvent returns false when the event's default was prevented,
+      // which is what allows a drop
+      const notCancelled = fireEvent.dragOver(target, {
+        dataTransfer: { getData: vi.fn(() => '1') },
+      })
+
+      expect(notCancelled).toBe(false)
+    })
+
+    it('does not count as a drop', () => {
+      TestRenderer(<DragAndDropHard />)
+      const { shape, target } = firstShapeAndTarget()
+
+      fireEvent.dragOver(target, {
+        dataTransfer: { getData: vi.fn(() => '1') },
+      })
+
+      expect(screen.getByTestId('total-count')).toHaveTextContent(
+        'Total Correct: 0',
+      )
+      // The shape's colour is only in its inline style
+      expect(shape.style.backgroundColor).toBe('red')
+    })
+  })
 })

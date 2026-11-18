@@ -47,8 +47,10 @@ const DropTarget = ({
 }): JSX.Element => {
   return (
     <div
+      // Cancelling dragover is what lets a shape be dropped here; only the
+      // drop itself checks the shape
       onDragOver={(e) => {
-        onDrop(e)
+        e.preventDefault()
       }}
       onDrop={(e) => {
         onDrop(e)

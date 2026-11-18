@@ -11,48 +11,65 @@ import { translateInformation } from '../utils/information'
 // The scenario's route, and where its texts live in the locale files
 const SLUG = 'add-remove'
 
+interface InitialState {
+  elements: number[]
+  // The index the next button added gets (it is shown as one more)
+  nextIndex: number
+}
+
+// The buttons saved in sessionStorage or, when there are none and the URL has
+// ?initialElements=N, buttons 1 to N. Worked out once, as the page loads, so
+// emptying the list later does not bring the URL's buttons back.
+export const loadInitialState = (search: string): InitialState => {
+  const storedElements = sessionStorage.getItem('elements')
+  const elements: number[] =
+    storedElements !== null ? JSON.parse(storedElements) : []
+
+  if (elements.length > 0) {
+    // Never reuse a saved button's number, even if the saved index is stale
+    const afterSaved = Math.max(...elements) + 1
+    const storedIndex = parseInt(sessionStorage.getItem('nextIndex') ?? '', 10)
+    return {
+      elements,
+      nextIndex: isNaN(storedIndex)
+        ? afterSaved
+        : Math.max(storedIndex, afterSaved),
+    }
+  }
+
+  const count = parseInt(
+    new URLSearchParams(search).get('initialElements') ?? '',
+    10,
+  )
+  if (!isNaN(count) && count > 0) {
+    // Buttons 1 to N have the indexes 0 to N - 1, so the next one is N
+    return {
+      elements: Array.from({ length: count }, (_, i) => i),
+      nextIndex: count,
+    }
+  }
+
+  return { elements: [], nextIndex: 0 }
+}
+
 const AddRemove = (): JSX.Element => {
   const { t } = useTranslation()
-  const [elements, setElements] = useState<number[]>(() => {
-    // Retrieve elements from sessionStorage
-    const storedElements = sessionStorage.getItem('elements')
-    return storedElements !== null ? JSON.parse(storedElements) : []
-  })
-  const [nextIndex, setNextIndex] = useState(() => {
-    const storedIndex = sessionStorage.getItem('nextIndex')
-    return storedIndex !== null ? parseInt(storedIndex, 10) : 0
-  })
-
   const location = useLocation()
-  const initialElementsParam = new URLSearchParams(location.search).get(
-    'initialElements',
-  )
+  const [initialState] = useState(() => loadInitialState(location.search))
+  const [elements, setElements] = useState<number[]>(initialState.elements)
+  const [nextIndex, setNextIndex] = useState(initialState.nextIndex)
 
+  // Save both whenever they change, so they cannot fall out of step
   useEffect(() => {
-    if (elements.length === 0 && initialElementsParam != null) {
-      const initialElementsCount = parseInt(initialElementsParam, 10)
-      if (!isNaN(initialElementsCount) && initialElementsCount > 0) {
-        setNextIndex(initialElementsCount - 1)
-        sessionStorage.setItem(
-          'nextIndex',
-          (initialElementsCount - 1).toString(),
-        )
-        setElements(Array.from({ length: initialElementsCount }, (_, i) => i))
-      }
-    }
-  }, [elements, initialElementsParam])
-
-  useEffect(() => {
-    // Save elements to sessionStorage whenever it changes
     sessionStorage.setItem('elements', JSON.stringify(elements))
   }, [elements])
 
+  useEffect(() => {
+    sessionStorage.setItem('nextIndex', nextIndex.toString())
+  }, [nextIndex])
+
   const addElement = (): void => {
-    setNextIndex((prevIndex) => {
-      const newIndex = prevIndex + 1
-      sessionStorage.setItem('nextIndex', newIndex.toString())
-      return newIndex
-    })
+    setNextIndex((prevIndex) => prevIndex + 1)
     setElements((prevElements) => [...prevElements, nextIndex])
   }
 
@@ -63,7 +80,6 @@ const AddRemove = (): JSX.Element => {
       )
       if (newElements.length === 0) {
         setNextIndex(0)
-        sessionStorage.setItem('nextIndex', '0')
       }
       return newElements
     })
