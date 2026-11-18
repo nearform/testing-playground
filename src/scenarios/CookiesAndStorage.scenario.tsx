@@ -42,6 +42,17 @@ const key = (name: string): string => `scenarios.cookies-and-storage.${name}`
 const isConsent = (value: string | undefined): value is Consent =>
   CONSENT_VALUES.includes(value as Consent)
 
+// Any cookie on the origin is read here, including ones set by other apps or
+// by a test, so a value that is not valid percent-encoding is kept as it is
+// rather than breaking the page
+const decodeCookieValue = (value: string): string => {
+  try {
+    return decodeURIComponent(value)
+  } catch {
+    return value
+  }
+}
+
 const readCookies = (): Record<string, string> =>
   Object.fromEntries(
     document.cookie
@@ -54,7 +65,7 @@ const readCookies = (): Record<string, string> =>
           ? [pair, '']
           : [
               pair.slice(0, separator),
-              decodeURIComponent(pair.slice(separator + 1)),
+              decodeCookieValue(pair.slice(separator + 1)),
             ]
       }),
   )

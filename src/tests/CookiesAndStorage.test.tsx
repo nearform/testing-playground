@@ -56,6 +56,7 @@ describe('Cookies and storage scenario', () => {
   afterEach(() => {
     vi.useRealTimers()
     document.cookie = `${CONSENT_COOKIE}=; max-age=0; path=/`
+    document.cookie = 'other_app=; max-age=0; path=/'
     localStorage.removeItem(PREFERENCES_KEY)
     sessionStorage.removeItem(SESSION_NOTE_KEY)
   })
@@ -190,6 +191,24 @@ describe('Cookies and storage scenario', () => {
 
       expect(screen.getByTestId('cookie-banner')).toBeInTheDocument()
     })
+
+    it.each([
+      { name: 'other_app', value: '100%' },
+      { name: CONSENT_COOKIE, value: '%E0' },
+    ])(
+      'still loads when the $name cookie is not valid percent-encoding',
+      ({ name, value }) => {
+        document.cookie = `${name}=${value}; path=/`
+        renderPage()
+
+        click('button-refresh')
+
+        expect(screen.getByTestId('consent-status')).toHaveAttribute(
+          'data-consent',
+          'none',
+        )
+      },
+    )
 
     it('follows the cookie when no preferences are saved', () => {
       setCookie('accepted')
