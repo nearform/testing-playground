@@ -3,6 +3,7 @@ import React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import TestRenderer from './TestRenderer'
+import information from '../i18n/information/en/virtualised-list.md?raw'
 import en from '../i18n/locales/en.json'
 import fr from '../i18n/locales/fr.json'
 import ptBr from '../i18n/locales/pt-br.json'
@@ -20,6 +21,7 @@ import VirtualisedList, {
   noteLines,
   variableRowHeight,
 } from '../scenarios/VirtualisedList.scenario'
+import { parseInformation } from '../utils/information'
 import { itemOffsets } from '../utils/virtualList'
 
 // Every key path under an object, e.g. "grid.result.none"
@@ -182,9 +184,9 @@ describe('Virtualised list scenario', () => {
       scrollViewport('fixed', { top: 7 * ROW_HEIGHT })
 
       expect(thirdRow).toHaveAttribute('data-row-id', '18')
-      expect(
-        en.scenarios['virtualised-list'].information.sections[1].points[0],
-      ).toContain('row 3 may show row 18')
+      expect(parseInformation(information).sections[1].points[0]).toContain(
+        'row 3 may show row 18',
+      )
     })
 
     it('keeps the selection with the row rather than with its element', () => {

@@ -35,36 +35,6 @@
     "accessibility-violations": {
       "title": "Violations d'accessibilité",
       "description": "Un formulaire d'inscription à une newsletter plein de problèmes d'accessibilité volontaires, avec un interrupteur vers une version corrigée, pour s'entraîner aux vérifications d'accessibilité automatiques et manuelles.",
-      "information": {
-        "summary": "Chaque problème d'accessibilité de cette page est volontaire. Activer <strong>Afficher la version corrigée</strong> (ou ouvrir <code>#/accessibility-violations?version=fixed</code>) les corrige tous, donc le même scan peut être lancé sur les deux versions. Chaque problème est listé plus bas, sous Problèmes attendus.",
-        "sections": [
-          {
-            "title": "Lancer le scan",
-            "points": [
-              "Les problèmes se trouvent tous dans la section Inscription à la newsletter, dont l'ID est <code>accessibility-violations-area</code>.",
-              "Limitez le scan à cette section, pour que rien du reste du terrain de jeu ne s'y mêle : <code>.include('#accessibility-violations-area')</code> dans <code>@axe-core/playwright</code> ou <code>cy.checkA11y('#accessibility-violations-area')</code> dans <code>cypress-axe</code>.",
-              "Chaque ligne de Problèmes attendus a un attribut <code>data-rule</code> avec l'ID de sa règle (ou <code>data-issue</code> pour les problèmes au clavier), et le tableau se vide dans la version corrigée."
-            ]
-          },
-          {
-            "title": "Ce qui rend l'automatisation délicate",
-            "points": [
-              "<code>duplicate-id-aria</code> est signalée dans <code>incomplete</code> et non dans <code>violations</code>, car axe-core considère que cette règle demande une vérification, donc un test qui ne regarde que <code>violations</code> ne la voit jamais.",
-              "<code>heading-order</code> est une bonne pratique et non une règle WCAG, donc un scan limité avec <code>withTags(['wcag2a', 'wcag2aa'])</code> ne la voit pas.",
-              "<code>color-contrast</code> et <code>scrollable-region-focusable</code> dépendent de la mise en page, donc elles ne sont trouvées que dans un vrai navigateur et jamais dans jsdom.",
-              "Une même règle peut échouer sur plusieurs éléments et les nouvelles versions d'axe-core ajoutent des règles, donc vérifiez les ID de règles attendus plutôt que le nombre de violations."
-            ]
-          },
-          {
-            "title": "Ce qu'aucun scanner ne trouve",
-            "points": [
-              "La zone Message garde la touche Tab pour elle, comme certains éditeurs de code qui indentent, donc une fois qu'elle a le focus, ni Tab ni Maj+Tab n'en sortent : c'est un piège au clavier.",
-              "Le bouton S'inscrire est un <code>div</code> avec un gestionnaire de clic, donc il ne peut pas être atteint avec Tab et ne fonctionne qu'à la souris.",
-              "Un scan sans erreur ne prouve pas qu'une page est accessible : il montre seulement que les problèmes qu'un scanner sait trouver ont disparu."
-            ]
-          }
-        ]
-      },
       "version": {
         "title": "Version",
         "switch": "Afficher la version corrigée",
@@ -138,33 +108,6 @@
     "actionability": {
       "title": "Actionnabilité",
       "description": "Superpositions, boutons en mouvement, décalages de mise en page et éléments présents mais impossibles à cliquer sans risque.",
-      "information": {
-        "summary": "Chaque élément de cette page est dans le DOM et semble cliquable, mais un vrai clic dessus le rate ou touche autre chose. C’est de là que viennent les erreurs comme « element click intercepted », « element is not stable », « element is outside of the viewport » et « element does not receive pointer events ». Le panneau Dernière action en haut indique ce que chaque clic a réellement touché.",
-        "sections": [
-          {
-            "title": "Éléments recouverts",
-            "points": [
-              "Dans la section Superpositions, le bouton Accepter les conditions est recouvert en permanence par un élément transparent, donc le clic est toujours intercepté : le test doit le signaler au lieu de réussir avec un clic forcé ou en JavaScript, qui cacherait un bug qu’un utilisateur rencontrerait.",
-              "Le bouton Continuer est recouvert par une superposition de chargement transparente pendant quelques secondes après le chargement de la page, donc un test doit attendre qu’elle disparaisse, et non attendre une durée fixe.",
-              "L’en-tête collant reste en haut de la fenêtre pendant que vous faites défiler la liste des produits, donc un outil qui fait défiler un bouton jusqu’en haut de la fenêtre avant de cliquer cliquera sur l’en-tête."
-            ]
-          },
-          {
-            "title": "Éléments qui bougent",
-            "points": [
-              "Dans Éléments en mouvement, un bouton ne s’arrête jamais, donc une vérification de stabilité n’aboutit jamais et un clic à son ancienne position le rate ; l’autre bouge pendant quelques secondes puis s’immobilise, donc attendre qu’il soit stable fonctionne, et le panneau Dernière action indique si vous l’avez cliqué pendant qu’il bougeait.",
-              "Dans Décalage de mise en page, une bannière est insérée au-dessus de Confirmer la commande quelques secondes après le chargement, et son bouton Passer à premium arrive exactement là où se trouvait Confirmer la commande, donc un clic dont la position a été calculée trop tôt passe à premium au lieu de confirmer."
-            ]
-          },
-          {
-            "title": "Hors de vue ou impossibles à cliquer",
-            "points": [
-              "Le bouton J’accepte se trouve dans une boîte défilante et non dans la page, donc c’est la boîte qu’il faut faire défiler pour que le bouton soit visible.",
-              "Un bouton a pointer-events: none, donc le pointeur le traverse, et un autre n’a ni largeur ni hauteur, donc il est dans le DOM avec du texte mais n’est pas visible. Les clics sur ces deux boutons ne fonctionnent qu’en JavaScript, ce qu’un utilisateur ne peut pas faire."
-            ]
-          }
-        ]
-      },
       "result": {
         "title": "Dernière action",
         "none": "Rien pour l’instant",
@@ -251,27 +194,6 @@
     "add-remove": {
       "title": "Ajouter/Supprimer",
       "description": "Ajouter et supprimer dynamiquement des éléments de la page",
-      "information": {
-        "summary": "Ajouter un élément ajoute un bouton Supprimer un élément numéroté, et cliquer sur l'un d'eux le retire. Les boutons sont enregistrés dans <code>sessionStorage</code> : ils sont toujours là après un rechargement.",
-        "sections": [
-          {
-            "title": "La numérotation",
-            "points": [
-              "Chaque nouveau bouton prend le numéro suivant et les numéros ne sont pas réutilisés : retirer le bouton 2 sur trois laisse le 1 et le 3, et le suivant ajouté est le 4.",
-              "Une fois tous les boutons retirés, la numérotation repart de 1.",
-              "Le test id de chaque bouton contient son numéro, comme <code>remove-element-3</code>."
-            ]
-          },
-          {
-            "title": "L'état de départ",
-            "points": [
-              "Ajouter <code>?initialElements=5</code> à l'URL (<code>#/add-remove?initialElements=5</code>) ouvre la page avec les boutons 1 à 5, ce qui évite de les ajouter un par un.",
-              "Le paramètre n'est utilisé que si la page se charge sans bouton enregistré : un rechargement qui a déjà des boutons dans <code>sessionStorage</code> l'ignore.",
-              "Effacer le stockage retire tous les boutons en vidant tout le <code>sessionStorage</code> du site, ce qui efface aussi ce que d'autres scénarios y ont enregistré. Chaque onglet a son propre <code>sessionStorage</code> : un nouvel onglet ou contexte de navigateur part toujours de zéro."
-            ]
-          }
-        ]
-      },
       "add-element": "Ajouter un élément",
       "clear-storage": "Effacer le stockage",
       "remove-element": "Supprimer un élément"
@@ -279,32 +201,6 @@
     "autocomplete": {
       "title": "Saisie semi-automatique",
       "description": "Choisissez une valeur parmi les suggestions qui apparaissent pendant la saisie.",
-      "information": {
-        "summary": "Commencez à taper dans l'un des champs pour voir des suggestions.",
-        "sections": [
-          {
-            "title": "Au clavier",
-            "points": [
-              "Utilisez les flèches haut et bas pour les parcourir (elles reviennent au début), Entrée pour choisir celle qui est mise en évidence, ou cliquez sur une suggestion ; Échap ferme la liste et un second Échap vide le champ.",
-              "Quitter le champ avec Tab ferme la liste sans rien choisir, et modifier le texte après un choix annule ce choix."
-            ]
-          },
-          {
-            "title": "Correspondances et balisage",
-            "points": [
-              "Le champ suit le modèle ARIA combobox : aria-expanded indique si la liste est ouverte et aria-activedescendant désigne l'option mise en évidence, qui a aria-selected=\"true\".",
-              "Les suggestions correspondent à n'importe quelle partie d'un nom, sans tenir compte de la casse ni des accents ; les noms qui commencent par le texte saisi sont listés en premier et la partie correspondante est en gras."
-            ]
-          },
-          {
-            "title": "Pays et ville",
-            "points": [
-              "Le champ des pays filtre immédiatement une liste fixe.",
-              "Le champ des villes interroge plutôt un faux serveur lent : il attend au moins {{min}} caractères et une pause de {{debounce}} ms dans la saisie, affiche un message de chargement pendant l'attente, renvoie au plus {{max}} villes et répond plus lentement aux recherches courtes qu'aux longues, si bien qu'une ancienne réponse peut arriver après une nouvelle ; seule la réponse correspondant au texte actuel est affichée."
-            ]
-          }
-        ]
-      },
       "no-matches": "Aucun résultat",
       "nothing-selected": "rien",
       "selected": "Sélection : {{value}}",
@@ -326,42 +222,6 @@
     "broken-images-and-links": {
       "title": "Images et liens cassés",
       "description": "Une galerie et une liste de liens dont certains fonctionnent et d'autres non, avec une image en 404, une image à l'URL invalide, une image en chargement différé, des pages manquantes et des liens d'ancre.",
-      "information": {
-        "summary": "Certaines images et certains liens de cette page fonctionnent et d'autres non, pour vérifier que chaque image se charge et que chaque lien mène quelque part. Chaque image et chaque lien a un attribut <code>data-expected</code> valant <code>ok</code> ou <code>broken</code>, pour qu'un test puisse comparer ce qu'il trouve avec ce qu'il devrait trouver.",
-        "sections": [
-          {
-            "title": "Images cassées",
-            "points": [
-              "Une image cassée reste dans la page : elle garde son <code>src</code>, affiche son texte alternatif et est visible, donc vérifier que l'<code>&lt;img&gt;</code> existe ou est visible réussit. Vérifiez plutôt qu'elle a fini de charger et qu'elle a une taille : <code>img.complete &amp;&amp; img.naturalWidth === 0</code> signifie qu'elle a échoué.",
-              "L'image à l'URL invalide ne fait jamais de requête, donc elle n'apparaît pas comme une 404 dans le journal réseau. Seule l'image elle-même indique qu'elle a échoué.",
-              "Écouter les réponses en échec ne capture que les requêtes faites après l'ajout de l'écouteur, donc ajoutez-le avant de charger la page."
-            ]
-          },
-          {
-            "title": "Chargement différé",
-            "points": [
-              "La dernière image a <code>loading=\"lazy\"</code> et se trouve sous la ligne de flottaison, donc le navigateur ne la demande pas avant qu'elle soit proche de la zone visible.",
-              "D'ici là, <code>complete</code> est faux et <code>naturalWidth</code> vaut 0, donc une vérification lancée tout de suite la signale comme cassée (ou, avec Vérifier les images, comme pas encore chargée). Faites-la défiler jusqu'à la zone visible et attendez son chargement avant de la vérifier."
-            ]
-          },
-          {
-            "title": "Vérifier les liens",
-            "points": [
-              "Cliquer sur chaque lien est lent et quitte la page, donc demandez plutôt chaque URL avec une requête d'API (<code>page.request.get()</code> dans Playwright, <code>cy.request()</code> dans Cypress) et vérifiez que le statut est inférieur à 400. Lisez la propriété <code>href</code> résolue plutôt que l'attribut, qui peut être relatif.",
-              "Un fichier statique manquant, comme l'ancienne page de la galerie, renvoie une vraie 404.",
-              "Ce playground utilise un routage par hash, donc un lien vers une page de l'application comme <code>#/cookies-and-storage</code> ne demande que la page d'accueil : le serveur renvoie 200 même pour une page qui n'existe pas. Ouvrez plutôt ces liens et vérifiez que la page affiche son contenu.",
-              "Les sites externes peuvent bloquer les requêtes automatisées, les limiter ou être indisponibles, ce qui rend la vérification des liens externes instable. Beaucoup de suites les vérifient selon un planning plutôt qu'à chaque exécution."
-            ]
-          },
-          {
-            "title": "Liens d'ancre",
-            "points": [
-              "Comme le # de l'URL sert déjà au routage, les liens vers les sections de cette page sont gérés par script : un clic fait défiler jusqu'à la section sans changer l'URL.",
-              "Pour vérifier une ancre, cherchez un élément dont l'<code>id</code> correspond à la partie après le #. Le lien vers la section des avis n'a pas de section correspondante, donc cliquer dessus ne fait rien."
-            ]
-          }
-        ]
-      },
       "nav": {
         "title": "Sur cette page"
       },
@@ -432,51 +292,6 @@
     "canvas-and-svg": {
       "title": "Canvas et SVG",
       "description": "Un bloc de dessin, un graphique à barres et un jeu de cible dessinés dans un canvas, ainsi qu'une carte SVG avec des info-bulles au survol, dont le contenu est introuvable avec les requêtes DOM habituelles.",
-      "information": {
-        "summary": "Rien de ce qui est dessiné dans un canvas n'est dans le DOM : les barres, la cible et votre dessin ne sont que des pixels, il n'y a donc aucun élément ni texte qu'un localisateur puisse trouver. Un test doit agir à des coordonnées précises et vérifier les résultats affichés sous chaque canvas. Chaque canvas est affiché à la taille à laquelle il est dessiné, donc une position en pixels CSS depuis son coin supérieur gauche est la même position en pixels du canvas : utilisez <code>click({ position: { x, y } })</code> dans Playwright ou <code>.click(x, y)</code> dans Cypress.",
-        "sections": [
-          {
-            "title": "Bloc de dessin",
-            "points": [
-              "Un trait demande d'appuyer sur le bouton, de déplacer le pointeur puis de relâcher le bouton, donc un simple clic ne dessine rien et n'est pas compté.",
-              "Pilotez-le avec <code>page.mouse.move</code>, <code>page.mouse.down</code> et <code>page.mouse.up</code>, qui utilisent les coordonnées de la page (ajoutez donc la position du rectangle englobant du canvas), ou déclenchez des événements de pointeur sur le canvas.",
-              "Le nombre de traits et de points est affiché sous le bloc et dans ses attributs <code>data-strokes</code> et <code>data-points</code>."
-            ]
-          },
-          {
-            "title": "Graphique à barres",
-            "points": [
-              "Le canvas mesure 480 × 260 pixels, la barre <em>i</em> (en comptant à partir de 0) fait 50 pixels de large et est centrée en x = 75 + 70 × <em>i</em>, et l'axe est en y = 230, donc un clic en y = 225 touche toujours une barre.",
-              "Un clic entre ou au-dessus des barres indique qu'aucune barre n'a été cliquée."
-            ]
-          },
-          {
-            "title": "Cible",
-            "points": [
-              "La cible a un rayon de 15 pixels et apparaît en (60, 60), (340, 240), (200, 150), (320, 50) puis (80, 250), dans cet ordre.",
-              "Son centre actuel se trouve dans les attributs <code>data-target-x</code> et <code>data-target-y</code> du canvas, un raccourci qu'un vrai jeu ne vous donnerait pas."
-            ]
-          },
-          {
-            "title": "Carte des quartiers",
-            "points": [
-              "La carte est en SVG, ses régions sont donc des éléments, mais elles n'ont ni rôle ni nom accessible et le <code>svg</code> est une seule image pour les technologies d'assistance, donc les localisateurs par rôle n'y trouvent rien.",
-              "Trouvez une région avec <code>[data-region=\"harbour\"]</code>. XPath a besoin de <code>//*[local-name()='polygon']</code>, car les éléments SVG sont dans leur propre espace de noms.",
-              "Le Port entoure la Vieille Ville, donc le milieu de son rectangle englobant, là où les outils cliquent et survolent par défaut, se trouve dans la Vieille Ville : cliquez-le avec un décalage, par exemple près de son bord inférieur.",
-              "Les noms sur la carte ignorent la souris et transmettent les clics à la région en dessous, donc un outil qui vérifie quel élément est sous le pointeur avant de cliquer, comme Playwright, attend qu'un nom reçoive le clic et finit par expirer.",
-              "L'info-bulle n'apparaît que lorsque la souris est sur une région et la suit, elle demande donc un survol plutôt qu'un clic."
-            ]
-          },
-          {
-            "title": "Tests de capture d'écran",
-            "points": [
-              "Tout est dessiné à une taille fixe avec des couleurs fixes, quel que soit le thème, sans animation ni hasard, donc les mêmes actions donnent toujours la même image.",
-              "Faites la capture du seul canvas ou de la carte plutôt que de toute la page, et attendez-vous à de petites différences entre navigateurs, systèmes d'exploitation et polices (anticrénelage et texte) : gardez une référence par navigateur et par plateforme, ou autorisez un petit seuil.",
-              "Les pixels peuvent aussi être lus directement avec <code>canvas.toDataURL()</code> ou <code>getContext('2d').getImageData()</code>."
-            ]
-          }
-        ]
-      },
       "pad": {
         "title": "Bloc de dessin",
         "intro": "Maintenez le bouton de la souris enfoncé et déplacez-la pour dessiner. Chaque ligne dessinée est un trait.",
@@ -533,38 +348,6 @@
     "challenging-selectors": {
       "title": "Sélecteurs difficiles",
       "description": "Des ID aléatoires, des boutons identiques, du texte découpé et des doublons cachés qui font échouer les sélecteurs naïfs.",
-      "information": {
-        "summary": "Cette page est conçue pour que les sélecteurs évidents échouent. Le panneau Dernière action en haut indique ce que votre dernier clic a réellement fait, pour vérifier que vous avez touché l’élément voulu.",
-        "sections": [
-          {
-            "title": "ID et ordre qui changent",
-            "points": [
-              "Les ID et noms de classe de la première section (et les noms de classe ailleurs) sont des hachages aléatoires, comme ceux des bibliothèques CSS-in-JS, et changent à chaque chargement de la page : trouvez donc le champ par son libellé et les boutons par leur rôle et leur nom.",
-              "Le tableau de l’équipe est mélangé à chaque chargement et chaque ligne a les mêmes boutons Modifier et Supprimer, sans nom accessible propre : choisissez la ligne par son contenu (le nom ou l’e-mail de la personne), puis le bouton dans cette ligne ; une position de ligne ou la n-ième correspondance tombera sur quelqu’un d’autre."
-            ]
-          },
-          {
-            "title": "Texte découpé",
-            "points": [
-              "Le message d’accueil et le nombre de messages non lus sont découpés en plusieurs éléments, donc une recherche sur le texte propre d’un élément ne trouvera pas la phrase entière : cherchez sur le texte du parent ou normalisez d’abord le texte.",
-              "Le libellé du bouton de lecture est découpé de la même façon, mais son nom accessible reste la phrase complète."
-            ]
-          },
-          {
-            "title": "Étiquettes manquantes",
-            "points": [
-              "Les deux blocs d’adresse ont des champs dont les libellés sont du texte simple non lié aux champs, et les deux blocs sont identiques à part leur titre : il faut donc repérer un champ par rapport au texte voisin ou par sa position dans le bon bloc.",
-              "Les deux formulaires de newsletter font la même chose : celui avec libellés a un titre, un libellé, un vrai bouton et des attributs data-testid, tandis que celui sans libellés n’a qu’un texte indicatif, une div cliquable qui ressemble à un bouton et des noms de classe aléatoires ; comparez comment chaque stratégie de localisation s’en sort."
-            ]
-          },
-          {
-            "title": "Éléments en double",
-            "points": [
-              "Le bouton Commander est présent trois fois dans la page : une version mobile et une version bureau, dont une seule est affichée selon la largeur de l’écran, et une troisième dans le panneau Plus d’options fermé ; un localisateur doit donc viser celui qui est visible et non le premier du DOM."
-            ]
-          }
-        ]
-      },
       "result": {
         "title": "Dernière action",
         "none": "Rien pour l’instant",
@@ -648,33 +431,6 @@
     "check-box": {
       "title": "Checkbox",
       "description": "Cochez des cases dans un formulaire, dessinées comme des icônes et dans une arborescence parent et enfants.",
-      "information": {
-        "summary": "Trois groupes de cases à cocher, chacun avec son piège. Aucune n'est un <code>&lt;input type=\"checkbox\"&gt;</code> natif : ce sont des boutons avec <code>role=\"checkbox\"</code>, alors lisez leur état dans <code>aria-checked</code> (ou avec une requête par rôle) plutôt que dans une propriété <code>checked</code>, et cliquez dessus plutôt que d'utiliser <code>check()</code> de Cypress, qui ne fonctionne qu'avec des champs.",
-        "sections": [
-          {
-            "title": "Dans un formulaire",
-            "points": [
-              "La première case est cochée au départ et la deuxième est désactivée : cliquer dessus ne change rien.",
-              "La case obligatoire affiche son message d'erreur et est marquée <code>aria-invalid=\"true\"</code> tant qu'elle n'est pas cochée ; la cocher retire le message du DOM."
-            ]
-          },
-          {
-            "title": "Sous forme d'icônes",
-            "points": [
-              "Le cœur et le marque-page n'ont pas de texte visible : leurs noms, Favori et Marque-page, viennent de <code>aria-label</code>.",
-              "Seule l'icône pleine montre leur état, alors vérifiez <code>aria-checked</code> plutôt que l'image."
-            ]
-          },
-          {
-            "title": "Parent et enfants",
-            "points": [
-              "Cocher le parent coche les deux enfants, et le décocher les décoche.",
-              "Avec un seul enfant coché, le parent n'est ni coché ni décoché : il a <code>aria-checked=\"mixed\"</code> et <code>data-state=\"indeterminate\"</code>, et cliquer dessus coche alors les deux enfants.",
-              "Les deux enfants s'appellent Fils et partagent <code>data-testid=\"child\"</code> : distinguez-les par leur position."
-            ]
-          }
-        ]
-      },
       "scenario-form": "Formulaire avec champ obligatoire",
       "checked": "Choisi",
       "required": "Obligatoire",
@@ -690,41 +446,6 @@
     "clipboard": {
       "title": "Presse-papiers",
       "description": "Copiez des valeurs dans le presse-papiers, relisez-le et voyez comment une page peut modifier ou bloquer un collage.",
-      "information": {
-        "summary": "Lire et écrire dans le presse-papiers du système nécessite des autorisations qui ne font pas partie de la page, et chaque navigateur les gère différemment : accordez <code>clipboard-read</code> et <code>clipboard-write</code> dans votre framework de test (s'il les prend en charge) et vérifiez le résultat en relisant le presse-papiers plutôt qu'en vous fiant au libellé <em>Copié !</em>.",
-        "sections": [
-          {
-            "title": "Autorisations et navigateurs",
-            "points": [
-              "L'API Clipboard n'existe que dans un contexte sécurisé (HTTPS ou localhost) et doit être appelée lors d'un geste de l'utilisateur pendant que la page a le focus : un clic d'un test qui a déplacé le focus ailleurs peut donc quand même échouer.",
-              "Dans Chromium, accordez <code>clipboard-read</code> et <code>clipboard-write</code> (dans Playwright avec <code>context.grantPermissions</code>), sinon la lecture est refusée avec une erreur d'autorisation. Firefox et WebKit ne prennent pas en charge ces autorisations de la même manière : Firefox affiche sa propre fenêtre <em>Coller</em> pour <code>readText</code>, sur laquelle un test ne peut pas cliquer.",
-              "Les navigateurs headless peuvent utiliser leur propre presse-papiers, non partagé avec le système d'exploitation, et des tests lancés en parallèle sur une même machine peuvent écraser le presse-papiers les uns des autres en mode headed.",
-              "Si l'autorisation est refusée ou si l'API est absente, la page affiche une erreur qui l'explique, ce qui rend l'échec facile à repérer sur une capture d'écran."
-            ]
-          },
-          {
-            "title": "Copier",
-            "points": [
-              "Chaque bouton <em>Copier</em> écrit sa valeur avec <code>navigator.clipboard.writeText</code> et affiche <em>Copié !</em> pendant deux secondes. Vérifiez le contenu du presse-papiers, pas seulement le libellé.",
-              "La clé d'API est masquée à l'écran mais la clé complète est copiée : le texte affiché n'est donc pas celui qui se retrouve dans le presse-papiers."
-            ]
-          },
-          {
-            "title": "Coller",
-            "points": [
-              "<em>Coller depuis le presse-papiers</em> lit le presse-papiers avec <code>navigator.clipboard.readText</code> et affiche ce qu'il contient.",
-              "Le champ de notes annule l'événement de collage et insère une version nettoyée, en texte brut : saisir le texte, définir la valeur ou simuler un collage donnent donc chacun un résultat différent. Un événement de collage synthétique a besoin d'un <code>clipboardData</code> contenant <code>text/plain</code>.",
-              "Le champ <em>Confirmer le mot de passe</em> refuse le texte collé : un test qui le remplit en collant échoue et doit saisir le mot de passe. Remplir le champ directement contourne complètement l'événement de collage."
-            ]
-          },
-          {
-            "title": "Copie bloquée",
-            "points": [
-              "Le second champ de référence annule les événements <code>copy</code> et <code>cut</code> : sélectionner son texte et utiliser le raccourci de copie laisse le presse-papiers inchangé. Comparez-le avec le champ voisin."
-            ]
-          }
-        ]
-      },
       "unavailable": {
         "title": "Presse-papiers indisponible"
       },
@@ -783,32 +504,6 @@
     "cookies-and-storage": {
       "title": "Cookies et stockage",
       "description": "Répondez à une bannière de consentement aux cookies, enregistrez vos préférences, gardez une note pour cet onglet uniquement et observez l'évolution des cookies et du stockage.",
-      "information": {
-        "summary": "Presque tous les sites réels affichent une bannière de consentement aux cookies lors de la première visite, et elle couvre la page tant qu'on n'y a pas répondu : c'est donc la première chose qui gêne un test de bout en bout. Ici, la bannière n'apparaît qu'une seconde après le chargement de la page, comme les bannières ajoutées par un script tiers, donc vérifier qu'elle est absente juste après le chargement réussit trop tôt.",
-        "sections": [
-          {
-            "title": "Où l'état est conservé",
-            "points": [
-              "Le choix est mémorisé dans le cookie <code>cookie_consent</code> (<code>accepted</code>, <code>rejected</code> ou <code>custom</code>), et les choix d'analyse et de marketing sont conservés dans <code>localStorage</code> sous <code>cookie_preferences</code>, si bien que les deux survivent à un rechargement.",
-              "La note de session est conservée dans <code>sessionStorage</code>, qui appartient à un seul onglet : elle survit à un rechargement mais disparaît dans un nouvel onglet ou un nouveau contexte de navigateur."
-            ]
-          },
-          {
-            "title": "Garder les tests indépendants",
-            "points": [
-              "Les tests qui partagent un contexte de navigateur se transmettent cet état, donc commencez chaque test avec un contexte propre, ou utilisez Tout effacer.",
-              "Cliquer sur la bannière dans chaque test est lent et fragile ; préparez plutôt l'état avant le chargement de la page, avec <code>context.addCookies</code>, <code>page.addInitScript</code> ou un <code>storageState</code> enregistré dans Playwright, ou avec <code>cy.setCookie</code> et <code>onBeforeLoad</code> dans Cypress, comme le montre le bas de la page."
-            ]
-          },
-          {
-            "title": "Inspecter et vider le stockage",
-            "points": [
-              "L'aperçu en direct ne relit le stockage que lorsque cette page le modifie : après avoir modifié le stockage depuis un test, appuyez sur Actualiser ou rechargez la page.",
-              "Tout effacer ne supprime que ce que ce scénario enregistre ; les réglages de langue et de thème du site sont conservés."
-            ]
-          }
-        ]
-      },
       "banner": {
         "title": "Nous utilisons des cookies",
         "text": "Nous utilisons des cookies nécessaires au fonctionnement de ce site. Avec votre accord, nous aimerions aussi déposer des cookies d'analyse et de marketing. Vous pouvez modifier votre choix à tout moment."
@@ -879,41 +574,6 @@
     "date-picker": {
       "title": "Sélecteur de date",
       "description": "Un sélecteur de date avec calendrier personnalisé : dates simples, jours désactivés, une période et un champ où l'on peut saisir ou choisir la date.",
-      "information": {
-        "sections": [
-          {
-            "title": "Naviguer dans le calendrier",
-            "points": [
-              "Chaque sélecteur ouvre son calendrier dans une fenêtre ajoutée à la fin du <code>&lt;body&gt;</code> de la page, et non à côté de son champ : cherchez-la dans tout le document plutôt que dans le conteneur du champ.",
-              "On ne peut rien saisir dans les sélecteurs de rendez-vous et de voyage : pour atteindre une date d'un autre mois, utilisez les boutons mois précédent et suivant ou les listes des mois et des années, et vérifiez d'abord quel mois est affiché.",
-              "Le sélecteur de voyage reste ouvert après le premier jour et se ferme après le dernier ; choisir un jour avant le premier recommence à partir de celui-ci.",
-              "Dans le calendrier, les flèches déplacent d'un jour et d'une semaine, Page précédente et Page suivante d'un mois, Début et Fin au début et à la fin de la semaine, Entrée choisit le jour qui a le focus et Échap le ferme."
-            ]
-          },
-          {
-            "title": "Quels jours peuvent être choisis",
-            "points": [
-              "Les jours qu'on peut choisir dépendent de la date du jour, lue sur l'horloge du navigateur à l'ouverture de la page : un test qui choisit « lundi prochain » ou « le 15 de ce mois » obtient une autre date (ou une date désactivée) un autre jour, sauf si l'horloge est simulée.",
-              "Les jours désactivés restent affichés et peuvent recevoir le focus, mais ils sont marqués <code>aria-disabled</code>, barrés, et cliquer dessus ne fait rien.",
-              "Les rendez-vous et les voyages peuvent être réservés jusqu'à la fin de {{lastYear}}."
-            ]
-          },
-          {
-            "title": "Lire la date choisie",
-            "points": [
-              "Chaque jour est un bouton dont le texte n'est que le numéro du jour, dont le nom accessible est la date complète dans la langue actuelle (par ex. « vendredi 20 novembre 2026 ») et qui porte un attribut <code>data-date</code> au format ISO.",
-              "Sous chaque sélecteur, la valeur choisie est affichée au format ISO (AAAA-MM-JJ), identique dans toutes les langues : vérifiez-la plutôt que le texte affiché."
-            ]
-          },
-          {
-            "title": "Différences entre les langues",
-            "points": [
-              "Le champ de la date de naissance suit le format de la langue actuelle (MM/DD/YYYY en anglais, JJ/MM/AAAA en français et en portugais) : 03/04/2000 est le 4 mars en anglais mais le 3 avril en français, et le texte n'est vérifié qu'à l'appui sur Entrée ou quand le champ perd le focus ; les dates futures ou antérieures à {{minYear}} sont refusées.",
-              "La semaine commence le dimanche en anglais et en portugais et le lundi en français, donc une même date se trouve dans une autre colonne."
-            ]
-          }
-        ]
-      },
       "iso-value": "Valeur (ISO) :",
       "clear": "Effacer",
       "calendar": {
@@ -957,26 +617,6 @@
     "drag-and-drop": {
       "title": "Glisser-déposer",
       "description": "Faites glisser des éléments d'un côté de la page et déposez-les de l'autre côté.",
-      "information": {
-        "summary": "Faites glisser la boîte rouge <em>Faites glisser moi!</em> sur la zone de dépôt grise autant de fois que vous voulez : chaque dépôt ajoute une boîte jaune numérotée à la zone et un au compteur Total des dépôts.",
-        "sections": [
-          {
-            "title": "Comment fonctionne le glisser",
-            "points": [
-              "La page utilise le glisser-déposer HTML5 natif du navigateur (<code>draggable</code> avec les événements <code>dragstart</code>, <code>dragover</code> et <code>drop</code> qui partagent un <code>dataTransfer</code>) plutôt que de suivre la souris.",
-              "<code>dragTo()</code> de Playwright le pilote directement. Cypress n'a pas de commande de glisser, et les actions de souris de Selenium ne lancent pas un glisser natif dans tous les navigateurs : avec ces outils, vous devrez peut-être déclencher vous-même <code>dragstart</code>, <code>dragover</code> et <code>drop</code> avec un <code>DataTransfer</code> partagé, ou utiliser un plugin.",
-              "Un dépôt ne compte que si le glisser a commencé sur la boîte rouge, qui place <code>smallBox</code> en <code>text/plain</code> dans le <code>dataTransfer</code>."
-            ]
-          },
-          {
-            "title": "Vérifier le résultat",
-            "points": [
-              "Total des dépôts (<code>data-testid=\"total-drops\"</code>) compte chaque dépôt, et les boîtes déposées sont nommées Boîte 1, Boîte 2 et ainsi de suite.",
-              "La boîte rouge ne bouge jamais : vérifiez le compteur et les nouvelles boîtes plutôt que la position de la boîte rouge."
-            ]
-          }
-        ]
-      },
       "box": "Boîte",
       "drag-me": "Faites glisser moi",
       "drop-here": "Déposer ici",
@@ -985,45 +625,11 @@
     "drag-and-drop-hard": {
       "title": "Glisser-déposer (difficile)",
       "description": "Triez cinq formes aléatoires en faisant glisser chacune sur la grande forme qui lui correspond.",
-      "information": {
-        "summary": "Cinq petites formes rouges, chacune un cercle ou un carré, doivent être déposées sur la grande forme correspondante : les cercles sur le cercle et les carrés sur le carré. Les formes obtenues sont aléatoires et changent à chaque chargement.",
-        "sections": [
-          {
-            "title": "Déposer les formes",
-            "points": [
-              "Une forme déposée sur la bonne cible devient verte et ajoute un à Total correct ; déposée sur la mauvaise, elle devient jaune et peut être glissée à nouveau pour corriger.",
-              "Une forme verte est terminée et ne peut plus être glissée : Total correct atteint donc 5 quand toutes les formes sont vertes.",
-              "Les formes restent à leur place et ne changent que de couleur : vérifiez la couleur ou le compteur plutôt que de chercher une forme dans une cible."
-            ]
-          },
-          {
-            "title": "Trouver les formes",
-            "points": [
-              "Le test id de chaque forme indique ce qu'elle est et son numéro, comme <code>draggable-circle-2</code> ou <code>draggable-square-4</code>, et les cibles sont <code>drop-circle</code> et <code>drop-square</code>. Comme le mélange est aléatoire, trouvez les formes par le début de leur test id plutôt que par une liste fixe.",
-              "Les formes n'ont pas de texte : leur couleur (rouge, jaune ou verte) n'apparaît que dans leur style <code>background-color</code> en ligne.",
-              "Comme la version facile, celle-ci utilise le glisser-déposer HTML5 natif, avec le numéro de la forme en <code>shapeId</code> dans le <code>dataTransfer</code>."
-            ]
-          }
-        ]
-      },
       "total-correct": "Total correct"
     },
     "dropdown": {
       "title": "Listes déroulantes",
       "description": "Choisissez des options dans un select natif, une sélection multiple et une liste déroulante personnalisée.",
-      "information": {
-        "summary": "Il y a ici trois types de listes déroulantes. Vos choix actuels sont affichés en dessous.",
-        "sections": [
-          {
-            "title": "Les listes déroulantes",
-            "points": [
-              "Les deux premières sont des éléments <code>&lt;select&gt;</code> natifs : la plupart des frameworks peuvent donc choisir une option directement par sa valeur ou son texte ; la deuxième permet de choisir plusieurs options à la fois.",
-              "La troisième est une liste déroulante personnalisée construite avec des boutons et une liste : ce n'est pas un <code>&lt;select&gt;</code>, et ses options n'existent dans le DOM, à la fin de la page, que lorsqu'elle est ouverte. Cliquez dessus pour l'ouvrir, puis cliquez sur une option.",
-              "Certaines options sont désactivées et ne peuvent pas être choisies."
-            ]
-          }
-        ]
-      },
       "native": {
         "title": "Select natif",
         "label": "Fruit",
@@ -1066,21 +672,6 @@
     "dynamic-loading": {
       "title": "Chargement dynamique",
       "description": "Des éléments qui apparaissent, disparaissent et changent d’état après un délai aléatoire.",
-      "information": {
-        "summary": "Chaque section modifie la page après un délai aléatoire compris entre {{min}} et {{max}} secondes, tiré à nouveau à chaque fois : une pause fixe est donc parfois trop courte et toujours plus lente que nécessaire. Attendez plutôt la condition dont vous avez réellement besoin.",
-        "sections": [
-          {
-            "title": "Chaque section",
-            "points": [
-              "La première section n'ajoute son élément au DOM qu'une fois son indicateur de chargement terminé : il est donc introuvable avant.",
-              "La deuxième a son élément dans le DOM dès le départ, mais masqué avec <code>display: none</code> : il est <em>présent</em> bien avant d'être <em>visible</em>.",
-              "La troisième a un champ désactivé jusqu'à la fin de l'étape asynchrone, et cliquer dessus tant qu'il est désactivé ne fait rien.",
-              "La quatrième supprime sa case à cocher puis en ajoute une toute nouvelle : une référence à l'ancien élément devient obsolète et doit être recherchée à nouveau.",
-              "La dernière affiche « Chargement... » puis « Chargement en cours... » avant son texte final : attendre seulement que « Chargement... » disparaisse ne suffit pas, attendez le texte attendu."
-            ]
-          }
-        ]
-      },
       "start": "Démarrer",
       "loading": "Chargement",
       "rendered": {
@@ -1121,27 +712,6 @@
     "dynamic-table": {
       "title": "Tableau dynamique",
       "description": "Trouvez un processus dans un tableau dont les lignes et les valeurs changent à chaque chargement, et comparez son UC à la barre verte.",
-      "information": {
-        "summary": "La barre verte sous le tableau nomme l'un des quatre processus et donne sa valeur d'UC, comme <em>Chrome UC: 23.4%</em>. Le but est de trouver la ligne de ce processus dans le tableau et de vérifier que sa cellule UC affiche la même valeur.",
-        "sections": [
-          {
-            "title": "Ce qui change à chaque chargement",
-            "points": [
-              "L'ordre des lignes et toutes leurs valeurs sont aléatoires, et la barre verte choisit un processus différent à chaque fois : un test ne peut se fier ni à la position d'une ligne ni à un nombre fixe.",
-              "Les test ids des lignes, comme <code>dynamic-table-row-0</code>, suivent l'ordre à l'écran : ils indiquent où se trouve une ligne, pas quel processus elle contient.",
-              "Les noms des processus sont traduits : ils changent donc aussi avec la langue."
-            ]
-          },
-          {
-            "title": "Trouver la valeur",
-            "points": [
-              "Lisez le nom du processus dans la barre verte, trouvez la ligne dont la cellule Nom correspond, puis lisez la cellule de la colonne UC de cette ligne.",
-              "Les colonnes sont toujours dans le même ordre, mais trouver la colonne UC par son en-tête se rapproche davantage de la façon de lire un vrai tableau qui change.",
-              "Les valeurs sont du texte avec leurs unités (<code>%</code>, <code>MB</code>, <code>Mbps</code> et <code>MB/s</code>) : comparez-les comme du texte, ou retirez l'unité avant de les comparer comme des nombres."
-            ]
-          }
-        ]
-      },
       "name": "Nom",
       "cpu": "UC",
       "memory": "Mémoire",
@@ -1155,27 +725,6 @@
     "file-upload": {
       "title": "Téléchargement de fichier",
       "description": "Choisissez un fichier par un champ de fichier masqué, puis attendez la fin d'un envoi simulé et lent.",
-      "information": {
-        "summary": "Choisissez n'importe quel fichier, cliquez sur Télécharger et attendez le message de réussite. Rien n'est envoyé nulle part : l'envoi est simulé et prend entre 1 et 10 secondes au hasard, quelle que soit la taille du fichier.",
-        "sections": [
-          {
-            "title": "Choisir un fichier",
-            "points": [
-              "Le vrai <code>&lt;input type=\"file\"&gt;</code> (<code>data-testid=\"select-file\"</code>) est masqué, et le bouton Sélectionner un fichier est son libellé, qui ouvre le sélecteur de fichiers du système. Définissez plutôt le fichier sur le champ, avec <code>setInputFiles()</code> dans Playwright ou <code>selectFile()</code> dans Cypress (avec <code>{ force: true }</code>, car le champ est masqué).",
-              "Tous les types et toutes les tailles de fichier sont acceptés, un à la fois, et le nom du fichier choisi s'affiche en dessous.",
-              "Le bouton Télécharger n'apparaît qu'une fois un fichier choisi."
-            ]
-          },
-          {
-            "title": "Attendre l'envoi",
-            "points": [
-              "Pendant l'envoi, le bouton Télécharger est désactivé et une barre de progression sans valeur (indéterminée) s'affiche.",
-              "Un envoi peut prendre jusqu'à 10 secondes, plus que les délais d'assertion par défaut de Cypress (4 secondes) et de Playwright (5 secondes) : donnez au message de réussite un délai plus long plutôt que d'ajouter une attente fixe.",
-              "Choisir un autre fichier efface le message précédent."
-            ]
-          }
-        ]
-      },
       "please-select-file": "Veuillez sélectionner un fichier.",
       "select-file": "Sélectionner un fichier",
       "selected-file": "Fichier : \"{{ filename }}\"",
@@ -1185,60 +734,11 @@
     "file-download": {
       "title": "Téléchargement de Fichier",
       "description": "Cliquez sur un bouton qui télécharge un fichier texte, puis vérifiez le fichier enregistré.",
-      "information": {
-        "summary": "Le bouton Télécharger le Fichier enregistre un petit fichier texte appelé <code>file.txt</code> qui contient <code>Sample content</code>. Le fichier est créé dans le navigateur et non récupéré sur un serveur : un test doit donc intercepter le téléchargement lui-même.",
-        "sections": [
-          {
-            "title": "Comment fonctionne le téléchargement",
-            "points": [
-              "Le bouton crée une URL <code>blob:</code> pour le fichier, clique sur un lien temporaire avec un attribut <code>download</code>, puis retire le lien et révoque l'URL aussitôt : il n'y a donc aucun lien à lire sur la page ni aucune adresse à redemander.",
-              "Rien ne change sur la page après un téléchargement : seul le fichier est à vérifier."
-            ]
-          },
-          {
-            "title": "Vérifier le fichier",
-            "points": [
-              "Dans Playwright, attendez l'événement <code>download</code> pendant le clic, puis vérifiez son <code>suggestedFilename()</code> et le contenu du fichier enregistré.",
-              "Dans Cypress, le fichier est enregistré dans le <code>downloadsFolder</code> (<code>cypress/downloads</code> par défaut) : lisez-le à cet endroit avec <code>cy.readFile()</code>.",
-              "Dans Selenium et WebdriverIO, définissez le dossier de téléchargement du navigateur dans ses options et attendez que le fichier y apparaisse, car son écriture peut prendre un moment."
-            ]
-          }
-        ]
-      },
       "download": "Télécharger le Fichier"
     },
     "form-validation": {
       "title": "Validation de formulaire",
       "description": "Un formulaire d'inscription dont les champs sont validés, afin de vérifier les messages d'erreur affichés pour des valeurs mal formatées.",
-      "information": {
-        "summary": "Un formulaire d'inscription qui vérifie chaque champ, pour que vous puissiez contrôler le message d'erreur de chaque type d'erreur. La validation propre au navigateur est désactivée (<code>novalidate</code>) : tous les messages viennent de la page.",
-        "sections": [
-          {
-            "title": "Quand les erreurs apparaissent",
-            "points": [
-              "Un champ est vérifié quand vous le quittez et à nouveau à l'envoi du formulaire ; une fois vérifié, son message se met à jour pendant la saisie.",
-              "Un envoi avec des erreurs indique leur nombre en haut du formulaire, dans une alerte (<code>data-testid=\"form-error-summary\"</code>).",
-              "Un formulaire valide affiche un message de réussite avec votre nom, et Réinitialiser vide tous les champs et messages."
-            ]
-          },
-          {
-            "title": "Les règles",
-            "points": [
-              "Le nom complet est obligatoire, fait au moins 2 caractères et ne contient que des lettres, des espaces, des traits d'union et des apostrophes.",
-              "L'e-mail est obligatoire et doit ressembler à <code>name@example.com</code>.",
-              "Le téléphone et le site web sont facultatifs mais doivent être valides s'ils sont remplis : un numéro de téléphone a de 10 à 15 chiffres, peut commencer par + et contenir des espaces, et un site web doit commencer par <code>http://</code> ou <code>https://</code>.",
-              "L'âge est obligatoire et doit être un nombre entier de 18 à 120.",
-              "Le mot de passe doit avoir au moins 8 caractères avec une majuscule, une minuscule et un chiffre, et Confirmer le mot de passe doit lui correspondre."
-            ]
-          },
-          {
-            "title": "Trouver les messages",
-            "points": [
-              "Le test id de chaque champ est son nom, comme <code>email</code> ou <code>confirm-password</code>, et son erreur et son aide ajoutent <code>-error</code> et <code>-hint</code>, comme <code>email-error</code>."
-            ]
-          }
-        ]
-      },
       "submit-button": "Envoyer",
       "reset-button": "Réinitialiser",
       "error-summary_one": "Veuillez corriger l'erreur ci-dessous.",
@@ -1286,19 +786,6 @@
     "geolocation": {
       "title": "Géolocalisation",
       "description": "Trouvez la position du navigateur, puis suivez-la lorsqu'elle change.",
-      "information": {
-        "summary": "Le navigateur demande l'autorisation avant de partager sa position, et cette demande ne fait pas partie de la page : accordez (ou refusez) l'autorisation de géolocalisation et définissez une fausse position dans votre framework de test avant de cliquer.",
-        "sections": [
-          {
-            "title": "Obtenir la position",
-            "points": [
-              "« Obtenir ma position » lit la position une seule fois ; « Commencer le suivi » continue de la suivre, donc modifiez la fausse position et la page se mettra à jour.",
-              "Les coordonnées, leur précision et la plus proche de quelques villes connues sont affichées en dessous.",
-              "Si l'autorisation est refusée, si la position est introuvable ou si la recherche prend trop de temps, une erreur en explique la raison."
-            ]
-          }
-        ]
-      },
       "button": {
         "get-location": "Obtenir ma position",
         "start-watching": "Commencer le suivi",
@@ -1343,19 +830,6 @@
     "hovers": {
       "title": "Survols",
       "description": "Interagissez avec des éléments qui n'apparaissent que lorsque la souris survole quelque chose.",
-      "information": {
-        "summary": "Tout ce qui se trouve sur cette page n'apparaît que lorsque le pointeur de la souris est posé sur quelque chose : les tests doivent donc d'abord survoler. Votre dernière action est affichée en dessous.",
-        "sections": [
-          {
-            "title": "Chaque section",
-            "points": [
-              "Les détails de chaque carte de profil ne sont pas du tout dans le DOM tant que la carte n'est pas survolée, et il n'existe volontairement aucun autre moyen de les afficher.",
-              "Les boutons de chaque fichier sont toujours dans le DOM, mais restent invisibles tant que leur ligne n'est pas survolée : un test qui clique dessus directement sera informé qu'ils ne sont pas visibles ; au clavier, on peut aussi les afficher en atteignant la ligne avec Tab.",
-              "Le menu ouvre ses sous-menus un instant après le survol d'un élément et se ferme un instant après que le pointeur l'a quitté : parcourez-le comme le ferait une personne ; cliquer sur un élément ouvre son sous-menu immédiatement."
-            ]
-          }
-        ]
-      },
       "profiles": {
         "title": "Profils",
         "view": "Voir le profil",
@@ -1394,19 +868,6 @@
     "iframes": {
       "title": "IFrames",
       "description": "Des formulaires, des cadres imbriqués et un éditeur de texte enrichi placés dans des iframes : il faut basculer dans un cadre pour les atteindre.",
-      "information": {
-        "summary": "Tout ce qui se trouve dans une iframe appartient à un document distinct, donc les sélecteurs exécutés sur la page ne le trouvent pas : les tests doivent d'abord basculer dans le cadre, puis en ressortir pour vérifier quoi que ce soit sur la page.",
-        "sections": [
-          {
-            "title": "Chaque exemple",
-            "points": [
-              "Le formulaire envoie son message à la page, en dehors du cadre.",
-              "Le compteur se trouve dans un cadre lui-même placé dans un autre cadre, il faut donc deux bascules pour l'atteindre.",
-              "L'éditeur de texte enrichi fonctionne comme de nombreux éditeurs WYSIWYG classiques : le texte modifié est le corps d'un cadre, tandis que la barre d'outils, le nombre de mots et le HTML sont sur la page autour, ce qui oblige un test à passer de l'un à l'autre."
-            ]
-          }
-        ]
-      },
       "form": {
         "title": "Formulaire dans un cadre",
         "description": "Envoyez un nom depuis un formulaire dans un cadre vers la page qui l'entoure.",
@@ -1445,26 +906,6 @@
     "infinite-scroll": {
       "title": "Défilement infini",
       "description": "Une liste qui charge de nouveaux éléments chaque fois que vous atteignez le bas de la page.",
-      "information": {
-        "summary": "La liste commence avec 10 éléments et en charge 10 de plus chaque fois que vous atteignez le bas. Elle ne s'épuise jamais : attendez l'apparition des nouveaux éléments plutôt que la fin de la liste.",
-        "sections": [
-          {
-            "title": "Charger la suite",
-            "points": [
-              "D'autres éléments se chargent quand un repère invisible sous le dernier élément (<code>data-testid=\"scroll-sentinel\"</code>) devient visible : faites défiler jusqu'en bas de la page ou amenez ce repère à l'écran.",
-              "Un message de chargement s'affiche 0,8 seconde avant l'ajout de chaque lot de 10, et le compteur au-dessus de la liste (<code>data-testid=\"item-count\"</code>), comme <em>20 éléments affichés</em>, augmente.",
-              "Dans une fenêtre très haute, le repère reste visible après le chargement d'un lot : les lots continuent de se charger jusqu'à ce qu'il sorte de l'écran."
-            ]
-          },
-          {
-            "title": "Vérifier les éléments",
-            "points": [
-              "Les éléments sont numérotés dans l'ordre et chacun indique son lot : l'élément 11 est donc le premier du lot 2. Leurs test ids sont <code>item-</code> suivi du numéro, comme <code>item-11</code>.",
-              "Chaque élément est un <code>article</code> avec <code>aria-posinset</code> égal à son numéro, et la liste n'indique pas sa longueur (<code>aria-setsize=\"-1\"</code>), puisqu'elle n'a pas de fin."
-            ]
-          }
-        ]
-      },
       "feed-label": "Fil infini",
       "count_one": "{{count}} élément affiché",
       "count_other": "{{count}} éléments affichés",
@@ -1476,32 +917,6 @@
     "js-alerts": {
       "title": "Alertes JS",
       "description": "Gérez les boîtes de dialogue natives alert, confirm et prompt du navigateur, qui ne font pas partie de la page.",
-      "information": {
-        "summary": "Chaque bouton ouvre l'une des boîtes de dialogue JavaScript intégrées au navigateur : une alerte, une confirmation ou une saisie. Elles sont dessinées par le navigateur et non par la page : elles ne sont pas dans le DOM et les sélecteurs ne les trouvent pas.",
-        "sections": [
-          {
-            "title": "Gérer une boîte de dialogue",
-            "points": [
-              "Mettez en place un gestionnaire avant de cliquer sur le bouton qui ouvre la boîte de dialogue, vérifiez son message, puis acceptez-la ou fermez-la ; tant qu'elle est ouverte, la page est inutilisable.",
-              "Playwright ferme les boîtes de dialogue de lui-même, sauf si vous gérez son événement <code>dialog</code>. Cypress accepte de lui-même les alertes et les confirmations, permet de les vérifier avec les événements <code>window:alert</code> et <code>window:confirm</code>, et demande de remplacer <code>window.prompt</code> par un stub pour répondre à une saisie. Selenium passe à la boîte de dialogue avec <code>switchTo().alert()</code>."
-            ]
-          },
-          {
-            "title": "Chaque boîte de dialogue",
-            "points": [
-              "L'alerte n'a qu'un bouton OK.",
-              "La confirmation demande <em>Voulez-vous continuer ?</em>, et OK et Annuler donnent des résultats différents.",
-              "La saisie demande votre nom avec <em>Testeur</em> déjà rempli. L'accepter, taper votre propre réponse d'abord, l'envoyer vide et annuler donnent chacun un résultat différent."
-            ]
-          },
-          {
-            "title": "Le résultat",
-            "points": [
-              "Une fois la boîte de dialogue fermée, le panneau Résultat (<code>data-testid=\"result\"</code>) indique ce que vous avez fait, comme <em>Vous avez cliqué sur Annuler</em> ou <em>Vous avez saisi : Testeur</em>."
-            ]
-          }
-        ]
-      },
       "button": {
         "alert": "Ouvrir l'alerte JS",
         "confirm": "Ouvrir la confirmation JS",
@@ -1526,19 +941,6 @@
     "key-presses": {
       "title": "Appuis sur les touches",
       "description": "Interagissez avec la page en appuyant sur les touches du clavier.",
-      "information": {
-        "summary": "Tout sur cette page est piloté par le clavier : les tests doivent donc envoyer des appuis sur les touches plutôt que cliquer ou saisir du texte. Il n'y a volontairement aucune alternative à la souris.",
-        "sections": [
-          {
-            "title": "Chaque contrôle",
-            "points": [
-              "Le lecteur de touches affiche la dernière touche appuyée dans sa zone de texte, avec sa clé (key), son code et les touches de modification maintenues, ainsi que les dernières touches appuyées.",
-              "Le compteur ne change que lorsqu'il a le focus : les flèches haut et bas (ou droite et gauche) le modifient de 1, maintenir Maj le modifie de 10, Début et Fin vont aux valeurs minimale et maximale et Échap le remet à sa valeur de départ.",
-              "Le contrôle de maintien ne confirme que si Espace est maintenue enfoncée pendant une seconde entière ; relâcher plus tôt ne compte pas, et maintenir une touche répète son événement keydown, donc chaque répétition doit être ignorée."
-            ]
-          }
-        ]
-      },
       "reader": {
         "title": "Lecteur de touches",
         "label": "Appuyez sur une touche dans cette zone",
@@ -1571,27 +973,6 @@
     "login-form": {
       "title": "Formulaire de connexion",
       "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
-      "information": {
-        "summary": "Connectez-vous avec le nom d'utilisateur <strong>admin</strong> et le mot de passe <strong>Passw0rd!</strong>. Toute autre combinaison affiche une erreur.",
-        "sections": [
-          {
-            "title": "Se connecter",
-            "points": [
-              "Les deux valeurs doivent correspondre exactement : elles sont sensibles à la casse et les espaces comptent.",
-              "Appuyer sur Entrée dans le champ du mot de passe connecte aussi, comme le bouton Se connecter.",
-              "Un échec affiche <em>Les informations que vous avez fournies ne sont pas valides</em> et garde ce qui a été saisi ; une réussite remplace le formulaire par un message et un bouton Se déconnecter."
-            ]
-          },
-          {
-            "title": "Rester connecté",
-            "points": [
-              "La connexion enregistre <code>username</code> et <code>isLoggedIn</code> dans <code>localStorage</code> : la page est donc toujours connectée après un rechargement ou dans un nouvel onglet.",
-              "Si vos tests partagent une session de navigateur (comme dans Selenium, ou dans Cypress avec l'isolation des tests désactivée), cet état passe d'un test au suivant : déconnectez-vous ou videz <code>localStorage</code> d'abord. Pour commencer un test déjà connecté, définissez <code>username</code> et <code>isLoggedIn</code> (à <code>true</code>) avant le chargement de la page.",
-              "Se déconnecter supprime les deux clés et vide le formulaire."
-            ]
-          }
-        ]
-      },
       "logged-in-message": "Vous êtes actuellement connecté !",
       "invalid-credentials": "Les informations que vous avez fournies ne sont pas valides",
       "login-button": "Se connecter",
@@ -1602,32 +983,6 @@
     "modal-dialogs": {
       "title": "Boîtes de dialogue modales",
       "description": "Ouvrez, utilisez et fermez des boîtes de dialogue dessinées dans la page, dont une qui apparaît d'elle-même au chargement.",
-      "information": {
-        "sections": [
-          {
-            "title": "Trouver une fenêtre modale",
-            "points": [
-              "Contrairement aux boîtes de dialogue natives du navigateur (voir JS Alerts), ces modales sont des éléments du DOM ordinaires, mais chacune est rendue dans son propre élément à la <em>fin de <code>&lt;body&gt;</code></em>, en dehors du balisage du scénario : cherchez-la depuis le document plutôt qu'à l'intérieur de la section qui l'a ouverte.",
-              "Tant qu'une modale est ouverte, un fond plein écran recouvre la page et tout ce qui se trouve derrière est marqué <code>inert</code> et <code>aria-hidden=\"true\"</code> : les clics sur la page sont interceptés par le fond et les éléments en arrière-plan sortent de l'arbre d'accessibilité, si bien que les requêtes par rôle ne les trouvent plus."
-            ]
-          },
-          {
-            "title": "Chaque fenêtre modale",
-            "points": [
-              "La modale simple se ferme avec son bouton de fermeture, la touche Échap ou un clic sur le fond, et indique lequel a été utilisé.",
-              "La modale de confirmation protège une suppression : le bouton Annuler, le choix sûr, reçoit le focus, et Échap ou le fond annulent aussi.",
-              "La modale avec formulaire garde le focus piégé à l'intérieur tant qu'elle est ouverte (Tab fait le tour) et rend le focus au bouton qui l'a ouverte à sa fermeture.",
-              "Les modales empilées affichent une deuxième boîte de dialogue au-dessus de la première : Échap et le fond ne ferment que celle du dessus."
-            ]
-          },
-          {
-            "title": "La fenêtre de bienvenue",
-            "points": [
-              "Une modale de bienvenue s'ouvre <em>d'elle-même</em> lors de votre première visite et ne peut être fermée qu'avec son bouton ; ce choix est mémorisé dans <code>localStorage</code> sous <code>modal-dialogs-entry-dismissed</code>, les tests doivent donc soit la fermer, soit définir cette clé avant le chargement de la page."
-            ]
-          }
-        ]
-      },
       "close": "Fermer",
       "cancel": "Annuler",
       "basic": {
@@ -1687,20 +1042,6 @@
     "mouse-interactions": {
       "title": "Interactions avec la souris",
       "description": "Double-cliquez, faites un clic droit, cliquez en maintenant, et cliquez avec différents boutons de la souris et touches de modification.",
-      "information": {
-        "summary": "Chaque cible de cette page demande plus qu'un simple clic gauche, et chaque outil de test expose ces actions de la souris différemment. Le panneau en haut affiche toujours la dernière interaction. Il n'y a volontairement aucune alternative au clavier pour le double-clic, le bouton à maintenir ou la zone des boutons de la souris.",
-        "sections": [
-          {
-            "title": "Chaque cible",
-            "points": [
-              "La cible du double-clic ignore les clics simples et ne compte que les double-clics.",
-              "La note ouvre un menu contextuel personnalisé au clic droit à la place de celui du navigateur, et ses éléments épinglent, surlignent ou suppriment la note ; le menu est un élément distinct placé à l'endroit du pointeur, et il se ferme avec Échap ou en appuyant n'importe où en dehors.",
-              "Le bouton à maintenir ne confirme que si le bouton gauche de la souris reste enfoncé dessus pendant une seconde entière, donc l'appui et le relâchement doivent être envoyés en deux étapes séparées avec une attente entre les deux ; relâcher ou sortir du bouton plus tôt ne compte pas, et la barre de progression indique où vous en êtes.",
-              "La dernière zone indique quel bouton de la souris a été enfoncé (gauche, milieu, droit, précédent ou suivant) et quelles touches de modification (Shift, Control, Alt, Meta) étaient maintenues."
-            ]
-          }
-        ]
-      },
       "double-click": {
         "title": "Double-clic",
         "instructions": "Seul un double-clic compte ici : les clics simples sont ignorés.",
@@ -1766,38 +1107,6 @@
     "multi-step-form": {
       "title": "Formulaire en plusieurs étapes",
       "description": "Un assistant d'inscription réparti sur plusieurs étapes, avec une validation par étape, une étape qui n'apparaît que pour les comptes professionnels, une étape facultative, une page de récapitulatif avec des liens de modification, et des réponses conservées après un rechargement. L'étape en cours est indiquée dans l'URL.",
-      "information": {
-        "summary": "Le formulaire est découpé en étapes : informations personnelles, informations sur l'entreprise (comptes professionnels uniquement), adresse, préférences (facultative) et récapitulatif. Chaque étape a sa propre URL, comme <code>?step=address</code>, et les réponses sont enregistrées dans <code>sessionStorage</code> au fur et à mesure.",
-        "sections": [
-          {
-            "title": "Les étapes et l'URL",
-            "points": [
-              "Suivant ajoute une entrée à l'historique : le bouton Précédent du navigateur revient donc d'une étape, comme le bouton Retour du formulaire.",
-              "Une étape ne peut être affichée que lorsque toutes les étapes précédentes sont terminées. Ouvrir <code>?step=review</code> sur une page vierge affiche la première étape à la place, et l'URL est corrigée avec <code>history.replaceState</code>. Attendez que l'URL ou le titre de l'étape se stabilise plutôt que de vérifier juste après la navigation.",
-              "Pour accéder directement à une étape plus loin, remplissez les étapes précédentes via l'interface, ou renseignez la clé <code>multi-step-form</code> de <code>sessionStorage</code> avant le chargement de la page, par exemple avec <code>page.addInitScript()</code> dans Playwright ou <code>onBeforeLoad</code> dans Cypress. Les données doivent être valides et les étapes précédentes listées dans <code>completed</code> (ou <code>skipped</code>, pour l'étape facultative)."
-            ]
-          },
-          {
-            "title": "Validation et contenu conditionnel",
-            "points": [
-              "Suivant ne vérifie que les champs de l'étape en cours. Les erreurs apparaissent après un clic sur Suivant, puis se mettent à jour pendant la saisie, et le focus passe au premier champ en erreur.",
-              "Retour ne valide rien : une étape terminée peut donc redevenir invalide. Avancer de nouveau, ou ouvrir l'URL d'une étape suivante, vous y ramène.",
-              "Choisir <em>Professionnel</em> ajoute une étape sur l'entreprise : le nombre d'étapes passe de 4 à 5 et chaque étape suivante est décalée d'un rang. Repérez les étapes par leur nom ou par l'attribut <code>data-step</code>, pas par leur position.",
-              "L'étape des préférences est facultative : Passer avance sans l'enregistrer comme terminée, et le récapitulatif l'indique comme passée. Le champ du numéro de téléphone n'existe que lorsque <em>Téléphone</em> est le moyen de contact choisi.",
-              "Revenir à un compte personnel masque l'étape sur l'entreprise. Ses réponses sont conservées, mais ne sont plus affichées dans le récapitulatif."
-            ]
-          },
-          {
-            "title": "Récapitulatif, focus et réponses enregistrées",
-            "points": [
-              "Chaque section du récapitulatif a un lien dont le texte visible est simplement <em>Modifier</em>. Leurs noms accessibles indiquent l'étape qu'ils ouvrent, par exemple <em>Modifier Adresse</em> : recherchez-les par rôle et par nom. Après une modification, le bouton principal affiche <em>Enregistrer et revenir au récapitulatif</em> au lieu de Suivant.",
-              "Quand l'étape change, le focus passe au titre de l'étape. Saisir du texte juste après avoir cliqué sur Suivant ne remplit aucun champ.",
-              "Les réponses survivent à un rechargement, mais pas à un nouvel onglet ni à un nouveau contexte de navigateur, car <code>sessionStorage</code> appartient à un seul onglet. Recommencez, ou videz le stockage, pour que les tests ne voient pas les réponses des autres. L'envoi les efface aussi.",
-              "Chaque étape fait un objet de page naturel, avec un composant partagé pour la liste de progression et les boutons Retour, Suivant et Passer, et les étapes se prêtent bien à des scénarios BDD comme <em>Étant donné que j'ai rempli mes informations personnelles</em>."
-            ]
-          }
-        ]
-      },
       "progress-label": "Progression du formulaire",
       "step-count": "Étape {{current}} sur {{total}}",
       "optional": "facultative",
@@ -1885,18 +1194,6 @@
     "multiple-windows": {
       "title": "Fenêtres multiples",
       "description": "Des liens et des boutons qui ouvrent de nouveaux onglets et des fenêtres pop-up, vers lesquels les tests doivent basculer puis revenir.",
-      "information": {
-        "summary": "Chaque onglet ou fenêtre a son propre document, donc un test ne voit que celui sur lequel il se trouve : il doit attendre la nouvelle fenêtre, basculer dessus, puis revenir à la fenêtre d'origine. Chaque fenêtre définit son propre titre de document pour la distinguer.",
-        "sections": [
-          {
-            "title": "Chaque exemple",
-            "points": [
-              "La fenêtre pop-up renvoie un message à la fenêtre qui l'a ouverte, puis se ferme, tandis que la page suit si elle est toujours ouverte.",
-              "Les deux liens de fenêtre nommée s'ouvrent dans la même fenêtre : cliquer sur le second la réutilise au lieu d'en ouvrir une autre."
-            ]
-          }
-        ]
-      },
       "new-tab": {
         "title": "Nouvel onglet",
         "description": "Un lien qui ouvre une page dans un nouvel onglet.",
@@ -1955,27 +1252,6 @@
     "notification": {
       "title": "Notification",
       "description": "Déclenchez des notifications qui s'affichent en popup et en message sur la page, puis disparaissent d'elles-mêmes.",
-      "information": {
-        "summary": "Chaque bouton affiche son message deux fois : en popup au-dessus de la page et en alerte sous les boutons. Les deux disparaissent d'eux-mêmes au bout de 6 secondes.",
-        "sections": [
-          {
-            "title": "La popup et l'alerte",
-            "points": [
-              "La popup est placée dans une région de notifications (nommée <em>Notifications (F8)</em>) et a un test id formé de <code>notification-</code> et de son type, comme <code>notification-success</code>.",
-              "L'alerte sous les boutons a un test id formé de <code>message-</code> et de son type, et son type en majuscules comme titre, comme <em>SUCCESS</em>.",
-              "La popup peut être fermée plus tôt avec son bouton de fermeture, mais pas l'alerte : elle reste toujours les 6 secondes entières."
-            ]
-          },
-          {
-            "title": "Le minutage",
-            "points": [
-              "Les quatre boutons sont désactivés tant que l'alerte est affichée, donc une seule notification à la fois : attendez que l'alerte disparaisse avant de déclencher la suivante.",
-              "Le minuteur de la popup se met en pause quand le pointeur la survole ou qu'elle a le focus : un test qui la survole ou clique dessus la garde ouverte plus de 6 secondes, alors que l'alerte disparaît toujours à l'heure.",
-              "Plutôt que d'attendre 6 secondes, le contrôle de l'horloge de votre framework (comme <code>page.clock</code> dans Playwright ou <code>cy.clock()</code> dans Cypress) peut faire avancer le temps."
-            ]
-          }
-        ]
-      },
       "generate-notification": "Générer une notification",
       "type": {
         "success": "Succès",
@@ -1993,35 +1269,6 @@
     "paginated-table": {
       "title": "Tableau paginé",
       "description": "Retrouvez des factures sur les pages d'un tableau grâce à la recherche, aux filtres, à la sélection de lignes et à une action groupée.",
-      "information": {
-        "summary": "Le tableau contient 143 factures, affichées par 10, 25 ou 50. Le résumé, les dates et les montants sont rédigés et formatés différemment selon la langue.",
-        "sections": [
-          {
-            "title": "Chargement",
-            "points": [
-              "Chaque changement (une nouvelle page, taille de page, recherche ou filtre) se charge pendant une durée aléatoire de {{min}} à {{max}} ms, et pendant le chargement les anciennes lignes restent affichées : le tableau est marqué <code>aria-busy=\"true\"</code>, un voile avec un indicateur de chargement le recouvre et la pagination, la taille de page et les cases à cocher sont désactivées.",
-              "Vérifier les lignes juste après un clic peut lire l'ancienne page : attendez la fin du chargement ou que le résumé du nombre de lignes change."
-            ]
-          },
-          {
-            "title": "Recherche, filtres et pages",
-            "points": [
-              "La recherche ne se lance qu'après une pause de {{debounce}} ms dans la saisie, puis se charge à son tour ; elle porte sur le numéro de facture ou le client, sans tenir compte de la casse ni des accents (« cafe » trouve « Café Étoile »).",
-              "Une nouvelle recherche, un nouveau filtre ou une nouvelle taille de page ramène à la page 1, et les deux bornes de la période sont incluses.",
-              "La pagination affiche la première et la dernière page ainsi que celles qui entourent la page courante, avec … pour les autres : la page voulue n'a donc pas forcément encore de bouton ; la page courante est marquée <code>aria-current=\"page\"</code>.",
-              "Quand rien ne correspond, le tableau affiche un message avec un bouton pour effacer les filtres, et la pagination disparaît."
-            ]
-          },
-          {
-            "title": "Sélection des lignes",
-            "points": [
-              "Les lignes sélectionnées le restent quand vous changez de page ou de filtre, même si elles ne sont plus affichées, et le nombre de lignes sélectionnées les inclut.",
-              "La case de l'en-tête ne sélectionne que les lignes de la page courante, et est partiellement cochée quand seules certaines le sont.",
-              "Marquer des factures comme payées les modifie immédiatement : avec un filtre de statut, elles peuvent donc disparaître de la page."
-            ]
-          }
-        ]
-      },
       "filters": {
         "search": "Rechercher",
         "search-placeholder": "Numéro de facture ou client",
@@ -2076,27 +1323,6 @@
     "radio-button": {
       "title": "Bouton radio",
       "description": "Choisissez une couleur primaire, puis une couleur secondaire dans un second groupe qui dépend du premier choix.",
-      "information": {
-        "summary": "Choisir une couleur primaire affiche un second groupe de couleurs secondaires, dont le choix dépend de la couleur primaire choisie.",
-        "sections": [
-          {
-            "title": "Les deux groupes",
-            "points": [
-              "Rouge propose Violet et Orange, Bleu propose Violet et Vert, et Jaune propose Orange et Vert.",
-              "Blanc est désactivé et ne peut pas être choisi.",
-              "Changer de couleur primaire efface le choix secondaire, même quand le nouveau groupe propose la même couleur.",
-              "Le test id de chaque bouton radio indique son groupe et sa position, comme <code>radio-button-group-2-1</code>, et le second groupe change avec le premier choix : le même test id désigne Violet après Rouge mais Orange après Jaune. Vérifiez aussi le libellé."
-            ]
-          },
-          {
-            "title": "Pas des boutons radio natifs",
-            "points": [
-              "Comme les cases du scénario Checkbox, ce sont des boutons avec <code>role=\"radio\"</code> et <code>aria-checked</code> plutôt que des <code>&lt;input type=\"radio\"&gt;</code> : cliquez dessus plutôt que d'utiliser <code>check()</code> de Cypress, et lisez leur état dans <code>aria-checked</code>.",
-              "Chaque groupe est un <code>radiogroup</code> : Tab y entre une seule fois, puis les flèches passent au bouton suivant et le choisissent, en sautant Blanc, qui est désactivé."
-            ]
-          }
-        ]
-      },
       "first-set": "Couleurs primaires",
       "second-set": "Couleurs secondaires",
       "first": {
@@ -2114,26 +1340,6 @@
     "shadow-dom": {
       "title": "Shadow DOM",
       "description": "Des éléments cachés dans des shadow roots ouvertes, imbriquées et fermées, pour vérifier comment vos outils accèdent au shadow DOM.",
-      "information": {
-        "summary": "Quatre exemples cachés dans des shadow roots. Les sélecteurs ordinaires s'arrêtent à la limite d'une shadow root : chacun teste donc la façon dont votre outil y pénètre.",
-        "sections": [
-          {
-            "title": "Chaque exemple",
-            "points": [
-              "La shadow root ouverte contient un petit formulaire. Les locators de Playwright entrent d'eux-mêmes dans les shadow roots ouvertes, Cypress le fait avec <code>.shadow()</code> ou l'option <code>includeShadowDom</code>, et Selenium par la shadow root de l'hôte.",
-              "L'exemple imbriqué a une shadow root dans une autre : il faut donc deux étapes, dans l'hôte extérieur puis dans l'intérieur.",
-              "Le bouton inséré par slot s'affiche dans une shadow root mais appartient au light DOM : les sélecteurs ordinaires le trouvent depuis la page.",
-              "La shadow root fermée est inaccessible par <code>host.shadowRoot</code>, qui vaut <code>null</code>, et les locators de Playwright ne la traversent pas non plus. Atteignez son bouton autrement, par exemple avec Tab au clavier ou en cliquant à l'endroit où il s'affiche à l'écran."
-            ]
-          },
-          {
-            "title": "Vérifier le résultat",
-            "points": [
-              "Chaque exemple affiche son résultat là où vous pouvez le vérifier : le message d'accueil, le compteur et le compteur du bouton inséré par slot sont à côté, et celui de la root fermée est à l'extérieur, dans le light DOM (<code>data-testid=\"closed-shadow-status\"</code>)."
-            ]
-          }
-        ]
-      },
       "open": {
         "title": "Shadow root ouverte",
         "description": "Un petit formulaire affiché dans une shadow root ouverte.",
@@ -2169,19 +1375,6 @@
     "sortable-table": {
       "title": "Tableau triable",
       "description": "Triez un tableau en cliquant sur les en-têtes de ses colonnes.",
-      "information": {
-        "summary": "Cliquez sur l'en-tête d'une colonne pour trier selon celle-ci : le premier clic trie par ordre croissant, le deuxième par ordre décroissant et le troisième remet les lignes dans leur ordre d'origine. Le tri actuel est affiché sous le tableau.",
-        "sections": [
-          {
-            "title": "Points d'attention",
-            "points": [
-              "L'en-tête de la colonne triée indique le sens du tri dans son attribut aria-sort, les autres en-têtes n'en ont pas ; la colonne E-mail ne peut pas être triée.",
-              "Les valeurs sont choisies pour piéger un tri naïf : les salaires et le nombre de projets sont mal triés comme du texte, les dates d'arrivée sont affichées au format de votre langue, un nom commence par une lettre accentuée et plusieurs personnes partagent un service (elles gardent leur ordre d'origine en cas d'égalité).",
-              "Le prestataire n'a pas de salaire et est toujours trié en dernier, quel que soit le sens du tri."
-            ]
-          }
-        ]
-      },
       "columns": {
         "name": "Nom",
         "department": "Service",
@@ -2208,27 +1401,6 @@
     "slider-page": {
       "title": "Curseurs",
       "description": "Réglez des valeurs avec un curseur simple, un curseur de plage à deux poignées et un curseur lié à un champ numérique.",
-      "information": {
-        "summary": "Ces curseurs ne sont pas des éléments <code>&lt;input type=\"range\"&gt;</code>, on ne peut donc pas y saisir une valeur : chaque poignée est un élément avec <code>role=\"slider\"</code> qu'on déplace en la faisant glisser ou au clavier. Les trois vont de 1 à 100 par pas de 1.",
-        "sections": [
-          {
-            "title": "Déplacer une poignée",
-            "points": [
-              "La valeur d'une poignée est dans <code>aria-valuenow</code>, et ses limites dans <code>aria-valuemin</code> et <code>aria-valuemax</code>.",
-              "Une fois la poignée active, les flèches la déplacent de 1, Maj avec une flèche ou Page précédente et Page suivante la déplacent de 10, et Début et Fin vont à 1 et à 100.",
-              "Le glisser fonctionne aussi, mais l'endroit où la poignée s'arrête dépend de la largeur du curseur : un déplacement d'un nombre fixe de pixels donne des valeurs différentes selon l'écran. Le clavier est plus fiable."
-            ]
-          },
-          {
-            "title": "Chaque curseur",
-            "points": [
-              "Le curseur de base affiche sa valeur à côté de son libellé ; cet affichage n'a pas de test id propre, alors cherchez-le dans <code>basic-slider-container</code>.",
-              "Le curseur de plage a deux poignées, à 1 et à 25 au départ, qui peuvent se rejoindre sur la même valeur ; ses valeurs restent toujours dans l'ordre, si bien que la première poignée porte la plus petite.",
-              "Le dernier curseur est lié au champ numérique à côté (<code>data-testid=\"input-slider-text\"</code>) : taper un nombre déplace la poignée, et déplacer la poignée change le nombre. Un nombre hors de 1 à 100 est ramené à la limite la plus proche : taper 150 donne donc 100."
-            ]
-          }
-        ]
-      },
       "basic-slider": "Curseur de base",
       "range-slider": "Curseur avec Plage",
       "slider-with-input": "Curseur avec entrée",
@@ -2237,40 +1409,6 @@
     "time-and-timers": {
       "title": "Temps et minuteurs",
       "description": "Une offre à durée limitée, une déconnexion pour inactivité, des horodatages relatifs, un contenu selon l'heure, une recherche différée et un bouton limité.",
-      "information": {
-        "summary": "Tout sur cette page dépend de l'heure actuelle ou du temps qui passe, et les attentes sont volontairement longues : l'offre dure cinq minutes, et l'avertissement de session n'apparaît qu'après dix minutes sans aucune activité.",
-        "sections": [
-          {
-            "title": "Contrôler l'horloge",
-            "points": [
-              "Les attendre en temps réel rend un test lent et instable, alors prenez plutôt le contrôle de l'horloge, avec <code>page.clock</code> dans Playwright, <code>cy.clock()</code> et <code>cy.tick()</code> dans Cypress, ou <code>vi.useFakeTimers()</code> dans Vitest.",
-              "Installez la fausse horloge avant le chargement de la page, car les minuteurs démarrés avant restent sur l'horloge réelle.",
-              "La page relit l'horloge chaque seconde et calcule chaque état à partir de l'heure actuelle, donc avancer l'horloge d'un coup (par exemple avec <code>page.clock.fastForward()</code>, qui ne déclenche un minuteur échu qu'une seule fois) arrive directement au bon état."
-            ]
-          },
-          {
-            "title": "Ce qui dépend de l'horloge",
-            "points": [
-              "Le message d'accueil et la bannière des horaires d'ouverture dépendent de l'heure et du jour de la semaine, donc un test qui ne fixe pas l'heure réussit ou échoue selon le moment où il s'exécute : fixez une heure, comme un samedi ou un jour de semaine à 08:00, avant de charger la page. Ils utilisent aussi le fuseau horaire du navigateur.",
-              "Les horodatages relatifs passent de « à l'instant » à « il y a 1 minute », puis aux heures et aux jours, et leur heure exacte est dans l'attribut <code>datetime</code>."
-            ]
-          },
-          {
-            "title": "Expiration de la session",
-            "points": [
-              "La déconnexion pour inactivité compte tout mouvement de souris, clic, touche ou défilement comme une activité, donc un test qui bouge la souris pendant l'attente la remet à zéro.",
-              "L'avertissement couvre toute la page : tant qu'il est affiché, tout autre clic sur la page est intercepté jusqu'à ce qu'il soit fermé ; une fois l'avertissement affiché, seul Rester connecté conserve la session, et une fois déconnecté, seul Se reconnecter en démarre une nouvelle."
-            ]
-          },
-          {
-            "title": "Recherche et enregistrement",
-            "points": [
-              "La recherche ne s'exécute qu'une demi-seconde après la fin de la saisie, donc un test doit attendre les résultats, ou avancer l'horloge, plutôt que de les vérifier juste après la saisie ; le compteur de recherches indique combien de recherches ont réellement été lancées.",
-              "Enregistrer est limité : après un enregistrement, les clics suivants sont ignorés pendant deux secondes, donc deux clics rapprochés n'enregistrent qu'une fois."
-            ]
-          }
-        ]
-      },
       "clock": {
         "title": "Heure de la journée",
         "instructions": "Le message d'accueil change selon l'heure, et la boutique est ouverte du lundi au vendredi, aux heures de bureau uniquement.",
@@ -2347,26 +1485,6 @@
     "tooltip-page": {
       "title": "Tooltip",
       "description": "Affichez des infobulles sur un bouton désactivé, sur un bouton dont l'infobulle contient un lien et sur un texte tronqué.",
-      "information": {
-        "summary": "Chaque infobulle n'apparaît que tant que le pointeur est sur son élément ou que l'élément a le focus clavier : un test doit d'abord survoler (ou donner le focus). Elle apparaît 100 ms après le début du survol et est retirée du DOM quand le pointeur s'en va ou qu'on appuie sur Échap.",
-        "sections": [
-          {
-            "title": "Chaque infobulle",
-            "points": [
-              "Le bouton de suppression est désactivé, et les boutons désactivés ne déclenchent pas d'événements de pointeur : son infobulle est donc déclenchée par l'élément qui l'entoure (<code>data-testid=\"delete-button\"</code>). Survolez celui-ci plutôt que le bouton lui-même.",
-              "L'infobulle Plus d'informations contient un lien. Elle reste ouverte pendant que le pointeur passe du bouton à elle : allez directement sur le lien avant de cliquer dessus.",
-              "Le texte long est tronqué avec des points de suspension, et son infobulle l'affiche en entier. Le texte complet reste dans le DOM : une recherche par texte réussit même s'il n'est pas entièrement visible."
-            ]
-          },
-          {
-            "title": "Trouver une infobulle",
-            "points": [
-              "Une infobulle ouverte a <code>role=\"tooltip\"</code> : trouvez-la par ce rôle et vérifiez son texte, plutôt que de vous fier à sa position ou à son style.",
-              "Chaque infobulle s'affiche à côté de son élément, dans la page plutôt qu'à la fin de <code>&lt;body&gt;</code>."
-            ]
-          }
-        ]
-      },
       "no-permission": "Vous n'avez pas la permission de faire ça",
       "more-information": "Plus d'informations",
       "more-information-msg": "Pour plus d'informations, cliquez ici:",
@@ -2376,33 +1494,6 @@
     "various-inputs": {
       "title": "Diverses entrées",
       "description": "Tous les types courants de champs HTML, chacun avec une sortie qui reprend ce que vous saisissez pour que vous puissiez le vérifier.",
-      "information": {
-        "summary": "Chaque ligne a un champ natif à gauche et, à droite, une sortie en lecture seule qui montre exactement ce que contient le champ : vous pouvez saisir dans l'un et vérifier l'autre.",
-        "sections": [
-          {
-            "title": "Les champs",
-            "points": [
-              "Il y a des champs texte, mot de passe, nombre, date et texte sur plusieurs lignes, chacun avec un test id nommé d'après son type : <code>text-input</code>, <code>password-input</code>, <code>number-input</code>, <code>date-input</code> et <code>textarea-input</code>.",
-              "Les sorties sont de simples zones de texte en lecture seule : le mot de passe s'y affiche en clair.",
-              "Quand ce qui est saisi dans le champ nombre n'est pas un nombre valide, sa valeur est vide, et sa sortie l'est aussi."
-            ]
-          },
-          {
-            "title": "Les dates",
-            "points": [
-              "L'apparence du champ date et la façon d'y saisir dépendent du navigateur et de sa langue, mais sa valeur, que la sortie affiche, est toujours au format <code>yyyy-mm-dd</code>.",
-              "La plupart des frameworks peuvent la définir directement avec une valeur de cette forme, comme <code>2025-01-31</code>, plutôt que de saisir le jour, le mois et l'année séparément."
-            ]
-          },
-          {
-            "title": "Effacer",
-            "points": [
-              "Chaque champ sur une ligne affiche son propre bouton d'effacement dès qu'il a une valeur ; le champ sur plusieurs lignes n'en a pas.",
-              "Le bouton Tout effacer, en haut, vide tous les champs d'un coup."
-            ]
-          }
-        ]
-      },
       "input": "Entrée",
       "output": "Sortie",
       "text": "Texte",
@@ -2415,37 +1506,6 @@
     "virtualised-list": {
       "title": "Liste virtualisée",
       "description": "Des listes de 10 000 lignes et une grille de 260 000 cellules où seules les lignes à l'écran existent dans le DOM. Les lignes sont créées, réutilisées et supprimées au fil du défilement.",
-      "information": {
-        "summary": "Chaque liste compte 10 000 lignes et la grille 260 000 cellules, mais seules les quelques-unes proches de la zone visible sont dans le DOM. Le compteur au-dessus de chaque liste indique combien de lignes sont affichées en ce moment et lesquelles, pour les voir changer pendant le défilement.",
-        "sections": [
-          {
-            "title": "Les lignes hors écran n'existent pas",
-            "points": [
-              "Chercher la ligne {{fixedTarget}} tout de suite ne trouve rien : elle n'est pas masquée, elle n'est tout simplement pas encore dans le DOM. <code>scrollIntoView()</code> n'aide pas non plus, car il n'y a aucun élément sur lequel l'appeler. Faites défiler la liste elle-même (pas la page) jusqu'à ce que la ligne soit affichée, puis cherchez-la.",
-              "Compter les lignes avec <code>getAllByRole('listitem')</code>, <code>locator.count()</code> ou <code>should('have.length')</code> donne le nombre de lignes affichées, pas le total. Les vrais totaux se trouvent dans <code>aria-setsize</code> sur chaque ligne, et dans <code>aria-rowcount</code> et <code>aria-colcount</code> sur la grille.",
-              "Chercher du texte dans la page, avec <code>getByText</code> ou la recherche du navigateur, ne voit que les lignes affichées.",
-              "Être dans le DOM ne veut pas dire être à l'écran : quelques lignes de plus sont affichées au-dessus et en dessous de la zone visible pour éviter les trous lors d'un défilement rapide. Playwright fait défiler une ligne affichée jusqu'à elle avant de cliquer ; ailleurs, vérifiez d'abord qu'elle est visible."
-            ]
-          },
-          {
-            "title": "Les éléments sont réutilisés",
-            "points": [
-              "Pendant le défilement, l'élément qui affichait une ligne est réutilisé pour une autre : l'élément qui affichait la ligne 3 peut afficher la ligne 18 après un défilement. Un élément conservé, comme un <code>WebElement</code> Selenium ou un alias Cypress, peut ensuite désigner une autre ligne sans devenir obsolète, alors cherchez à nouveau la ligne après chaque défilement.",
-              "Cherchez les lignes par quelque chose qui leur appartient, comme leur texte, leur <code>data-row-id</code> ou le nom de leur bouton (<em>Sélectionner la ligne {{fixedTarget}}</em>), pas par leur position : <code>nth()</code> ou <code>eq()</code> choisit la n-ième ligne affichée, pas la n-ième ligne de la liste.",
-              "Le bouton <code>Sélectionner</code> de chaque ligne a le même texte visible, donc un sélecteur basé sur ce seul texte correspond à toutes les lignes affichées."
-            ]
-          },
-          {
-            "title": "Faire défiler jusqu'à une ligne",
-            "points": [
-              "Dans la liste à hauteur fixe, chaque ligne mesure {{rowHeight}} px, donc la ligne N commence à <code>(N - 1) × {{rowHeight}}</code> pixels. Donnez cette valeur au <code>scrollTop</code> de la liste et la ligne est affichée.",
-              "Dans la liste à hauteur variable, les lignes n'ont pas toutes la même hauteur, donc la position d'une ligne ne se déduit pas de son ID. Faites défiler pas à pas, par exemple de la hauteur de la liste, et vérifiez après chaque pas si la ligne est affichée. Les ID des lignes affichées indiquent s'il faut continuer ou revenir en arrière.",
-              "Les lignes sont affichées en réponse à l'événement de défilement, alors attendez que la ligne apparaisse plutôt que de vérifier juste après avoir défilé. Modifier <code>scrollTop</code>, <code>mouse.wheel()</code> dans Playwright et <code>scrollTo()</code> sur la liste dans Cypress déclenchent tous cet événement.",
-              "La grille défile dans les deux sens : ses colonnes sont aussi virtualisées, donc la colonne Q n'est pas dans le DOM tant que vous n'avez pas défilé vers la droite. Sa ligne d'en-tête et ses numéros de ligne restent en place au-dessus des cellules, donc une cellule juste en dessous est dans le DOM mais recouverte."
-            ]
-          }
-        ]
-      },
       "rendered": "{{rendered}} lignes sur {{total}} dans le DOM (lignes {{first}} à {{last}})",
       "row": "Ligne {{id}}",
       "select": "Sélectionner",
@@ -2484,46 +1544,6 @@
     "multiple-file-upload": {
       "title": "Envoi de plusieurs fichiers",
       "description": "Choisissez plusieurs fichiers à la fois, et ajoutez des images par une zone de dépôt avec un champ caché, des contrôles de type et de taille, des aperçus, une barre de progression par fichier et des boutons de suppression.",
-      "information": {
-        "summary": "La première section est un champ de fichier natif qui accepte plusieurs fichiers à la fois. La seconde est une zone de dépôt, comme la plupart des composants d'envoi : le vrai champ est caché, les fichiers sont vérifiés à leur ajout et chacun est envoyé avec sa propre barre de progression.",
-        "sections": [
-          {
-            "title": "Le champ derrière la zone de dépôt",
-            "points": [
-              "Le <code>&lt;input type=\"file\"&gt;</code> de la zone de dépôt est masqué visuellement et hors de l'ordre de tabulation : les utilisateurs ne voient que la zone et son bouton <em>Parcourir les fichiers</em>. <code>setInputFiles()</code> de Playwright fonctionne sur les champs cachés, ciblez donc directement <code>#drop-zone-input</code>. <code>selectFile()</code> de Cypress vérifie que l'élément est utilisable, ce qu'un champ caché peut ne pas être : passez <code>{ force: true }</code>.",
-              "Cliquer sur <em>Parcourir les fichiers</em> ouvre la boîte de dialogue de fichiers du système, qu'aucun outil de test ne peut piloter. Avec Playwright, attendez l'événement <code>filechooser</code> et appelez <code>setFiles()</code> dessus ; ailleurs, ne cliquez pas et définissez directement les fichiers du champ.",
-              "Pour tester le dépôt lui-même, simulez-le sur la zone. Avec Cypress, utilisez <code>selectFile(file, { action: 'drag-drop' })</code> sur la zone. Avec Playwright, créez un <code>DataTransfer</code> dans la page avec <code>page.evaluateHandle()</code> et passez-le à <code>dispatchEvent('drop', { dataTransfer })</code>. Selenium n'a pas de méthode intégrée : exécutez un script qui déclenche les événements.",
-              "Le champ est vidé après chaque sélection, pour qu'un même fichier puisse être choisi de nouveau après l'avoir retiré. Vérifier les <code>files</code> du champ ne vous apprend donc rien : vérifiez plutôt la liste des fichiers."
-            ]
-          },
-          {
-            "title": "Choisir plusieurs fichiers",
-            "points": [
-              "Le premier champ a l'attribut <code>multiple</code>. Passez un tableau à <code>setInputFiles()</code> ou <code>selectFile()</code>. Avec Selenium, envoyez à <code>sendKeys()</code> les chemins absolus séparés par des retours à la ligne.",
-              "Choisir de nouveau remplace la sélection au lieu de s'y ajouter, comme pour les champs natifs, alors que la zone de dépôt ajoute à sa liste à chaque fois.",
-              "Les fichiers n'ont pas besoin d'exister sur le disque : Playwright accepte <code>{ name, mimeType, buffer }</code> et Cypress <code>{ contents, fileName, mimeType }</code>."
-            ]
-          },
-          {
-            "title": "Validation",
-            "points": [
-              "Seules les images PNG, JPEG, GIF et WebP de {{max}} au plus sont acceptées. L'attribut <code>accept</code> du champ ne filtre que la boîte de dialogue : les fichiers définis par un test ou déposés passent outre, la page vérifie donc chaque fichier elle-même et liste ceux qu'elle a refusés.",
-              "Le type vient du type MIME du fichier, pas de son nom : un fichier nommé <code>photo.png</code> de type <code>text/plain</code> est refusé. Définissez vous-même le type MIME en créant des fichiers dans un test, sinon il est deviné à partir de l'extension.",
-              "Un fichier ayant le même nom et la même taille qu'un fichier déjà dans la liste est refusé comme doublon. Quand une sélection mêle bons et mauvais fichiers, les bons sont ajoutés et seuls les autres apparaissent dans l'erreur.",
-              "Tester la taille maximale demande un fichier de plus de {{max}} : créez-en un en mémoire, par exemple avec <code>Buffer.alloc(1024 * 1024 + 1)</code>."
-            ]
-          },
-          {
-            "title": "Progression, aperçus et suppression",
-            "points": [
-              "Chaque image commence à être envoyée dès son ajout, et les gros fichiers prennent plus de temps, jusqu'à environ 3 secondes. Attendez <code>data-status=\"uploaded\"</code>, le texte <em>Envoyé</em> ou que l'<code>aria-valuenow</code> de la barre de progression atteigne 100, plutôt qu'une durée fixe.",
-              "<em>Valider</em> est désactivé tant qu'une image est en cours d'envoi.",
-              "Chaque fichier a son propre bouton de suppression, nommé d'après lui (<em>Retirer photo.png</em>), et la suppression fonctionne aussi pendant l'envoi. Trouvez la ligne d'un fichier par son nom et agissez à l'intérieur plutôt que par sa position, car retirer un fichier fait remonter les suivants.",
-              "Les aperçus utilisent des URL <code>blob:</code> créées dans la page, leur <code>src</code> change donc à chaque exécution. Vérifiez le texte alternatif de l'aperçu, ou qu'il s'est chargé (<code>naturalWidth</code> supérieur à 0), plutôt que son <code>src</code>."
-            ]
-          }
-        ]
-      },
       "units": {
         "b": "{{value}} o",
         "kb": "{{value}} Ko",
@@ -2569,42 +1589,6 @@
     "tabs-and-accordions": {
       "title": "Onglets et accordéons",
       "description": "Passez d'un onglet à l'autre et dépliez ou repliez les sections d'accordéons, dont certaines gardent leur contenu masqué dans la page et d'autres le suppriment.",
-      "information": {
-        "summary": "Les onglets et les accordéons masquent du contenu sans le supprimer, ou le suppriment sans prévenir : un test doit donc savoir s'il vérifie qu'un élément <em>existe</em> ou qu'il est <em>visible</em>, et le moyen le plus fiable de savoir ce qui est ouvert est l'état ARIA (<code>aria-selected</code>, <code>aria-expanded</code>) plutôt que le style.",
-        "sections": [
-          {
-            "title": "Visible ou présent",
-            "points": [
-              "Les onglets produit gardent tous les panneaux dans le DOM et masquent les autres avec l'attribut <code>hidden</code> : le texte d'un panneau masqué reste trouvable, vérifiez donc la visibilité (<code>toBeVisible</code>) et pas seulement la présence.",
-              "Les onglets du rapport n'affichent que le panneau sélectionné : les autres n'existent pas du tout, et ce qui a été saisi dans un panneau est perdu quand on change d'onglet puis qu'on revient. Dans les onglets produit, les notes saisies sont conservées.",
-              "Les sections repliées des accordéons restent dans le DOM, masquées, comme pour les onglets produit."
-            ]
-          },
-          {
-            "title": "État ARIA et rôles",
-            "points": [
-              "Repérez les onglets et les panneaux par leur rôle (<code>tab</code>, <code>tabpanel</code>) et leur nom, et vérifiez l'onglet sélectionné avec <code>aria-selected=\"true\"</code>. Chaque panneau est étiqueté par son onglet via <code>aria-labelledby</code>.",
-              "Les en-têtes d'accordéon sont des boutons placés dans des titres, avec <code>aria-expanded</code> et <code>aria-controls</code> qui pointe vers une <code>region</code> étiquetée par son en-tête.",
-              "L'onglet <em>Archives</em> est désactivé avec <code>aria-disabled</code> plutôt qu'avec l'attribut natif <code>disabled</code> : il peut toujours recevoir un clic et le focus, mais ne fait rien. Certains outils considèrent <code>aria-disabled</code> comme désactivé et refusent de cliquer, d'autres cliquent sans problème."
-            ]
-          },
-          {
-            "title": "Clavier",
-            "points": [
-              "Seul l'onglet sélectionné est dans l'ordre de tabulation (<code>tabindex</code> itinérant). La touche <kbd>Tab</kbd> passe de la liste d'onglets au panneau, et non à l'onglet suivant.",
-              "<kbd>ArrowLeft</kbd> et <kbd>ArrowRight</kbd> passent d'un onglet à l'autre en bouclant, <kbd>Home</kbd> et <kbd>End</kbd> vont au premier et au dernier, et l'onglet désactivé est ignoré. Déplacer le focus sélectionne aussi l'onglet."
-            ]
-          },
-          {
-            "title": "Délais et URL",
-            "points": [
-              "L'onglet <em>Avis</em> met environ 1,5 seconde à se charger la première fois qu'il est sélectionné, et affiche d'ici là un message de chargement avec <code>aria-busy</code>. Attendez les avis eux-mêmes plutôt qu'un délai fixe.",
-              "Les onglets sélectionnés sont conservés dans l'URL (<code>?product=reviews&amp;report=monthly</code>), ce qui permet à un test d'ouvrir directement un onglet. Un onglet inconnu ou désactivé revient au premier.",
-              "Les éléments natifs <code>&lt;details&gt;</code> n'ont pas d'<code>aria-expanded</code> : vérifiez plutôt l'attribut <code>open</code>. Leur contenu est masqué par le navigateur, pas par la page."
-            ]
-          }
-        ]
-      },
       "notes-label": "Notes (changez d'onglet puis revenez pour voir si elles sont conservées)",
       "product": {
         "title": "Onglets qui gardent les panneaux masqués",
@@ -2693,41 +1677,6 @@
     "offline-and-network-status": {
       "title": "Hors ligne et état du réseau",
       "description": "Réagissez lorsque le navigateur passe hors ligne puis revient en ligne, mettez des messages en file d'attente hors ligne et relancez une requête échouée.",
-      "information": {
-        "summary": "La page écoute les événements <code>online</code> et <code>offline</code> du navigateur et lit <code>navigator.onLine</code> : un test doit donc couper la connexion depuis le navigateur lui-même (dans Playwright avec <code>context.setOffline</code>, dans Cypress ou WebdriverIO via les conditions réseau du Chrome DevTools Protocol) plutôt qu'en arrêtant un serveur.",
-        "sections": [
-          {
-            "title": "Passer hors ligne",
-            "points": [
-              "Bloquer les requêtes par interception ne modifie pas <code>navigator.onLine</code> et ne déclenche pas l'événement <code>offline</code> : la bannière reste verte et la file d'attente n'attend pas. Seule une coupure au niveau du navigateur change les deux.",
-              "<code>navigator.onLine</code> à <code>true</code> signifie seulement que le navigateur a une connexion réseau, pas que le site est joignable. Une requête peut donc échouer alors que la bannière indique « en ligne », et la page la signale comme une erreur réseau plutôt que comme hors ligne.",
-              "Couper le réseau à la main dans les DevTools ou dans un test revient au même, mais les navigateurs autres que Chromium ne le permettent pas forcément : vérifiez ce que votre framework propose pour Firefox et WebKit."
-            ]
-          },
-          {
-            "title": "La file d'attente des messages",
-            "points": [
-              "Chaque message rejoint la file d'attente et part aussitôt si le navigateur est en ligne : en ligne, un message ne reste donc qu'un instant dans la file. Attendez qu'il apparaisse dans <em>Messages envoyés</em> plutôt que de vérifier la file juste après l'envoi.",
-              "Hors ligne, les messages attendent dans la file, dans l'ordre, et sont envoyés lorsque l'événement <code>online</code> se déclenche. Les messages qui ont dû attendre sont signalés comme tels dans <em>Messages envoyés</em>.",
-              "L'envoi utilise une vraie requête vers un fichier livré avec le site (le site est statique et ne peut pas recevoir le message lui-même) : c'est elle qui échoue quand le réseau est coupé. Interceptez <code>status.json</code> pour faire échouer l'envoi avec une erreur serveur."
-            ]
-          },
-          {
-            "title": "Requêtes échouées",
-            "points": [
-              "« Vérifier l'état du service » demande le même fichier. En cas d'échec, l'erreur indique si le navigateur était hors ligne, si la requête n'a reçu aucune réponse ou si le serveur a répondu par une erreur, et « Réessayer » relance la requête. Le numéro de la tentative est affiché pour qu'un test distingue une nouvelle tentative de la première.",
-              "La réponse n'est jamais prise dans le cache du navigateur : une requête faite hors ligne échoue donc toujours."
-            ]
-          },
-          {
-            "title": "Événements de connexion",
-            "points": [
-              "Chaque événement <code>online</code> et <code>offline</code> est consigné avec son heure, après une entrée pour l'état dans lequel la page s'est chargée. Les heures sont au format 24 heures <code>HH:MM:SS</code> dans le fuseau horaire du navigateur, avec l'horodatage complet dans l'attribut <code>datetime</code>.",
-              "C'est le navigateur qui décide quand déclencher ces événements : n'attendez pas une entrée pour chaque bascule de votre test, car passer à l'état où se trouve déjà le navigateur ne déclenche rien."
-            ]
-          }
-        ]
-      },
       "banner": {
         "online-title": "Vous êtes en ligne",
         "online": "Le navigateur signale une connexion réseau. Les messages sont envoyés immédiatement.",
