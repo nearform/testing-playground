@@ -232,6 +232,14 @@ describe('Autocomplete scenario', () => {
       })
     }
 
+    it('warns that the server is slow and how long it can take', () => {
+      TestRenderer(<Autocomplete />)
+
+      expect(screen.getByTestId('city-slow-notice')).toHaveTextContent(
+        `take up to ${SEARCH_DEBOUNCE + SLOW_RESPONSE}ms to appear`,
+      )
+    })
+
     it('asks for more characters before searching', async () => {
       renderWithFakeTimers()
 
@@ -248,7 +256,9 @@ describe('Autocomplete scenario', () => {
       renderWithFakeTimers()
 
       typeCity('lon')
-      expect(screen.getByTestId('city-message')).toHaveTextContent('Searching…')
+      expect(screen.getByTestId('city-message')).toHaveTextContent(
+        'Waiting for the server…',
+      )
 
       await wait(SEARCH_DEBOUNCE + FAST_RESPONSE)
 
@@ -265,7 +275,9 @@ describe('Autocomplete scenario', () => {
       await wait(SEARCH_DEBOUNCE - 1 + FAST_RESPONSE)
 
       // The first search was never sent, and the second is still waiting
-      expect(screen.getByTestId('city-message')).toHaveTextContent('Searching…')
+      expect(screen.getByTestId('city-message')).toHaveTextContent(
+        'Waiting for the server…',
+      )
 
       await wait(1)
 

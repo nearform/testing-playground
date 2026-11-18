@@ -1,4 +1,4 @@
-import { CardTitle, Input } from '@nearform/quantum'
+import { CardTitle, Input, Notice, Spinner } from '@nearform/quantum'
 import type { KeyboardEvent, ReactNode } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -141,6 +141,8 @@ interface ComboboxProps {
   suggestions: string[]
   // Shown in the popup in place of suggestions, e.g. "No matches"
   message?: string
+  // Puts a spinner beside the message, while waiting for suggestions
+  loading?: boolean
   onQueryChange: (query: string) => void
   onSelect: (option: string) => void
 }
@@ -153,6 +155,7 @@ const Combobox = ({
   query,
   suggestions,
   message,
+  loading = false,
   onQueryChange,
   onSelect,
 }: ComboboxProps): JSX.Element => {
@@ -279,9 +282,10 @@ const Combobox = ({
       {showMessage && (
         <p
           role='status'
-          className='absolute z-10 mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-foreground-muted shadow-md dark:border-border-dark dark:bg-background-dark dark:text-foreground-muted-dark'
+          className='absolute z-10 mt-1 flex w-full items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-foreground-muted shadow-md dark:border-border-dark dark:bg-background-dark dark:text-foreground-muted-dark'
           data-testid={`${id}-message`}
         >
+          {loading && <Spinner size='sm' />}
           {message}
         </p>
       )}
@@ -396,6 +400,7 @@ const Autocomplete = (): JSX.Element => {
               // shows it instead of an empty "No matches"
               suggestions={city === null ? cityResults : [city]}
               message={cityMessage()}
+              loading={cityLoading && cityTerm.length >= MIN_CITY_CHARACTERS}
               onQueryChange={(query) => {
                 setCityQuery(query)
                 setCity(null)
@@ -410,6 +415,11 @@ const Autocomplete = (): JSX.Element => {
                 value: selection(city),
               })}
             </p>
+            <Notice variant='warning' data-testid='city-slow-notice'>
+              {t('scenarios.autocomplete.city.slow-notice', {
+                wait: SEARCH_DEBOUNCE + SLOW_RESPONSE,
+              })}
+            </Notice>
           </section>
         </div>
       </PageSetup>
