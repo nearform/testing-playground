@@ -37,6 +37,9 @@ const RadioButton = (): JSX.Element => {
     if (firstRadioValue in secondRadioOptions) {
       return (
         <RadioGroup
+          // A new group for each primary colour, so a secondary colour picked
+          // for an earlier one is not still selected
+          key={firstRadioValue}
           legend={`${t(`scenarios.${SLUG}.second-set`)}:`}
           defaultValue=''
           data-testid='radio-button-group-2'

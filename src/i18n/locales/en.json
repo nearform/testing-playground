@@ -2083,6 +2083,7 @@
             "points": [
               "Red offers Purple and Orange, Blue offers Purple and Green, and Yellow offers Orange and Green.",
               "White is disabled and cannot be picked.",
+              "Changing the primary colour clears the secondary choice, even when the new set offers the same colour.",
               "Each radio's test id has its set and position, such as <code>radio-button-group-2-1</code>, and the second set changes with the first choice, so the same test id is Purple after Red but Orange after Yellow: check the label as well."
             ]
           },
