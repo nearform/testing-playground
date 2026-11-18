@@ -291,6 +291,112 @@
         "too-short_other": "Digite pelo menos {{count}} caracteres"
       }
     },
+    "broken-images-and-links": {
+      "title": "Imagens e links quebrados",
+      "description": "Uma galeria e uma lista de links em que alguns funcionam e outros não, incluindo uma imagem com 404, uma imagem com URL inválida, uma imagem com carregamento lento, páginas inexistentes e links de âncora.",
+      "information": {
+        "summary": "Algumas imagens e links desta página funcionam e outros não, para verificar que cada imagem carrega e que cada link leva a algum lugar. Cada imagem e cada link tem um atributo <code>data-expected</code> com o valor <code>ok</code> ou <code>broken</code>, para que um teste possa comparar o que encontra com o que deveria encontrar.",
+        "sections": [
+          {
+            "title": "Imagens quebradas",
+            "points": [
+              "Uma imagem quebrada continua na página: mantém o seu <code>src</code>, mostra o texto alternativo e está visível, então verificar que a <code>&lt;img&gt;</code> existe ou está visível passa. Em vez disso, verifique se terminou de carregar e tem tamanho: <code>img.complete &amp;&amp; img.naturalWidth === 0</code> significa que falhou.",
+              "A imagem com URL inválida nunca faz uma requisição, então não aparece como 404 no registro de rede. Só a própria imagem indica que falhou.",
+              "Escutar respostas com falha só captura requisições feitas depois de adicionar o ouvinte, então adicione-o antes de carregar a página."
+            ]
+          },
+          {
+            "title": "Carregamento lento",
+            "points": [
+              "A última imagem tem <code>loading=\"lazy\"</code> e fica abaixo da dobra, então o navegador só a solicita quando ela se aproxima da área visível.",
+              "Até lá, <code>complete</code> é falso e <code>naturalWidth</code> é 0, então uma verificação feita logo de início a reporta como quebrada (ou, com Verificar imagens, como ainda não carregada). Role até ela e espere que carregue antes de verificá-la."
+            ]
+          },
+          {
+            "title": "Verificar links",
+            "points": [
+              "Clicar em cada link é lento e sai da página, então solicite cada URL com uma requisição de API (<code>page.request.get()</code> no Playwright, <code>cy.request()</code> no Cypress) e verifique se o status é menor que 400. Leia a propriedade <code>href</code> resolvida em vez do atributo, que pode ser relativo.",
+              "Um arquivo estático inexistente, como a página antiga da galeria, retorna um 404 de verdade.",
+              "Este playground usa roteamento por hash, então um link para uma página da aplicação como <code>#/cookies-and-storage</code> só solicita a página inicial: o servidor retorna 200 mesmo para uma página que não existe. Em vez disso, abra esses links e verifique se a página mostra o seu conteúdo.",
+              "Sites externos podem bloquear requisições automatizadas, limitá-las ou estar fora do ar, o que torna instável a verificação de links externos. Muitas suítes os verificam de forma agendada em vez de em cada execução."
+            ]
+          },
+          {
+            "title": "Links de âncora",
+            "points": [
+              "Como o # da URL já é usado para o roteamento, os links para seções desta página são tratados por script: clicar em um rola até a seção sem mudar a URL.",
+              "Para verificar uma âncora, procure um elemento cujo <code>id</code> corresponda à parte depois do #. O link para a seção de avaliações não tem seção correspondente, então clicar nele não faz nada."
+            ]
+          }
+        ]
+      },
+      "nav": {
+        "title": "Nesta página"
+      },
+      "images": {
+        "title": "Galeria",
+        "explanation": "Duas destas imagens carregam. Uma aponta para um arquivo que não existe, e outra tem uma URL que não pode ser interpretada.",
+        "mountain": {
+          "alt": "Montanhas sob um céu azul",
+          "caption": "Montanhas"
+        },
+        "lake": {
+          "alt": "Um lago cercado de grama",
+          "caption": "Lago"
+        },
+        "missing": {
+          "alt": "Um pôr do sol sobre o mar",
+          "caption": "Pôr do sol"
+        },
+        "invalid": {
+          "alt": "Uma foto de um endereço inválido",
+          "caption": "Endereço inválido"
+        },
+        "lazy": {
+          "alt": "Uma fileira de pinheiros",
+          "caption": "Floresta"
+        }
+      },
+      "check": {
+        "button": "Verificar imagens",
+        "status": {
+          "loaded": "Carregada",
+          "broken": "Quebrada",
+          "pending": "Ainda não carregada"
+        }
+      },
+      "links": {
+        "title": "Links",
+        "explanation": "Alguns destes links levam a uma página e outros não levam a lugar nenhum.",
+        "kind": {
+          "route": "página desta aplicação",
+          "static": "página estática",
+          "external": "site externo",
+          "anchor": "seção desta página"
+        },
+        "items": {
+          "route": "Cenário de cookies e armazenamento",
+          "unknown-route": "Cenário removido",
+          "static": "Sobre a galeria",
+          "missing-static": "Galeria antiga",
+          "external": "Testing Playground no GitHub",
+          "missing-external": "Página do GitHub inexistente",
+          "anchor-images": "Galeria",
+          "anchor-links": "Links",
+          "anchor-lazy-image": "Imagem com carregamento lento",
+          "anchor-reviews": "Avaliações"
+        }
+      },
+      "snippets": {
+        "title": "Verificar em um teste",
+        "explanation": "Exemplos de como verificar cada imagem e cada link externo de uma página."
+      },
+      "lazy": {
+        "title": "Imagem com carregamento lento",
+        "explanation": "Esta imagem tem loading=\"lazy\", então o navegador só a solicita quando ela se aproxima da área visível.",
+        "scroll-hint": "Role para baixo: há uma imagem com carregamento lento mais abaixo."
+      }
+    },
     "canvas-and-svg": {
       "title": "Canvas e SVG",
       "description": "Um bloco de desenho, um gráfico de barras e um jogo de alvo desenhados em canvas, além de um mapa SVG com dicas ao passar o mouse, cujo conteúdo não pode ser encontrado com as consultas normais ao DOM.",
