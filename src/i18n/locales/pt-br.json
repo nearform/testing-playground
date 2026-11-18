@@ -44,10 +44,11 @@
         "placeholder": "Comece a digitar um país"
       },
       "city": {
-        "title": "Cidades (de um servidor)",
+        "title": "Cidades (servidor lento)",
+        "slow-notice": "As sugestões vêm de um servidor fictício lento, então levam até {{wait}} ms para aparecer depois que você para de digitar.",
         "label": "Cidade",
         "placeholder": "Comece a digitar uma cidade",
-        "loading": "Buscando…",
+        "loading": "Aguardando o servidor…",
         "too-short_one": "Digite pelo menos {{count}} caractere",
         "too-short_other": "Digite pelo menos {{count}} caracteres"
       }

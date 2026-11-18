@@ -37,12 +37,16 @@ const PageSetup: React.FC<PageSetupProps> = ({
       <Card className='flex flex-col gap-4'>
         <section>
           <CardTitle>{t('scenarios.description')}</CardTitle>
-          <CardDescription>{ReactHtmlParser(t(description))}</CardDescription>
+          <CardDescription className='text-sm'>
+            {ReactHtmlParser(t(description))}
+          </CardDescription>
         </section>
         {information && (
           <section>
             <CardTitle>{t('scenarios.information')}</CardTitle>
-            <CardDescription>{ReactHtmlParser(t(information))}</CardDescription>
+            <CardDescription className='text-sm'>
+              {ReactHtmlParser(t(information))}
+            </CardDescription>
           </section>
         )}
       </Card>

@@ -43,10 +43,11 @@
         "placeholder": "Start typing a country"
       },
       "city": {
-        "title": "Cities (from a server)",
+        "title": "Cities (slow server)",
+        "slow-notice": "Suggestions come from a slow pretend server, so they take up to {{wait}}ms to appear after you stop typing.",
         "label": "City",
         "placeholder": "Start typing a city",
-        "loading": "Searching…",
+        "loading": "Waiting for the server…",
         "too-short_one": "Type at least {{count}} character",
         "too-short_other": "Type at least {{count}} characters"
       }
