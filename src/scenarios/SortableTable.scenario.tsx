@@ -201,7 +201,7 @@ const SortableTable = (): JSX.Element => {
         information={t('scenarios.sortable-table.information')}
       >
         <div className='flex flex-col gap-6'>
-          <Table data-testid='sortable-table' bordered className='w-full'>
+          <Table data-testid='sortable-table' bordered>
             <TableHeader>
               <TableRow>
                 {columns.map(({ key, align }) => (

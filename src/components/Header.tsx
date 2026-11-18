@@ -26,9 +26,8 @@ function Header(): JSX.Element {
         </AppHeaderLogo>
         <h1 className='font-semibold'>{t('site.title')}</h1>
       </div>
-      {/* Quantum hides the actions below `sm` to make room for a mobile menu;
-          there is no menu here, so keep them showing */}
-      <AppHeaderActions className='flex'>
+      {/* There is no mobile menu, so keep the actions showing on small screens */}
+      <AppHeaderActions collapse={false}>
         <LanguageDropdown />
         <ThemeToggle data-testid='theme-toggle' />
       </AppHeaderActions>

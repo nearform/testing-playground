@@ -1,4 +1,10 @@
-import { Badge, Card, CardDescription, CardTitle } from '@nearform/quantum'
+import {
+  Badge,
+  Card,
+  CardDescription,
+  CardTitle,
+  Spinner,
+} from '@nearform/quantum'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -101,10 +107,8 @@ const InfiniteScroll = (): JSX.Element => {
             role='status'
             data-testid='loading'
           >
-            <span
-              aria-hidden='true'
-              className='h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent'
-            />
+            {/* No label: the text beside it already says what is loading */}
+            <Spinner />
             {t('scenarios.infinite-scroll.loading')}
           </div>
         )}

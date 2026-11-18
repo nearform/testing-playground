@@ -1,4 +1,4 @@
-import { Button, CardTitle, Input, Label } from '@nearform/quantum'
+import { Button, CardTitle, Input, Label, Spinner } from '@nearform/quantum'
 import type { ReactNode } from 'react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,15 +34,13 @@ const useDelay = (): ((callback: () => void, ms: number) => void) => {
   }, [])
 }
 
-const Spinner = ({ id }: { id: string }): JSX.Element => {
+const LoadingSpinner = ({ id }: { id: string }): JSX.Element => {
   const { t } = useTranslation()
+  const label = t('scenarios.dynamic-loading.loading')
+  // A status takes its name only from aria-label, not from Quantum's hidden
+  // label text, so set both to keep it findable by role and name
   return (
-    <div
-      role='status'
-      aria-label={t('scenarios.dynamic-loading.loading')}
-      data-testid={`${id}-spinner`}
-      className='h-6 w-6 animate-spin rounded-full border-4 border-current border-t-transparent'
-    />
+    <Spinner label={label} aria-label={label} data-testid={`${id}-spinner`} />
   )
 }
 
@@ -81,7 +79,7 @@ const RenderedAfterLoading = (): JSX.Element => {
       >
         {t('scenarios.dynamic-loading.start')}
       </Button>
-      {state === 'loading' && <Spinner id='rendered' />}
+      {state === 'loading' && <LoadingSpinner id='rendered' />}
       {state === 'done' && (
         <p data-testid='rendered-element'>
           {t('scenarios.dynamic-loading.rendered.result')}
@@ -114,7 +112,7 @@ const HiddenUntilLoaded = (): JSX.Element => {
       >
         {t('scenarios.dynamic-loading.start')}
       </Button>
-      {state === 'loading' && <Spinner id='hidden' />}
+      {state === 'loading' && <LoadingSpinner id='hidden' />}
       {/* An inline style rather than a class, so it is hidden whatever CSS
           has loaded */}
       <p
@@ -177,7 +175,7 @@ const EnabledAfterDelay = (): JSX.Element => {
             : 'scenarios.dynamic-loading.enable.enable',
         )}
       </Button>
-      {busy && <Spinner id='enable' />}
+      {busy && <LoadingSpinner id='enable' />}
       {messageKey !== null && (
         <p aria-live='polite' data-testid='enable-message'>
           {t(messageKey)}
@@ -235,7 +233,7 @@ const RemovedAndAdded = (): JSX.Element => {
             : 'scenarios.dynamic-loading.remove.add',
         )}
       </Button>
-      {busy && <Spinner id='remove' />}
+      {busy && <LoadingSpinner id='remove' />}
       {messageKey !== null && (
         <p aria-live='polite' data-testid='remove-message'>
           {t(messageKey)}
