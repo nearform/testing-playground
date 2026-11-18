@@ -2314,6 +2314,105 @@
         "open-summary": "Por que comparar com o elemento nativo?",
         "open-body": "Ele não precisa de script nem de ARIA, mas seu estado é o atributo open, e não aria-expanded."
       }
+    },
+    "offline-and-network-status": {
+      "title": "Offline e status da rede",
+      "description": "Reaja quando o navegador fica offline e volta a ficar online, coloque mensagens na fila enquanto estiver offline e tente de novo uma requisição que falhou.",
+      "information": {
+        "summary": "A página escuta os eventos <code>online</code> e <code>offline</code> do navegador e lê <code>navigator.onLine</code>, então um teste precisa cortar a conexão pelo próprio navegador (no Playwright com <code>context.setOffline</code>, no Cypress ou WebdriverIO pelas condições de rede do Chrome DevTools Protocol) em vez de parar um servidor.",
+        "sections": [
+          {
+            "title": "Ficando offline",
+            "points": [
+              "Bloquear requisições com interceptação não altera <code>navigator.onLine</code> nem dispara o evento <code>offline</code>, então o banner continua verde e a fila não espera. Só um corte no nível do navegador muda os dois.",
+              "<code>navigator.onLine</code> como <code>true</code> só significa que o navegador tem uma conexão de rede, não que o site pode ser alcançado. Uma requisição ainda pode falhar enquanto o banner diz online, e a página informa isso como erro de rede, não como offline.",
+              "Desligar a rede à mão no DevTools e num teste é a mesma coisa, mas navegadores que não são Chromium podem não suportar isso: veja o que seu framework oferece para Firefox e WebKit."
+            ]
+          },
+          {
+            "title": "A fila de mensagens",
+            "points": [
+              "Toda mensagem entra na fila e é enviada na hora se o navegador estiver online, então online uma mensagem fica na fila só por um instante. Espere ela aparecer em <em>Mensagens enviadas</em> em vez de verificar a fila logo depois de enviar.",
+              "Offline, as mensagens esperam na fila, em ordem, e são enviadas quando o evento <code>online</code> é disparado. As mensagens que tiveram que esperar aparecem marcadas em <em>Mensagens enviadas</em>.",
+              "O envio usa uma requisição real para um arquivo publicado com o site (o site é estático e não pode receber a mensagem em si), e é ela que falha quando a rede cai. Intercepte <code>status.json</code> para fazer o envio falhar com um erro do servidor."
+            ]
+          },
+          {
+            "title": "Requisições que falham",
+            "points": [
+              "<em>Verificar status do serviço</em> pede o mesmo arquivo. Se falhar, o erro diz se o navegador estava offline, se a requisição não teve resposta ou se o servidor respondeu com um erro, e <em>Tentar novamente</em> repete a requisição. O número da tentativa é mostrado para que um teste diferencie uma nova tentativa da primeira.",
+              "A resposta nunca vem do cache do navegador, então uma requisição feita offline sempre falha."
+            ]
+          },
+          {
+            "title": "Eventos de conexão",
+            "points": [
+              "Cada evento <code>online</code> e <code>offline</code> é registrado com a hora em que aconteceu, depois de um registro do estado em que a página carregou. As horas estão no formato 24 horas <code>HH:MM:SS</code> no fuso horário do navegador, com o horário completo no atributo <code>datetime</code>.",
+              "É o navegador que decide quando disparar esses eventos, então não espere um registro para cada troca que seu teste fizer: mudar para o estado em que o navegador já está não dispara nada."
+            ]
+          }
+        ]
+      },
+      "banner": {
+        "online-title": "Você está online",
+        "online": "O navegador informa uma conexão de rede. As mensagens são enviadas na hora.",
+        "offline-title": "Você está offline",
+        "offline": "O navegador não informa nenhuma conexão de rede. As mensagens vão para a fila e serão enviadas quando a conexão voltar."
+      },
+      "form": {
+        "title": "Enviar uma mensagem",
+        "explanation": "As mensagens são enviadas quando você está online. Offline, elas esperam na fila e são enviadas quando a conexão voltar.",
+        "message-label": "Mensagem",
+        "send": "Enviar"
+      },
+      "queue": {
+        "title": "Mensagens na fila:",
+        "empty": "Nenhuma mensagem está esperando para ser enviada.",
+        "waiting": "Esperando",
+        "sending": "Enviando",
+        "queued-at": "desde",
+        "paused-title": "Fila pausada",
+        "paused": {
+          "offline": "Você está offline. As mensagens na fila serão enviadas quando a conexão voltar.",
+          "network": "O envio falhou porque não foi possível acessar a rede. Tente de novo com \"Enviar mensagens da fila agora\".",
+          "server": "O envio falhou porque o servidor retornou um erro. Tente de novo com \"Enviar mensagens da fila agora\"."
+        },
+        "send-now": "Enviar mensagens da fila agora"
+      },
+      "sent": {
+        "title": "Mensagens enviadas:",
+        "empty": "Nenhuma mensagem foi enviada ainda.",
+        "sent-at": "Enviada às",
+        "waited": "ficou na fila"
+      },
+      "request": {
+        "title": "Status do serviço",
+        "explanation": "Peça o status do serviço. Se a requisição falhar, o erro explica o motivo e você pode tentar de novo.",
+        "button": "Verificar status do serviço",
+        "loading": "Verificando o status do serviço...",
+        "success-title": "Status do serviço carregado",
+        "checked-at": "verificado às",
+        "attempt": "(tentativa {{attempt}})",
+        "retry": "Tentar novamente",
+        "errors": {
+          "offline-title": "Você está offline",
+          "offline": "A requisição falhou porque o navegador não tem conexão de rede.",
+          "network-title": "Erro de rede",
+          "network": "A requisição falhou porque não foi possível acessar o servidor.",
+          "server-title": "Erro do servidor",
+          "server": "O servidor retornou um erro."
+        }
+      },
+      "events": {
+        "title": "Eventos de conexão",
+        "explanation": "Cada mudança na conexão, com a hora em que aconteceu.",
+        "types": {
+          "loaded-online": "Página carregada online",
+          "loaded-offline": "Página carregada offline",
+          "online": "Conexão restabelecida",
+          "offline": "Conexão perdida"
+        }
+      }
     }
   }
 }

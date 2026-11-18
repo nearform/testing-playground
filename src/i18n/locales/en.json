@@ -2313,6 +2313,105 @@
         "open-summary": "Why compare with the native element?",
         "open-body": "It needs no script and no ARIA, but its state is the open attribute rather than aria-expanded."
       }
+    },
+    "offline-and-network-status": {
+      "title": "Offline and Network Status",
+      "description": "React to the browser going offline and back online, queue messages while offline and retry a failed request.",
+      "information": {
+        "summary": "The page listens to the browser's <code>online</code> and <code>offline</code> events and reads <code>navigator.onLine</code>, so a test has to cut the connection through the browser itself (in Playwright with <code>context.setOffline</code>, in Cypress or WebdriverIO through Chrome DevTools Protocol network conditions) rather than by stopping a server.",
+        "sections": [
+          {
+            "title": "Going offline",
+            "points": [
+              "Blocking requests with request interception does not change <code>navigator.onLine</code> or fire the <code>offline</code> event, so the banner stays green and the queue does not wait. Only a browser-level switch changes both.",
+              "<code>navigator.onLine</code> being <code>true</code> only means the browser has a network connection, not that the site can be reached. A request can still fail while the banner says online, and the page reports that as a network error rather than as offline.",
+              "Switching the network off in DevTools by hand and in a test are the same thing, but browsers other than Chromium may not support it: check what your framework offers for Firefox and WebKit."
+            ]
+          },
+          {
+            "title": "The message queue",
+            "points": [
+              "Every message joins the queue and is sent at once if the browser is online, so while online a message only sits in the queue for a moment. Wait for it to appear in <em>Sent messages</em> rather than asserting the queue straight after sending.",
+              "While offline, messages wait in the queue, in order, and are sent when the <code>online</code> event fires. Messages that had to wait are marked as such in <em>Sent messages</em>.",
+              "Sending uses a real request to a file shipped with the site (the site is static, so it cannot accept the message itself), which is what fails when the network is down. Intercept <code>status.json</code> to make sending fail with a server error instead."
+            ]
+          },
+          {
+            "title": "Failed requests",
+            "points": [
+              "<em>Check service status</em> requests the same file. If it fails, the error says whether the browser was offline, the request got no response, or the server answered with an error, and <em>Retry</em> tries again. The attempt number is shown so a test can tell a retry from the first try.",
+              "The response is never taken from the browser's cache, so a request made while offline always fails."
+            ]
+          },
+          {
+            "title": "Connection events",
+            "points": [
+              "Each <code>online</code> and <code>offline</code> event is logged with the time it happened, after an entry for the state the page loaded in. Times are 24-hour <code>HH:MM:SS</code> in the browser's time zone, with the full timestamp in the <code>datetime</code> attribute.",
+              "The browser decides when to fire these events, so do not expect one entry for every switch your test makes: switching to the state the browser is already in fires nothing."
+            ]
+          }
+        ]
+      },
+      "banner": {
+        "online-title": "You are online",
+        "online": "The browser reports a network connection. Messages are sent straight away.",
+        "offline-title": "You are offline",
+        "offline": "The browser reports no network connection. Messages will be queued and sent when the connection returns."
+      },
+      "form": {
+        "title": "Send a message",
+        "explanation": "Messages are sent when you are online. While offline they wait in the queue and are sent when the connection comes back.",
+        "message-label": "Message",
+        "send": "Send"
+      },
+      "queue": {
+        "title": "Queued messages:",
+        "empty": "No messages are waiting to be sent.",
+        "waiting": "Waiting",
+        "sending": "Sending",
+        "queued-at": "since",
+        "paused-title": "Queue paused",
+        "paused": {
+          "offline": "You are offline. Queued messages will be sent when the connection returns.",
+          "network": "Sending failed because the network could not be reached. Try again with \"Send queued messages now\".",
+          "server": "Sending failed because the server returned an error. Try again with \"Send queued messages now\"."
+        },
+        "send-now": "Send queued messages now"
+      },
+      "sent": {
+        "title": "Sent messages:",
+        "empty": "No messages have been sent yet.",
+        "sent-at": "Sent at",
+        "waited": "was queued"
+      },
+      "request": {
+        "title": "Service status",
+        "explanation": "Request the service status. If the request fails, the error explains why and you can try again.",
+        "button": "Check service status",
+        "loading": "Checking the service status...",
+        "success-title": "Service status loaded",
+        "checked-at": "checked at",
+        "attempt": "(attempt {{attempt}})",
+        "retry": "Retry",
+        "errors": {
+          "offline-title": "You are offline",
+          "offline": "The request failed because the browser has no network connection.",
+          "network-title": "Network error",
+          "network": "The request failed because the server could not be reached.",
+          "server-title": "Server error",
+          "server": "The server returned an error."
+        }
+      },
+      "events": {
+        "title": "Connection events",
+        "explanation": "Every change in the connection, with the time it happened.",
+        "types": {
+          "loaded-online": "Page loaded online",
+          "loaded-offline": "Page loaded offline",
+          "online": "Connection restored",
+          "offline": "Connection lost"
+        }
+      }
     }
   }
 }

@@ -2314,6 +2314,105 @@
         "open-summary": "Pourquoi comparer avec l'élément natif ?",
         "open-body": "Il ne demande ni script ni ARIA, mais son état est l'attribut open et non aria-expanded."
       }
+    },
+    "offline-and-network-status": {
+      "title": "Hors ligne et état du réseau",
+      "description": "Réagissez lorsque le navigateur passe hors ligne puis revient en ligne, mettez des messages en file d'attente hors ligne et relancez une requête échouée.",
+      "information": {
+        "summary": "La page écoute les événements <code>online</code> et <code>offline</code> du navigateur et lit <code>navigator.onLine</code> : un test doit donc couper la connexion depuis le navigateur lui-même (dans Playwright avec <code>context.setOffline</code>, dans Cypress ou WebdriverIO via les conditions réseau du Chrome DevTools Protocol) plutôt qu'en arrêtant un serveur.",
+        "sections": [
+          {
+            "title": "Passer hors ligne",
+            "points": [
+              "Bloquer les requêtes par interception ne modifie pas <code>navigator.onLine</code> et ne déclenche pas l'événement <code>offline</code> : la bannière reste verte et la file d'attente n'attend pas. Seule une coupure au niveau du navigateur change les deux.",
+              "<code>navigator.onLine</code> à <code>true</code> signifie seulement que le navigateur a une connexion réseau, pas que le site est joignable. Une requête peut donc échouer alors que la bannière indique « en ligne », et la page la signale comme une erreur réseau plutôt que comme hors ligne.",
+              "Couper le réseau à la main dans les DevTools ou dans un test revient au même, mais les navigateurs autres que Chromium ne le permettent pas forcément : vérifiez ce que votre framework propose pour Firefox et WebKit."
+            ]
+          },
+          {
+            "title": "La file d'attente des messages",
+            "points": [
+              "Chaque message rejoint la file d'attente et part aussitôt si le navigateur est en ligne : en ligne, un message ne reste donc qu'un instant dans la file. Attendez qu'il apparaisse dans <em>Messages envoyés</em> plutôt que de vérifier la file juste après l'envoi.",
+              "Hors ligne, les messages attendent dans la file, dans l'ordre, et sont envoyés lorsque l'événement <code>online</code> se déclenche. Les messages qui ont dû attendre sont signalés comme tels dans <em>Messages envoyés</em>.",
+              "L'envoi utilise une vraie requête vers un fichier livré avec le site (le site est statique et ne peut pas recevoir le message lui-même) : c'est elle qui échoue quand le réseau est coupé. Interceptez <code>status.json</code> pour faire échouer l'envoi avec une erreur serveur."
+            ]
+          },
+          {
+            "title": "Requêtes échouées",
+            "points": [
+              "« Vérifier l'état du service » demande le même fichier. En cas d'échec, l'erreur indique si le navigateur était hors ligne, si la requête n'a reçu aucune réponse ou si le serveur a répondu par une erreur, et « Réessayer » relance la requête. Le numéro de la tentative est affiché pour qu'un test distingue une nouvelle tentative de la première.",
+              "La réponse n'est jamais prise dans le cache du navigateur : une requête faite hors ligne échoue donc toujours."
+            ]
+          },
+          {
+            "title": "Événements de connexion",
+            "points": [
+              "Chaque événement <code>online</code> et <code>offline</code> est consigné avec son heure, après une entrée pour l'état dans lequel la page s'est chargée. Les heures sont au format 24 heures <code>HH:MM:SS</code> dans le fuseau horaire du navigateur, avec l'horodatage complet dans l'attribut <code>datetime</code>.",
+              "C'est le navigateur qui décide quand déclencher ces événements : n'attendez pas une entrée pour chaque bascule de votre test, car passer à l'état où se trouve déjà le navigateur ne déclenche rien."
+            ]
+          }
+        ]
+      },
+      "banner": {
+        "online-title": "Vous êtes en ligne",
+        "online": "Le navigateur signale une connexion réseau. Les messages sont envoyés immédiatement.",
+        "offline-title": "Vous êtes hors ligne",
+        "offline": "Le navigateur ne signale aucune connexion réseau. Les messages seront mis en file d'attente et envoyés au retour de la connexion."
+      },
+      "form": {
+        "title": "Envoyer un message",
+        "explanation": "Les messages sont envoyés lorsque vous êtes en ligne. Hors ligne, ils attendent dans la file et sont envoyés au retour de la connexion.",
+        "message-label": "Message",
+        "send": "Envoyer"
+      },
+      "queue": {
+        "title": "Messages en attente :",
+        "empty": "Aucun message n'attend d'être envoyé.",
+        "waiting": "En attente",
+        "sending": "Envoi en cours",
+        "queued-at": "depuis",
+        "paused-title": "File d'attente suspendue",
+        "paused": {
+          "offline": "Vous êtes hors ligne. Les messages en attente seront envoyés au retour de la connexion.",
+          "network": "L'envoi a échoué car le réseau est injoignable. Réessayez avec « Envoyer les messages en attente ».",
+          "server": "L'envoi a échoué car le serveur a renvoyé une erreur. Réessayez avec « Envoyer les messages en attente »."
+        },
+        "send-now": "Envoyer les messages en attente"
+      },
+      "sent": {
+        "title": "Messages envoyés :",
+        "empty": "Aucun message n'a encore été envoyé.",
+        "sent-at": "Envoyé à",
+        "waited": "mis en attente"
+      },
+      "request": {
+        "title": "État du service",
+        "explanation": "Demandez l'état du service. Si la requête échoue, l'erreur en explique la raison et vous pouvez réessayer.",
+        "button": "Vérifier l'état du service",
+        "loading": "Vérification de l'état du service...",
+        "success-title": "État du service chargé",
+        "checked-at": "vérifié à",
+        "attempt": "(tentative {{attempt}})",
+        "retry": "Réessayer",
+        "errors": {
+          "offline-title": "Vous êtes hors ligne",
+          "offline": "La requête a échoué car le navigateur n'a pas de connexion réseau.",
+          "network-title": "Erreur réseau",
+          "network": "La requête a échoué car le serveur est injoignable.",
+          "server-title": "Erreur serveur",
+          "server": "Le serveur a renvoyé une erreur."
+        }
+      },
+      "events": {
+        "title": "Événements de connexion",
+        "explanation": "Chaque changement de connexion, avec son heure.",
+        "types": {
+          "loaded-online": "Page chargée en ligne",
+          "loaded-offline": "Page chargée hors ligne",
+          "online": "Connexion rétablie",
+          "offline": "Connexion perdue"
+        }
+      }
     }
   }
 }
