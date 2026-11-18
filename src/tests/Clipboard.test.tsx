@@ -1,4 +1,5 @@
 import { act, cleanup, fireEvent, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -282,6 +283,32 @@ describe('Clipboard scenario', () => {
       expect(screen.getByTestId('notes-paste-status')).toHaveTextContent(
         /^Pasted as plain text$/,
       )
+    })
+
+    it('keeps typing in order after a paste that leaves the notes unchanged', async () => {
+      const user = userEvent.setup()
+      TestRenderer(<Clipboard />)
+      const notes = screen.getByTestId('textarea-notes') as HTMLTextAreaElement
+
+      // Whitespace only cleans up to nothing, so the value stays empty
+      pasteInto(notes, { 'text/plain': '   ' })
+      await user.type(notes, 'ab')
+
+      expect(notes).toHaveValue('ab')
+      expect(notes.selectionStart).toBe(2)
+    })
+
+    it('places the caret after a paste that matches the selected text', () => {
+      TestRenderer(<Clipboard />)
+      const notes = screen.getByTestId('textarea-notes') as HTMLTextAreaElement
+      fireEvent.change(notes, { target: { value: 'Hello world' } })
+      notes.setSelectionRange(0, 5)
+
+      pasteInto(notes, { 'text/plain': 'Hello' })
+
+      expect(notes).toHaveValue('Hello world')
+      expect(notes.selectionStart).toBe(5)
+      expect(notes.selectionEnd).toBe(5)
     })
 
     it('rejects a paste into the confirm password field', () => {

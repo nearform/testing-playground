@@ -129,8 +129,15 @@ const Clipboard = (): JSX.Element => {
       element.selectionEnd,
       pasted,
     )
-    pendingCaret.current = { element, caret: next.caret }
-    setNotes(next.value)
+    if (next.value === element.value) {
+      // React skips a render for an unchanged value, so the effect would not
+      // run: place the caret now rather than leaving it pending, where the
+      // next keystroke would apply it and move the caret back
+      element.setSelectionRange(next.caret, next.caret)
+    } else {
+      pendingCaret.current = { element, caret: next.caret }
+      setNotes(next.value)
+    }
     setNotesPaste(
       Array.from(event.clipboardData.types).includes('text/html')
         ? 'formatting-removed'
