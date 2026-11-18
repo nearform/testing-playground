@@ -1,4 +1,4 @@
-import { Button, CardTitle } from '@nearform/quantum'
+import { Button, CardTitle, ProgressBar } from '@nearform/quantum'
 import type { KeyboardEvent, MouseEvent } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -389,20 +389,12 @@ const MouseInteractions = (): JSX.Element => {
             >
               {t('scenarios.mouse-interactions.hold.label')}
             </button>
-            <div
-              role='progressbar'
+            <ProgressBar
               aria-label={t('scenarios.mouse-interactions.hold.progress')}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={holdPercent}
-              className='h-3 w-72 overflow-hidden rounded-full bg-grey-200 dark:bg-background-alt-dark'
+              value={holdPercent}
+              className='w-72'
               data-testid='hold-progress'
-            >
-              <div
-                className='h-full bg-brandGreen'
-                style={{ width: `${holdPercent}%` }}
-              />
-            </div>
+            />
             <p aria-live='polite' data-testid='hold-result'>
               {t(`scenarios.mouse-interactions.hold.state.${holdState}`)}
             </p>

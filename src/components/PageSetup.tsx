@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import ReactHtmlParser from 'html-react-parser'
 import { useTranslation } from 'react-i18next'
-import { useHref } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 interface PageSetupProps {
   children: React.ReactNode
@@ -25,19 +25,13 @@ const PageSetup: React.FC<PageSetupProps> = ({
   information,
 }) => {
   const { t } = useTranslation()
-  // A router-aware href ('#/' under the HashRouter), so the plain anchor
-  // BackLink renders navigates within the app
-  const homeHref = useHref('/')
 
   return (
     <div className='flex flex-col gap-4 p-4'>
       <PageHeader>
         <PageHeaderTitle>{title}</PageHeaderTitle>
-        <BackLink
-          href={homeHref}
-          data-testid={t('navigation.back').toLowerCase()}
-        >
-          {t('navigation.back_to_main_page')}
+        <BackLink asChild data-testid={t('navigation.back').toLowerCase()}>
+          <Link to='/'>{t('navigation.back_to_main_page')}</Link>
         </BackLink>
       </PageHeader>
       <Card className='flex flex-col gap-4'>

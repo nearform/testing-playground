@@ -52,13 +52,7 @@ const TooltipPage = (): JSX.Element => {
           </Tooltip>
 
           <Tooltip
-            content={
-              // Quantum's tooltip has no width of its own, so cap it here or
-              // the long text runs across the page on one line
-              <span className='block max-w-xs'>
-                {t('scenarios.tooltip-page.really-long-text')}
-              </span>
-            }
+            content={t('scenarios.tooltip-page.really-long-text')}
             side='right'
           >
             <p className='w-40 truncate' data-testid='text'>
