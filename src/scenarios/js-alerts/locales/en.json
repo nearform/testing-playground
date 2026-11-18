@@ -1,0 +1,24 @@
+{
+  "title": "JS Alerts",
+  "description": "Handle the browser's native alert, confirm and prompt dialogs, which are not part of the page.",
+  "button": {
+    "alert": "Open JS Alert",
+    "confirm": "Open JS Confirm",
+    "prompt": "Open JS Prompt"
+  },
+  "dialog": {
+    "alert": "I am a JS Alert",
+    "confirm": "Do you want to continue?",
+    "prompt": "What is your name?",
+    "prompt-default": "Tester"
+  },
+  "result": {
+    "title": "Result",
+    "alert": "You accepted the alert",
+    "confirm-ok": "You clicked OK",
+    "confirm-cancel": "You clicked Cancel",
+    "prompt-ok": "You entered: {{answer}}",
+    "prompt-empty": "You submitted an empty answer",
+    "prompt-cancel": "You cancelled the prompt"
+  }
+}

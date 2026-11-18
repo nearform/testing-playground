@@ -1,0 +1,76 @@
+{
+  "title": "Temps et minuteurs",
+  "description": "Une offre à durée limitée, une déconnexion pour inactivité, des horodatages relatifs, un contenu selon l'heure, une recherche différée et un bouton limité.",
+  "clock": {
+    "title": "Heure de la journée",
+    "instructions": "Le message d'accueil change selon l'heure, et la boutique est ouverte du lundi au vendredi, aux heures de bureau uniquement.",
+    "today": "Nous sommes le",
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir",
+      "night": "Bonne nuit"
+    },
+    "shop": {
+      "weekend": "Nous sommes fermés le week-end. Nous rouvrons lundi à {{opens}}.",
+      "open": "Nous sommes ouverts jusqu'à {{closes}}.",
+      "before-opening": "Nous sommes fermés. Nous ouvrons aujourd'hui à {{opens}}.",
+      "after-closing": "Nous avons fermé à {{closes}}. Revenez demain."
+    }
+  },
+  "countdown": {
+    "title": "Compte à rebours",
+    "instructions": "L'offre expire cinq minutes après le chargement de la page et ne peut plus être utilisée.",
+    "offer": "20 % de réduction sur votre première commande",
+    "ends-in": "L'offre se termine dans {{time}}",
+    "claimed": "Offre utilisée",
+    "expired": "Cette offre a expiré",
+    "claim": "Profiter de l'offre",
+    "restart": "Relancer l'offre"
+  },
+  "session": {
+    "title": "Expiration de session",
+    "instructions": "Après {{warning}} sans mouvement de souris, clic, touche ou défilement, un avertissement apparaît. Si personne ne choisit de rester connecté dans les {{grace}}, la session est déconnectée.",
+    "signed-in": "Vous êtes connecté",
+    "signed-out": "Vous avez été déconnecté pour inactivité",
+    "sign-in": "Se reconnecter",
+    "idle": "Inactif depuis {{time}}",
+    "warning-title": "Êtes-vous toujours là ?",
+    "warning-body": "Vous serez déconnecté dans {{time}}.",
+    "stay": "Rester connecté"
+  },
+  "relative": {
+    "title": "Horodatages relatifs",
+    "instructions": "Chaque mise à jour indique depuis combien de temps elle a eu lieu, et le texte change avec le temps.",
+    "just-now": "à l'instant",
+    "post": "Publier une mise à jour",
+    "list": "Mises à jour",
+    "opened": "Page ouverte",
+    "posted": "Mise à jour {{number}} publiée"
+  },
+  "rate": {
+    "title": "Différer et limiter"
+  },
+  "debounce": {
+    "title": "Recherche différée",
+    "instructions": "La recherche s'exécute {{delay}} ms après la fin de la saisie.",
+    "label": "Rechercher des villes",
+    "count_one": "{{count}} recherche lancée",
+    "count_other": "{{count}} recherches lancées",
+    "searching": "Recherche en cours…",
+    "empty": "Tapez pour rechercher",
+    "no-results": "Aucune ville ne correspond à « {{query}} »",
+    "results": "Villes correspondantes"
+  },
+  "throttle": {
+    "title": "Bouton limité",
+    "instructions": "Après un enregistrement, les clics sur Enregistrer sont ignorés pendant {{interval}} ms.",
+    "save": "Enregistrer",
+    "ready": "Prêt à enregistrer",
+    "cooling-down": "Enregistré. Les clics sont ignorés un instant",
+    "saves_one": "Enregistré {{count}} fois",
+    "saves_other": "Enregistré {{count}} fois",
+    "ignored_one": "{{count}} clic ignoré",
+    "ignored_other": "{{count}} clics ignorés"
+  }
+}

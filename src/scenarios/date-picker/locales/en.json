@@ -1,0 +1,43 @@
+{
+  "title": "Date Picker",
+  "description": "A custom calendar date picker: single dates, disabled days, a date range and a field you can type into or pick from.",
+  "iso-value": "Value (ISO):",
+  "clear": "Clear",
+  "calendar": {
+    "previous-month": "Previous month",
+    "next-month": "Next month",
+    "month": "Month",
+    "year": "Year"
+  },
+  "appointment": {
+    "title": "Appointment",
+    "instructions": "Book a weekday from today onwards. Weekends and past days cannot be picked.",
+    "label": "Appointment date",
+    "placeholder": "Choose a date",
+    "calendar": "Choose an appointment date"
+  },
+  "trip": {
+    "title": "Trip",
+    "instructions": "Pick the first and then the last day of your trip, from today onwards.",
+    "label": "Trip dates",
+    "placeholder": "Choose dates",
+    "calendar": "Choose trip dates",
+    "pick-start": "Pick the first day",
+    "pick-end": "Pick the last day",
+    "start": "Start (ISO):",
+    "end": "End (ISO):"
+  },
+  "birth-date": {
+    "title": "Date of birth",
+    "instructions": "Type the date as {{format}} and press Enter, or pick it from the calendar.",
+    "label": "Date of birth",
+    "format": "MM/DD/YYYY",
+    "open-calendar": "Choose date of birth",
+    "calendar": "Choose date of birth",
+    "errors": {
+      "invalid": "Enter a real date as {{format}}",
+      "future": "Date of birth cannot be in the future",
+      "too-early": "Date of birth cannot be before {{year}}"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Saisie semi-automatique",
+  "description": "Choisissez une valeur parmi les suggestions qui apparaissent pendant la saisie.",
+  "no-matches": "Aucun résultat",
+  "nothing-selected": "rien",
+  "selected": "Sélection : {{value}}",
+  "country": {
+    "title": "Pays",
+    "label": "Pays",
+    "placeholder": "Commencez à taper un pays"
+  },
+  "city": {
+    "title": "Villes (serveur lent)",
+    "slow-notice": "Les suggestions viennent d'un faux serveur lent : elles mettent jusqu'à {{wait}} ms à apparaître une fois la saisie arrêtée.",
+    "label": "Ville",
+    "placeholder": "Commencez à taper une ville",
+    "loading": "En attente du serveur…",
+    "too-short_one": "Tapez au moins {{count}} caractère",
+    "too-short_other": "Tapez au moins {{count}} caractères"
+  }
+}

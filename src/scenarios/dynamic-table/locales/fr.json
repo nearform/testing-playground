@@ -1,0 +1,13 @@
+{
+  "title": "Tableau dynamique",
+  "description": "Trouvez un processus dans un tableau dont les lignes et les valeurs changent à chaque chargement, et comparez son UC à la barre verte.",
+  "name": "Nom",
+  "cpu": "UC",
+  "memory": "Mémoire",
+  "network": "Réseau",
+  "disk": "Disque",
+  "chrome": "Chrome",
+  "docker": "Docker",
+  "system": "Système",
+  "slack": "Slack"
+}

@@ -1,0 +1,70 @@
+{
+  "title": "Cookies and Storage",
+  "description": "Answer a cookie consent banner, save cookie preferences, keep a note for this tab only, and watch the cookies and storage change.",
+  "banner": {
+    "title": "We use cookies",
+    "text": "We use necessary cookies to make this site work. With your permission we would also like to set analytics and marketing cookies. You can change your choice at any time."
+  },
+  "preferences": {
+    "title": "Cookie preferences",
+    "text": "Choose which optional cookies to allow. Necessary cookies are always on."
+  },
+  "categories": {
+    "necessary": {
+      "label": "Necessary",
+      "description": "Needed for the site to work, so they cannot be turned off."
+    },
+    "analytics": {
+      "label": "Analytics",
+      "description": "Help us understand how the site is used."
+    },
+    "marketing": {
+      "label": "Marketing",
+      "description": "Used to show you relevant adverts on other sites."
+    }
+  },
+  "button": {
+    "accept-all": "Accept all",
+    "reject-all": "Reject all",
+    "manage": "Manage preferences",
+    "save-preferences": "Save preferences",
+    "cancel": "Cancel",
+    "cookie-settings": "Cookie settings",
+    "reload": "Reload page",
+    "refresh": "Refresh",
+    "clear": "Clear everything"
+  },
+  "consent": {
+    "title": "Cookie consent",
+    "status-title": "Your choice",
+    "status": {
+      "none": "You have not made a choice yet",
+      "accepted": "You accepted all cookies",
+      "rejected": "You rejected all optional cookies",
+      "custom": "You chose which cookies to allow"
+    },
+    "allowed": "Allowed",
+    "blocked": "Blocked"
+  },
+  "session": {
+    "title": "Session only",
+    "explanation": "This note is saved in sessionStorage, so it is kept when the page is reloaded but not in a new tab.",
+    "label": "Session note",
+    "save": "Save note",
+    "empty": "Nothing saved in this tab",
+    "saved": "Saved in this tab: {{note}}",
+    "new-tab": "Open this page in a new tab"
+  },
+  "live": {
+    "title": "Current cookies and storage",
+    "explanation": "What this scenario has stored right now. Changes made from outside the page show up after pressing Refresh.",
+    "cookies": "Cookies",
+    "local": "localStorage",
+    "session": "sessionStorage",
+    "empty": "Nothing stored"
+  },
+  "seeding": {
+    "title": "Skip the banner in your tests",
+    "explanation": "Set the consent cookie (and any preferences) before the page loads, and the banner never appears. Both examples point at this page."
+  }
+}

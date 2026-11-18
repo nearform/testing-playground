@@ -1,0 +1,24 @@
+{
+  "title": "Alertes JS",
+  "description": "Gérez les boîtes de dialogue natives alert, confirm et prompt du navigateur, qui ne font pas partie de la page.",
+  "button": {
+    "alert": "Ouvrir l'alerte JS",
+    "confirm": "Ouvrir la confirmation JS",
+    "prompt": "Ouvrir la saisie JS"
+  },
+  "dialog": {
+    "alert": "Je suis une alerte JS",
+    "confirm": "Voulez-vous continuer ?",
+    "prompt": "Quel est votre nom ?",
+    "prompt-default": "Testeur"
+  },
+  "result": {
+    "title": "Résultat",
+    "alert": "Vous avez accepté l'alerte",
+    "confirm-ok": "Vous avez cliqué sur OK",
+    "confirm-cancel": "Vous avez cliqué sur Annuler",
+    "prompt-ok": "Vous avez saisi : {{answer}}",
+    "prompt-empty": "Vous avez envoyé une réponse vide",
+    "prompt-cancel": "Vous avez annulé la saisie"
+  }
+}

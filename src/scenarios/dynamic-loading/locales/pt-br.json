@@ -1,0 +1,40 @@
+{
+  "title": "Carregamento dinâmico",
+  "description": "Elementos que aparecem, desaparecem e mudam de estado após um atraso aleatório.",
+  "start": "Iniciar",
+  "loading": "Carregando",
+  "rendered": {
+    "title": "Elemento adicionado após o carregamento",
+    "result": "Olá, mundo!"
+  },
+  "hidden": {
+    "title": "Elemento oculto exibido após o carregamento",
+    "result": "Agora você me vê!"
+  },
+  "enable": {
+    "title": "Ativado após um atraso",
+    "label": "Mensagem",
+    "enable": "Ativar",
+    "disable": "Desativar",
+    "enabling": "Ativando…",
+    "disabling": "Desativando…",
+    "enabled": "Está ativado!",
+    "disabled": "Está desativado!"
+  },
+  "remove": {
+    "title": "Removido e adicionado novamente",
+    "checkbox": "Uma caixa de seleção",
+    "remove": "Remover",
+    "add": "Adicionar",
+    "removed": "Sumiu!",
+    "added": "Voltou!"
+  },
+  "text": {
+    "title": "Texto que muda",
+    "load": "Carregar dados",
+    "idle": "Nada carregado ainda",
+    "loading": "Carregando...",
+    "processing": "Ainda carregando...",
+    "done": "Dados carregados: 42 registros"
+  }
+}

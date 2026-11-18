@@ -1,0 +1,15 @@
+{
+  "title": "Checkbox",
+  "description": "Tick checkboxes in a form, drawn as icons and in a parent and child tree.",
+  "scenario-form": "Scenario within a form",
+  "checked": "Checked",
+  "required": "Required",
+  "required-message": "Please select required field.",
+  "disabled": "Disabled",
+  "scenario-icons": "Scenario with checkbox as icons",
+  "scenario-tree": "Scenario with tree selection",
+  "parent": "Parent",
+  "child": "Child",
+  "favorite": "Favorite",
+  "bookmark": "Bookmark"
+}

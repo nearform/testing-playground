@@ -1,0 +1,63 @@
+import { BsCloudDownload, Button } from '@nearform/quantum'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+import Layout from '../../components/Layout'
+import PageSetup from '../../components/PageSetup'
+import { defineScenario } from '../../utils/defineScenario'
+import { translateInformation } from '../../utils/information'
+
+// The scenario's route, and where its texts live in the locale files
+const SLUG = 'file-download'
+
+const DownloadButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+  const { t } = useTranslation()
+
+  return (
+    <Button
+      variant='secondary'
+      leftSideChild={<BsCloudDownload aria-hidden='true' />}
+      onClick={onClick}
+    >
+      {t(`scenarios.${SLUG}.download`)}
+    </Button>
+  )
+}
+
+const handleDownload = (): void => {
+  const fileContent = 'Sample content'
+  const blob = new Blob([fileContent], { type: 'text/plain' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = 'file.txt'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+
+  URL.revokeObjectURL(url)
+}
+
+const FileDownload: React.FC = (): JSX.Element => {
+  const { t } = useTranslation()
+
+  return (
+    <Layout>
+      <PageSetup
+        title={t(`scenarios.${SLUG}.title`)}
+        description={t(`scenarios.${SLUG}.description`)}
+        information={translateInformation(t, `scenarios.${SLUG}.information`)}
+      >
+        <div>
+          <DownloadButton onClick={handleDownload} />
+        </div>
+      </PageSetup>
+    </Layout>
+  )
+}
+
+export default defineScenario(FileDownload, {
+  slug: SLUG,
+  difficulty: 'medium',
+})

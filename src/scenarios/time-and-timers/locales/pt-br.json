@@ -1,0 +1,76 @@
+{
+  "title": "Tempo e temporizadores",
+  "description": "Uma oferta com contagem regressiva, um tempo limite por inatividade, horários relativos, conteúdo conforme a hora, uma busca com debounce e um botão com throttle.",
+  "clock": {
+    "title": "Hora do dia",
+    "instructions": "A saudação muda conforme a hora do dia, e a loja abre de segunda a sexta, só em horário comercial.",
+    "today": "Agora é",
+    "greeting": {
+      "morning": "Bom dia",
+      "afternoon": "Boa tarde",
+      "evening": "Boa noite",
+      "night": "Boa madrugada"
+    },
+    "shop": {
+      "weekend": "Estamos fechados nos fins de semana. Abrimos novamente na segunda às {{opens}}.",
+      "open": "Estamos abertos até as {{closes}}.",
+      "before-opening": "Estamos fechados. Abrimos hoje às {{opens}}.",
+      "after-closing": "Fechamos às {{closes}}. Volte amanhã."
+    }
+  },
+  "countdown": {
+    "title": "Contagem regressiva",
+    "instructions": "A oferta expira cinco minutos depois de a página carregar e não pode mais ser resgatada.",
+    "offer": "20% de desconto no seu primeiro pedido",
+    "ends-in": "A oferta termina em {{time}}",
+    "claimed": "Oferta resgatada",
+    "expired": "Esta oferta expirou",
+    "claim": "Resgatar oferta",
+    "restart": "Reiniciar a oferta"
+  },
+  "session": {
+    "title": "Tempo limite da sessão",
+    "instructions": "Após {{warning}} sem movimento do mouse, clique, tecla ou rolagem, um aviso aparece. Se ninguém escolher continuar conectado em {{grace}}, a sessão é desconectada.",
+    "signed-in": "Você está conectado",
+    "signed-out": "Você foi desconectado por inatividade",
+    "sign-in": "Entrar novamente",
+    "idle": "Inativo há {{time}}",
+    "warning-title": "Você ainda está aí?",
+    "warning-body": "Você será desconectado em {{time}}.",
+    "stay": "Continuar conectado"
+  },
+  "relative": {
+    "title": "Horários relativos",
+    "instructions": "Cada atualização mostra há quanto tempo aconteceu, e o texto muda com o passar do tempo.",
+    "just-now": "agora mesmo",
+    "post": "Publicar uma atualização",
+    "list": "Atualizações",
+    "opened": "Página aberta",
+    "posted": "Atualização {{number}} publicada"
+  },
+  "rate": {
+    "title": "Debounce e throttle"
+  },
+  "debounce": {
+    "title": "Busca com debounce",
+    "instructions": "A busca roda {{delay}} ms depois que você para de digitar.",
+    "label": "Buscar cidades",
+    "count_one": "{{count}} busca realizada",
+    "count_other": "{{count}} buscas realizadas",
+    "searching": "Buscando…",
+    "empty": "Digite para buscar",
+    "no-results": "Nenhuma cidade corresponde a \"{{query}}\"",
+    "results": "Cidades encontradas"
+  },
+  "throttle": {
+    "title": "Botão com throttle",
+    "instructions": "Depois de salvar, os cliques em Salvar são ignorados por {{interval}} ms.",
+    "save": "Salvar",
+    "ready": "Pronto para salvar",
+    "cooling-down": "Salvo. Os cliques são ignorados por um momento",
+    "saves_one": "Salvo {{count}} vez",
+    "saves_other": "Salvo {{count}} vezes",
+    "ignored_one": "{{count}} clique ignorado",
+    "ignored_other": "{{count}} cliques ignorados"
+  }
+}

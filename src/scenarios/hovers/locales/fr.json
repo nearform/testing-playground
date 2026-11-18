@@ -1,0 +1,38 @@
+{
+  "title": "Survols",
+  "description": "Interagissez avec des éléments qui n'apparaissent que lorsque la souris survole quelque chose.",
+  "profiles": {
+    "title": "Profils",
+    "view": "Voir le profil",
+    "roles": {
+      "tester": "Testeur",
+      "developer": "Développeur",
+      "designer": "Designer"
+    }
+  },
+  "files": {
+    "title": "Fichiers",
+    "open": "Ouvrir",
+    "open-label": "Ouvrir {{name}}",
+    "delete": "Supprimer",
+    "delete-label": "Supprimer {{name}}",
+    "empty": "Il ne reste aucun fichier. Rechargez la page pour les récupérer."
+  },
+  "menu": {
+    "title": "Menu",
+    "products": "Produits",
+    "laptops": "Ordinateurs portables",
+    "phones": "Téléphones",
+    "android": "Android",
+    "ios": "iOS",
+    "tablets": "Tablettes"
+  },
+  "result": {
+    "title": "Dernière action",
+    "none": "Rien pour l'instant",
+    "viewed": "Profil de {{name}} consulté",
+    "opened": "{{name}} ouvert",
+    "deleted": "{{name}} supprimé",
+    "chose": "{{name}} choisi"
+  }
+}

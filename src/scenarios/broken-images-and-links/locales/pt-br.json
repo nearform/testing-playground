@@ -1,0 +1,70 @@
+{
+  "title": "Imagens e links quebrados",
+  "description": "Uma galeria e uma lista de links em que alguns funcionam e outros não, incluindo uma imagem com 404, uma imagem com URL inválida, uma imagem com carregamento lento, páginas inexistentes e links de âncora.",
+  "nav": {
+    "title": "Nesta página"
+  },
+  "images": {
+    "title": "Galeria",
+    "explanation": "Duas destas imagens carregam. Uma aponta para um arquivo que não existe, e outra tem uma URL que não pode ser interpretada.",
+    "mountain": {
+      "alt": "Montanhas sob um céu azul",
+      "caption": "Montanhas"
+    },
+    "lake": {
+      "alt": "Um lago cercado de grama",
+      "caption": "Lago"
+    },
+    "missing": {
+      "alt": "Um pôr do sol sobre o mar",
+      "caption": "Pôr do sol"
+    },
+    "invalid": {
+      "alt": "Uma foto de um endereço inválido",
+      "caption": "Endereço inválido"
+    },
+    "lazy": {
+      "alt": "Uma fileira de pinheiros",
+      "caption": "Floresta"
+    }
+  },
+  "check": {
+    "button": "Verificar imagens",
+    "status": {
+      "loaded": "Carregada",
+      "broken": "Quebrada",
+      "pending": "Ainda não carregada"
+    }
+  },
+  "links": {
+    "title": "Links",
+    "explanation": "Alguns destes links levam a uma página e outros não levam a lugar nenhum.",
+    "kind": {
+      "route": "página desta aplicação",
+      "static": "página estática",
+      "external": "site externo",
+      "anchor": "seção desta página"
+    },
+    "items": {
+      "route": "Cenário de cookies e armazenamento",
+      "unknown-route": "Cenário removido",
+      "static": "Sobre a galeria",
+      "missing-static": "Galeria antiga",
+      "external": "Testing Playground no GitHub",
+      "missing-external": "Página do GitHub inexistente",
+      "anchor-images": "Galeria",
+      "anchor-links": "Links",
+      "anchor-lazy-image": "Imagem com carregamento lento",
+      "anchor-reviews": "Avaliações"
+    }
+  },
+  "snippets": {
+    "title": "Verificar em um teste",
+    "explanation": "Exemplos de como verificar cada imagem e cada link externo de uma página."
+  },
+  "lazy": {
+    "title": "Imagem com carregamento lento",
+    "explanation": "Esta imagem tem loading=\"lazy\", então o navegador só a solicita quando ela se aproxima da área visível.",
+    "scroll-hint": "Role para baixo: há uma imagem com carregamento lento mais abaixo."
+  }
+}

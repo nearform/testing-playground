@@ -1,7 +1,7 @@
 import i18next from 'i18next'
 import { describe, expect, it } from 'vitest'
 
-import i18n, { withInformation } from '../i18n/i18nConfig'
+import i18n, { withScenarios } from '../i18n/i18nConfig'
 import { scenarios } from '../scenarios/list'
 import {
   parseInformation,
@@ -19,7 +19,7 @@ const LANGUAGES = [
   { folder: 'pt-br', language: 'ptBr' },
 ]
 
-const files = import.meta.glob<string>('../i18n/information/*/*.md', {
+const files = import.meta.glob<string>('../scenarios/*/information/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -30,13 +30,13 @@ const informationIn = (folder: string): Record<string, string> =>
   Object.fromEntries(
     Object.entries(files)
       .map(([path, markdown]) => [
-        /information\/([^/]+)\/([^/]+)\.md$/.exec(path),
+        /scenarios\/([^/]+)\/information\/([^/]+)\.md$/.exec(path),
         markdown,
       ])
       .filter(
-        (entry): entry is [RegExpExecArray, string] => entry[0]?.[1] === folder,
+        (entry): entry is [RegExpExecArray, string] => entry[0]?.[2] === folder,
       )
-      .map(([match, markdown]) => [match[2], markdown]),
+      .map(([match, markdown]) => [match[1], markdown]),
   )
 
 // How some information is split up. Two languages with the same shape split
@@ -150,22 +150,29 @@ describe('translateInformation', () => {
   })
 })
 
-describe('withInformation', () => {
+describe('withScenarios', () => {
   const translation = {
     title: 'Playground',
-    scenarios: { hovers: { title: 'Hovers' } },
+    scenarios: { description: 'Description' },
   }
-  const markdownFiles = {
-    './information/en/hovers.md': 'English notes',
-    './information/fr/hovers.md': 'Notes en *français*',
+  const files = {
+    texts: {
+      '../scenarios/hovers/locales/en.json': { title: 'Hovers' },
+      '../scenarios/hovers/locales/fr.json': { title: 'Survols' },
+    },
+    information: {
+      '../scenarios/hovers/information/en.md': 'English notes',
+      '../scenarios/hovers/information/fr.md': 'Notes en _français_',
+    },
   }
 
-  it("adds the language's parsed files to its scenarios, keeping their other texts", () => {
-    expect(withInformation(translation, 'fr', markdownFiles)).toEqual({
+  it("adds each scenario's texts and parsed information in the language, keeping the shared texts", () => {
+    expect(withScenarios(translation, 'fr', files)).toEqual({
       title: 'Playground',
       scenarios: {
+        description: 'Description',
         hovers: {
-          title: 'Hovers',
+          title: 'Survols',
           information: {
             summary: ['Notes en <em>français</em>'],
             sections: [],
@@ -175,18 +182,24 @@ describe('withInformation', () => {
     })
   })
 
-  it('names the file that breaks the layout', () => {
+  it('names the information file that breaks the layout', () => {
     expect(() =>
-      withInformation(translation, 'en', {
-        './information/en/hovers.md': '1. A numbered point',
+      withScenarios(translation, 'en', {
+        texts: {},
+        information: {
+          '../scenarios/hovers/information/en.md': '1. A numbered point',
+        },
       }),
-    ).toThrow(/^Could not read \.\/information\/en\/hovers\.md: /)
+    ).toThrow(/^Could not read \.\.\/scenarios\/hovers\/information\/en\.md: /)
   })
 
-  it('leaves the texts it was given unchanged', () => {
-    withInformation(translation, 'en', markdownFiles)
+  it('leaves the texts and files it was given unchanged', () => {
+    withScenarios(translation, 'en', files)
 
-    expect(translation.scenarios.hovers).toEqual({ title: 'Hovers' })
+    expect(translation.scenarios).toEqual({ description: 'Description' })
+    expect(files.texts['../scenarios/hovers/locales/en.json']).toEqual({
+      title: 'Hovers',
+    })
   })
 
   it.each(LANGUAGES)(

@@ -1,0 +1,73 @@
+{
+  "title": "Violations d'accessibilité",
+  "description": "Un formulaire d'inscription à une newsletter plein de problèmes d'accessibilité volontaires, avec un interrupteur vers une version corrigée, pour s'entraîner aux vérifications d'accessibilité automatiques et manuelles.",
+  "version": {
+    "title": "Version",
+    "switch": "Afficher la version corrigée",
+    "status": {
+      "broken": "Version cassée affichée",
+      "fixed": "Version corrigée affichée"
+    }
+  },
+  "expected": {
+    "title": "Problèmes attendus",
+    "explanation": "Ce qu'un scan de la section Inscription à la newsletter devrait trouver dans la version affichée, et comment chaque problème est signalé.",
+    "columns": {
+      "rule": "Règle",
+      "problem": "Ce qui ne va pas",
+      "found": "Signalé comme"
+    },
+    "found": {
+      "rules": "Violation",
+      "review": "À vérifier (incomplete)",
+      "manual": "Test au clavier uniquement"
+    },
+    "none": "Aucun : la version corrigée n'a pas de problème connu."
+  },
+  "rules": {
+    "label": "Le champ Adresse e-mail n'a pas d'étiquette",
+    "duplicate-id-aria": "Les étiquettes Prénom et Nom partagent le même ID, donc les deux champs s'appellent Prénom",
+    "image-alt": "La photo de profil n'a pas de texte alternatif",
+    "heading-order": "Vos coordonnées passe directement d'un titre de niveau 2 à un titre de niveau 4",
+    "aria-required-attr": "La case du résumé hebdomadaire n'a pas d'aria-checked",
+    "aria-valid-attr-value": "Plus d'options met aria-expanded à yes ou no au lieu de true ou false",
+    "scrollable-region-focusable": "La zone des conditions défile mais ne peut pas recevoir le focus, donc elle ne défile pas au clavier",
+    "color-contrast": "La note de confidentialité est en gris clair sur blanc",
+    "button-name": "Le bouton d'aide est une icône sans nom",
+    "link-name": "Le lien GitHub est une icône sans nom"
+  },
+  "manual": {
+    "keyboard-trap": {
+      "name": "Piège au clavier",
+      "problem": "Tab et Maj+Tab ne sortent jamais de la zone Message"
+    },
+    "mouse-only": {
+      "name": "Souris uniquement",
+      "problem": "Le bouton S'inscrire ne peut pas être atteint avec Tab"
+    }
+  },
+  "form": {
+    "title": "Inscription à la newsletter",
+    "intro": "Inscrivez-vous à notre newsletter hebdomadaire.",
+    "details": "Vos coordonnées",
+    "email": "Adresse e-mail",
+    "first-name": "Prénom",
+    "last-name": "Nom",
+    "photo": "Votre photo de profil",
+    "photo-alt": "Photo de profil par défaut",
+    "preferences": "Préférences",
+    "digest": "M'envoyer le résumé hebdomadaire",
+    "more-options": "Plus d'options",
+    "more-options-text": "Vous pouvez aussi choisir de recevoir plutôt un résumé mensuel.",
+    "terms": "Conditions générales",
+    "terms-clause": "Clause {{number}} : nous n'utiliserons votre adresse e-mail que pour vous envoyer cette newsletter, et vous pouvez vous désinscrire à tout moment grâce au lien en bas de chaque e-mail.",
+    "message": "Message (facultatif)",
+    "finish": "Terminer",
+    "privacy": "Nous ne partagerons jamais votre adresse e-mail avec qui que ce soit.",
+    "help": "Aide",
+    "help-text": "Remplissez vos coordonnées et appuyez sur S'inscrire. Vous pouvez vous désinscrire à tout moment.",
+    "github": "Testing Playground sur GitHub",
+    "subscribe": "S'inscrire",
+    "subscribed": "Merci, vous êtes maintenant inscrit."
+  }
+}

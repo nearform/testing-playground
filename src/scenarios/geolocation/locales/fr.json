@@ -1,0 +1,44 @@
+{
+  "title": "Géolocalisation",
+  "description": "Trouvez la position du navigateur, puis suivez-la lorsqu'elle change.",
+  "button": {
+    "get-location": "Obtenir ma position",
+    "start-watching": "Commencer le suivi",
+    "stop-watching": "Arrêter le suivi"
+  },
+  "status": {
+    "title": "Statut",
+    "idle": "Votre position n'a pas encore été demandée",
+    "locating": "Recherche de votre position...",
+    "located": "Position trouvée"
+  },
+  "errors": {
+    "permission-denied": "L'accès à votre position a été refusé",
+    "position-unavailable": "Votre position n'a pas pu être déterminée",
+    "timeout": "La recherche de votre position a pris trop de temps",
+    "unsupported": "La géolocalisation n'est pas prise en charge par ce navigateur",
+    "unknown": "Une erreur inconnue est survenue lors de la recherche de votre position"
+  },
+  "watch-updates_one": "Suivi de votre position : {{count}} mise à jour reçue",
+  "watch-updates_other": "Suivi de votre position : {{count}} mises à jour reçues",
+  "details": {
+    "title": "Votre position",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "accuracy": "Précision",
+    "nearest-city": "Ville la plus proche",
+    "distance": "Distance de la ville",
+    "metres": "{{value}} m",
+    "kilometres": "{{value}} km"
+  },
+  "cities": {
+    "london": "Londres",
+    "dublin": "Dublin",
+    "paris": "Paris",
+    "lisbon": "Lisbonne",
+    "new-york": "New York",
+    "sao-paulo": "São Paulo",
+    "tokyo": "Tokyo",
+    "sydney": "Sydney"
+  }
+}

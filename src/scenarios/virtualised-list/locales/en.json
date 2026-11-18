@@ -1,0 +1,38 @@
+{
+  "title": "Virtualised List",
+  "description": "Lists of 10,000 rows and a grid of 260,000 cells where only the rows on screen exist in the DOM. Rows are created, reused and removed as you scroll.",
+  "rendered": "{{rendered}} of {{total}} rows in the DOM (rows {{first}} to {{last}})",
+  "row": "Row {{id}}",
+  "select": "Select",
+  "select-label": "Select row {{id}}",
+  "result": {
+    "title": "Result",
+    "none": "No row selected yet.",
+    "correct": "You selected row {{id}}. Well done!",
+    "wrong": "You selected row {{id}}, not row {{target}}."
+  },
+  "fixed": {
+    "title": "Fixed-height list",
+    "instructions": "Every row is {{height}}px tall. Find the row with ID {{target}} and click its Select button.",
+    "label": "Fixed-height rows"
+  },
+  "variable": {
+    "title": "Variable-height list",
+    "instructions": "Rows are between {{min}}px and {{max}}px tall, depending on how many notes they have. Find the row with ID {{target}} and click its Select button.",
+    "label": "Variable-height rows",
+    "note": "Note {{line}} for row {{id}}"
+  },
+  "grid": {
+    "title": "Virtualised grid",
+    "instructions": "{{rows}} rows by {{columns}} columns, with rows of a fixed height. Both the rows and the columns are virtualised. Find cell {{target}} (column {{column}}, row {{row}}) and click it.",
+    "label": "Spreadsheet",
+    "corner": "Row",
+    "cell": "Cell {{cell}}: {{value}}",
+    "rendered": "{{rows}} of {{totalRows}} rows and {{columns}} of {{totalColumns}} columns in the DOM ({{cells}} of {{totalCells}} cells)",
+    "result": {
+      "none": "No cell clicked yet.",
+      "correct": "You clicked cell {{cell}}, which holds {{value}}. Well done!",
+      "wrong": "You clicked cell {{cell}}, not {{target}}."
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "title": "Cookies et stockage",
+  "description": "Répondez à une bannière de consentement aux cookies, enregistrez vos préférences, gardez une note pour cet onglet uniquement et observez l'évolution des cookies et du stockage.",
+  "banner": {
+    "title": "Nous utilisons des cookies",
+    "text": "Nous utilisons des cookies nécessaires au fonctionnement de ce site. Avec votre accord, nous aimerions aussi déposer des cookies d'analyse et de marketing. Vous pouvez modifier votre choix à tout moment."
+  },
+  "preferences": {
+    "title": "Préférences en matière de cookies",
+    "text": "Choisissez les cookies facultatifs à autoriser. Les cookies nécessaires sont toujours activés."
+  },
+  "categories": {
+    "necessary": {
+      "label": "Nécessaires",
+      "description": "Indispensables au fonctionnement du site, ils ne peuvent pas être désactivés."
+    },
+    "analytics": {
+      "label": "Analyse",
+      "description": "Nous aident à comprendre comment le site est utilisé."
+    },
+    "marketing": {
+      "label": "Marketing",
+      "description": "Servent à vous montrer des publicités pertinentes sur d'autres sites."
+    }
+  },
+  "button": {
+    "accept-all": "Tout accepter",
+    "reject-all": "Tout refuser",
+    "manage": "Gérer les préférences",
+    "save-preferences": "Enregistrer les préférences",
+    "cancel": "Annuler",
+    "cookie-settings": "Paramètres des cookies",
+    "reload": "Recharger la page",
+    "refresh": "Actualiser",
+    "clear": "Tout effacer"
+  },
+  "consent": {
+    "title": "Consentement aux cookies",
+    "status-title": "Votre choix",
+    "status": {
+      "none": "Vous n'avez pas encore fait de choix",
+      "accepted": "Vous avez accepté tous les cookies",
+      "rejected": "Vous avez refusé tous les cookies facultatifs",
+      "custom": "Vous avez choisi les cookies à autoriser"
+    },
+    "allowed": "Autorisés",
+    "blocked": "Bloqués"
+  },
+  "session": {
+    "title": "Session uniquement",
+    "explanation": "Cette note est enregistrée dans sessionStorage : elle est conservée lors d'un rechargement de la page, mais pas dans un nouvel onglet.",
+    "label": "Note de session",
+    "save": "Enregistrer la note",
+    "empty": "Rien d'enregistré dans cet onglet",
+    "saved": "Enregistré dans cet onglet : {{note}}",
+    "new-tab": "Ouvrir cette page dans un nouvel onglet"
+  },
+  "live": {
+    "title": "Cookies et stockage actuels",
+    "explanation": "Ce que ce scénario a enregistré en ce moment. Les modifications faites depuis l'extérieur de la page apparaissent après avoir appuyé sur Actualiser.",
+    "cookies": "Cookies",
+    "local": "localStorage",
+    "session": "sessionStorage",
+    "empty": "Rien d'enregistré"
+  },
+  "seeding": {
+    "title": "Éviter la bannière dans vos tests",
+    "explanation": "Définissez le cookie de consentement (et les éventuelles préférences) avant le chargement de la page, et la bannière n'apparaît jamais. Les deux exemples pointent vers cette page."
+  }
+}

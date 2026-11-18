@@ -1,0 +1,13 @@
+{
+  "title": "Tabela Dinâmica",
+  "description": "Encontre um processo em uma tabela cujas linhas e valores mudam a cada carregamento e compare sua CPU com a barra verde.",
+  "name": "Nome",
+  "cpu": "CPU",
+  "memory": "Memória",
+  "network": "Rede",
+  "disk": "Disco",
+  "chrome": "Chrome",
+  "docker": "Docker",
+  "system": "Sistema",
+  "slack": "Slack"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Formulaire de connexion",
+  "description": "Un formulaire de connexion classique avec nom d'utilisateur et mot de passe.",
+  "logged-in-message": "Vous êtes actuellement connecté !",
+  "invalid-credentials": "Les informations que vous avez fournies ne sont pas valides",
+  "login-button": "Se connecter",
+  "logout-button": "Se déconnecter",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe"
+}

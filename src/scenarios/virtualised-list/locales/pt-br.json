@@ -1,0 +1,38 @@
+{
+  "title": "Lista virtualizada",
+  "description": "Listas de 10.000 linhas e uma grade de 260.000 células em que só as linhas na tela existem no DOM. As linhas são criadas, reutilizadas e removidas conforme você rola.",
+  "rendered": "{{rendered}} de {{total}} linhas no DOM (linhas {{first}} a {{last}})",
+  "row": "Linha {{id}}",
+  "select": "Selecionar",
+  "select-label": "Selecionar linha {{id}}",
+  "result": {
+    "title": "Resultado",
+    "none": "Nenhuma linha selecionada ainda.",
+    "correct": "Você selecionou a linha {{id}}. Muito bem!",
+    "wrong": "Você selecionou a linha {{id}}, não a linha {{target}}."
+  },
+  "fixed": {
+    "title": "Lista de altura fixa",
+    "instructions": "Cada linha tem {{height}} px de altura. Encontre a linha com o ID {{target}} e clique no botão Selecionar dela.",
+    "label": "Linhas de altura fixa"
+  },
+  "variable": {
+    "title": "Lista de altura variável",
+    "instructions": "As linhas têm entre {{min}} px e {{max}} px de altura, conforme o número de notas. Encontre a linha com o ID {{target}} e clique no botão Selecionar dela.",
+    "label": "Linhas de altura variável",
+    "note": "Nota {{line}} da linha {{id}}"
+  },
+  "grid": {
+    "title": "Grade virtualizada",
+    "instructions": "{{rows}} linhas por {{columns}} colunas, com linhas de altura fixa. Tanto as linhas quanto as colunas são virtualizadas. Encontre a célula {{target}} (coluna {{column}}, linha {{row}}) e clique nela.",
+    "label": "Planilha",
+    "corner": "Linha",
+    "cell": "Célula {{cell}}: {{value}}",
+    "rendered": "{{rows}} de {{totalRows}} linhas e {{columns}} de {{totalColumns}} colunas no DOM ({{cells}} de {{totalCells}} células)",
+    "result": {
+      "none": "Nenhuma célula clicada ainda.",
+      "correct": "Você clicou na célula {{cell}}, que contém {{value}}. Muito bem!",
+      "wrong": "Você clicou na célula {{cell}}, não na {{target}}."
+    }
+  }
+}

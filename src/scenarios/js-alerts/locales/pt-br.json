@@ -1,0 +1,24 @@
+{
+  "title": "Alertas JS",
+  "description": "Lide com as caixas de diálogo nativas alert, confirm e prompt do navegador, que não fazem parte da página.",
+  "button": {
+    "alert": "Abrir alerta JS",
+    "confirm": "Abrir confirmação JS",
+    "prompt": "Abrir prompt JS"
+  },
+  "dialog": {
+    "alert": "Eu sou um alerta JS",
+    "confirm": "Deseja continuar?",
+    "prompt": "Qual é o seu nome?",
+    "prompt-default": "Testador"
+  },
+  "result": {
+    "title": "Resultado",
+    "alert": "Você aceitou o alerta",
+    "confirm-ok": "Você clicou em OK",
+    "confirm-cancel": "Você clicou em Cancelar",
+    "prompt-ok": "Você digitou: {{answer}}",
+    "prompt-empty": "Você enviou uma resposta vazia",
+    "prompt-cancel": "Você cancelou o prompt"
+  }
+}

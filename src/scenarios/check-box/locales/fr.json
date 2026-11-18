@@ -1,0 +1,15 @@
+{
+  "title": "Checkbox",
+  "description": "Cochez des cases dans un formulaire, dessinées comme des icônes et dans une arborescence parent et enfants.",
+  "scenario-form": "Formulaire avec champ obligatoire",
+  "checked": "Choisi",
+  "required": "Obligatoire",
+  "required-message": "Marquez le champ obligatoire.",
+  "disabled": "Désactivé",
+  "scenario-icons": "Checkbox comme des icônes",
+  "scenario-tree": "Sélection d'arbre",
+  "parent": "Père",
+  "child": "Fils",
+  "favorite": "Favori",
+  "bookmark": "Marque-page"
+}

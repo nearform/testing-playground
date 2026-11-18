@@ -1,0 +1,40 @@
+{
+  "title": "Dynamic Loading",
+  "description": "Elements that appear, disappear and change state after a random delay.",
+  "start": "Start",
+  "loading": "Loading",
+  "rendered": {
+    "title": "Element added after loading",
+    "result": "Hello World!"
+  },
+  "hidden": {
+    "title": "Hidden element shown after loading",
+    "result": "Now you see me!"
+  },
+  "enable": {
+    "title": "Enabled after a delay",
+    "label": "Message",
+    "enable": "Enable",
+    "disable": "Disable",
+    "enabling": "Enabling…",
+    "disabling": "Disabling…",
+    "enabled": "It's enabled!",
+    "disabled": "It's disabled!"
+  },
+  "remove": {
+    "title": "Removed and added again",
+    "checkbox": "A checkbox",
+    "remove": "Remove",
+    "add": "Add",
+    "removed": "It's gone!",
+    "added": "It's back!"
+  },
+  "text": {
+    "title": "Text that changes",
+    "load": "Load data",
+    "idle": "Nothing loaded yet",
+    "loading": "Loading...",
+    "processing": "Still loading...",
+    "done": "Data loaded: 42 records"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "title": "Interações com o mouse",
+  "description": "Clique duas vezes, clique com o botão direito, clique e segure, e clique com diferentes botões do mouse e teclas modificadoras.",
+  "double-click": {
+    "title": "Clique duplo",
+    "instructions": "Aqui só o clique duplo conta: cliques simples são ignorados.",
+    "label": "Clique duas vezes em mim",
+    "count": "Cliques duplos: {{count}}"
+  },
+  "context-menu": {
+    "title": "Menu de contexto",
+    "instructions": "Clique com o botão direito na nota para abrir o menu dela. O menu do navegador não aparece.",
+    "note": "Lembrar de regar as plantas",
+    "pinned": "Fixada",
+    "highlighted": "Destacada",
+    "menu-label": "Ações da nota",
+    "actions": {
+      "pin": "Fixar",
+      "unpin": "Desafixar",
+      "highlight": "Destacar",
+      "unhighlight": "Remover destaque",
+      "delete": "Excluir"
+    },
+    "deleted": "A nota foi excluída.",
+    "restore": "Restaurar nota"
+  },
+  "hold": {
+    "title": "Clicar e segurar",
+    "instructions": "Pressione e segure o botão por {{seconds}} segundo para confirmar. Soltar ou sair dele antes não conta.",
+    "label": "Segure para confirmar",
+    "progress": "Progresso",
+    "state": {
+      "idle": "Não confirmado",
+      "holding": "Continue segurando…",
+      "confirmed": "Confirmado",
+      "released-early": "Solto cedo demais, tente novamente"
+    }
+  },
+  "buttons": {
+    "title": "Botões do mouse e teclas modificadoras",
+    "instructions": "Clique na caixa com qualquer botão do mouse, segurando Shift, Control, Alt ou Meta se quiser.",
+    "label": "Clique em mim com qualquer botão",
+    "none": "Ainda não clicado",
+    "button": "Botão",
+    "modifiers": "Segurando",
+    "no-modifiers": "Nada",
+    "names": {
+      "left": "Esquerdo",
+      "middle": "Do meio",
+      "right": "Direito",
+      "back": "Voltar",
+      "forward": "Avançar"
+    }
+  },
+  "result": {
+    "title": "Última interação",
+    "none": "Nada ainda",
+    "double-click": "Clique duplo no alvo",
+    "context-menu": "“{{action}}” escolhido no menu de contexto",
+    "hold-confirmed": "Botão segurado tempo suficiente para confirmar",
+    "hold-early": "Botão de segurar solto cedo demais",
+    "button": "Clique: botão {{button}}",
+    "button-with": "Clique: botão {{button}}, com {{modifiers}}"
+  }
+}

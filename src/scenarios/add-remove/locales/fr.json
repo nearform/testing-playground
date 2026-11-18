@@ -1,0 +1,7 @@
+{
+  "title": "Ajouter/Supprimer",
+  "description": "Ajouter et supprimer dynamiquement des éléments de la page",
+  "add-element": "Ajouter un élément",
+  "clear-storage": "Effacer le stockage",
+  "remove-element": "Supprimer un élément"
+}

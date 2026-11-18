@@ -1,0 +1,88 @@
+{
+  "title": "Tabs and accordions",
+  "description": "Switch between tabs and expand or collapse accordion sections, some of which keep their hidden content in the page and some of which remove it.",
+  "notes-label": "Notes (switch tabs and come back to see if they are kept)",
+  "product": {
+    "title": "Tabs that keep hidden panels",
+    "explanation": "Every panel is in the page, but only the selected one is visible. The Reviews tab loads after a short delay and the Archive tab is disabled.",
+    "label": "Product details",
+    "tabs": {
+      "overview": "Overview",
+      "specifications": "Specifications",
+      "reviews": "Reviews",
+      "archive": "Archive"
+    },
+    "panels": {
+      "overview": "The Trailblazer backpack holds 28 litres and has a padded laptop sleeve.",
+      "specifications": "Weight: 1.2 kg. Dimensions: 50 × 30 × 20 cm. Material: recycled nylon.",
+      "archive": "Older models are no longer available."
+    },
+    "reviews-loading": "Loading reviews…",
+    "reviews": {
+      "1": "“Comfortable even when full.” 5 stars",
+      "2": "“The laptop sleeve fits a 16-inch laptop.” 4 stars",
+      "3": "“Wish it had more pockets.” 3 stars"
+    }
+  },
+  "report": {
+    "title": "Tabs that render only the selected panel",
+    "explanation": "Only the selected panel is in the page. The others are removed, along with anything typed into them.",
+    "label": "Report period",
+    "tabs": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "panels": {
+      "daily": "Today: 42 orders, 3 returns.",
+      "weekly": "This week: 287 orders, 19 returns.",
+      "monthly": "This month: 1,204 orders, 71 returns."
+    }
+  },
+  "faq": {
+    "title": "Accordion with one section open at a time",
+    "explanation": "Opening a section closes the one that was open. Clicking the open section closes it.",
+    "items": {
+      "shipping": {
+        "title": "How long does shipping take?",
+        "body": "Orders arrive within 3 to 5 working days."
+      },
+      "returns": {
+        "title": "Can I return an item?",
+        "body": "Yes, within 30 days of delivery, as long as it is unused."
+      },
+      "warranty": {
+        "title": "Is there a warranty?",
+        "body": "Every product has a two-year warranty against defects."
+      }
+    }
+  },
+  "settings": {
+    "title": "Accordion with several sections open",
+    "explanation": "Any number of sections can be open at once.",
+    "expand-all": "Expand all",
+    "collapse-all": "Collapse all",
+    "items": {
+      "profile": {
+        "title": "Profile",
+        "body": "Your name and photo are shown to other users."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "body": "Email notifications are sent once a day."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "body": "Your profile is visible only to people you follow."
+      }
+    }
+  },
+  "details": {
+    "title": "Native disclosure",
+    "explanation": "The browser's own <details> and <summary> elements, for comparison. One starts closed and one starts open.",
+    "closed-summary": "What is a disclosure?",
+    "closed-body": "A control that shows and hides a section of content.",
+    "open-summary": "Why compare with the native element?",
+    "open-body": "It needs no script and no ARIA, but its state is the open attribute rather than aria-expanded."
+  }
+}

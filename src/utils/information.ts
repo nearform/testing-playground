@@ -2,7 +2,7 @@ import type { TFunction } from 'i18next'
 import { marked, type Token, type Tokens } from 'marked'
 
 // A scenario's information is written in Markdown, in
-// src/i18n/information/<language>/<scenario>.md. Short notes are one
+// src/scenarios/<scenario>/information/<language>.md. Short notes are one
 // paragraph; longer ones are a summary followed by `## ` headings over `- `
 // lists of points, which are far easier to scan than one long paragraph.
 // Inline Markdown (`code`, **bold**, *emphasis*) and inline HTML such as

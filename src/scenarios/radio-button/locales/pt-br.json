@@ -1,0 +1,17 @@
+{
+  "title": "Botão de Rádio",
+  "description": "Escolha uma cor primária e depois uma cor secundária de um segundo grupo que depende da primeira escolha.",
+  "first-set": "Cores Primárias",
+  "second-set": "Cores Secundárias",
+  "first": {
+    "first": "Vermelho",
+    "second": "Azul",
+    "third": "Amarelo",
+    "fourth": "Branco"
+  },
+  "second": {
+    "first": "Roxo",
+    "second": "Laranja",
+    "third": "Verde"
+  }
+}

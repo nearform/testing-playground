@@ -1,0 +1,9 @@
+{
+  "title": "File Upload",
+  "description": "Choose a file through a hidden file input, then wait for a slow, simulated upload to finish.",
+  "please-select-file": "Please select a file.",
+  "select-file": "Select File",
+  "selected-file": "File: \"{{ filename }}\"",
+  "upload-button": "Upload",
+  "upload-success": "File \"{{ filename }}\" uploaded successfully!"
+}

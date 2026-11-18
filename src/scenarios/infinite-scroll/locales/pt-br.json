@@ -1,0 +1,11 @@
+{
+  "title": "Rolagem infinita",
+  "description": "Uma lista que carrega novos itens sempre que você chega ao final da página.",
+  "feed-label": "Feed infinito",
+  "count_one": "Exibindo {{count}} item",
+  "count_other": "Exibindo {{count}} itens",
+  "item-title": "Item {{number}}",
+  "item-description": "Este é o conteúdo do item {{number}}. Continue rolando para carregar mais.",
+  "batch": "Lote {{batch}}",
+  "loading": "Carregando mais itens..."
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Onglets et accordéons",
+  "description": "Passez d'un onglet à l'autre et dépliez ou repliez les sections d'accordéons, dont certaines gardent leur contenu masqué dans la page et d'autres le suppriment.",
+  "notes-label": "Notes (changez d'onglet puis revenez pour voir si elles sont conservées)",
+  "product": {
+    "title": "Onglets qui gardent les panneaux masqués",
+    "explanation": "Tous les panneaux sont dans la page, mais seul celui sélectionné est visible. L'onglet Avis se charge après un court délai et l'onglet Archives est désactivé.",
+    "label": "Détails du produit",
+    "tabs": {
+      "overview": "Présentation",
+      "specifications": "Caractéristiques",
+      "reviews": "Avis",
+      "archive": "Archives"
+    },
+    "panels": {
+      "overview": "Le sac à dos Trailblazer a une contenance de 28 litres et une pochette rembourrée pour ordinateur portable.",
+      "specifications": "Poids : 1,2 kg. Dimensions : 50 × 30 × 20 cm. Matière : nylon recyclé.",
+      "archive": "Les anciens modèles ne sont plus disponibles."
+    },
+    "reviews-loading": "Chargement des avis…",
+    "reviews": {
+      "1": "« Confortable même plein. » 5 étoiles",
+      "2": "« La pochette accueille un ordinateur de 16 pouces. » 4 étoiles",
+      "3": "« J'aurais aimé plus de poches. » 3 étoiles"
+    }
+  },
+  "report": {
+    "title": "Onglets qui n'affichent que le panneau sélectionné",
+    "explanation": "Seul le panneau sélectionné est dans la page. Les autres sont supprimés, avec tout ce qui y a été saisi.",
+    "label": "Période du rapport",
+    "tabs": {
+      "daily": "Jour",
+      "weekly": "Semaine",
+      "monthly": "Mois"
+    },
+    "panels": {
+      "daily": "Aujourd'hui : 42 commandes, 3 retours.",
+      "weekly": "Cette semaine : 287 commandes, 19 retours.",
+      "monthly": "Ce mois-ci : 1 204 commandes, 71 retours."
+    }
+  },
+  "faq": {
+    "title": "Accordéon avec une seule section ouverte",
+    "explanation": "Ouvrir une section ferme celle qui était ouverte. Cliquer sur la section ouverte la ferme.",
+    "items": {
+      "shipping": {
+        "title": "Quel est le délai de livraison ?",
+        "body": "Les commandes arrivent sous 3 à 5 jours ouvrés."
+      },
+      "returns": {
+        "title": "Puis-je retourner un article ?",
+        "body": "Oui, dans les 30 jours suivant la livraison, s'il n'a pas été utilisé."
+      },
+      "warranty": {
+        "title": "Y a-t-il une garantie ?",
+        "body": "Chaque produit est garanti deux ans contre les défauts."
+      }
+    }
+  },
+  "settings": {
+    "title": "Accordéon avec plusieurs sections ouvertes",
+    "explanation": "Plusieurs sections peuvent être ouvertes en même temps.",
+    "expand-all": "Tout déplier",
+    "collapse-all": "Tout replier",
+    "items": {
+      "profile": {
+        "title": "Profil",
+        "body": "Votre nom et votre photo sont visibles par les autres utilisateurs."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "body": "Les notifications par e-mail sont envoyées une fois par jour."
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "body": "Votre profil n'est visible que par les personnes que vous suivez."
+      }
+    }
+  },
+  "details": {
+    "title": "Divulgation native",
+    "explanation": "Les éléments <details> et <summary> du navigateur, pour comparaison. L'un est fermé au départ, l'autre ouvert.",
+    "closed-summary": "Qu'est-ce qu'une divulgation ?",
+    "closed-body": "Un contrôle qui affiche et masque une partie du contenu.",
+    "open-summary": "Pourquoi comparer avec l'élément natif ?",
+    "open-body": "Il ne demande ni script ni ARIA, mais son état est l'attribut open et non aria-expanded."
+  }
+}

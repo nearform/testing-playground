@@ -1,0 +1,17 @@
+{
+  "title": "Notificação",
+  "description": "Dispare notificações que aparecem como popup e como mensagem na página e depois somem sozinhas.",
+  "generate-notification": "Gerar Notificação",
+  "type": {
+    "success": "Sucesso",
+    "info": "Informação",
+    "warning": "Aviso",
+    "error": "Erro"
+  },
+  "messages": {
+    "success": "Esta é uma mensagem de notificação bem-sucedida",
+    "info": "Esta é uma mensagem de notificação de informação",
+    "warning": "Esta é uma mensagem de notificação de aviso",
+    "error": "Esta é uma mensagem de notificação de erro"
+  }
+}

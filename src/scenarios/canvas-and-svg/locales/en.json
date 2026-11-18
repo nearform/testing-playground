@@ -1,0 +1,56 @@
+{
+  "title": "Canvas and SVG",
+  "description": "A drawing pad, a bar chart and a target game drawn on canvas, and an SVG map with hover tooltips, where what is shown cannot be found with normal DOM queries.",
+  "pad": {
+    "title": "Drawing pad",
+    "intro": "Hold the mouse button down and move to draw. Each line you draw is a stroke.",
+    "label": "Drawing pad",
+    "clear": "Clear",
+    "strokes_one": "{{count}} stroke",
+    "strokes_other": "{{count}} strokes",
+    "points_one": "{{count}} point",
+    "points_other": "{{count}} points"
+  },
+  "chart": {
+    "title": "Orders chart",
+    "intro": "Click a bar to see how many orders there were that month.",
+    "label": "Bar chart of orders per month, January to June",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun"
+    },
+    "value_one": "{{month}}: {{count}} order",
+    "value_other": "{{month}}: {{count}} orders",
+    "none": "Click a bar to see its value.",
+    "missed": "No bar was clicked."
+  },
+  "game": {
+    "title": "Target practice",
+    "intro": "Click the target. Each time you hit it, it moves.",
+    "label": "Target game",
+    "reset": "Start again",
+    "score": "Hits: {{hits}} of {{total}}",
+    "misses_one": "{{count}} miss",
+    "misses_other": "{{count}} misses",
+    "done": "All targets hit!"
+  },
+  "map": {
+    "title": "District map",
+    "intro": "Point at a district to see its population, and click it to select it.",
+    "label": "Map of the districts of the island",
+    "regions": {
+      "northfield": "Northfield",
+      "westmoor": "Westmoor",
+      "old-town": "Old Town",
+      "harbour": "Harbour",
+      "eastvale": "Eastvale"
+    },
+    "population": "Population: {{population}}",
+    "selected": "Selected: {{name}} (population {{population}})",
+    "none": "No district selected."
+  }
+}

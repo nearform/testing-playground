@@ -1,0 +1,59 @@
+{
+  "title": "Modal Dialogs",
+  "description": "Open, use and close dialogs drawn in the page, including one that appears by itself on load.",
+  "close": "Close",
+  "cancel": "Cancel",
+  "basic": {
+    "title": "Basic modal",
+    "open": "Open modal",
+    "modal-title": "Hello from a modal",
+    "modal-body": "Close me with the close button, the Escape key or a click outside.",
+    "not-closed": "The modal has not been closed yet",
+    "closed": {
+      "button": "Closed with the close button",
+      "escape": "Closed with the Escape key",
+      "backdrop": "Closed with a backdrop click"
+    }
+  },
+  "confirm": {
+    "title": "Confirm before deleting",
+    "item": "Invoice #{{number}}",
+    "delete": "Delete",
+    "delete-item": "Delete {{item}}",
+    "modal-title": "Delete item?",
+    "modal-body": "{{item}} will be permanently deleted.",
+    "deleted": "{{item}} was deleted",
+    "cancelled": "Deleting {{item}} was cancelled",
+    "empty": "No items left",
+    "restore": "Restore items"
+  },
+  "form": {
+    "title": "Modal with a form",
+    "open": "Edit profile",
+    "modal-title": "Edit profile",
+    "name": "Name",
+    "email": "Email",
+    "name-required": "Name is required",
+    "save": "Save",
+    "empty": "No profile saved yet",
+    "saved": "Saved profile: {{name}} ({{email}})"
+  },
+  "stacked": {
+    "title": "Stacked modals",
+    "open": "Open first modal",
+    "first-title": "First modal",
+    "first-body": "This modal can open another one on top of it.",
+    "open-second": "Open second modal",
+    "second-title": "Second modal",
+    "second-body": "I am on top of the first modal. Close me to get back to it.",
+    "done": "Done"
+  },
+  "entry": {
+    "title": "Welcome modal",
+    "explanation": "A welcome modal opens by itself the first time you visit this page and blocks it until it is acknowledged.",
+    "reset": "Show the welcome modal again",
+    "modal-title": "Welcome!",
+    "modal-body": "This modal opened by itself when the page loaded. You need to acknowledge it before you can use the page.",
+    "dismiss": "Enter the playground"
+  }
+}

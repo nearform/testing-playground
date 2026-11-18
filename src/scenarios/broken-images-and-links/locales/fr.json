@@ -1,0 +1,70 @@
+{
+  "title": "Images et liens cassés",
+  "description": "Une galerie et une liste de liens dont certains fonctionnent et d'autres non, avec une image en 404, une image à l'URL invalide, une image en chargement différé, des pages manquantes et des liens d'ancre.",
+  "nav": {
+    "title": "Sur cette page"
+  },
+  "images": {
+    "title": "Galerie",
+    "explanation": "Deux de ces images se chargent. Une pointe vers un fichier qui n'existe pas, et une a une URL qui ne peut pas être analysée.",
+    "mountain": {
+      "alt": "Des montagnes sous un ciel bleu",
+      "caption": "Montagnes"
+    },
+    "lake": {
+      "alt": "Un lac entouré d'herbe",
+      "caption": "Lac"
+    },
+    "missing": {
+      "alt": "Un coucher de soleil sur la mer",
+      "caption": "Coucher de soleil"
+    },
+    "invalid": {
+      "alt": "Une photo à une adresse invalide",
+      "caption": "Adresse invalide"
+    },
+    "lazy": {
+      "alt": "Une rangée de pins",
+      "caption": "Forêt"
+    }
+  },
+  "check": {
+    "button": "Vérifier les images",
+    "status": {
+      "loaded": "Chargée",
+      "broken": "Cassée",
+      "pending": "Pas encore chargée"
+    }
+  },
+  "links": {
+    "title": "Liens",
+    "explanation": "Certains de ces liens mènent à une page et d'autres ne mènent nulle part.",
+    "kind": {
+      "route": "page de cette application",
+      "static": "page statique",
+      "external": "site externe",
+      "anchor": "section de cette page"
+    },
+    "items": {
+      "route": "Scénario cookies et stockage",
+      "unknown-route": "Scénario retiré",
+      "static": "À propos de la galerie",
+      "missing-static": "Ancienne galerie",
+      "external": "Testing Playground sur GitHub",
+      "missing-external": "Page GitHub manquante",
+      "anchor-images": "Galerie",
+      "anchor-links": "Liens",
+      "anchor-lazy-image": "Image en chargement différé",
+      "anchor-reviews": "Avis"
+    }
+  },
+  "snippets": {
+    "title": "Vérifier dans un test",
+    "explanation": "Exemples de vérification de chaque image et de chaque lien externe d'une page."
+  },
+  "lazy": {
+    "title": "Image en chargement différé",
+    "explanation": "Cette image a loading=\"lazy\", donc le navigateur ne la demande que lorsqu'elle approche de la zone visible.",
+    "scroll-hint": "Faites défiler vers le bas : une image en chargement différé se trouve plus bas."
+  }
+}

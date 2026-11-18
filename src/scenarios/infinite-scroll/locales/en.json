@@ -1,0 +1,11 @@
+{
+  "title": "Infinite Scroll",
+  "description": "A list that keeps loading new items every time you reach the bottom of the page.",
+  "feed-label": "Infinite feed",
+  "count_one": "Showing {{count}} item",
+  "count_other": "Showing {{count}} items",
+  "item-title": "Item {{number}}",
+  "item-description": "This is the content of item {{number}}. Keep scrolling to load more.",
+  "batch": "Batch {{batch}}",
+  "loading": "Loading more items..."
+}

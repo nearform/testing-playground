@@ -1,0 +1,9 @@
+{
+  "title": "Tooltip",
+  "description": "Mostre tooltips em um botão desativado, em um botão cujo tooltip contém um link e em um texto cortado.",
+  "no-permission": "Você não tem permissão para fazer isso",
+  "more-information": "Mais informações",
+  "more-information-msg": "Para mais informações, clique aqui:",
+  "really-long-text": "Um exemplo de texto realmente muito longo",
+  "delete": "Excluir"
+}

@@ -1,0 +1,87 @@
+{
+  "title": "Multi-Step Form",
+  "description": "A sign-up wizard spread over several steps, with per-step validation, a step that only appears for business accounts, an optional step, a review page with edit links, and answers that survive a reload. The current step is kept in the URL.",
+  "progress-label": "Form progress",
+  "step-count": "Step {{current}} of {{total}}",
+  "optional": "optional",
+  "error-summary_one": "Please fix the error below to continue.",
+  "error-summary_other": "Please fix the {{count}} errors below to continue.",
+  "success": "Thanks {{name}}, your application has been submitted.",
+  "choose": "Choose…",
+  "company-size-option": "{{size}} employees",
+  "review-intro": "Check your answers before submitting. Use the Edit links to change a section.",
+  "edit": "Edit",
+  "edit-label": "Edit {{step}}",
+  "skipped": "Skipped",
+  "yes": "Yes",
+  "no": "No",
+  "steps": {
+    "personal": "Personal details",
+    "company": "Company details",
+    "address": "Address",
+    "preferences": "Preferences",
+    "review": "Review"
+  },
+  "status": {
+    "done": "completed",
+    "skipped": "skipped"
+  },
+  "fields": {
+    "full-name": "Full name",
+    "email": "Email",
+    "account-type": "Account type",
+    "company-name": "Company name",
+    "company-size": "Company size",
+    "street": "Street address",
+    "city": "City",
+    "postcode": "Postcode",
+    "country": "Country",
+    "contact-method": "Preferred contact method",
+    "phone": "Phone number",
+    "newsletter": "Send me the monthly newsletter"
+  },
+  "hints": {
+    "account-type": "Business accounts are asked for company details on the next step"
+  },
+  "account-types": {
+    "personal": "Personal",
+    "business": "Business"
+  },
+  "countries": {
+    "gb": "United Kingdom",
+    "fr": "France",
+    "br": "Brazil",
+    "pt": "Portugal",
+    "other": "Other"
+  },
+  "contact-methods": {
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "buttons": {
+    "back": "Back",
+    "next": "Next",
+    "return-to-review": "Save and return to review",
+    "skip": "Skip this step",
+    "start-over": "Start over",
+    "submit": "Submit",
+    "start-new": "Start a new application"
+  },
+  "errors": {
+    "full-name-required": "Full name is required",
+    "full-name-too-short": "Full name must be at least 2 characters",
+    "email-required": "Email is required",
+    "email-invalid": "Please enter a valid email address",
+    "account-type-required": "Please choose an account type",
+    "company-name-required": "Company name is required",
+    "company-size-required": "Please choose a company size",
+    "street-required": "Street address is required",
+    "city-required": "City is required",
+    "postcode-required": "Postcode is required",
+    "postcode-invalid": "Please enter a valid postcode",
+    "country-required": "Please choose a country",
+    "phone-required": "Phone number is required when contacting you by phone",
+    "phone-invalid": "Phone number can only contain digits, spaces and a leading +",
+    "phone-length": "Phone number must be between {{minDigits}} and {{maxDigits}} digits"
+  }
+}

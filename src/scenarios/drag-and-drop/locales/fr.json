@@ -1,0 +1,8 @@
+{
+  "title": "Glisser-déposer",
+  "description": "Faites glisser des éléments d'un côté de la page et déposez-les de l'autre côté.",
+  "box": "Boîte",
+  "drag-me": "Faites glisser moi",
+  "drop-here": "Déposer ici",
+  "total-drops": "Total des dépôts"
+}

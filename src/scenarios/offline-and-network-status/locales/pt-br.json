@@ -1,0 +1,64 @@
+{
+  "title": "Offline e status da rede",
+  "description": "Reaja quando o navegador fica offline e volta a ficar online, coloque mensagens na fila enquanto estiver offline e tente de novo uma requisição que falhou.",
+  "banner": {
+    "online-title": "Você está online",
+    "online": "O navegador informa uma conexão de rede. As mensagens são enviadas na hora.",
+    "offline-title": "Você está offline",
+    "offline": "O navegador não informa nenhuma conexão de rede. As mensagens vão para a fila e serão enviadas quando a conexão voltar."
+  },
+  "form": {
+    "title": "Enviar uma mensagem",
+    "explanation": "As mensagens são enviadas quando você está online. Offline, elas esperam na fila e são enviadas quando a conexão voltar.",
+    "message-label": "Mensagem",
+    "send": "Enviar"
+  },
+  "queue": {
+    "title": "Mensagens na fila:",
+    "empty": "Nenhuma mensagem está esperando para ser enviada.",
+    "waiting": "Esperando",
+    "sending": "Enviando",
+    "queued-at": "desde",
+    "paused-title": "Fila pausada",
+    "paused": {
+      "offline": "Você está offline. As mensagens na fila serão enviadas quando a conexão voltar.",
+      "network": "O envio falhou porque não foi possível acessar a rede. Tente de novo com \"Enviar mensagens da fila agora\".",
+      "server": "O envio falhou porque o servidor retornou um erro. Tente de novo com \"Enviar mensagens da fila agora\"."
+    },
+    "send-now": "Enviar mensagens da fila agora"
+  },
+  "sent": {
+    "title": "Mensagens enviadas:",
+    "empty": "Nenhuma mensagem foi enviada ainda.",
+    "sent-at": "Enviada às",
+    "waited": "ficou na fila"
+  },
+  "request": {
+    "title": "Status do serviço",
+    "explanation": "Peça o status do serviço. Se a requisição falhar, o erro explica o motivo e você pode tentar de novo.",
+    "button": "Verificar status do serviço",
+    "loading": "Verificando o status do serviço...",
+    "success-title": "Status do serviço carregado",
+    "checked-at": "verificado às",
+    "attempt": "(tentativa {{attempt}})",
+    "retry": "Tentar novamente",
+    "errors": {
+      "offline-title": "Você está offline",
+      "offline": "A requisição falhou porque o navegador não tem conexão de rede.",
+      "network-title": "Erro de rede",
+      "network": "A requisição falhou porque não foi possível acessar o servidor.",
+      "server-title": "Erro do servidor",
+      "server": "O servidor retornou um erro."
+    }
+  },
+  "events": {
+    "title": "Eventos de conexão",
+    "explanation": "Cada mudança na conexão, com a hora em que aconteceu.",
+    "types": {
+      "loaded-online": "Página carregada online",
+      "loaded-offline": "Página carregada offline",
+      "online": "Conexão restabelecida",
+      "offline": "Conexão perdida"
+    }
+  }
+}

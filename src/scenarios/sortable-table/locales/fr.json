@@ -1,0 +1,26 @@
+{
+  "title": "Tableau triable",
+  "description": "Triez un tableau en cliquant sur les en-têtes de ses colonnes.",
+  "columns": {
+    "name": "Nom",
+    "department": "Service",
+    "started": "Date d'arrivée",
+    "projects": "Projets",
+    "salary": "Salaire",
+    "email": "E-mail"
+  },
+  "departments": {
+    "engineering": "Ingénierie",
+    "design": "Design",
+    "sales": "Ventes",
+    "support": "Assistance",
+    "marketing": "Marketing"
+  },
+  "no-salary": "Prestataire",
+  "status": {
+    "unsorted": "Non trié",
+    "asc": "Trié par {{column}}, ordre croissant",
+    "desc": "Trié par {{column}}, ordre décroissant"
+  },
+  "reset": "Réinitialiser le tri"
+}

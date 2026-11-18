@@ -5,11 +5,10 @@ NC='\033[0m' # No Color
 staged_files=$(git diff --cached --name-only --diff-filter=ACMRTUXB)
 # Check each staged file
 for file in $staged_files; do
-    # Check if it's a scenario .tsx file in src/scenarios
-    if [[ $file == "src/scenarios/"*".scenario.tsx" ]]; then
-        # Construct the expected test file name in src/tests
-        test_file="src/tests/${file#src/scenarios/}"
-        test_file="${test_file/scenario/test}"
+    # Check if it's a scenario .tsx file in its folder in src/scenarios
+    if [[ $file == "src/scenarios/"*"/"*".scenario.tsx" ]]; then
+        # Its tests sit beside it, in the same folder
+        test_file="${file%.scenario.tsx}.test.tsx"
         # Check if the test file exists
         if [ ! -e "$test_file" ]; then
             echo "${RED}Error: Corresponding test file not found for $file${NC}"

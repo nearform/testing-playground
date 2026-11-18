@@ -1,0 +1,58 @@
+{
+  "title": "Área de transferência",
+  "description": "Copie valores para a área de transferência, leia-a de volta e veja como uma página pode alterar ou bloquear uma colagem.",
+  "unavailable": {
+    "title": "Área de transferência indisponível"
+  },
+  "errors": {
+    "unavailable": "A Clipboard API não está disponível. Ela exige um contexto seguro (HTTPS ou localhost) e um navegador que a suporte.",
+    "permission-denied": "A permissão para usar a área de transferência foi negada. Conceda a permissão e verifique se a página tem o foco.",
+    "unknown": "Ocorreu um erro desconhecido ao usar a área de transferência"
+  },
+  "copy": {
+    "title": "Copiar valores",
+    "explanation": "Cada botão copia seu valor para a área de transferência.",
+    "values": {
+      "snippet": "Trecho de código",
+      "api-key": "Chave de API",
+      "share-link": "Link de compartilhamento"
+    },
+    "button": "Copiar",
+    "button-label": "Copiar {{name}}",
+    "copied": "Copiado!",
+    "copied-message": "{{name}} copiado para a área de transferência",
+    "failed": "Falha ao copiar"
+  },
+  "paste": {
+    "title": "Ler a área de transferência",
+    "explanation": "Lê o texto da área de transferência e o mostra abaixo.",
+    "button": "Colar da área de transferência",
+    "reading": "Lendo a área de transferência...",
+    "result-title": "Área de transferência",
+    "empty": "A área de transferência está vazia ou não contém texto",
+    "characters_one": "{{count}} caractere colado:",
+    "characters_other": "{{count}} caracteres colados:",
+    "failed": "Falha ao colar"
+  },
+  "paste-handling": {
+    "title": "Tratamento de colagem",
+    "explanation": "Estes campos alteram o que acontece quando um texto é colado neles.",
+    "notes-label": "Notas (o texto colado é convertido em texto simples)",
+    "notes-formatting-removed": "Colado como texto simples: a formatação foi removida",
+    "notes-plain": "Colado como texto simples",
+    "password-label": "Senha",
+    "confirm-label": "Confirmar senha",
+    "paste-blocked-title": "Colagem bloqueada",
+    "paste-blocked": "Não é permitido colar aqui. Digite a senha novamente.",
+    "match": "As senhas coincidem",
+    "mismatch": "As senhas não coincidem"
+  },
+  "copy-blocked": {
+    "title": "Cópia bloqueada",
+    "explanation": "Os dois campos têm a mesma referência, mas copiar do segundo está bloqueado.",
+    "allowed-label": "Referência (pode ser copiada)",
+    "blocked-label": "Referência (cópia bloqueada)",
+    "blocked-title": "Cópia bloqueada",
+    "blocked": "Não é permitido copiar deste campo"
+  }
+}

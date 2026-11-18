@@ -1,0 +1,64 @@
+{
+  "title": "Offline and Network Status",
+  "description": "React to the browser going offline and back online, queue messages while offline and retry a failed request.",
+  "banner": {
+    "online-title": "You are online",
+    "online": "The browser reports a network connection. Messages are sent straight away.",
+    "offline-title": "You are offline",
+    "offline": "The browser reports no network connection. Messages will be queued and sent when the connection returns."
+  },
+  "form": {
+    "title": "Send a message",
+    "explanation": "Messages are sent when you are online. While offline they wait in the queue and are sent when the connection comes back.",
+    "message-label": "Message",
+    "send": "Send"
+  },
+  "queue": {
+    "title": "Queued messages:",
+    "empty": "No messages are waiting to be sent.",
+    "waiting": "Waiting",
+    "sending": "Sending",
+    "queued-at": "since",
+    "paused-title": "Queue paused",
+    "paused": {
+      "offline": "You are offline. Queued messages will be sent when the connection returns.",
+      "network": "Sending failed because the network could not be reached. Try again with \"Send queued messages now\".",
+      "server": "Sending failed because the server returned an error. Try again with \"Send queued messages now\"."
+    },
+    "send-now": "Send queued messages now"
+  },
+  "sent": {
+    "title": "Sent messages:",
+    "empty": "No messages have been sent yet.",
+    "sent-at": "Sent at",
+    "waited": "was queued"
+  },
+  "request": {
+    "title": "Service status",
+    "explanation": "Request the service status. If the request fails, the error explains why and you can try again.",
+    "button": "Check service status",
+    "loading": "Checking the service status...",
+    "success-title": "Service status loaded",
+    "checked-at": "checked at",
+    "attempt": "(attempt {{attempt}})",
+    "retry": "Retry",
+    "errors": {
+      "offline-title": "You are offline",
+      "offline": "The request failed because the browser has no network connection.",
+      "network-title": "Network error",
+      "network": "The request failed because the server could not be reached.",
+      "server-title": "Server error",
+      "server": "The server returned an error."
+    }
+  },
+  "events": {
+    "title": "Connection events",
+    "explanation": "Every change in the connection, with the time it happened.",
+    "types": {
+      "loaded-online": "Page loaded online",
+      "loaded-offline": "Page loaded offline",
+      "online": "Connection restored",
+      "offline": "Connection lost"
+    }
+  }
+}

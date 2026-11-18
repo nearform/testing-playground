@@ -1,0 +1,12 @@
+{
+  "title": "Diverses entrées",
+  "description": "Tous les types courants de champs HTML, chacun avec une sortie qui reprend ce que vous saisissez pour que vous puissiez le vérifier.",
+  "input": "Entrée",
+  "output": "Sortie",
+  "text": "Texte",
+  "password": "Mot de passe",
+  "number": "Nombre",
+  "date": "Date",
+  "textarea": "Zone de texte",
+  "clear-all": "Tout effacer"
+}

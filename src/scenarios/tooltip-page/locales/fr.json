@@ -1,0 +1,9 @@
+{
+  "title": "Tooltip",
+  "description": "Affichez des infobulles sur un bouton désactivé, sur un bouton dont l'infobulle contient un lien et sur un texte tronqué.",
+  "no-permission": "Vous n'avez pas la permission de faire ça",
+  "more-information": "Plus d'informations",
+  "more-information-msg": "Pour plus d'informations, cliquez ici:",
+  "really-long-text": "Un exemple de texte vraiment très long",
+  "delete": "Supprimer"
+}

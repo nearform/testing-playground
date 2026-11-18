@@ -1,0 +1,26 @@
+{
+  "title": "Tabela ordenável",
+  "description": "Ordene uma tabela clicando nos cabeçalhos das colunas.",
+  "columns": {
+    "name": "Nome",
+    "department": "Departamento",
+    "started": "Data de início",
+    "projects": "Projetos",
+    "salary": "Salário",
+    "email": "E-mail"
+  },
+  "departments": {
+    "engineering": "Engenharia",
+    "design": "Design",
+    "sales": "Vendas",
+    "support": "Suporte",
+    "marketing": "Marketing"
+  },
+  "no-salary": "Prestador",
+  "status": {
+    "unsorted": "Sem ordenação",
+    "asc": "Ordenado por {{column}}, crescente",
+    "desc": "Ordenado por {{column}}, decrescente"
+  },
+  "reset": "Redefinir ordenação"
+}

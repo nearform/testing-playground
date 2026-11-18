@@ -1,0 +1,87 @@
+{
+  "title": "Formulário em Várias Etapas",
+  "description": "Um assistente de cadastro dividido em várias etapas, com validação por etapa, uma etapa que só aparece para contas empresariais, uma etapa opcional, uma página de revisão com links de edição e respostas que sobrevivem a um recarregamento. A etapa atual fica na URL.",
+  "progress-label": "Progresso do formulário",
+  "step-count": "Etapa {{current}} de {{total}}",
+  "optional": "opcional",
+  "error-summary_one": "Corrija o erro abaixo para continuar.",
+  "error-summary_other": "Corrija os {{count}} erros abaixo para continuar.",
+  "success": "Obrigado, {{name}}, seu pedido foi enviado.",
+  "choose": "Escolha…",
+  "company-size-option": "{{size}} funcionários",
+  "review-intro": "Confira suas respostas antes de enviar. Use os links Editar para alterar uma seção.",
+  "edit": "Editar",
+  "edit-label": "Editar {{step}}",
+  "skipped": "Pulada",
+  "yes": "Sim",
+  "no": "Não",
+  "steps": {
+    "personal": "Dados pessoais",
+    "company": "Dados da empresa",
+    "address": "Endereço",
+    "preferences": "Preferências",
+    "review": "Revisão"
+  },
+  "status": {
+    "done": "concluída",
+    "skipped": "pulada"
+  },
+  "fields": {
+    "full-name": "Nome completo",
+    "email": "E-mail",
+    "account-type": "Tipo de conta",
+    "company-name": "Nome da empresa",
+    "company-size": "Tamanho da empresa",
+    "street": "Endereço",
+    "city": "Cidade",
+    "postcode": "CEP / código postal",
+    "country": "País",
+    "contact-method": "Forma de contato preferida",
+    "phone": "Número de telefone",
+    "newsletter": "Quero receber a newsletter mensal"
+  },
+  "hints": {
+    "account-type": "Contas empresariais informam os dados da empresa na próxima etapa"
+  },
+  "account-types": {
+    "personal": "Pessoal",
+    "business": "Empresarial"
+  },
+  "countries": {
+    "gb": "Reino Unido",
+    "fr": "França",
+    "br": "Brasil",
+    "pt": "Portugal",
+    "other": "Outro"
+  },
+  "contact-methods": {
+    "email": "E-mail",
+    "phone": "Telefone"
+  },
+  "buttons": {
+    "back": "Voltar",
+    "next": "Próximo",
+    "return-to-review": "Salvar e voltar para a revisão",
+    "skip": "Pular esta etapa",
+    "start-over": "Recomeçar",
+    "submit": "Enviar",
+    "start-new": "Iniciar um novo pedido"
+  },
+  "errors": {
+    "full-name-required": "O nome completo é obrigatório",
+    "full-name-too-short": "O nome completo deve ter pelo menos 2 caracteres",
+    "email-required": "O e-mail é obrigatório",
+    "email-invalid": "Digite um endereço de e-mail válido",
+    "account-type-required": "Escolha um tipo de conta",
+    "company-name-required": "O nome da empresa é obrigatório",
+    "company-size-required": "Escolha o tamanho da empresa",
+    "street-required": "O endereço é obrigatório",
+    "city-required": "A cidade é obrigatória",
+    "postcode-required": "O código postal é obrigatório",
+    "postcode-invalid": "Digite um código postal válido",
+    "country-required": "Escolha um país",
+    "phone-required": "O telefone é obrigatório para contato por telefone",
+    "phone-invalid": "O telefone só pode conter dígitos, espaços e um + inicial",
+    "phone-length": "O telefone deve ter entre {{minDigits}} e {{maxDigits}} dígitos"
+  }
+}

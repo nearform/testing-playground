@@ -1,0 +1,8 @@
+{
+  "title": "Drag and Drop",
+  "description": "Drag elements from one side of the page and drop them on the other side.",
+  "box": "Box",
+  "drag-me": "Drag Me",
+  "drop-here": "Drop Here",
+  "total-drops": "Total Drops"
+}

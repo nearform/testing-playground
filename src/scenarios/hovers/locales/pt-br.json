@@ -1,0 +1,38 @@
+{
+  "title": "Passar o mouse",
+  "description": "Interaja com elementos que só aparecem enquanto o mouse está sobre algo.",
+  "profiles": {
+    "title": "Perfis",
+    "view": "Ver perfil",
+    "roles": {
+      "tester": "Testador",
+      "developer": "Desenvolvedor",
+      "designer": "Designer"
+    }
+  },
+  "files": {
+    "title": "Arquivos",
+    "open": "Abrir",
+    "open-label": "Abrir {{name}}",
+    "delete": "Excluir",
+    "delete-label": "Excluir {{name}}",
+    "empty": "Não há mais arquivos. Recarregue a página para recuperá-los."
+  },
+  "menu": {
+    "title": "Menu",
+    "products": "Produtos",
+    "laptops": "Notebooks",
+    "phones": "Celulares",
+    "android": "Android",
+    "ios": "iOS",
+    "tablets": "Tablets"
+  },
+  "result": {
+    "title": "Última ação",
+    "none": "Nada ainda",
+    "viewed": "Perfil de {{name}} visualizado",
+    "opened": "{{name}} aberto",
+    "deleted": "{{name}} excluído",
+    "chose": "{{name}} escolhido"
+  }
+}

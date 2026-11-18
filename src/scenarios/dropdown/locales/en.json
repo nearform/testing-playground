@@ -1,0 +1,42 @@
+{
+  "title": "Dropdown",
+  "description": "Pick options from a native select, a multi-select and a custom dropdown.",
+  "native": {
+    "title": "Native select",
+    "label": "Fruit",
+    "placeholder": "Choose a fruit"
+  },
+  "multi": {
+    "title": "Native multi-select",
+    "label": "Colours"
+  },
+  "custom": {
+    "title": "Custom dropdown",
+    "label": "Country",
+    "placeholder": "Choose a country"
+  },
+  "fruits": {
+    "apple": "Apple",
+    "banana": "Banana",
+    "cherry": "Cherry",
+    "durian": "Durian (out of stock)"
+  },
+  "colours": {
+    "red": "Red",
+    "green": "Green",
+    "blue": "Blue",
+    "yellow": "Yellow",
+    "purple": "Purple"
+  },
+  "countries": {
+    "brazil": "Brazil",
+    "france": "France",
+    "ireland": "Ireland",
+    "portugal": "Portugal (unavailable)",
+    "united-kingdom": "United Kingdom"
+  },
+  "result": {
+    "title": "Selected",
+    "none": "Nothing selected"
+  }
+}

@@ -7,16 +7,35 @@ import enTranslation from './locales/en.json'
 import frTranslation from './locales/fr.json'
 import ptBrTranslation from './locales/pt-br.json'
 
-// Each scenario's information is Markdown, one file per language in
-// information/<language>/<scenario>.md, as long notes are far easier to write,
-// review and translate there than as strings of HTML in JSON
-const informationFiles = import.meta.glob<string>('./information/*/*.md', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-})
+// Each scenario keeps its texts beside its code, so a scenario is one folder:
+// scenarios/<scenario>/locales/<language>.json for the texts on its page, and
+// scenarios/<scenario>/information/<language>.md for its information, in
+// Markdown, as long notes are far easier to write, review and translate there
+// than as strings of HTML in JSON
+const scenarioTexts = import.meta.glob<Record<string, unknown>>(
+  '../scenarios/*/locales/*.json',
+  { import: 'default', eager: true },
+)
+const informationFiles = import.meta.glob<string>(
+  '../scenarios/*/information/*.md',
+  { query: '?raw', import: 'default', eager: true },
+)
 
 type Translation = { scenarios: Record<string, unknown> }
+
+export interface ScenarioFiles {
+  texts: Record<string, Record<string, unknown>>
+  information: Record<string, string>
+}
+
+// The scenario and language a file in a scenario's folder is for
+const fileOf = (path: string): { scenario?: string; language?: string } => {
+  const [, scenario, language] =
+    /\/scenarios\/([^/]+)\/(?:locales|information)\/([^/]+)\.(?:json|md)$/.exec(
+      path,
+    ) ?? []
+  return { scenario, language }
+}
 
 const readInformation = (path: string, markdown: string): Information => {
   try {
@@ -27,23 +46,31 @@ const readInformation = (path: string, markdown: string): Information => {
   }
 }
 
-// Adds a language's information files to its texts, as
-// scenarios.<scenario>.information, so they are filled in with values and
-// change with the language like every other text. Each file is parsed here,
-// once, so one that breaks the layout fails as the app loads, naming the
-// file, rather than when its page is drawn.
-export const withInformation = <T extends Translation>(
+// Adds every scenario's texts and information in one language (named as its
+// files are, such as pt-br) to the shared texts, as scenarios.<scenario>, so
+// they are filled in with values and change with the language like every
+// other text. Information is parsed here, once, so a file that breaks the
+// layout fails as the app loads, naming the file, rather than when its page
+// is drawn.
+export const withScenarios = <T extends Translation>(
   translation: T,
-  folder: string,
-  files: Record<string, string> = informationFiles,
+  language: string,
+  { texts, information }: ScenarioFiles = {
+    texts: scenarioTexts,
+    information: informationFiles,
+  },
 ): T => {
   const scenarios = { ...translation.scenarios }
-  for (const [path, markdown] of Object.entries(files)) {
-    const [, fileFolder, scenario] =
-      /\/information\/([^/]+)\/([^/]+)\.md$/.exec(path) ?? []
-    if (fileFolder !== folder) continue
-    scenarios[scenario] = {
-      ...(scenarios[scenario] as object),
+  for (const [path, scenarioText] of Object.entries(texts)) {
+    const file = fileOf(path)
+    if (file.scenario === undefined || file.language !== language) continue
+    scenarios[file.scenario] = { ...scenarioText }
+  }
+  for (const [path, markdown] of Object.entries(information)) {
+    const file = fileOf(path)
+    if (file.scenario === undefined || file.language !== language) continue
+    scenarios[file.scenario] = {
+      ...(scenarios[file.scenario] as object),
       information: readInformation(path, markdown),
     }
   }
@@ -51,9 +78,9 @@ export const withInformation = <T extends Translation>(
 }
 
 const resources = {
-  en: { translation: withInformation(enTranslation, 'en') },
-  fr: { translation: withInformation(frTranslation, 'fr') },
-  ptBr: { translation: withInformation(ptBrTranslation, 'pt-br') },
+  en: { translation: withScenarios(enTranslation, 'en') },
+  fr: { translation: withScenarios(frTranslation, 'fr') },
+  ptBr: { translation: withScenarios(ptBrTranslation, 'pt-br') },
 }
 
 // Only languages with texts are saved or restored: any other (such as the

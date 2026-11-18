@@ -1,0 +1,83 @@
+{
+  "title": "Acionabilidade",
+  "description": "Sobreposições, botões em movimento, mudanças de layout e elementos presentes que não podem ser clicados com segurança.",
+  "result": {
+    "title": "Última ação",
+    "none": "Nada ainda",
+    "intercepted": "O clique foi interceptado por uma sobreposição transparente",
+    "accepted": "Termos aceitos",
+    "continued": "Continuou depois que a sobreposição desapareceu",
+    "sticky-header": "O clique caiu no cabeçalho fixo",
+    "added": "{{product}} adicionado ao carrinho",
+    "caught": "Pegou o botão que nunca para de se mover",
+    "clicked-moving": "Clicou no botão que se acomoda enquanto ele ainda se movia",
+    "clicked-settled": "Clicou no botão que se acomoda depois que ele parou",
+    "upgraded": "Assinou o premium: o banner apareceu sob o clique",
+    "confirmed": "Pedido confirmado",
+    "agreed": "Aceitou os termos depois de rolar a caixa",
+    "pointer-events": "Clicou no botão com pointer-events: none",
+    "zero-size": "Clicou no botão de tamanho zero"
+  },
+  "overlay": {
+    "title": "Sobreposições",
+    "instructions": "Os dois botões estão cobertos por um elemento invisível que recebe o clique.",
+    "permanent-title": "Sempre coberto",
+    "accept": "Aceitar os termos",
+    "timed-title": "Coberto durante o carregamento",
+    "waiting": "Aguardando a sobreposição de carregamento desaparecer…",
+    "cleared": "A sobreposição de carregamento desapareceu",
+    "continue": "Continuar",
+    "restart": "Mostrar a sobreposição de novo"
+  },
+  "sticky": {
+    "title": "Seu carrinho",
+    "basket_one": "{{count}} item",
+    "basket_other": "{{count}} itens",
+    "instructions": "Este cabeçalho fica no topo da janela enquanto você rola os produtos.",
+    "add": "Adicionar {{product}}",
+    "products": {
+      "apples": "Maçãs",
+      "bananas": "Bananas",
+      "carrots": "Cenouras",
+      "dates": "Tâmaras",
+      "eggs": "Ovos",
+      "flour": "Farinha",
+      "grapes": "Uvas",
+      "honey": "Mel",
+      "lemons": "Limões",
+      "milk": "Leite",
+      "oats": "Aveia",
+      "pears": "Peras"
+    }
+  },
+  "moving": {
+    "title": "Elementos em movimento",
+    "instructions": "O primeiro botão nunca para de se mover. O segundo se move por alguns segundos e depois para.",
+    "endless": "Me pegue",
+    "settling": "Me espere",
+    "moving": "O segundo botão ainda está se movendo",
+    "settled": "O segundo botão parou",
+    "restart": "Movê-lo de novo"
+  },
+  "shift": {
+    "title": "Mudança de layout",
+    "instructions": "Um banner é adicionado acima do botão pouco depois que a página carrega.",
+    "confirm": "Confirmar pedido",
+    "upgrade": "Assinar o premium",
+    "offer": "Oferta limitada: entrega premium pela metade do preço",
+    "restart": "Carregar o banner de novo"
+  },
+  "scroll": {
+    "title": "Contêiner com rolagem",
+    "instructions": "O botão fica no final desta caixa, que tem rolagem própria.",
+    "label": "Termos e condições",
+    "clause": "Cláusula {{number}}: você concorda em manter seus testes confiáveis e suas esperas explícitas.",
+    "agree": "Eu aceito"
+  },
+  "unclickable": {
+    "title": "Presentes mas não clicáveis",
+    "instructions": "Um botão ignora o ponteiro e o outro não tem tamanho. Há dois botões aqui, mesmo que você só veja um.",
+    "pointer-events": "Ignora o ponteiro",
+    "zero-size": "Botão de tamanho zero"
+  }
+}

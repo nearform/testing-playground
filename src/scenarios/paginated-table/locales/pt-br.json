@@ -1,0 +1,54 @@
+{
+  "title": "Tabela paginada",
+  "description": "Encontre faturas nas páginas de uma tabela com busca, filtros, seleção de linhas e uma ação em massa.",
+  "filters": {
+    "search": "Buscar",
+    "search-placeholder": "Número da fatura ou cliente",
+    "status": "Status",
+    "all-statuses": "Todos os status",
+    "from": "Emitida a partir de",
+    "to": "Emitida até"
+  },
+  "statuses": {
+    "paid": "Paga",
+    "pending": "Pendente",
+    "overdue": "Vencida",
+    "cancelled": "Cancelada"
+  },
+  "columns": {
+    "id": "Fatura",
+    "customer": "Cliente",
+    "issued": "Emitida em",
+    "status": "Status",
+    "amount": "Valor"
+  },
+  "selection": {
+    "page": "Selecionar todas as faturas desta página",
+    "row": "Selecionar {{id}}",
+    "count_one": "{{count}} fatura selecionada",
+    "count_other": "{{count}} faturas selecionadas",
+    "mark-paid": "Marcar como pagas",
+    "clear": "Limpar seleção",
+    "marked_one": "{{count}} fatura marcada como paga",
+    "marked_other": "{{count}} faturas marcadas como pagas"
+  },
+  "loading": "Carregando faturas",
+  "empty": {
+    "title": "Nenhuma fatura corresponde à sua busca",
+    "hint": "Tente outra busca, ou altere ou limpe os filtros.",
+    "clear": "Limpar filtros"
+  },
+  "summary": {
+    "showing": "Mostrando {{start}}–{{end}} de {{total}}",
+    "none": "Nenhuma fatura para mostrar"
+  },
+  "page-size": "Linhas por página",
+  "pagination": {
+    "label": "Paginação",
+    "first": "Primeira",
+    "previous": "Anterior",
+    "next": "Próxima",
+    "last": "Última",
+    "page": "Página {{page}}"
+  }
+}

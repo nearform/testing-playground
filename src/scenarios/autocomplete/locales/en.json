@@ -1,0 +1,21 @@
+{
+  "title": "Autocomplete",
+  "description": "Pick a value from suggestions that appear as you type.",
+  "no-matches": "No matches",
+  "nothing-selected": "nothing",
+  "selected": "Selected: {{value}}",
+  "country": {
+    "title": "Countries",
+    "label": "Country",
+    "placeholder": "Start typing a country"
+  },
+  "city": {
+    "title": "Cities (slow server)",
+    "slow-notice": "Suggestions come from a slow pretend server, so they take up to {{wait}}ms to appear after you stop typing.",
+    "label": "City",
+    "placeholder": "Start typing a city",
+    "loading": "Waiting for the server…",
+    "too-short_one": "Type at least {{count}} character",
+    "too-short_other": "Type at least {{count}} characters"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "title": "Canvas et SVG",
+  "description": "Un bloc de dessin, un graphique à barres et un jeu de cible dessinés dans un canvas, ainsi qu'une carte SVG avec des info-bulles au survol, dont le contenu est introuvable avec les requêtes DOM habituelles.",
+  "pad": {
+    "title": "Bloc de dessin",
+    "intro": "Maintenez le bouton de la souris enfoncé et déplacez-la pour dessiner. Chaque ligne dessinée est un trait.",
+    "label": "Bloc de dessin",
+    "clear": "Effacer",
+    "strokes_one": "{{count}} trait",
+    "strokes_other": "{{count}} traits",
+    "points_one": "{{count}} point",
+    "points_other": "{{count}} points"
+  },
+  "chart": {
+    "title": "Graphique des commandes",
+    "intro": "Cliquez sur une barre pour voir le nombre de commandes de ce mois.",
+    "label": "Graphique à barres des commandes par mois, de janvier à juin",
+    "months": {
+      "jan": "Janv.",
+      "feb": "Févr.",
+      "mar": "Mars",
+      "apr": "Avr.",
+      "may": "Mai",
+      "jun": "Juin"
+    },
+    "value_one": "{{month}} : {{count}} commande",
+    "value_other": "{{month}} : {{count}} commandes",
+    "none": "Cliquez sur une barre pour voir sa valeur.",
+    "missed": "Aucune barre n'a été cliquée."
+  },
+  "game": {
+    "title": "Tir sur cible",
+    "intro": "Cliquez sur la cible. Chaque fois que vous la touchez, elle se déplace.",
+    "label": "Jeu de cible",
+    "reset": "Recommencer",
+    "score": "Touchés : {{hits}} sur {{total}}",
+    "misses_one": "{{count}} tir manqué",
+    "misses_other": "{{count}} tirs manqués",
+    "done": "Toutes les cibles sont touchées !"
+  },
+  "map": {
+    "title": "Carte des quartiers",
+    "intro": "Pointez un quartier pour voir sa population, et cliquez dessus pour le sélectionner.",
+    "label": "Carte des quartiers de l'île",
+    "regions": {
+      "northfield": "Champs-du-Nord",
+      "westmoor": "Lande-Ouest",
+      "old-town": "Vieille Ville",
+      "harbour": "Port",
+      "eastvale": "Val-Est"
+    },
+    "population": "Population : {{population}}",
+    "selected": "Sélection : {{name}} (population {{population}})",
+    "none": "Aucun quartier sélectionné."
+  }
+}
