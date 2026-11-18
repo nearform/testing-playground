@@ -2,6 +2,8 @@
 // which steps exist, which are complete and which can be visited are easy to
 // test on their own.
 
+import { isValidEmail, phoneNumberError } from './formValidation'
+
 export const ACCOUNT_TYPES = ['personal', 'business'] as const
 export type AccountType = (typeof ACCOUNT_TYPES)[number]
 
@@ -88,8 +90,6 @@ export const getSteps = (data: WizardData): StepId[] =>
 export const isStepId = (value: unknown): value is StepId =>
   typeof value === 'string' && (STEP_IDS as readonly string[]).includes(value)
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const PHONE_PATTERN = /^\+?[0-9 ]+$/
 // Letters, digits, spaces and hyphens, which covers UK, French, Brazilian and
 // Portuguese postcodes without being tied to one of them
 const POSTCODE_PATTERN = /^[A-Za-z0-9][A-Za-z0-9 -]{1,8}[A-Za-z0-9]$/
@@ -108,7 +108,7 @@ const validateField = (
     case 'email': {
       const email = data.email.trim()
       if (email === '') return 'email-required'
-      if (!EMAIL_PATTERN.test(email)) return 'email-invalid'
+      if (!isValidEmail(email)) return 'email-invalid'
       return undefined
     }
     case 'accountType':
@@ -136,10 +136,7 @@ const validateField = (
       if (data.contactMethod !== 'phone') return undefined
       const phone = data.phone.trim()
       if (phone === '') return 'phone-required'
-      if (!PHONE_PATTERN.test(phone)) return 'phone-invalid'
-      const digits = phone.replace(/\D/g, '').length
-      if (digits < 10 || digits > 15) return 'phone-length'
-      return undefined
+      return phoneNumberError(phone)
     }
     case 'contactMethod':
     case 'newsletter':

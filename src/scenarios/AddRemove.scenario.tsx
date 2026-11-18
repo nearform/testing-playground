@@ -137,4 +137,7 @@ const AddRemove = (): JSX.Element => {
   )
 }
 
-export default defineScenario(AddRemove, { difficulty: 'easy' })
+export default defineScenario(AddRemove, {
+  slug: 'add-remove',
+  difficulty: 'easy',
+})

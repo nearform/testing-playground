@@ -419,4 +419,7 @@ const Iframes = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Iframes, { difficulty: 'hard' })
+export default defineScenario(Iframes, {
+  slug: 'iframes',
+  difficulty: 'hard',
+})

@@ -14,10 +14,6 @@ import {
   SelectValue,
 } from '@nearform/quantum'
 
-const transformLink = (link: string): string => {
-  return link.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-}
-
 export default function Index(): JSX.Element {
   const { t } = useTranslation()
 
@@ -26,8 +22,7 @@ export default function Index(): JSX.Element {
 
   // Generate scenarioData dynamically
   const scenarioData = scenarioComponents.map((ScenarioComponent) => {
-    const scenarioName = ScenarioComponent.name ?? 'UnknownScenario'
-    const link = transformLink(scenarioName)
+    const link = ScenarioComponent.slug
     return {
       title: t(`scenarios.${link}.title`),
       description: t(`scenarios.${link}.description`),

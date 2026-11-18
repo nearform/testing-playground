@@ -24,6 +24,7 @@ import {
   validateFiles,
 } from '../utils/fileUpload'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 
 const key = (path: string): string => `scenarios.multiple-file-upload.${path}`
 
@@ -43,18 +44,6 @@ const revokePreviewUrl = (url: string): void => {
   if (url !== '' && typeof URL.revokeObjectURL === 'function') {
     URL.revokeObjectURL(url)
   }
-}
-
-// The app's language codes are not all valid locales (ptBr)
-const locales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
-
-const useLocale = (): string => {
-  const { i18n } = useTranslation()
-  return locales[i18n.language] ?? 'en-GB'
 }
 
 const useShowSize = (): ((size: FormattedSize) => string) => {
@@ -189,25 +178,22 @@ const DropZone = (): JSX.Element => {
     )
     setRejections(rejected)
     setMessage(null)
-    setUploads((current) => [
-      ...current,
-      ...accepted.map((file) => ({
-        id: nextId.current++,
-        file,
-        previewUrl: createPreviewUrl(file),
-        progress: 0,
-      })),
-    ])
+    // Built outside the updater: StrictMode runs updaters twice, which would
+    // create object URLs that are never revoked and skip ids
+    const added = accepted.map((file) => ({
+      id: nextId.current++,
+      file,
+      previewUrl: createPreviewUrl(file),
+      progress: 0,
+    }))
+    setUploads((current) => [...current, ...added])
   }
 
   const removeUpload = (id: number): void => {
-    setUploads((current) =>
-      current.filter((upload) => {
-        if (upload.id !== id) return true
-        revokePreviewUrl(upload.previewUrl)
-        return false
-      }),
-    )
+    const removed = uploads.find((upload) => upload.id === id)
+    if (removed === undefined) return
+    revokePreviewUrl(removed.previewUrl)
+    setUploads((current) => current.filter((upload) => upload.id !== id))
   }
 
   const handleSubmit = (): void => {
@@ -422,4 +408,7 @@ const MultipleFileUpload = (): JSX.Element => {
   )
 }
 
-export default defineScenario(MultipleFileUpload, { difficulty: 'medium' })
+export default defineScenario(MultipleFileUpload, {
+  slug: 'multiple-file-upload',
+  difficulty: 'medium',
+})

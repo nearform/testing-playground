@@ -62,8 +62,12 @@ const Clipboard = (): JSX.Element => {
     }
   }
   useEffect(() => clearResetTimer, [])
+  // Copies can overlap while writeText is pending: only the latest one may
+  // update the status, so an earlier one cannot overwrite it when it settles
+  const latestCopy = useRef(0)
 
   const copy = async (id: CopyId, value: string): Promise<void> => {
+    const attempt = ++latestCopy.current
     clearResetTimer()
     if (!isClipboardAvailable('writeText')) {
       setCopyStatus({ state: 'error', id, key: 'unavailable' })
@@ -71,12 +75,16 @@ const Clipboard = (): JSX.Element => {
     }
     try {
       await navigator.clipboard.writeText(value)
+      if (attempt !== latestCopy.current) return
       setCopyStatus({ state: 'copied', id })
+      // Cleared again: another copy may have started a timer during the await
+      clearResetTimer()
       resetTimer.current = setTimeout(() => {
         resetTimer.current = null
         setCopyStatus({ state: 'idle' })
       }, COPIED_RESET_MS)
     } catch (error) {
+      if (attempt !== latestCopy.current) return
       setCopyStatus({ state: 'error', id, key: classifyClipboardError(error) })
     }
   }
@@ -448,4 +456,7 @@ const Clipboard = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Clipboard, { difficulty: 'medium' })
+export default defineScenario(Clipboard, {
+  slug: 'clipboard',
+  difficulty: 'medium',
+})

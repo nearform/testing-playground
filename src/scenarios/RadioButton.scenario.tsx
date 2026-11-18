@@ -87,4 +87,7 @@ const RadioButton = (): JSX.Element => {
   )
 }
 
-export default defineScenario(RadioButton, { difficulty: 'easy' })
+export default defineScenario(RadioButton, {
+  slug: 'radio-button',
+  difficulty: 'easy',
+})

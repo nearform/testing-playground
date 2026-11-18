@@ -143,4 +143,7 @@ const VariousInputs: React.FC = (): JSX.Element => {
   )
 }
 
-export default defineScenario(VariousInputs, { difficulty: 'easy' })
+export default defineScenario(VariousInputs, {
+  slug: 'various-inputs',
+  difficulty: 'easy',
+})

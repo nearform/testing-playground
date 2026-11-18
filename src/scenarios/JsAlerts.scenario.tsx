@@ -105,4 +105,7 @@ const JsAlerts = (): JSX.Element => {
   )
 }
 
-export default defineScenario(JsAlerts, { difficulty: 'medium' })
+export default defineScenario(JsAlerts, {
+  slug: 'js-alerts',
+  difficulty: 'medium',
+})

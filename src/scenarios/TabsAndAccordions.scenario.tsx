@@ -435,4 +435,7 @@ const TabsAndAccordions = (): JSX.Element => {
   )
 }
 
-export default defineScenario(TabsAndAccordions, { difficulty: 'easy' })
+export default defineScenario(TabsAndAccordions, {
+  slug: 'tabs-and-accordions',
+  difficulty: 'easy',
+})

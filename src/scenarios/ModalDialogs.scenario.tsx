@@ -644,4 +644,7 @@ const ModalDialogs = (): JSX.Element => {
   )
 }
 
-export default defineScenario(ModalDialogs, { difficulty: 'medium' })
+export default defineScenario(ModalDialogs, {
+  slug: 'modal-dialogs',
+  difficulty: 'medium',
+})

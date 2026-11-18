@@ -138,4 +138,7 @@ const LoginForm = (): JSX.Element => {
   )
 }
 
-export default defineScenario(LoginForm, { difficulty: 'easy' })
+export default defineScenario(LoginForm, {
+  slug: 'login-form',
+  difficulty: 'easy',
+})

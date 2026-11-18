@@ -198,11 +198,19 @@ const CookiesAndStorage = (): JSX.Element => {
     }
   }, [consent])
 
-  // Another tab changing localStorage fires a storage event here
+  // Another tab changing localStorage fires a storage event here. Cookies are
+  // shared between tabs too, so consent and preferences are re-read along with
+  // the live panel, keeping the whole page in step with the other tab.
   useEffect(() => {
-    window.addEventListener('storage', refresh)
+    const syncFromStorage = (): void => {
+      const current = readConsent()
+      setConsent(current)
+      setPreferences(readPreferences(current))
+      refresh()
+    }
+    window.addEventListener('storage', syncFromStorage)
     return () => {
-      window.removeEventListener('storage', refresh)
+      window.removeEventListener('storage', syncFromStorage)
     }
   }, [refresh])
 
@@ -569,4 +577,7 @@ const CookiesAndStorage = (): JSX.Element => {
   )
 }
 
-export default defineScenario(CookiesAndStorage, { difficulty: 'medium' })
+export default defineScenario(CookiesAndStorage, {
+  slug: 'cookies-and-storage',
+  difficulty: 'medium',
+})

@@ -33,10 +33,9 @@ const publicFiles = Object.keys(
 
 const existsInPublic = (path: string): boolean => publicFiles.includes(path)
 
-// The routes the router registers, worked out the same way it does
+// The routes the router registers
 const scenarioRoutes = Object.values(Scenario).map(
-  (component) =>
-    `/${component.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`,
+  (component) => `/${component.slug}`,
 )
 
 const fakeImage = (complete: boolean, naturalWidth: number): HTMLImageElement =>

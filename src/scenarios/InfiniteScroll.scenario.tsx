@@ -124,4 +124,7 @@ const InfiniteScroll = (): JSX.Element => {
   )
 }
 
-export default defineScenario(InfiniteScroll, { difficulty: 'medium' })
+export default defineScenario(InfiniteScroll, {
+  slug: 'infinite-scroll',
+  difficulty: 'medium',
+})

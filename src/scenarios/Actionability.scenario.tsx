@@ -366,4 +366,7 @@ const Actionability = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Actionability, { difficulty: 'hard' })
+export default defineScenario(Actionability, {
+  slug: 'actionability',
+  difficulty: 'hard',
+})

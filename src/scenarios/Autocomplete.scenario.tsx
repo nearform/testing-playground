@@ -432,4 +432,7 @@ const Autocomplete = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Autocomplete, { difficulty: 'hard' })
+export default defineScenario(Autocomplete, {
+  slug: 'autocomplete',
+  difficulty: 'hard',
+})

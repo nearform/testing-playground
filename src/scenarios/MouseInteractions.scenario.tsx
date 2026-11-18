@@ -451,4 +451,7 @@ const MouseInteractions = (): JSX.Element => {
   )
 }
 
-export default defineScenario(MouseInteractions, { difficulty: 'medium' })
+export default defineScenario(MouseInteractions, {
+  slug: 'mouse-interactions',
+  difficulty: 'medium',
+})

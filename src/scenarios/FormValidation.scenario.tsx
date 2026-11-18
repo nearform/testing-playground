@@ -223,4 +223,7 @@ const FormValidation = (): JSX.Element => {
   )
 }
 
-export default defineScenario(FormValidation, { difficulty: 'medium' })
+export default defineScenario(FormValidation, {
+  slug: 'form-validation',
+  difficulty: 'medium',
+})

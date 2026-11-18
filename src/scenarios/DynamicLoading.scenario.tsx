@@ -317,4 +317,7 @@ const DynamicLoading = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DynamicLoading, { difficulty: 'medium' })
+export default defineScenario(DynamicLoading, {
+  slug: 'dynamic-loading',
+  difficulty: 'medium',
+})

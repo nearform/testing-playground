@@ -141,6 +141,22 @@ describe('MultipleFileUpload', () => {
       expect(uploadNames()).toEqual(['dropped.png'])
     })
 
+    it('makes one preview per image under StrictMode', () => {
+      // StrictMode, as the app runs in, calls state updaters twice
+      TestRenderer(
+        <React.StrictMode>
+          <MultipleFileUpload />
+        </React.StrictMode>,
+      )
+
+      fireEvent.drop(screen.getByTestId('drop-zone'), {
+        dataTransfer: { files: [image('a.png'), image('b.png')] },
+      })
+
+      expect(uploadNames()).toEqual(['a.png', 'b.png'])
+      expect(URL.createObjectURL).toHaveBeenCalledTimes(2)
+    })
+
     it('highlights the zone while files are dragged over it', () => {
       setup()
       const zone = screen.getByTestId('drop-zone')

@@ -291,4 +291,7 @@ const Hovers = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Hovers, { difficulty: 'medium' })
+export default defineScenario(Hovers, {
+  slug: 'hovers',
+  difficulty: 'medium',
+})

@@ -122,4 +122,7 @@ const FileUpload = (): JSX.Element => {
   )
 }
 
-export default defineScenario(FileUpload, { difficulty: 'medium' })
+export default defineScenario(FileUpload, {
+  slug: 'file-upload',
+  difficulty: 'medium',
+})

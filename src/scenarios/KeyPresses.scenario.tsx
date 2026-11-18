@@ -232,4 +232,7 @@ const KeyPresses = (): JSX.Element => {
   )
 }
 
-export default defineScenario(KeyPresses, { difficulty: 'medium' })
+export default defineScenario(KeyPresses, {
+  slug: 'key-presses',
+  difficulty: 'medium',
+})

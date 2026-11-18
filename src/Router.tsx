@@ -12,15 +12,13 @@ function Router(): JSX.Element {
   return (
     <Routes>
       <Route path='/' element={<Index />} />
-      {scenarioComponents.map((ScenarioComponent, index) => {
-        const scenarioName = ScenarioComponent.name ?? 'UnknownScenario'
-        const routePath = scenarioName
-          .replace(/([a-z])([A-Z])/g, '$1-$2')
-          .toLowerCase()
-        return (
-          <Route key={index} path={routePath} element={<ScenarioComponent />} />
-        )
-      })}
+      {scenarioComponents.map((ScenarioComponent) => (
+        <Route
+          key={ScenarioComponent.slug}
+          path={ScenarioComponent.slug}
+          element={<ScenarioComponent />}
+        />
+      ))}
     </Routes>
   )
 }

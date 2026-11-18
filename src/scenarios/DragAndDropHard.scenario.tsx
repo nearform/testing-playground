@@ -164,4 +164,7 @@ const DragAndDropHard = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DragAndDropHard, { difficulty: 'hard' })
+export default defineScenario(DragAndDropHard, {
+  slug: 'drag-and-drop-hard',
+  difficulty: 'hard',
+})

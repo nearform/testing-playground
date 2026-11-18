@@ -114,4 +114,7 @@ const SliderPage: React.FC = () => {
   )
 }
 
-export default defineScenario(SliderPage, { difficulty: 'medium' })
+export default defineScenario(SliderPage, {
+  slug: 'slider-page',
+  difficulty: 'medium',
+})

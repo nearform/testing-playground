@@ -748,4 +748,7 @@ const DatePicker = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DatePicker, { difficulty: 'hard' })
+export default defineScenario(DatePicker, {
+  slug: 'date-picker',
+  difficulty: 'hard',
+})

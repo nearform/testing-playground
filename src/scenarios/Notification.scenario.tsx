@@ -131,4 +131,7 @@ const Notification = (): JSX.Element => {
   )
 }
 
-export default defineScenario(Notification, { difficulty: 'medium' })
+export default defineScenario(Notification, {
+  slug: 'notification',
+  difficulty: 'medium',
+})

@@ -7,6 +7,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 import {
   type VisibleRange,
   columnName,
@@ -104,15 +105,8 @@ export const cellValue = (row: number, column: number): number =>
 export const cellName = (row: number, column: number): string =>
   `${columnName(column)}${row}`
 
-const locales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
-
 const useFormatNumber = (): ((value: number) => string) => {
-  const { i18n } = useTranslation()
-  const locale = locales[i18n.language] ?? 'en-GB'
+  const locale = useLocale()
   return useMemo(() => {
     const formatter = new Intl.NumberFormat(locale)
     return (value: number) => formatter.format(value)
@@ -693,4 +687,7 @@ const VirtualisedList = (): JSX.Element => {
   )
 }
 
-export default defineScenario(VirtualisedList, { difficulty: 'hard' })
+export default defineScenario(VirtualisedList, {
+  slug: 'virtualised-list',
+  difficulty: 'hard',
+})

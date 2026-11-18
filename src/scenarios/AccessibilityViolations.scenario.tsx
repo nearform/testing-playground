@@ -527,5 +527,6 @@ const AccessibilityViolations = (): JSX.Element => {
 }
 
 export default defineScenario(AccessibilityViolations, {
+  slug: 'accessibility-violations',
   difficulty: 'medium',
 })

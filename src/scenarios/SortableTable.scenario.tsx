@@ -14,6 +14,7 @@ import Layout from '../components/Layout'
 import PageSetup from '../components/PageSetup'
 import { defineScenario } from '../utils/defineScenario'
 import { translateInformation } from '../utils/information'
+import { useLocale } from '../utils/locale'
 
 interface Employee {
   id: number
@@ -122,13 +123,6 @@ const columns: Array<{ key: SortKey; align?: 'right' }> = [
   { key: 'salary', align: 'right' },
 ]
 
-// The app's language codes are not all valid locales, so map them to one
-const locales: Record<string, string> = {
-  en: 'en-GB',
-  fr: 'fr-FR',
-  ptBr: 'pt-BR',
-}
-
 // Clicking a column sorts it ascending, then descending, then not at all.
 // Clicking a different column starts that one at ascending.
 const nextSort = (
@@ -141,9 +135,9 @@ const nextSort = (
 }
 
 const SortableTable = (): JSX.Element => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [sort, setSort] = useState<SortState | null>(null)
-  const locale = locales[i18n.language] ?? 'en-GB'
+  const locale = useLocale()
 
   const departmentLabel = (department: string): string =>
     t(`scenarios.sortable-table.departments.${department}`)
@@ -279,4 +273,7 @@ const SortableTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(SortableTable, { difficulty: 'medium' })
+export default defineScenario(SortableTable, {
+  slug: 'sortable-table',
+  difficulty: 'medium',
+})

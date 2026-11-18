@@ -165,4 +165,7 @@ const DynamicTable = (): JSX.Element => {
   )
 }
 
-export default defineScenario(DynamicTable, { difficulty: 'hard' })
+export default defineScenario(DynamicTable, {
+  slug: 'dynamic-table',
+  difficulty: 'hard',
+})

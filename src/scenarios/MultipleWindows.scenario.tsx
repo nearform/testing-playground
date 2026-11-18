@@ -397,4 +397,7 @@ const MultipleWindows = (): JSX.Element => {
   return isWindowView(view) ? <ChildWindow view={view} /> : <MainWindow />
 }
 
-export default defineScenario(MultipleWindows, { difficulty: 'medium' })
+export default defineScenario(MultipleWindows, {
+  slug: 'multiple-windows',
+  difficulty: 'medium',
+})
