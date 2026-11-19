@@ -13,6 +13,7 @@ npm ci
 npm run dev   # the site, with hot reloading
 npm test      # the unit tests (Vitest)
 npm run lint  # oxlint
+npm run format:check  # Prettier, as CI checks it
 ```
 
 ## To add a new scenario
