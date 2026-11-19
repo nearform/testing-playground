@@ -195,7 +195,7 @@ const BrokenImagesAndLinks = (): JSX.Element => {
         width={320}
         height={200}
         loading={lazy ? 'lazy' : undefined}
-        className='h-[200px] w-[320px] max-w-full border border-dashed border-gray-400 object-contain'
+        className='h-[200px] w-[320px] max-w-full border border-dashed border-grey-400 object-contain'
         data-testid={`image-${id}`}
         data-expected={expected}
       />
@@ -347,7 +347,7 @@ const BrokenImagesAndLinks = (): JSX.Element => {
           </section>
 
           <p
-            className='flex min-h-[100vh] items-end border-l-4 border-gray-400 pl-4'
+            className='flex min-h-[100vh] items-end border-l-4 border-grey-400 pl-4'
             data-testid='scroll-hint'
           >
             {t(key('lazy.scroll-hint'))}

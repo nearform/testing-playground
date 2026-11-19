@@ -13,7 +13,7 @@ const LoadError = (): JSX.Element => {
 
   return (
     <Layout>
-      <main className='p-4' data-testid='scenario-load-error'>
+      <main className='p-4 md:px-8' data-testid='scenario-load-error'>
         <Card role='alert' className='flex flex-col gap-4'>
           <CardTitle asChild>
             <h1>{t('common.load-error-title')}</h1>

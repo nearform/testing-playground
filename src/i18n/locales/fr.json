@@ -13,14 +13,18 @@
       "test": "Faites pointer vos tests sur la page du scénario. Chacun a sa propre adresse : un test peut donc l'ouvrir directement."
     },
     "source": "Le playground est open source :",
-    "source-link": "proposez ou ajoutez un scénario sur GitHub"
+    "source-link": "proposez ou ajoutez un scénario sur GitHub",
+    "search-label": "Rechercher un scénario",
+    "search-placeholder": "Titre ou description",
+    "results": "{{count}} scénarios affichés sur {{total}}",
+    "no-results-title": "Aucun scénario ne correspond à ces filtres",
+    "no-results-body": "Essayez un autre mot ou remettez la difficulté sur Tous.",
+    "clear-filters": "Effacer les filtres"
   },
   "common": {
     "copyright": "Droits d'auteur © {{year}} {{company}} Ltd. Tous droits réservés.",
     "learn-more": "En savoir plus",
-    "search": "Rechercher...",
     "difficulty": "Difficulté",
-    "select-difficulty": "Sélectionnez la difficulté",
     "all": "Tous",
     "easy": "Facile",
     "medium": "Moyen",

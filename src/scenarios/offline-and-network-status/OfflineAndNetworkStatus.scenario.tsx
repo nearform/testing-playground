@@ -268,7 +268,7 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
                         data-state={state}
                       >
                         <span data-testid='queue-item-text'>{item.text}</span>
-                        <span className='text-gray-500'>
+                        <span className='text-foreground-muted dark:text-foreground-muted-dark'>
                           {t(key(`queue.${state}`))} {t(key('queue.queued-at'))}{' '}
                           <TimeStamp date={item.queuedAt} />
                         </span>
@@ -322,7 +322,7 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
                       data-waited={item.waited}
                     >
                       <span data-testid='sent-item-text'>{item.text}</span>
-                      <span className='text-gray-500'>
+                      <span className='text-foreground-muted dark:text-foreground-muted-dark'>
                         {t(key('sent.sent-at'))}{' '}
                         <TimeStamp date={item.sentAt} />
                         {item.waited && <> ({t(key('sent.waited'))})</>}

@@ -41,6 +41,55 @@ describe('Index page', () => {
     ])
   })
 
+  it('names the search box by its visible label', () => {
+    TestRenderer(<Index />)
+
+    expect(
+      screen.getByRole('searchbox', { name: 'Search scenarios' }),
+    ).toBeInTheDocument()
+  })
+
+  it('names the difficulty filter by its visible label', () => {
+    TestRenderer(<Index />)
+
+    expect(
+      screen.getByRole('combobox', { name: 'Difficulty' }),
+    ).toHaveTextContent('All')
+  })
+
+  it('says how many scenarios match the search', () => {
+    TestRenderer(<Index />)
+
+    fireEvent.change(screen.getByRole('searchbox'), {
+      target: { value: 'clipboard' },
+    })
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      `Showing 1 of ${scenarios.length} scenarios`,
+    )
+  })
+
+  it('explains that nothing matched when the search finds no scenario', () => {
+    TestRenderer(<Index />)
+
+    fireEvent.change(screen.getByRole('searchbox'), {
+      target: { value: 'no scenario has this text' },
+    })
+
+    expect(screen.getByText('No scenarios match these filters')).toBeVisible()
+  })
+
+  it('shows every scenario again when the filters are cleared', () => {
+    TestRenderer(<Index />)
+    fireEvent.change(screen.getByRole('searchbox'), {
+      target: { value: 'no scenario has this text' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear filters' }))
+
+    expect(scenarioLinks()).toHaveLength(scenarios.length)
+  })
+
   it('shows the scenario titles in the chosen language', async () => {
     TestRenderer(<Index />)
 
