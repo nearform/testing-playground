@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 
-import { quantumThemeInit } from './quantumThemeInit'
+import { quantumThemeInit } from './quantumThemeInit.ts'
 
 export default defineConfig({
   base: '/testing-playground/',

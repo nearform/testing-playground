@@ -2,6 +2,8 @@
   // The build config, which runs in Node rather than the browser. The app's
   // own sources are checked by tsconfig.json.
   "compilerOptions": {
+    // Vite loads the config natively, which needs the .ts on its imports
+    "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2023"],
     "module": "ES2022",
