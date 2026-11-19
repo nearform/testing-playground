@@ -17,7 +17,7 @@ describe('Header theme toggle', () => {
     TestRenderer(<Header />)
 
     const toggle = screen.getByTestId('theme-toggle')
-    const languageSelector = screen.getByRole('combobox')
+    const languageSelector = screen.getByRole('combobox', { name: 'Language' })
 
     expect(toggle.parentElement).toContainElement(languageSelector)
   })

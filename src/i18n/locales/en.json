@@ -1,6 +1,6 @@
 {
   "site": {
-    "company": "NearForm",
+    "company": "Nearform",
     "title": "Testing Playground"
   },
   "home": {
@@ -32,7 +32,8 @@
     "playground": "Playground",
     "load-error-title": "This page could not be loaded",
     "load-error-body": "Part of the page failed to download. Check your connection, or the site may have just been updated: reload to try again.",
-    "reload": "Reload the page"
+    "reload": "Reload the page",
+    "language": "Language"
   },
   "not-found": {
     "title": "Page not found",
