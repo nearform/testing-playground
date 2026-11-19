@@ -155,7 +155,7 @@ const ClockSection = (): JSX.Element => {
           className={`rounded-md p-3 font-semibold ${
             status === 'open'
               ? 'bg-brandGreen text-black'
-              : 'bg-red-100 text-red-900'
+              : 'bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100'
           }`}
           data-testid='shop-status'
           data-status={status}

@@ -246,7 +246,7 @@ const VirtualList = ({
                   renderDetails === undefined
                     ? 'items-center'
                     : variableRowClasses
-                } ${selected ? 'bg-brandGreen-100 text-black' : ''}`}
+                } ${selected ? 'bg-brandGreen-100 text-black dark:bg-green-800 dark:text-white' : ''}`}
                 style={{
                   height: rowHeight(index),
                   transform: `translateY(${rowTop(index)}px)`,
@@ -627,7 +627,7 @@ const GridSection = (): JSX.Element => {
                         aria-label={t(key('grid.cell'), { cell, value })}
                         className={`h-full w-full px-2 text-right tabular-nums focus-visible:outline focus-visible:outline-2 ${
                           isSelected
-                            ? 'bg-brandGreen-100 text-black'
+                            ? 'bg-brandGreen-100 text-black dark:bg-green-800 dark:text-white'
                             : 'hover:bg-background-alt dark:hover:bg-background-alt-dark'
                         }`}
                         onClick={() => {
