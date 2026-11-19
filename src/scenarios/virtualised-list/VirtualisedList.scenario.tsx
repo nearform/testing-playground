@@ -409,7 +409,7 @@ const VariableSection = (): React.JSX.Element => {
 
 // The grid's width follows the page, so it is measured to work out how many
 // columns fit
-const useWidth = (ref: React.RefObject<HTMLElement>): number => {
+const useWidth = (ref: React.RefObject<HTMLElement | null>): number => {
   const [width, setWidth] = useState(0)
   useLayoutEffect(() => {
     const element = ref.current

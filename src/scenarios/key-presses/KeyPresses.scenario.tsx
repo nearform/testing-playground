@@ -43,7 +43,7 @@ const KeyPresses = (): React.JSX.Element => {
   const [history, setHistory] = useState<string[]>([])
   const [counter, setCounter] = useState(COUNTER_START)
   const [holdState, setHoldState] = useState<HoldState>('idle')
-  const holdTimer = useRef<ReturnType<typeof setTimeout>>()
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => () => clearTimeout(holdTimer.current), [])
 

@@ -480,7 +480,7 @@ const ThrottleSection = (): React.JSX.Element => {
   // Re-renders the label as soon as the cooldown ends, rather than on the
   // next tick
   const [, setCooldownEnded] = useState(0)
-  const cooldown = useRef<ReturnType<typeof setTimeout>>()
+  const cooldown = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   useNow()
   // Worked out from the clock, like the check in save, so the two agree
   // even when the clock jumps without firing timers. Reading the clock while

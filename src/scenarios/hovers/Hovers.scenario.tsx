@@ -51,7 +51,7 @@ const Hovers = (): React.JSX.Element => {
   // The ids of the open menus, outermost first
   const [openMenus, setOpenMenus] = useState<string[]>([])
   const [lastAction, setLastAction] = useState<Action | null>(null)
-  const menuTimer = useRef<ReturnType<typeof setTimeout>>()
+  const menuTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   const clearMenuTimer = (): void => {
     clearTimeout(menuTimer.current)
