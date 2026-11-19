@@ -1,4 +1,4 @@
-# NearForm Testing Playground
+# Nearform Testing Playground
 
 ![Latest Deploy](https://github.com/nearform/testing-playground/actions/workflows/deploy.yml/badge.svg)
 
@@ -7,6 +7,8 @@ A set of small pages for practising test automation on the parts of the web that
 You can find the site live at https://nearform.github.io/testing-playground
 
 ## Running it locally
+
+You need Node 26, the version in [`.nvmrc`](./.nvmrc). With nvm, run `nvm use` first.
 
 ```bash
 npm ci
