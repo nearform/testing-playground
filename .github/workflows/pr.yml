@@ -40,7 +40,7 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
-      # npm run build type checks with tsc before Vite builds
+      # npm run build type checks the app and its build config before Vite builds
       - name: Type check and build
         run: npm run build
 
