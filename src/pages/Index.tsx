@@ -25,7 +25,7 @@ const proseClass =
   'max-w-[75ch] text-foreground-muted dark:text-foreground-muted-dark'
 
 export default function Index(): JSX.Element {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   // Each scenario's card, worked out again only when the language changes,
   // not on every keystroke in the search box
@@ -37,9 +37,8 @@ export default function Index(): JSX.Element {
         link: slug,
         difficulty,
       })),
-    // The language is listed as well as t, in case t keeps its identity
-    // across a change of language
-    [t, i18n.language],
+    // react-i18next hands out a new t when the language changes
+    [t],
   )
 
   // State for search term and selected difficulty

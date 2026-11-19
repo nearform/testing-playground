@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["eslint", "typescript", "unicorn", "oxc"],
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react"],
   "env": {
     "browser": true,
     "node": true
@@ -24,7 +24,28 @@
     "typescript/no-this-alias": "error",
     "typescript/prefer-as-const": "error",
     "typescript/prefer-namespace-keyword": "error",
-    "typescript/triple-slash-reference": "error"
+    "typescript/triple-slash-reference": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    // React Compiler style checks. They flag about 20 places, mostly in
+    // scenarios that read the clock or refs while drawing on purpose, so
+    // they are off until each place has been looked at
+    "react/set-state-in-effect": "off",
+    "react/refs": "off",
+    "react/purity": "off",
+    "react/immutability": "off"
   },
-  "ignorePatterns": ["dist/"]
+  "ignorePatterns": ["dist/"],
+  // The site's own pages and components should be accessible. Scenarios
+  // are left out: some are hard to automate, or inaccessible, on purpose.
+  "overrides": [
+    {
+      "files": ["src/components/**", "src/pages/**"],
+      "plugins": ["jsx-a11y"],
+      "rules": {
+        // An explicit role="status" is announced more reliably than <output>
+        "jsx-a11y/prefer-tag-over-role": "off"
+      }
+    }
+  ]
 }
