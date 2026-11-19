@@ -261,6 +261,7 @@ describe('MultipleWindows scenario', () => {
     )
 
     it('puts the page title back when the window view goes', () => {
+      document.title = 'Nearform Testing Playground'
       const { unmount } = renderView('new-tab')
 
       unmount()

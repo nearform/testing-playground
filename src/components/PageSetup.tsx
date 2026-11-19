@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 
 import ScenarioInformation from './ScenarioInformation'
 import type { Information } from '../utils/information'
+import { useDocumentTitle } from '../utils/useDocumentTitle'
 
 interface PageSetupProps {
   children: React.ReactNode
@@ -33,6 +34,7 @@ const PageSetup: React.FC<PageSetupProps> = ({
   sections = false,
 }) => {
   const { t } = useTranslation()
+  useDocumentTitle(title)
 
   return (
     <div className='flex flex-col gap-4 p-4 md:px-8'>

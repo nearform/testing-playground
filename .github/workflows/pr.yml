@@ -6,9 +6,20 @@ on:
   workflow_call:
   workflow_dispatch:
 
+# The checks only read the code
+permissions:
+  contents: read
+
 jobs:
   pr-tests:
     runs-on: ubuntu-latest
+    # A new push makes the run for the previous one pointless. Set on the job,
+    # not the workflow: the Dependabot PRs workflow also calls this one, and a
+    # called workflow's github.workflow is its caller's name, so the two runs
+    # on a Dependabot PR get separate groups and never cancel each other.
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -25,10 +36,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type check
-        run: npx tsc --noEmit
+      # The pre-commit hook formats staged files, but it can be skipped
+      - name: Check formatting
+        run: npm run format:check
 
-      - name: Build
+      # npm run build type checks with tsc before Vite builds
+      - name: Type check and build
         run: npm run build
 
       - name: Run Vitest

@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import i18n, { isSupportedLanguage, LANGUAGE_KEY } from '../i18n/i18nConfig'
+import i18n, {
+  isSupportedLanguage,
+  LANGUAGE_KEY,
+  languageTag,
+} from '../i18n/i18nConfig'
 
 describe('i18n changeLanguage', () => {
   afterEach(async () => {
@@ -36,6 +40,44 @@ describe('i18n changeLanguage', () => {
 
     await expect(i18n.changeLanguage('fr')).resolves.toBeTypeOf('function')
     expect(i18n.language).toBe('fr')
+  })
+
+  it.each([
+    { from: 'en', language: 'fr', tag: 'fr' },
+    { from: 'en', language: 'ptBr', tag: 'pt-BR' },
+    { from: 'fr', language: 'en', tag: 'en' },
+  ])(
+    'marks the page as $tag when $language is chosen',
+    async ({ from, language, tag }) => {
+      await i18n.changeLanguage(from)
+
+      await i18n.changeLanguage(language)
+
+      expect(document.documentElement).toHaveAttribute('lang', tag)
+    },
+  )
+})
+
+describe('when the app starts with a saved language', () => {
+  afterEach(() => {
+    localStorage.removeItem(LANGUAGE_KEY)
+    vi.resetModules()
+  })
+
+  it('marks the page with it before anything else changes the language', async () => {
+    localStorage.setItem(LANGUAGE_KEY, 'ptBr')
+    document.documentElement.removeAttribute('lang')
+    vi.resetModules()
+
+    await import('../i18n/i18nConfig')
+
+    expect(document.documentElement).toHaveAttribute('lang', 'pt-BR')
+  })
+})
+
+describe('languageTag', () => {
+  it('gives an unsupported language back unchanged', () => {
+    expect(languageTag('de')).toBe('de')
   })
 })
 

@@ -86,8 +86,27 @@ const resources = {
 
 // Only languages with texts are saved or restored: any other (such as the
 // BCP 47 form `pt-BR` instead of the app's `ptBr`) would show raw keys
-export const isSupportedLanguage = (language: string): boolean =>
-  Object.hasOwn(resources, language)
+export const isSupportedLanguage = (
+  language: string,
+): language is keyof typeof resources => Object.hasOwn(resources, language)
+
+// The BCP 47 tag of each language, for the page's lang attribute. The app's
+// own names are not all valid tags: `ptBr` would not be recognised.
+const languageTags: Record<keyof typeof resources, string> = {
+  en: 'en',
+  fr: 'fr',
+  ptBr: 'pt-BR',
+}
+
+export const languageTag = (language: string): string =>
+  isSupportedLanguage(language) ? languageTags[language] : language
+
+// Screen readers choose their voice and pronunciation from <html lang>, so
+// it follows the chosen language rather than staying at index.html's `en`.
+// Listening before init means the starting language is set too.
+i18n.on('languageChanged', (language) => {
+  document.documentElement.lang = languageTag(language)
+})
 
 // Where the chosen language is remembered in localStorage
 export const LANGUAGE_KEY = storageKey('language')
