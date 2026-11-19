@@ -15,5 +15,10 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     globals: true,
+    // Node 25+ has its own localStorage, which hides jsdom's and warns once
+    // per worker that it has no file to keep it in. Turning it off leaves
+    // jsdom's storage, as in a browser. (The --experimental- spelling is the
+    // one Node 22 and 24 know too.)
+    execArgv: ['--no-experimental-webstorage'],
   },
 })
