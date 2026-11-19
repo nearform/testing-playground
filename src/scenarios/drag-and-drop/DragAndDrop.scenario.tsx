@@ -6,7 +6,7 @@ import PageSetup from '../../components/PageSetup'
 import { translateInformation } from '../../utils/information'
 import { SLUG } from './meta'
 
-const DragAndDrop = (): JSX.Element => {
+const DragAndDrop = (): React.JSX.Element => {
   const { t } = useTranslation()
   // Only the count is kept: each dropped box is labelled as it is drawn, so
   // the labels follow a language switch

@@ -13,7 +13,7 @@ import { SLUG } from './meta'
 export const USERNAME_KEY = storageKey('username')
 export const LOGGED_IN_KEY = storageKey('isLoggedIn')
 
-const LoginForm = (): JSX.Element => {
+const LoginForm = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   // The login state saved in localStorage, read once as the page opens

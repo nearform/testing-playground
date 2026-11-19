@@ -138,7 +138,7 @@ const nextSort = (
   return null
 }
 
-const SortableTable = (): JSX.Element => {
+const SortableTable = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [sort, setSort] = useState<SortState | null>(null)
   const locale = useLocale()

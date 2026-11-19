@@ -74,7 +74,11 @@ const ACTIVITY_EVENTS = [
 // the whole page, so every section ticks together on a single timer.
 const NowContext = createContext<number | null>(null)
 
-const ClockProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+const ClockProvider = ({
+  children,
+}: {
+  children: ReactNode
+}): React.JSX.Element => {
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
     const timer = setInterval(() => {
@@ -119,7 +123,7 @@ const ABSOLUTE_FORMAT: Intl.DateTimeFormatOptions = {
 const boxClasses =
   'flex flex-col gap-3 rounded-lg border border-border p-4 dark:border-border-dark'
 
-const ClockSection = (): JSX.Element => {
+const ClockSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const hoursFormat = useDateTimeFormat(HOURS_FORMAT)
   const dateFormat = useDateTimeFormat(DATE_FORMAT)
@@ -170,7 +174,7 @@ const ClockSection = (): JSX.Element => {
   )
 }
 
-const CountdownSection = (): JSX.Element => {
+const CountdownSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const now = useNow()
   const [endsAt, setEndsAt] = useState(() => Date.now() + OFFER_DURATION)
@@ -222,7 +226,7 @@ const CountdownSection = (): JSX.Element => {
   )
 }
 
-const SessionSection = (): JSX.Element => {
+const SessionSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const now = useNow()
   // The exact time of the last activity. Only the activity handler and the
@@ -337,7 +341,7 @@ interface Update {
   at: number
 }
 
-const RelativeSection = (): JSX.Element => {
+const RelativeSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const locale = useLocale()
   const now = useNow()
@@ -399,7 +403,7 @@ const RelativeSection = (): JSX.Element => {
   )
 }
 
-const DebounceSection = (): JSX.Element => {
+const DebounceSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [query, setQuery] = useState('')
   // The query the results were last worked out for
@@ -465,7 +469,7 @@ const DebounceSection = (): JSX.Element => {
   )
 }
 
-const ThrottleSection = (): JSX.Element => {
+const ThrottleSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [saves, setSaves] = useState(0)
   const [ignored, setIgnored] = useState(0)
@@ -539,7 +543,7 @@ const ThrottleSection = (): JSX.Element => {
   )
 }
 
-const TimeAndTimers = (): JSX.Element => {
+const TimeAndTimers = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

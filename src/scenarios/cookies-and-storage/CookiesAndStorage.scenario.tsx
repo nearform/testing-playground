@@ -181,7 +181,7 @@ cy.visit('${href}', {
 
 type Panel = 'none' | 'banner' | 'preferences'
 
-const CookiesAndStorage = (): JSX.Element => {
+const CookiesAndStorage = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   const [consent, setConsent] = useState<Consent | null>(readConsent)

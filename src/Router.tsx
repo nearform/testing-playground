@@ -15,7 +15,7 @@ const loading = (
   </Layout>
 )
 
-function Router(): JSX.Element {
+function Router(): React.JSX.Element {
   return (
     <Routes>
       <Route path='/' element={<Index />} />

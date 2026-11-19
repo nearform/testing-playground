@@ -22,7 +22,7 @@ const keyPaths = (value: unknown, prefix = ''): string[] =>
     : [prefix]
 
 // Shows the router's query string, so tests can see the selected tabs
-const LocationProbe = (): JSX.Element => {
+const LocationProbe = (): React.JSX.Element => {
   const { search } = useLocation()
   return <output data-testid='location'>{search}</output>
 }

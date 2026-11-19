@@ -84,7 +84,7 @@ const statusSeverity: Record<Status['state'], AlertSeverity> = {
 const isSupported = (): boolean =>
   typeof navigator !== 'undefined' && 'geolocation' in navigator
 
-const Geolocation = (): JSX.Element => {
+const Geolocation = (): React.JSX.Element => {
   const { t } = useTranslation()
   const supported = isSupported()
   const [status, setStatus] = useState<Status>(

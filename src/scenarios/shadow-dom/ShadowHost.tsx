@@ -24,7 +24,7 @@ const ShadowHost = ({
   styles,
   shadowContent,
   children,
-}: ShadowHostProps): JSX.Element => {
+}: ShadowHostProps): React.JSX.Element => {
   const [root, setRoot] = useState<ShadowRoot | null>(null)
 
   const hostRef = useCallback(

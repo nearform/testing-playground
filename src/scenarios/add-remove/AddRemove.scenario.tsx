@@ -81,7 +81,7 @@ const ElementComponent = ({
 }: {
   index: number
   removeElement: () => void
-}): JSX.Element => {
+}): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (
@@ -95,7 +95,7 @@ const ElementComponent = ({
   )
 }
 
-const AddRemove = (): JSX.Element => {
+const AddRemove = (): React.JSX.Element => {
   const { t } = useTranslation()
   const location = useLocation()
   // The buttons and the next index live together, so one update changes both

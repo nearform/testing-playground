@@ -19,7 +19,7 @@ const LANGUAGES = [
   { value: 'ptBr', name: 'Português (Brasil)' },
 ]
 
-function LanguageSelector(): JSX.Element {
+function LanguageSelector(): React.JSX.Element {
   const { t, i18n } = useTranslation()
 
   const handleChangeLanguage = (selectedLanguage: string) => {

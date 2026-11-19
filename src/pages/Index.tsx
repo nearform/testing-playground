@@ -24,7 +24,7 @@ const REPOSITORY_URL = 'https://github.com/nearform/testing-playground'
 const proseClass =
   'max-w-[75ch] text-foreground-muted dark:text-foreground-muted-dark'
 
-export default function Index(): JSX.Element {
+export default function Index(): React.JSX.Element {
   const { t } = useTranslation()
 
   // Each scenario's card, worked out again only when the language changes,

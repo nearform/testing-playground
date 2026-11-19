@@ -95,7 +95,7 @@ const TextField = ({
   value,
   error,
   onChange,
-}: TextFieldProps): JSX.Element => {
+}: TextFieldProps): React.JSX.Element => {
   const { t } = useTranslation()
   const id = FIELD_KEYS[field]
   return (
@@ -145,7 +145,7 @@ const SelectField = ({
   value,
   error,
   onChange,
-}: SelectFieldProps): JSX.Element => {
+}: SelectFieldProps): React.JSX.Element => {
   const { t } = useTranslation()
   const id = FIELD_KEYS[field]
   return (
@@ -182,7 +182,7 @@ const SelectField = ({
   )
 }
 
-const MultiStepForm = (): JSX.Element => {
+const MultiStepForm = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -666,7 +666,7 @@ interface ReviewProps {
   steps: StepId[]
 }
 
-const Review = ({ data, progress, steps }: ReviewProps): JSX.Element => {
+const Review = ({ data, progress, steps }: ReviewProps): React.JSX.Element => {
   const { t } = useTranslation()
 
   const valueOf = (field: WizardField): string => {

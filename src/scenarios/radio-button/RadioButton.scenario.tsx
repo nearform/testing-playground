@@ -17,7 +17,7 @@ const secondRadioOptions: Record<string, string[]> = {
   yellow: ['orange', 'green'],
 }
 
-const RadioButton = (): JSX.Element => {
+const RadioButton = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [firstRadioValue, setFirstRadioValue] = useState('')
 

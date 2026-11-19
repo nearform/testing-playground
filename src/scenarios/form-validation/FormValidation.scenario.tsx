@@ -63,7 +63,7 @@ const noneTouched = (): Record<FormField, boolean> =>
     boolean
   >
 
-const FormValidation = (): JSX.Element => {
+const FormValidation = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   const [values, setValues] = useState<FormValues>(emptyFormValues)

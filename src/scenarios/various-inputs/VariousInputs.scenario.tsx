@@ -34,7 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
     onChange('')
   }
 
-  const renderField = (isOutput: boolean): JSX.Element =>
+  const renderField = (isOutput: boolean): React.JSX.Element =>
     type === 'textarea' ? (
       <Textarea
         variant='primary'
@@ -87,7 +87,7 @@ const InputField: React.FC<InputFieldProps> = ({
   )
 }
 
-const VariousInputs: React.FC = (): JSX.Element => {
+const VariousInputs: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [inputValues, setInputValues] = useState({
     text: '',

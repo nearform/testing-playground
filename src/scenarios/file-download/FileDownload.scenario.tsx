@@ -43,7 +43,7 @@ const handleDownload = (): void => {
   }, REVOKE_DELAY_MS)
 }
 
-const FileDownload: React.FC = (): JSX.Element => {
+const FileDownload: React.FC = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

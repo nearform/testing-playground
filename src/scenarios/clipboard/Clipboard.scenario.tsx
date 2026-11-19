@@ -40,7 +40,7 @@ type PasteStatus =
 
 type NotesPaste = 'none' | 'formatting-removed' | 'plain'
 
-const Clipboard = (): JSX.Element => {
+const Clipboard = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   const shareLink = window.location.href

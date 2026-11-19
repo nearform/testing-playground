@@ -84,7 +84,7 @@ const PROFILE_IMAGE = `data:image/svg+xml,${encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' fill='#9ca3af'/><circle cx='32' cy='24' r='12' fill='#f3f4f6'/><rect x='12' y='42' width='40' height='22' rx='11' fill='#f3f4f6'/></svg>",
 )}`
 
-const QuestionIcon = (): JSX.Element => (
+const QuestionIcon = (): React.JSX.Element => (
   <svg
     aria-hidden='true'
     focusable='false'
@@ -101,7 +101,7 @@ const QuestionIcon = (): JSX.Element => (
   </svg>
 )
 
-const GitHubIcon = (): JSX.Element => (
+const GitHubIcon = (): React.JSX.Element => (
   <svg
     aria-hidden='true'
     focusable='false'
@@ -122,13 +122,13 @@ interface ExampleProps {
   children: ReactNode
 }
 
-const Example = ({ id, children }: ExampleProps): JSX.Element => (
+const Example = ({ id, children }: ExampleProps): React.JSX.Element => (
   <div className={fieldClass} data-testid={`example-${id}`}>
     {children}
   </div>
 )
 
-const AccessibilityViolations = (): JSX.Element => {
+const AccessibilityViolations = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const version = versionFrom(searchParams.get(VERSION_PARAM))

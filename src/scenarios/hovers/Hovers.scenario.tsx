@@ -44,7 +44,7 @@ type Action =
   | { result: 'viewed' | 'opened' | 'deleted'; name: string }
   | { result: 'chose'; path: string[] }
 
-const Hovers = (): JSX.Element => {
+const Hovers = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [hoveredProfile, setHoveredProfile] = useState<string | null>(null)
   const [files, setFiles] = useState(initialFiles)
@@ -97,7 +97,10 @@ const Hovers = (): JSX.Element => {
     })
   }
 
-  const renderMenuItem = (item: MenuItem, path: string[]): JSX.Element => {
+  const renderMenuItem = (
+    item: MenuItem,
+    path: string[],
+  ): React.JSX.Element => {
     const itemPath = [...path, item.id]
     const isOpen = openMenus[path.length] === item.id
     const hasChildren = item.children !== undefined

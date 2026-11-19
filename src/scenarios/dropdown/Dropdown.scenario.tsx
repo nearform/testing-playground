@@ -54,7 +54,7 @@ const listBoxClasses = [
   'dark:hover:border-border-hover-dark dark:focus-visible:shadow-brandGreen10',
 ].join(' ')
 
-const Dropdown = (): JSX.Element => {
+const Dropdown = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [fruit, setFruit] = useState('')
   const [selectedColours, setSelectedColours] = useState<string[]>([])

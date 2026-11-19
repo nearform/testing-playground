@@ -47,7 +47,7 @@ const targetClasses = [
   'border-border dark:border-border-dark',
 ].join(' ')
 
-const MouseInteractions = (): JSX.Element => {
+const MouseInteractions = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [lastInteraction, setLastInteraction] = useState<Interaction | null>(
     null,

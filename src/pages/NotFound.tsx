@@ -7,7 +7,7 @@ import PageSetup from '../components/PageSetup'
 
 // What any address without a page shows, such as a mistyped or retired
 // scenario, so there is still a header and a way back rather than a blank page
-export default function NotFound(): JSX.Element {
+export default function NotFound(): React.JSX.Element {
   const { t } = useTranslation()
   const { pathname } = useLocation()
 

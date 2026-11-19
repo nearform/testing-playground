@@ -76,7 +76,7 @@ const calendarNames = (
   }
 }
 
-const CalendarIcon = (): JSX.Element => (
+const CalendarIcon = (): React.JSX.Element => (
   <svg
     aria-hidden='true'
     viewBox='0 0 16 16'
@@ -141,7 +141,7 @@ const CalendarPopup = ({
   onSelect,
   onClose,
   footer,
-}: CalendarPopupProps): JSX.Element => {
+}: CalendarPopupProps): React.JSX.Element => {
   const { t, i18n } = useTranslation()
   const locale = dateLocale(i18n.language)
 
@@ -417,7 +417,11 @@ interface IsoValueProps {
 }
 
 // The chosen date in ISO format, the same in every language
-const IsoValue = ({ label, value, testId }: IsoValueProps): JSX.Element => (
+const IsoValue = ({
+  label,
+  value,
+  testId,
+}: IsoValueProps): React.JSX.Element => (
   <p className='text-sm'>
     {label}{' '}
     <output className='font-mono' data-testid={testId}>
@@ -433,7 +437,7 @@ const nextWeekday = (from: Date): Date => {
   return date
 }
 
-const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
+const AppointmentPicker = ({ today }: { today: Date }): React.JSX.Element => {
   const { t, i18n } = useTranslation()
   const { order } = dateLocale(i18n.language)
   const [value, setValue] = useState<Date | null>(null)
@@ -508,7 +512,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
   )
 }
 
-const TripPicker = ({ today }: { today: Date }): JSX.Element => {
+const TripPicker = ({ today }: { today: Date }): React.JSX.Element => {
   const { t, i18n } = useTranslation()
   const { order } = dateLocale(i18n.language)
   const [range, setRange] = useState<DateRange>({ start: null, end: null })
@@ -608,7 +612,7 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
 
 type BirthDateError = 'invalid' | 'future' | 'too-early'
 
-const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
+const BirthDatePicker = ({ today }: { today: Date }): React.JSX.Element => {
   const { t, i18n } = useTranslation()
   const { order } = dateLocale(i18n.language)
   const [value, setValue] = useState<Date | null>(null)
@@ -741,7 +745,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
   )
 }
 
-const DatePicker = (): JSX.Element => {
+const DatePicker = (): React.JSX.Element => {
   const { t } = useTranslation()
   // Read from the browser's clock once, when the page opens
   const [today] = useState(() => startOfDay(new Date()))

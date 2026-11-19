@@ -87,7 +87,7 @@ const FrameHost = ({
   className,
   styles,
   children,
-}: FrameHostProps): JSX.Element => {
+}: FrameHostProps): React.JSX.Element => {
   const frameRef = useRef<HTMLIFrameElement>(null)
   const [frameDocument, setFrameDocument] = useState<Document | null>(null)
 

@@ -151,7 +151,7 @@ cy.get('a[href^="http"]').each(($a) => {
 
 const key = (name: string): string => `scenarios.${SLUG}.${name}`
 
-const BrokenImagesAndLinks = (): JSX.Element => {
+const BrokenImagesAndLinks = (): React.JSX.Element => {
   const { t } = useTranslation()
   const images = useRef(new Map<string, HTMLImageElement>())
   const [results, setResults] = useState<Array<[string, ImageStatus]> | null>(
@@ -188,7 +188,7 @@ const BrokenImagesAndLinks = (): JSX.Element => {
   const renderImage = (
     { id, src, expected }: ImageItem,
     lazy = false,
-  ): JSX.Element => (
+  ): React.JSX.Element => (
     <figure key={id} className='flex flex-col gap-2'>
       <img
         ref={imageRef(id)}
@@ -207,7 +207,12 @@ const BrokenImagesAndLinks = (): JSX.Element => {
     </figure>
   )
 
-  const renderLink = ({ id, kind, href, expected }: LinkItem): JSX.Element => {
+  const renderLink = ({
+    id,
+    kind,
+    href,
+    expected,
+  }: LinkItem): React.JSX.Element => {
     const props = {
       'data-testid': `link-${id}`,
       'data-expected': expected,

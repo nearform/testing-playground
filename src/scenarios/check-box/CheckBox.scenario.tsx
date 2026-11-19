@@ -22,8 +22,8 @@ type CheckedState = boolean | 'indeterminate'
 interface IconCheckboxProps {
   testId: string
   label: string
-  icon: JSX.Element
-  checkedIcon: JSX.Element
+  icon: React.JSX.Element
+  checkedIcon: React.JSX.Element
 }
 
 // A checkbox drawn as an icon: an IconButton that keeps checkbox semantics
@@ -32,7 +32,7 @@ const IconCheckbox = ({
   label,
   icon,
   checkedIcon,
-}: IconCheckboxProps): JSX.Element => {
+}: IconCheckboxProps): React.JSX.Element => {
   const [checked, setChecked] = useState(false)
 
   return (
@@ -51,7 +51,7 @@ const IconCheckbox = ({
   )
 }
 
-const CheckBox = (): JSX.Element => {
+const CheckBox = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [checked, setChecked] = useState([false, false, false])
 

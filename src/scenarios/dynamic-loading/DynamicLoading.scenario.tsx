@@ -42,7 +42,7 @@ const useDelay = (): ((callback: () => void, ms: number) => void) => {
   }, [])
 }
 
-const LoadingSpinner = ({ id }: { id: string }): JSX.Element => {
+const LoadingSpinner = ({ id }: { id: string }): React.JSX.Element => {
   const { t } = useTranslation()
   const label = t(`scenarios.${SLUG}.loading`)
   // Quantum names the status from its label, so it is findable by role and
@@ -56,7 +56,7 @@ const Section = ({
 }: {
   title: string
   children: ReactNode
-}): JSX.Element => (
+}): React.JSX.Element => (
   <section className='flex flex-col items-start gap-4'>
     <CardTitle>{title}</CardTitle>
     {children}
@@ -64,7 +64,7 @@ const Section = ({
 )
 
 // An element that does not exist until the spinner finishes
-const RenderedAfterLoading = (): JSX.Element => {
+const RenderedAfterLoading = (): React.JSX.Element => {
   const { t } = useTranslation()
   const delay = useDelay()
   const [state, setState] = useState<'idle' | 'loading' | 'done'>('idle')
@@ -97,7 +97,7 @@ const RenderedAfterLoading = (): JSX.Element => {
 
 // An element that is in the page from the start, but hidden until the
 // spinner finishes
-const HiddenUntilLoaded = (): JSX.Element => {
+const HiddenUntilLoaded = (): React.JSX.Element => {
   const { t } = useTranslation()
   const delay = useDelay()
   const [state, setState] = useState<'idle' | 'loading' | 'done'>('idle')
@@ -133,7 +133,7 @@ const HiddenUntilLoaded = (): JSX.Element => {
 
 // An input that starts disabled and is enabled (or disabled again) after a
 // delay, with the button locked while it changes
-const EnabledAfterDelay = (): JSX.Element => {
+const EnabledAfterDelay = (): React.JSX.Element => {
   const { t } = useTranslation()
   const delay = useDelay()
   const [enabled, setEnabled] = useState(false)
@@ -193,7 +193,7 @@ const EnabledAfterDelay = (): JSX.Element => {
 
 // A checkbox that is removed and later added back as a brand new element, so
 // a reference to the old one goes stale
-const RemovedAndAdded = (): JSX.Element => {
+const RemovedAndAdded = (): React.JSX.Element => {
   const { t } = useTranslation()
   const delay = useDelay()
   const [present, setPresent] = useState(true)
@@ -260,7 +260,7 @@ const textKeys: Record<TextState, string> = {
 
 // Text that says "Loading..." and then something else that is still not the
 // answer, so waiting only for "Loading..." to go away is not enough
-const ChangingText = (): JSX.Element => {
+const ChangingText = (): React.JSX.Element => {
   const { t } = useTranslation()
   const delay = useDelay()
   const [state, setState] = useState<TextState>('idle')
@@ -293,7 +293,7 @@ const ChangingText = (): JSX.Element => {
   )
 }
 
-const DynamicLoading = (): JSX.Element => {
+const DynamicLoading = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

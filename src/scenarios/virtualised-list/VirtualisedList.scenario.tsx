@@ -143,7 +143,7 @@ const ResultAlert = ({
   state: ResultState
   testId: string
   message: string
-}): JSX.Element => {
+}): React.JSX.Element => {
   const { t } = useTranslation()
   return (
     <div aria-live='polite'>
@@ -185,7 +185,7 @@ const VirtualList = ({
   selectedId,
   onSelect,
   renderDetails,
-}: VirtualListProps): JSX.Element => {
+}: VirtualListProps): React.JSX.Element => {
   const { t } = useTranslation()
   const format = useFormatNumber()
   const [scrollTop, setScrollTop] = useState(0)
@@ -297,7 +297,7 @@ const useRowMessage = (result: Result, target: number): string => {
   return t(key(`result.${result.state}`), { id: result.id, target })
 }
 
-const FixedSection = (): JSX.Element => {
+const FixedSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [result, selectedId, select] = useRowResult(FIXED_TARGET_ROW)
   const message = useRowMessage(result, FIXED_TARGET_ROW)
@@ -339,7 +339,7 @@ const FixedSection = (): JSX.Element => {
   )
 }
 
-const VariableSection = (): JSX.Element => {
+const VariableSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [result, selectedId, select] = useRowResult(VARIABLE_TARGET_ROW)
   const message = useRowMessage(result, VARIABLE_TARGET_ROW)
@@ -431,7 +431,7 @@ type CellResult =
   | { state: 'none' }
   | { state: 'correct' | 'wrong'; row: number; column: number }
 
-const GridSection = (): JSX.Element => {
+const GridSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const format = useFormatNumber()
   const viewportRef = useRef<HTMLDivElement>(null)
@@ -661,7 +661,7 @@ const GridSection = (): JSX.Element => {
   )
 }
 
-const VirtualisedList = (): JSX.Element => {
+const VirtualisedList = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

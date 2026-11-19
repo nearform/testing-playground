@@ -159,7 +159,7 @@ const Combobox = ({
   loading = false,
   onQueryChange,
   onSelect,
-}: ComboboxProps): JSX.Element => {
+}: ComboboxProps): React.JSX.Element => {
   const [open, setOpen] = useState(false)
   const listId = `${id}-listbox`
   const optionId = (index: number): string => `${id}-option-${index}`
@@ -305,7 +305,7 @@ const Combobox = ({
   )
 }
 
-const Autocomplete = (): JSX.Element => {
+const Autocomplete = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   const [countryQuery, setCountryQuery] = useState('')

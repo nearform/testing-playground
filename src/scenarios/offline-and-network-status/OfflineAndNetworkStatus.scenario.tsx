@@ -52,13 +52,13 @@ const TimeStamp = ({
 }: {
   date: Date
   testId?: string
-}): JSX.Element => (
+}): React.JSX.Element => (
   <time dateTime={date.toISOString()} data-testid={testId}>
     {formatTime(date)}
   </time>
 )
 
-const OfflineAndNetworkStatus = (): JSX.Element => {
+const OfflineAndNetworkStatus = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   // Connection status and its event log

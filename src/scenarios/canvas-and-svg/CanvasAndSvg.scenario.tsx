@@ -194,7 +194,12 @@ interface PanelProps {
   children: ReactNode
 }
 
-const Panel = ({ id, title, intro, children }: PanelProps): JSX.Element => (
+const Panel = ({
+  id,
+  title,
+  intro,
+  children,
+}: PanelProps): React.JSX.Element => (
   <ScenarioSection
     aria-labelledby={`${id}-title`}
     data-testid={`section-${id}`}
@@ -213,7 +218,7 @@ const canvasFrame = 'max-w-full overflow-x-auto'
 const canvasClass =
   'block rounded border border-border-default dark:border-border-default-dark'
 
-const DrawingPad = (): JSX.Element => {
+const DrawingPad = (): React.JSX.Element => {
   const { t } = useTranslation()
   const canvas = useRef<HTMLCanvasElement>(null)
   // Finished strokes, and the one being drawn while the button is held
@@ -321,7 +326,7 @@ const DrawingPad = (): JSX.Element => {
   )
 }
 
-const BarChart = (): JSX.Element => {
+const BarChart = (): React.JSX.Element => {
   const { t } = useTranslation()
   const canvas = useRef<HTMLCanvasElement>(null)
   const [selected, setSelected] = useState<number | null>(null)
@@ -406,7 +411,7 @@ const BarChart = (): JSX.Element => {
   )
 }
 
-const TargetGame = (): JSX.Element => {
+const TargetGame = (): React.JSX.Element => {
   const { t } = useTranslation()
   const canvas = useRef<HTMLCanvasElement>(null)
   const [hits, setHits] = useState(0)
@@ -491,7 +496,7 @@ interface Tooltip {
   y: number
 }
 
-const DistrictMap = (): JSX.Element => {
+const DistrictMap = (): React.JSX.Element => {
   const { t } = useTranslation()
   const frame = useRef<HTMLDivElement>(null)
   const [selected, setSelected] = useState<Region | null>(null)
@@ -603,7 +608,7 @@ const DistrictMap = (): JSX.Element => {
   )
 }
 
-const CanvasAndSvg = (): JSX.Element => {
+const CanvasAndSvg = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

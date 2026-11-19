@@ -74,7 +74,7 @@ function adjustValues(
   return data
 }
 
-const DynamicTable = (): JSX.Element => {
+const DynamicTable = (): React.JSX.Element => {
   const { t } = useTranslation()
   const name = (id: string): string => t(`scenarios.${SLUG}.${id}`)
 

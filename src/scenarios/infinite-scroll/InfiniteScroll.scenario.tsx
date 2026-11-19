@@ -17,7 +17,7 @@ export const BATCH_SIZE = 10
 // Long enough for a test to see the loading state before new items arrive
 export const LOAD_DELAY = 800
 
-const InfiniteScroll = (): JSX.Element => {
+const InfiniteScroll = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [itemCount, setItemCount] = useState(BATCH_SIZE)
   const [isLoading, setIsLoading] = useState(false)

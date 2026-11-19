@@ -9,7 +9,7 @@ import { useDocumentTitle } from '../utils/useDocumentTitle'
 // What a scenario page shows when it fails to load or render, rather than a
 // blank page. React.lazy keeps a failed import, so trying again needs a
 // reload, which also picks up new chunk names after the site is redeployed.
-const LoadError = (): JSX.Element => {
+const LoadError = (): React.JSX.Element => {
   const { t } = useTranslation()
   useDocumentTitle(t('common.load-error-title'))
 
