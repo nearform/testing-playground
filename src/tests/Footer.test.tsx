@@ -12,7 +12,7 @@ describe('Footer', () => {
   })
 
   it.each([
-    { language: 'en', text: 'NearForm Ltd. All Rights Reserved.' },
+    { language: 'en', text: 'Nearform Ltd. All Rights Reserved.' },
     { language: 'fr', text: "Droits d'auteur ©" },
     { language: 'ptBr', text: 'Todos os direitos reservados.' },
   ])('shows the copyright line in $language', async ({ language, text }) => {
