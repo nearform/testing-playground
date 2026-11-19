@@ -148,7 +148,9 @@ const MouseInteractions = (): React.JSX.Element => {
   // Click and hold
   const [holdState, setHoldState] = useState<HoldState>('idle')
   const [holdProgress, setHoldProgress] = useState(0)
-  const holdTimer = useRef<ReturnType<typeof setInterval>>()
+  const holdTimer = useRef<ReturnType<typeof setInterval> | undefined>(
+    undefined,
+  )
 
   const stopHoldTimer = (): void => {
     clearInterval(holdTimer.current)

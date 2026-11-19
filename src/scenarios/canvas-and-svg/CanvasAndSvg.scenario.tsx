@@ -163,7 +163,10 @@ type Draw = (context: CanvasRenderingContext2D) => void
 // Redraws a canvas from scratch after every render, so what is shown only
 // ever depends on the current state. Without a 2D context (jsdom has none)
 // nothing is drawn, but the rest of the page still works.
-const useCanvas = (ref: RefObject<HTMLCanvasElement>, draw: Draw): void => {
+const useCanvas = (
+  ref: RefObject<HTMLCanvasElement | null>,
+  draw: Draw,
+): void => {
   useEffect(() => {
     const context = ref.current?.getContext('2d')
     if (context) draw(context)
