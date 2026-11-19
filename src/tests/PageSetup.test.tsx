@@ -111,6 +111,38 @@ describe('PageSetup', () => {
     ])
   })
 
+  it('names the browser tab after the page', () => {
+    TestRenderer(
+      <PageSetup title='A scenario' description='A description'>
+        <p>Scenario content</p>
+      </PageSetup>,
+    )
+
+    expect(document.title).toBe('A scenario | Testing Playground')
+  })
+
+  it('puts the previous title back when the page goes', async () => {
+    document.title = 'Nearform Testing Playground'
+    TestRenderer(
+      <Routes>
+        <Route path='/' element={<p>Main page</p>} />
+        <Route
+          path='/scenario'
+          element={
+            <PageSetup title='A scenario' description='A description'>
+              <p>Scenario content</p>
+            </PageSetup>
+          }
+        />
+      </Routes>,
+      { initialEntries: ['/scenario'] },
+    )
+
+    await userEvent.click(screen.getByTestId('back'))
+
+    expect(document.title).toBe('Nearform Testing Playground')
+  })
+
   describe('when the language changes', () => {
     afterEach(async () => {
       await switchLanguage('en')
@@ -128,6 +160,24 @@ describe('PageSetup', () => {
         await switchLanguage(language)
 
         expect(screen.getByTestId('back')).toHaveAttribute('href', '/')
+      },
+    )
+
+    it.each([
+      { language: 'fr', site: 'Terrain de jeu pour les tests' },
+      { language: 'ptBr', site: 'Playground de Testes' },
+    ])(
+      'names the browser tab with the site name in $language',
+      async ({ language, site }) => {
+        TestRenderer(
+          <PageSetup title='A scenario' description='A description'>
+            <p>Scenario content</p>
+          </PageSetup>,
+        )
+
+        await switchLanguage(language)
+
+        expect(document.title).toBe(`A scenario | ${site}`)
       },
     )
   })

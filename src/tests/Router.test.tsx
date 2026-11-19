@@ -36,6 +36,7 @@ describe('Router', () => {
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Login Form' }),
     ).toBeVisible()
+    expect(document.title).toBe('Login Form | Testing Playground')
   })
 
   it('shows the index page at the root', () => {
@@ -59,6 +60,7 @@ describe('Router', () => {
         'Requested address: /retired-scenario',
       )
       expect(screen.getByTestId('back')).toHaveAttribute('href', '/')
+      expect(document.title).toBe('Page not found | Testing Playground')
     })
   })
 
@@ -90,6 +92,9 @@ describe('Router', () => {
         }),
       ).toBeVisible()
       expect(screen.getByRole('banner')).toBeVisible()
+      expect(document.title).toBe(
+        'This page could not be loaded | Testing Playground',
+      )
     })
 
     it('offers to reload the page', async () => {
