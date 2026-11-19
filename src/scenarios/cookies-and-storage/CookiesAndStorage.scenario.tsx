@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import Alert, { type AlertSeverity } from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { COOKIE_PATH, cookieName, storageKey } from '../../utils/storage'
 import { SLUG } from './meta'
@@ -300,179 +301,178 @@ const CookiesAndStorage = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('consent.title'))}</CardTitle>
-            <div aria-live='polite'>
-              <Alert
-                severity={consentSeverity[consent ?? 'none']}
-                title={t(key('consent.status-title'))}
-                data-testid='consent-status'
-                data-consent={consent ?? 'none'}
-              >
-                {t(key(`consent.status.${consent ?? 'none'}`))}
-              </Alert>
-            </div>
-            <dl className='grid grid-cols-[auto_1fr] gap-x-4 gap-y-1'>
-              {CATEGORIES.map((category) => (
-                <React.Fragment key={category}>
-                  <dt className='font-semibold'>
-                    {t(key(`categories.${category}.label`))}
-                  </dt>
-                  <dd
-                    data-testid={`preference-${category}`}
-                    data-allowed={preferences[category]}
-                  >
-                    {t(
-                      key(
-                        preferences[category]
-                          ? 'consent.allowed'
-                          : 'consent.blocked',
-                      ),
-                    )}
-                  </dd>
-                </React.Fragment>
-              ))}
-            </dl>
-            <div className='flex flex-wrap gap-4'>
-              <Button
-                variant='secondary'
-                onClick={openPreferences}
-                disabled={consent === null}
-                data-testid='button-cookie-settings'
-              >
-                {t(key('button.cookie-settings'))}
-              </Button>
-              <Button
-                variant='secondary'
-                onClick={() => {
-                  window.location.reload()
-                }}
-                data-testid='button-reload'
-              >
-                {t(key('button.reload'))}
-              </Button>
-            </div>
-          </section>
-
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('session.title'))}</CardTitle>
-            <p>{t(key('session.explanation'))}</p>
-            <form
-              className='flex flex-wrap items-end gap-4'
-              onSubmit={(event) => {
-                event.preventDefault()
-                saveNote()
-              }}
+        <ScenarioSection>
+          <CardTitle>{t(key('consent.title'))}</CardTitle>
+          <div aria-live='polite'>
+            <Alert
+              severity={consentSeverity[consent ?? 'none']}
+              title={t(key('consent.status-title'))}
+              data-testid='consent-status'
+              data-consent={consent ?? 'none'}
             >
-              <div className='flex flex-col gap-2'>
-                <Label htmlFor='session-note'>{t(key('session.label'))}</Label>
-                <Input
-                  id='session-note'
-                  type='text'
-                  variant='primary'
-                  value={noteInput}
-                  onChange={(event) => {
-                    setNoteInput(event.currentTarget.value)
-                  }}
-                  data-testid='session-note-input'
-                />
-              </div>
-              <Button
-                type='submit'
-                variant='primary'
-                disabled={noteInput.trim() === ''}
-                data-testid='button-save-note'
-              >
-                {t(key('session.save'))}
-              </Button>
-            </form>
-            <p data-testid='session-note'>
-              {savedNote === null
-                ? t(key('session.empty'))
-                : t(key('session.saved'), { note: savedNote })}
-            </p>
-            <p>
-              <Link
-                href={href}
-                target='_blank'
-                rel='noopener noreferrer'
-                data-testid='link-new-tab'
-              >
-                {t(key('session.new-tab'))}
-              </Link>
-            </p>
-          </section>
-
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('live.title'))}</CardTitle>
-            <p>{t(key('live.explanation'))}</p>
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-              {liveSections.map(({ id, entries }) => (
-                <div
-                  key={id}
-                  className='flex flex-col gap-2'
-                  data-testid={`live-${id}`}
+              {t(key(`consent.status.${consent ?? 'none'}`))}
+            </Alert>
+          </div>
+          <dl className='grid grid-cols-[auto_1fr] gap-x-4 gap-y-1'>
+            {CATEGORIES.map((category) => (
+              <React.Fragment key={category}>
+                <dt className='font-semibold'>
+                  {t(key(`categories.${category}.label`))}
+                </dt>
+                <dd
+                  data-testid={`preference-${category}`}
+                  data-allowed={preferences[category]}
                 >
-                  <h3 className='font-semibold'>{t(key(`live.${id}`))}</h3>
-                  {entries.length === 0 ? (
-                    <p className='text-sm'>{t(key('live.empty'))}</p>
-                  ) : (
-                    <dl className='flex flex-col gap-1 text-sm'>
-                      {entries.map(([name, value]) => (
-                        <div key={name} className='flex flex-col'>
-                          <dt className='font-mono font-semibold'>{name}</dt>
-                          <dd
-                            className='font-mono break-all'
-                            data-testid={`live-${id}-${name}`}
-                          >
-                            {value}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
+                  {t(
+                    key(
+                      preferences[category]
+                        ? 'consent.allowed'
+                        : 'consent.blocked',
+                    ),
                   )}
-                </div>
-              ))}
-            </div>
-            <div className='flex flex-wrap gap-4'>
-              <Button
-                variant='secondary'
-                onClick={refresh}
-                data-testid='button-refresh'
-              >
-                {t(key('button.refresh'))}
-              </Button>
-              <Button
-                variant='primary'
-                onClick={clearEverything}
-                data-testid='button-clear'
-              >
-                {t(key('button.clear'))}
-              </Button>
-            </div>
-          </section>
+                </dd>
+              </React.Fragment>
+            ))}
+          </dl>
+          <div className='flex flex-wrap gap-4'>
+            <Button
+              variant='secondary'
+              onClick={openPreferences}
+              disabled={consent === null}
+              data-testid='button-cookie-settings'
+            >
+              {t(key('button.cookie-settings'))}
+            </Button>
+            <Button
+              variant='secondary'
+              onClick={() => {
+                window.location.reload()
+              }}
+              data-testid='button-reload'
+            >
+              {t(key('button.reload'))}
+            </Button>
+          </div>
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('seeding.title'))}</CardTitle>
-            <p>{t(key('seeding.explanation'))}</p>
-            <CodeBlock
-              label='Playwright'
-              language='ts'
-              data-testid='snippet-playwright'
+        <ScenarioSection>
+          <CardTitle>{t(key('session.title'))}</CardTitle>
+          <p>{t(key('session.explanation'))}</p>
+          <form
+            className='flex flex-wrap items-end gap-4'
+            onSubmit={(event) => {
+              event.preventDefault()
+              saveNote()
+            }}
+          >
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor='session-note'>{t(key('session.label'))}</Label>
+              <Input
+                id='session-note'
+                type='text'
+                variant='primary'
+                value={noteInput}
+                onChange={(event) => {
+                  setNoteInput(event.currentTarget.value)
+                }}
+                data-testid='session-note-input'
+              />
+            </div>
+            <Button
+              type='submit'
+              variant='primary'
+              disabled={noteInput.trim() === ''}
+              data-testid='button-save-note'
             >
-              {playwrightSnippet(hostname, href)}
-            </CodeBlock>
-            <CodeBlock
-              label='Cypress'
-              language='js'
-              data-testid='snippet-cypress'
+              {t(key('session.save'))}
+            </Button>
+          </form>
+          <p data-testid='session-note'>
+            {savedNote === null
+              ? t(key('session.empty'))
+              : t(key('session.saved'), { note: savedNote })}
+          </p>
+          <p>
+            <Link
+              href={href}
+              target='_blank'
+              rel='noopener noreferrer'
+              data-testid='link-new-tab'
             >
-              {cypressSnippet(hostname, href)}
-            </CodeBlock>
-          </section>
-        </div>
+              {t(key('session.new-tab'))}
+            </Link>
+          </p>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('live.title'))}</CardTitle>
+          <p>{t(key('live.explanation'))}</p>
+          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+            {liveSections.map(({ id, entries }) => (
+              <div
+                key={id}
+                className='flex flex-col gap-2'
+                data-testid={`live-${id}`}
+              >
+                <h3 className='font-semibold'>{t(key(`live.${id}`))}</h3>
+                {entries.length === 0 ? (
+                  <p className='text-sm'>{t(key('live.empty'))}</p>
+                ) : (
+                  <dl className='flex flex-col gap-1 text-sm'>
+                    {entries.map(([name, value]) => (
+                      <div key={name} className='flex flex-col'>
+                        <dt className='font-mono font-semibold'>{name}</dt>
+                        <dd
+                          className='font-mono break-all'
+                          data-testid={`live-${id}-${name}`}
+                        >
+                          {value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className='flex flex-wrap gap-4'>
+            <Button
+              variant='secondary'
+              onClick={refresh}
+              data-testid='button-refresh'
+            >
+              {t(key('button.refresh'))}
+            </Button>
+            <Button
+              variant='primary'
+              onClick={clearEverything}
+              data-testid='button-clear'
+            >
+              {t(key('button.clear'))}
+            </Button>
+          </div>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('seeding.title'))}</CardTitle>
+          <p>{t(key('seeding.explanation'))}</p>
+          <CodeBlock
+            label='Playwright'
+            language='ts'
+            data-testid='snippet-playwright'
+          >
+            {playwrightSnippet(hostname, href)}
+          </CodeBlock>
+          <CodeBlock
+            label='Cypress'
+            language='js'
+            data-testid='snippet-cypress'
+          >
+            {cypressSnippet(hostname, href)}
+          </CodeBlock>
+        </ScenarioSection>
       </PageSetup>
 
       {panel !== 'none' && (

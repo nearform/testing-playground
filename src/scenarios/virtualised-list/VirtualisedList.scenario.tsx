@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { useNumberFormat } from '../../utils/locale'
 import {
@@ -118,7 +119,6 @@ const range = (start: number, end: number): number[] =>
 // their notes, so nothing spills over into the next row.
 const variableRowClasses = 'items-start pb-[7px] pt-2'
 
-const sectionClasses = 'flex flex-col gap-4'
 // Scroll anchoring would move the scroll position when recycled rows move,
 // which renders new rows and moves them again
 const viewportClasses =
@@ -303,7 +303,7 @@ const FixedSection = (): JSX.Element => {
   const message = useRowMessage(result, FIXED_TARGET_ROW)
 
   return (
-    <section className={sectionClasses} aria-labelledby='fixed-title'>
+    <ScenarioSection aria-labelledby='fixed-title'>
       <CardTitle id='fixed-title'>{t(key('fixed.title'))}</CardTitle>
       <p className='text-sm'>
         {t(key('fixed.instructions'), {
@@ -335,7 +335,7 @@ const FixedSection = (): JSX.Element => {
         testId='fixed-result'
         message={message}
       />
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -356,7 +356,7 @@ const VariableSection = (): JSX.Element => {
   const maxHeight = VARIABLE_HEADER_HEIGHT + MAX_NOTE_LINES * NOTE_LINE_HEIGHT
 
   return (
-    <section className={sectionClasses} aria-labelledby='variable-title'>
+    <ScenarioSection aria-labelledby='variable-title'>
       <CardTitle id='variable-title'>{t(key('variable.title'))}</CardTitle>
       <p className='text-sm'>
         {t(key('variable.instructions'), {
@@ -403,7 +403,7 @@ const VariableSection = (): JSX.Element => {
         testId='variable-result'
         message={message}
       />
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -487,7 +487,7 @@ const GridSection = (): JSX.Element => {
     'flex items-center justify-center border-b border-r border-border bg-background-surface font-semibold dark:border-border-dark dark:bg-background-surface-dark'
 
   return (
-    <section className={sectionClasses} aria-labelledby='grid-title'>
+    <ScenarioSection aria-labelledby='grid-title'>
       <CardTitle id='grid-title'>{t(key('grid.title'))}</CardTitle>
       <p className='text-sm'>
         {t(key('grid.instructions'), {
@@ -657,7 +657,7 @@ const GridSection = (): JSX.Element => {
         testId='grid-result'
         message={message}
       />
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -673,12 +673,11 @@ const VirtualisedList = (): JSX.Element => {
           rowHeight: ROW_HEIGHT,
           fixedTarget: FIXED_TARGET_ROW,
         })}
+        sections
       >
-        <div className='flex flex-col gap-10'>
-          <FixedSection />
-          <VariableSection />
-          <GridSection />
-        </div>
+        <FixedSection />
+        <VariableSection />
+        <GridSection />
       </PageSetup>
     </Layout>
   )

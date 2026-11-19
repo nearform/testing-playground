@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import {
   LOAD_DELAY_MS,
@@ -301,135 +302,134 @@ const TabsAndAccordions = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('product.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('product.explanation'))}</p>
-            <Tabs
-              prefix='product'
-              label={t(key('product.label'))}
-              tabs={PRODUCT_TABS}
-              selected={productTab}
-              onSelect={(id) => {
-                selectTab(PRODUCT_PARAM, id)
-              }}
-              keepMounted
-              tabLabel={(id) => t(key(`product.tabs.${id}`))}
-              renderPanel={renderProductPanel}
-            />
-          </section>
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('product.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('product.explanation'))}</p>
+          <Tabs
+            prefix='product'
+            label={t(key('product.label'))}
+            tabs={PRODUCT_TABS}
+            selected={productTab}
+            onSelect={(id) => {
+              selectTab(PRODUCT_PARAM, id)
+            }}
+            keepMounted
+            tabLabel={(id) => t(key(`product.tabs.${id}`))}
+            renderPanel={renderProductPanel}
+          />
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('report.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('report.explanation'))}</p>
-            <Tabs
-              prefix='report'
-              label={t(key('report.label'))}
-              tabs={REPORT_TABS}
-              selected={reportTab}
-              onSelect={(id) => {
-                selectTab(REPORT_PARAM, id)
-              }}
-              keepMounted={false}
-              tabLabel={(id) => t(key(`report.tabs.${id}`))}
-              renderPanel={renderReportPanel}
-            />
-          </section>
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('report.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('report.explanation'))}</p>
+          <Tabs
+            prefix='report'
+            label={t(key('report.label'))}
+            tabs={REPORT_TABS}
+            selected={reportTab}
+            onSelect={(id) => {
+              selectTab(REPORT_PARAM, id)
+            }}
+            keepMounted={false}
+            tabLabel={(id) => t(key(`report.tabs.${id}`))}
+            renderPanel={renderReportPanel}
+          />
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('faq.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('faq.explanation'))}</p>
-            <Accordion
-              prefix='faq'
-              items={FAQ_ITEMS}
-              isOpen={(id) => faqOpen === id}
-              onToggle={(id) => {
-                setFaqOpen((open) => (open === id ? null : id))
-              }}
-              title={(id) => t(key(`faq.items.${id}.title`))}
-              body={(id) => t(key(`faq.items.${id}.body`))}
-            />
-          </section>
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('faq.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('faq.explanation'))}</p>
+          <Accordion
+            prefix='faq'
+            items={FAQ_ITEMS}
+            isOpen={(id) => faqOpen === id}
+            onToggle={(id) => {
+              setFaqOpen((open) => (open === id ? null : id))
+            }}
+            title={(id) => t(key(`faq.items.${id}.title`))}
+            body={(id) => t(key(`faq.items.${id}.body`))}
+          />
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('settings.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('settings.explanation'))}</p>
-            <div className='flex flex-wrap gap-2'>
-              <Button
-                variant='secondary'
-                onClick={() => {
-                  setSettingsOpen(new Set(SETTINGS_ITEMS))
-                }}
-                disabled={settingsOpen.size === SETTINGS_ITEMS.length}
-                data-testid='settings-expand-all'
-              >
-                {t(key('settings.expand-all'))}
-              </Button>
-              <Button
-                variant='secondary'
-                onClick={() => {
-                  setSettingsOpen(new Set())
-                }}
-                disabled={settingsOpen.size === 0}
-                data-testid='settings-collapse-all'
-              >
-                {t(key('settings.collapse-all'))}
-              </Button>
-            </div>
-            <Accordion
-              prefix='settings'
-              items={SETTINGS_ITEMS}
-              isOpen={(id) => settingsOpen.has(id)}
-              onToggle={(id) => {
-                setSettingsOpen((open) => {
-                  const next = new Set(open)
-                  if (next.has(id)) next.delete(id)
-                  else next.add(id)
-                  return next
-                })
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('settings.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('settings.explanation'))}</p>
+          <div className='flex flex-wrap gap-2'>
+            <Button
+              variant='secondary'
+              onClick={() => {
+                setSettingsOpen(new Set(SETTINGS_ITEMS))
               }}
-              title={(id) => t(key(`settings.items.${id}.title`))}
-              body={(id) => t(key(`settings.items.${id}.body`))}
-            />
-          </section>
+              disabled={settingsOpen.size === SETTINGS_ITEMS.length}
+              data-testid='settings-expand-all'
+            >
+              {t(key('settings.expand-all'))}
+            </Button>
+            <Button
+              variant='secondary'
+              onClick={() => {
+                setSettingsOpen(new Set())
+              }}
+              disabled={settingsOpen.size === 0}
+              data-testid='settings-collapse-all'
+            >
+              {t(key('settings.collapse-all'))}
+            </Button>
+          </div>
+          <Accordion
+            prefix='settings'
+            items={SETTINGS_ITEMS}
+            isOpen={(id) => settingsOpen.has(id)}
+            onToggle={(id) => {
+              setSettingsOpen((open) => {
+                const next = new Set(open)
+                if (next.has(id)) next.delete(id)
+                else next.add(id)
+                return next
+              })
+            }}
+            title={(id) => t(key(`settings.items.${id}.title`))}
+            body={(id) => t(key(`settings.items.${id}.body`))}
+          />
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('details.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('details.explanation'))}</p>
-            <div className='flex flex-col gap-2'>
-              <details
-                className='rounded-lg border-2 border-border px-4 py-3 dark:border-border-dark'
-                data-testid='details-closed'
-              >
-                <summary className='cursor-pointer font-semibold'>
-                  {t(key('details.closed-summary'))}
-                </summary>
-                <p className='pt-2'>{t(key('details.closed-body'))}</p>
-              </details>
-              <details
-                open
-                className='rounded-lg border-2 border-border px-4 py-3 dark:border-border-dark'
-                data-testid='details-open'
-              >
-                <summary className='cursor-pointer font-semibold'>
-                  {t(key('details.open-summary'))}
-                </summary>
-                <p className='pt-2'>{t(key('details.open-body'))}</p>
-              </details>
-            </div>
-          </section>
-        </div>
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('details.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('details.explanation'))}</p>
+          <div className='flex flex-col gap-2'>
+            <details
+              className='rounded-lg border border-border px-4 py-3 dark:border-border-dark'
+              data-testid='details-closed'
+            >
+              <summary className='cursor-pointer font-semibold'>
+                {t(key('details.closed-summary'))}
+              </summary>
+              <p className='pt-2'>{t(key('details.closed-body'))}</p>
+            </details>
+            <details
+              open
+              className='rounded-lg border border-border px-4 py-3 dark:border-border-dark'
+              data-testid='details-open'
+            >
+              <summary className='cursor-pointer font-semibold'>
+                {t(key('details.open-summary'))}
+              </summary>
+              <p className='pt-2'>{t(key('details.open-body'))}</p>
+            </details>
+          </div>
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )

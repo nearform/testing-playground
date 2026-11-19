@@ -19,6 +19,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { SLUG } from './meta'
 
@@ -201,325 +202,312 @@ const AccessibilityViolations = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('version.title'))}</h2>
-            </CardTitle>
-            <div className='flex items-center gap-4'>
-              <Switch
-                id='fixed-version'
-                checked={!broken}
-                onCheckedChange={setVersion}
-                data-testid='switch-fixed-version'
-              />
-              <Label htmlFor='fixed-version'>{t(key('version.switch'))}</Label>
-            </div>
-            <p
-              aria-live='polite'
-              data-testid='version-status'
-              data-version={version}
-            >
-              {t(key(`version.status.${version}`))}
-            </p>
-          </section>
-
-          <section className='flex flex-col gap-4'>
-            <CardTitle asChild>
-              <h2>{t(key('expected.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('expected.explanation'))}</p>
-            {broken ? (
-              // One table body per group, so each group can still be found
-              // on its own by its test ID
-              <Table bordered divided data-testid='expected-problems'>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t(key('expected.columns.rule'))}</TableHead>
-                    <TableHead>{t(key('expected.columns.problem'))}</TableHead>
-                    <TableHead>{t(key('expected.columns.found'))}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                {problems.map(({ id, attribute, items, isRule }) => (
-                  <TableBody key={id} data-testid={`expected-${id}`}>
-                    {items.map((item) => (
-                      <TableRow key={item} {...{ [attribute]: item }}>
-                        <TableCell className='whitespace-nowrap'>
-                          {isRule ? (
-                            <code>{item}</code>
-                          ) : (
-                            t(key(`manual.${item}.name`))
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {t(
-                            key(
-                              isRule
-                                ? `rules.${item}`
-                                : `manual.${item}.problem`,
-                            ),
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={FOUND_BADGE_VARIANT[id]}
-                            size='sm'
-                            className='whitespace-nowrap'
-                          >
-                            {t(key(`expected.found.${id}`))}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                ))}
-              </Table>
-            ) : (
-              <p data-testid='expected-none'>{t(key('expected.none'))}</p>
-            )}
-          </section>
-
-          <section
-            id={AREA_ID}
-            aria-labelledby='newsletter-title'
-            className='flex flex-col gap-4'
-            data-testid='violations-area'
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('version.title'))}</h2>
+          </CardTitle>
+          <div className='flex items-center gap-4'>
+            <Switch
+              id='fixed-version'
+              checked={!broken}
+              onCheckedChange={setVersion}
+              data-testid='switch-fixed-version'
+            />
+            <Label htmlFor='fixed-version'>{t(key('version.switch'))}</Label>
+          </div>
+          <p
+            aria-live='polite'
+            data-testid='version-status'
             data-version={version}
           >
-            <CardTitle asChild>
-              <h2 id='newsletter-title'>{t(key('form.title'))}</h2>
-            </CardTitle>
-            <p>{t(key('form.intro'))}</p>
+            {t(key(`version.status.${version}`))}
+          </p>
+        </ScenarioSection>
 
-            <FirstHeading
-              className='font-semibold'
-              data-testid='heading-details'
+        <ScenarioSection>
+          <CardTitle asChild>
+            <h2>{t(key('expected.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('expected.explanation'))}</p>
+          {broken ? (
+            // One table body per group, so each group can still be found
+            // on its own by its test ID
+            <Table bordered divided data-testid='expected-problems'>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t(key('expected.columns.rule'))}</TableHead>
+                  <TableHead>{t(key('expected.columns.problem'))}</TableHead>
+                  <TableHead>{t(key('expected.columns.found'))}</TableHead>
+                </TableRow>
+              </TableHeader>
+              {problems.map(({ id, attribute, items, isRule }) => (
+                <TableBody key={id} data-testid={`expected-${id}`}>
+                  {items.map((item) => (
+                    <TableRow key={item} {...{ [attribute]: item }}>
+                      <TableCell className='whitespace-nowrap'>
+                        {isRule ? (
+                          <code>{item}</code>
+                        ) : (
+                          t(key(`manual.${item}.name`))
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {t(
+                          key(
+                            isRule ? `rules.${item}` : `manual.${item}.problem`,
+                          ),
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={FOUND_BADGE_VARIANT[id]}
+                          size='sm'
+                          className='whitespace-nowrap'
+                        >
+                          {t(key(`expected.found.${id}`))}
+                        </Badge>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              ))}
+            </Table>
+          ) : (
+            <p data-testid='expected-none'>{t(key('expected.none'))}</p>
+          )}
+        </ScenarioSection>
+
+        <ScenarioSection
+          id={AREA_ID}
+          aria-labelledby='newsletter-title'
+          data-testid='violations-area'
+          data-version={version}
+        >
+          <CardTitle asChild>
+            <h2 id='newsletter-title'>{t(key('form.title'))}</h2>
+          </CardTitle>
+          <p>{t(key('form.intro'))}</p>
+
+          <FirstHeading className='font-semibold' data-testid='heading-details'>
+            {t(key('form.details'))}
+          </FirstHeading>
+
+          <Example id='label'>
+            {broken ? (
+              <span>{t(key('form.email'))}</span>
+            ) : (
+              <Label htmlFor='newsletter-email'>{t(key('form.email'))}</Label>
+            )}
+            <Input
+              id='newsletter-email'
+              type='email'
+              variant='primary'
+              data-testid='input-email'
+            />
+          </Example>
+
+          <Example id='duplicate-id-aria'>
+            {/* Copied from one field to the next without changing the ID,
+                so both inputs are named "First name" */}
+            <span
+              id={broken ? 'name-label' : 'first-name-label'}
+              className='font-medium'
             >
-              {t(key('form.details'))}
-            </FirstHeading>
+              {t(key('form.first-name'))}
+            </span>
+            <Input
+              type='text'
+              variant='primary'
+              aria-labelledby={broken ? 'name-label' : 'first-name-label'}
+              data-testid='input-first-name'
+            />
+            <span
+              id={broken ? 'name-label' : 'last-name-label'}
+              className='font-medium'
+            >
+              {t(key('form.last-name'))}
+            </span>
+            <Input
+              type='text'
+              variant='primary'
+              aria-labelledby={broken ? 'name-label' : 'last-name-label'}
+              data-testid='input-last-name'
+            />
+          </Example>
 
-            <Example id='label'>
-              {broken ? (
-                <span>{t(key('form.email'))}</span>
-              ) : (
-                <Label htmlFor='newsletter-email'>{t(key('form.email'))}</Label>
-              )}
-              <Input
-                id='newsletter-email'
-                type='email'
-                variant='primary'
-                data-testid='input-email'
-              />
-            </Example>
+          <Example id='image-alt'>
+            <p>{t(key('form.photo'))}</p>
+            <img
+              src={PROFILE_IMAGE}
+              width={64}
+              height={64}
+              alt={broken ? undefined : t(key('form.photo-alt'))}
+              data-testid='profile-image'
+            />
+          </Example>
 
-            <Example id='duplicate-id-aria'>
-              {/* Copied from one field to the next without changing the ID,
-                  so both inputs are named "First name" */}
+          <h3 className='font-semibold'>{t(key('form.preferences'))}</h3>
+
+          <Example id='aria-required-attr'>
+            {/* A custom checkbox: the broken one never says whether it is
+                checked, so only the tick shows its state */}
+            <div
+              role='checkbox'
+              aria-checked={broken ? undefined : digest}
+              tabIndex={0}
+              onClick={toggleDigest}
+              onKeyDown={(event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                  event.preventDefault()
+                  toggleDigest()
+                }
+              }}
+              className='flex w-fit cursor-pointer items-center gap-2'
+              data-testid='checkbox-digest'
+              data-checked={digest}
+            >
               <span
-                id={broken ? 'name-label' : 'first-name-label'}
-                className='font-medium'
+                aria-hidden='true'
+                className='flex h-5 w-5 items-center justify-center rounded border border-current'
               >
-                {t(key('form.first-name'))}
+                {digest ? '✓' : ''}
               </span>
-              <Input
-                type='text'
-                variant='primary'
-                aria-labelledby={broken ? 'name-label' : 'first-name-label'}
-                data-testid='input-first-name'
-              />
-              <span
-                id={broken ? 'name-label' : 'last-name-label'}
-                className='font-medium'
-              >
-                {t(key('form.last-name'))}
-              </span>
-              <Input
-                type='text'
-                variant='primary'
-                aria-labelledby={broken ? 'name-label' : 'last-name-label'}
-                data-testid='input-last-name'
-              />
-            </Example>
+              {t(key('form.digest'))}
+            </div>
+          </Example>
 
-            <Example id='image-alt'>
-              <p>{t(key('form.photo'))}</p>
-              <img
-                src={PROFILE_IMAGE}
-                width={64}
-                height={64}
-                alt={broken ? undefined : t(key('form.photo-alt'))}
-                data-testid='profile-image'
-              />
-            </Example>
+          <Example id='aria-valid-attr-value'>
+            <Button
+              variant='secondary'
+              className='w-fit'
+              {...moreOptionsExpanded}
+              aria-controls='more-options'
+              onClick={() => {
+                setMoreOpen((current) => !current)
+              }}
+              data-testid='button-more-options'
+            >
+              {t(key('form.more-options'))}
+            </Button>
+            <div
+              id='more-options'
+              hidden={!moreOpen}
+              data-testid='more-options'
+            >
+              <p>{t(key('form.more-options-text'))}</p>
+            </div>
+          </Example>
 
-            <h3 className='font-semibold'>{t(key('form.preferences'))}</h3>
+          <Example id='scrollable-region-focusable'>
+            <p id='terms-title' className='font-medium'>
+              {t(key('form.terms'))}
+            </p>
+            {/* Only a mouse or touch screen can scroll the broken box */}
+            <div
+              className='h-24 overflow-y-auto rounded border border-border-default p-2 text-sm dark:border-border-default-dark'
+              tabIndex={broken ? undefined : 0}
+              role={broken ? undefined : 'region'}
+              aria-labelledby={broken ? undefined : 'terms-title'}
+              data-testid='terms-box'
+            >
+              {[1, 2, 3, 4, 5, 6].map((clause) => (
+                <p key={clause} className='mb-2'>
+                  {t(key('form.terms-clause'), { number: clause })}
+                </p>
+              ))}
+            </div>
+          </Example>
 
-            <Example id='aria-required-attr'>
-              {/* A custom checkbox: the broken one never says whether it is
-                  checked, so only the tick shows its state */}
-              <div
-                role='checkbox'
-                aria-checked={broken ? undefined : digest}
-                tabIndex={0}
-                onClick={toggleDigest}
-                onKeyDown={(event) => {
-                  if (event.key === ' ' || event.key === 'Enter') {
-                    event.preventDefault()
-                    toggleDigest()
-                  }
-                }}
-                className='flex w-fit cursor-pointer items-center gap-2'
-                data-testid='checkbox-digest'
-                data-checked={digest}
-              >
-                <span
-                  aria-hidden='true'
-                  className='flex h-5 w-5 items-center justify-center rounded border border-current'
-                >
-                  {digest ? '✓' : ''}
-                </span>
-                {t(key('form.digest'))}
-              </div>
-            </Example>
+          <Example id='keyboard-trap'>
+            <Label htmlFor='newsletter-message'>{t(key('form.message'))}</Label>
+            <textarea
+              id='newsletter-message'
+              rows={3}
+              value={message}
+              onChange={(event) => {
+                setMessage(event.currentTarget.value)
+              }}
+              onKeyDown={broken ? trapTab : undefined}
+              className='rounded-md border border-border-default bg-transparent p-2 dark:border-border-default-dark'
+              data-testid='textarea-message'
+            />
+          </Example>
 
-            <Example id='aria-valid-attr-value'>
+          <h3 className='font-semibold'>{t(key('form.finish'))}</h3>
+
+          <Example id='color-contrast'>
+            {/* A fixed white background, so the contrast is the same in the
+                light and dark themes */}
+            <p
+              className='rounded p-2'
+              style={{
+                backgroundColor: '#ffffff',
+                color: broken ? '#b0b0b0' : '#595959',
+              }}
+              data-testid='privacy-note'
+            >
+              {t(key('form.privacy'))}
+            </p>
+          </Example>
+
+          <Example id='button-name'>
+            <div className='flex items-center gap-4'>
               <Button
                 variant='secondary'
-                className='w-fit'
-                {...moreOptionsExpanded}
-                aria-controls='more-options'
+                aria-label={broken ? undefined : t(key('form.help'))}
+                aria-expanded={helpOpen}
+                aria-controls='newsletter-help'
                 onClick={() => {
-                  setMoreOpen((current) => !current)
+                  setHelpOpen((current) => !current)
                 }}
-                data-testid='button-more-options'
+                data-testid='button-help'
               >
-                {t(key('form.more-options'))}
+                <QuestionIcon />
               </Button>
+              <a
+                href='https://github.com/nearform/testing-playground'
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={broken ? undefined : t(key('form.github'))}
+                className='inline-flex'
+                data-testid='link-github'
+              >
+                <GitHubIcon />
+              </a>
+            </div>
+            <p id='newsletter-help' hidden={!helpOpen} data-testid='help-text'>
+              {t(key('form.help-text'))}
+            </p>
+          </Example>
+
+          <Example id='mouse-only'>
+            {broken ? (
+              // Looks like a button, but it is a div: it cannot be reached
+              // with Tab and Enter does nothing
               <div
-                id='more-options'
-                hidden={!moreOpen}
-                data-testid='more-options'
+                onClick={subscribe}
+                className='w-fit cursor-pointer rounded-md bg-[#1d4ed8] px-4 py-2 font-medium text-white'
+                data-testid='button-subscribe'
               >
-                <p>{t(key('form.more-options-text'))}</p>
+                {t(key('form.subscribe'))}
               </div>
-            </Example>
-
-            <Example id='scrollable-region-focusable'>
-              <p id='terms-title' className='font-medium'>
-                {t(key('form.terms'))}
-              </p>
-              {/* Only a mouse or touch screen can scroll the broken box */}
-              <div
-                className='h-24 overflow-y-auto rounded border border-border-default p-2 text-sm dark:border-border-default-dark'
-                tabIndex={broken ? undefined : 0}
-                role={broken ? undefined : 'region'}
-                aria-labelledby={broken ? undefined : 'terms-title'}
-                data-testid='terms-box'
+            ) : (
+              <Button
+                variant='primary'
+                className='w-fit'
+                onClick={subscribe}
+                data-testid='button-subscribe'
               >
-                {[1, 2, 3, 4, 5, 6].map((clause) => (
-                  <p key={clause} className='mb-2'>
-                    {t(key('form.terms-clause'), { number: clause })}
-                  </p>
-                ))}
-              </div>
-            </Example>
-
-            <Example id='keyboard-trap'>
-              <Label htmlFor='newsletter-message'>
-                {t(key('form.message'))}
-              </Label>
-              <textarea
-                id='newsletter-message'
-                rows={3}
-                value={message}
-                onChange={(event) => {
-                  setMessage(event.currentTarget.value)
-                }}
-                onKeyDown={broken ? trapTab : undefined}
-                className='rounded-md border border-border-default bg-transparent p-2 dark:border-border-default-dark'
-                data-testid='textarea-message'
-              />
-            </Example>
-
-            <h3 className='font-semibold'>{t(key('form.finish'))}</h3>
-
-            <Example id='color-contrast'>
-              {/* A fixed white background, so the contrast is the same in the
-                  light and dark themes */}
-              <p
-                className='rounded p-2'
-                style={{
-                  backgroundColor: '#ffffff',
-                  color: broken ? '#b0b0b0' : '#595959',
-                }}
-                data-testid='privacy-note'
-              >
-                {t(key('form.privacy'))}
-              </p>
-            </Example>
-
-            <Example id='button-name'>
-              <div className='flex items-center gap-4'>
-                <Button
-                  variant='secondary'
-                  aria-label={broken ? undefined : t(key('form.help'))}
-                  aria-expanded={helpOpen}
-                  aria-controls='newsletter-help'
-                  onClick={() => {
-                    setHelpOpen((current) => !current)
-                  }}
-                  data-testid='button-help'
-                >
-                  <QuestionIcon />
-                </Button>
-                <a
-                  href='https://github.com/nearform/testing-playground'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  aria-label={broken ? undefined : t(key('form.github'))}
-                  className='inline-flex'
-                  data-testid='link-github'
-                >
-                  <GitHubIcon />
-                </a>
-              </div>
-              <p
-                id='newsletter-help'
-                hidden={!helpOpen}
-                data-testid='help-text'
-              >
-                {t(key('form.help-text'))}
-              </p>
-            </Example>
-
-            <Example id='mouse-only'>
-              {broken ? (
-                // Looks like a button, but it is a div: it cannot be reached
-                // with Tab and Enter does nothing
-                <div
-                  onClick={subscribe}
-                  className='w-fit cursor-pointer rounded-md bg-[#1d4ed8] px-4 py-2 font-medium text-white'
-                  data-testid='button-subscribe'
-                >
-                  {t(key('form.subscribe'))}
-                </div>
-              ) : (
-                <Button
-                  variant='primary'
-                  className='w-fit'
-                  onClick={subscribe}
-                  data-testid='button-subscribe'
-                >
-                  {t(key('form.subscribe'))}
-                </Button>
-              )}
-              <p aria-live='polite' data-testid='subscribe-status'>
-                {subscribed ? t(key('form.subscribed')) : ''}
-              </p>
-            </Example>
-          </section>
-        </div>
+                {t(key('form.subscribe'))}
+              </Button>
+            )}
+            <p aria-live='polite' data-testid='subscribe-status'>
+              {subscribed ? t(key('form.subscribed')) : ''}
+            </p>
+          </Example>
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )

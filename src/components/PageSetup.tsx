@@ -20,6 +20,9 @@ interface PageSetupProps {
   // Already translated: it is parsed as HTML, not looked up again
   description: string
   information?: Information
+  // The playground is a stack of ScenarioSections, each its own card, rather
+  // than one card holding everything
+  sections?: boolean
 }
 
 const PageSetup: React.FC<PageSetupProps> = ({
@@ -27,6 +30,7 @@ const PageSetup: React.FC<PageSetupProps> = ({
   title,
   description,
   information,
+  sections = false,
 }) => {
   const { t } = useTranslation()
 
@@ -60,9 +64,10 @@ const PageSetup: React.FC<PageSetupProps> = ({
         )}
       </Card>
       {/* Quantum draws controls for a surface: on the page background
-          their fill and borders all but disappear */}
-      <main aria-label={t('common.playground')}>
-        <Card>{children}</Card>
+          their fill and borders all but disappear, so the playground is
+          always on a card, or on one card per section */}
+      <main aria-label={t('common.playground')} className='flex flex-col gap-4'>
+        {sections ? children : <Card>{children}</Card>}
       </main>
     </div>
   )
