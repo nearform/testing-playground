@@ -1,6 +1,7 @@
 import {
   CardTitle,
   Label,
+  NativeSelect,
   Select,
   SelectContent,
   SelectItem,
@@ -43,9 +44,10 @@ const countries: Option[] = [
   { value: 'united-kingdom' },
 ]
 
-// Quantum only styles its own (custom) select, so the native ones borrow the
-// same look to keep the three dropdowns visually consistent
-const nativeSelectClasses = [
+// Quantum's NativeSelect cannot set how many rows a list box shows (its size
+// prop is the field height), so the multi-select stays a plain <select> with
+// the same look, to show every colour without scrolling
+const listBoxClasses = [
   'w-full rounded-lg border-2 border-border bg-grey-100 px-3 py-2 text-sm text-foreground',
   'hover:border-border-hover focus:outline-hidden focus-visible:shadow-brandGreen',
   'dark:border-border-dark dark:bg-background-alt-dark dark:text-foreground-muted-dark',
@@ -100,13 +102,12 @@ const Dropdown = (): JSX.Element => {
             <Label htmlFor='native-select'>
               {t(`scenarios.${SLUG}.native.label`)}
             </Label>
-            <select
+            <NativeSelect
               id='native-select'
               value={fruit}
               onChange={(e) => {
                 setFruit(e.currentTarget.value)
               }}
-              className={nativeSelectClasses}
               data-testid='native-select'
             >
               {/* A placeholder that cannot be picked again once a fruit is
@@ -119,7 +120,7 @@ const Dropdown = (): JSX.Element => {
                   {fruitLabel(value)}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </section>
 
           <section className='flex flex-col gap-2'>
@@ -137,7 +138,7 @@ const Dropdown = (): JSX.Element => {
                   Array.from(e.currentTarget.selectedOptions, (o) => o.value),
                 )
               }}
-              className={nativeSelectClasses}
+              className={listBoxClasses}
               data-testid='native-multi-select'
             >
               {colours.map(({ value }) => (

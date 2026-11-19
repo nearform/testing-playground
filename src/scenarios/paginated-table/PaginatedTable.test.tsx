@@ -152,6 +152,9 @@ describe('PaginatedTable scenario', () => {
         'true',
       )
       expect(screen.getByTestId('table-loading')).toBeInTheDocument()
+      expect(
+        screen.getByRole('status', { name: 'Loading invoices' }),
+      ).toBeInTheDocument()
       expect(ids()[0]).toBe('INV-1001')
       expect(screen.getByTestId('page-next')).toBeDisabled()
     })

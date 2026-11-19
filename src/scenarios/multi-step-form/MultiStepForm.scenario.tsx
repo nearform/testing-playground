@@ -6,6 +6,7 @@ import {
   FormGroup,
   Input,
   Label,
+  NativeSelect,
   Radio,
   RadioGroup,
 } from '@nearform/quantum'
@@ -67,16 +68,6 @@ const FIELD_KEYS: Record<WizardField, string> = {
 // The element to focus for an invalid field: the first radio of a group
 const focusId = (field: WizardField): string =>
   field === 'accountType' ? 'account-type-personal' : FIELD_KEYS[field]
-
-// Quantum only styles its own (custom) select, so the native ones borrow the
-// same look as its inputs
-const nativeSelectClasses = [
-  'w-full rounded-lg border-2 border-border bg-grey-100 px-3 py-2 text-sm text-foreground',
-  'hover:border-border-hover focus:outline-hidden focus-visible:shadow-brandGreen',
-  'aria-invalid:border-red-500',
-  'dark:border-border-dark dark:bg-background-alt-dark dark:text-foreground-muted-dark',
-  'dark:hover:border-border-hover-dark dark:focus-visible:shadow-brandGreen10',
-].join(' ')
 
 const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -167,14 +158,16 @@ const SelectField = ({
       }
     >
       <Label>{t(key(`fields.${id}`))} *</Label>
-      <select
+      {/* lg is the height of the form's inputs */}
+      <NativeSelect
         id={id}
+        size='lg'
         name={field}
         value={value}
         onChange={(e) => {
           onChange(e.currentTarget.value)
         }}
-        className={nativeSelectClasses}
+        variant={error !== undefined ? 'error' : 'default'}
         data-testid={id}
       >
         <option value=''>{t(key('choose'))}</option>
@@ -183,7 +176,7 @@ const SelectField = ({
             {optionLabel(option)}
           </option>
         ))}
-      </select>
+      </NativeSelect>
       <FieldError data-testid={`${id}-error`} />
     </FormGroup>
   )

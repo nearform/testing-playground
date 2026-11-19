@@ -1,24 +1,21 @@
 import quantum from '@nearform/quantum/tailwind-plugin'
+import tailwindColors from 'tailwindcss/colors'
 import { describe, expect, it } from 'vitest'
 
 // Quantum's Tailwind plugin replaces Tailwind's colour palette rather than
 // adding to it, so a class such as bg-gray-100 builds with no error and no CSS.
-// Quantum spells its neutral ramp grey, and has no hues by these names.
-const MISSING_HUES = [
-  'gray',
-  'slate',
-  'zinc',
-  'neutral',
-  'stone',
-  'amber',
-  'lime',
-  'emerald',
-  'cyan',
-  'sky',
-  'violet',
-  'fuchsia',
-  'rose',
-]
+// Quantum spells its neutral ramp grey, and has no amber, slate and so on.
+// The names are read from both palettes, as Quantum's own test does, so this
+// keeps up with either.
+const theme = quantum.config?.theme as {
+  colors: Record<string, unknown>
+  boxShadow: Record<string, unknown>
+}
+const MISSING_HUES = Object.entries(tailwindColors)
+  .filter(
+    ([name, value]) => typeof value === 'object' && !(name in theme.colors),
+  )
+  .map(([name]) => name)
 
 const missingColourClass = new RegExp(
   `\\b(?:bg|text|border(?:-[trblxy])?|ring|outline|fill|stroke|from|via|to|divide|decoration|accent|caret|placeholder|shadow)-(?:${MISSING_HUES.join('|')})-\\d{2,3}\\b`,
@@ -28,10 +25,6 @@ const missingColourClass = new RegExp(
 // Most Quantum colours are ramps with no default shade, so a class such as
 // bg-brandGreen also builds with no error and no CSS: it needs a shade, as in
 // bg-brandGreen-100. Read the names from Quantum so this keeps up with it.
-const theme = quantum.config?.theme as {
-  colors: Record<string, unknown>
-  boxShadow: Record<string, unknown>
-}
 const RAMPS = Object.entries(theme.colors)
   .filter(([, value]) => typeof value === 'object' && !('DEFAULT' in value!))
   .map(([name]) => name)
@@ -68,6 +61,12 @@ describe('colour classes', () => {
       expect(source.match(missingColourClass) ?? []).toEqual([])
     },
   )
+
+  it('knows which Tailwind hues Quantum lacks', () => {
+    expect(MISSING_HUES).toEqual(expect.arrayContaining(['gray', 'amber']))
+    expect(MISSING_HUES).not.toContain('grey')
+    expect(MISSING_HUES).not.toContain('red')
+  })
 
   it('knows which Quantum colours need a shade', () => {
     expect(RAMPS).toEqual(expect.arrayContaining(['brandGreen', 'grey', 'red']))

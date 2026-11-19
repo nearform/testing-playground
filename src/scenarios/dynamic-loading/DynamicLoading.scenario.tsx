@@ -45,11 +45,9 @@ const useDelay = (): ((callback: () => void, ms: number) => void) => {
 const LoadingSpinner = ({ id }: { id: string }): JSX.Element => {
   const { t } = useTranslation()
   const label = t(`scenarios.${SLUG}.loading`)
-  // A status takes its name only from aria-label, not from Quantum's hidden
-  // label text, so set both to keep it findable by role and name
-  return (
-    <Spinner label={label} aria-label={label} data-testid={`${id}-spinner`} />
-  )
+  // Quantum names the status from its label, so it is findable by role and
+  // name
+  return <Spinner label={label} data-testid={`${id}-spinner`} />
 }
 
 const Section = ({

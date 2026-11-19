@@ -3,14 +3,6 @@
 @source '../node_modules/@nearform/quantum';
 @custom-variant dark (&:is(.dark, .dark *));
 
-/* Quantum is set in Inter, but its plugin only names the family. Main.tsx
-   loads the bundled variable font, which registers as 'Inter Variable'. */
-@theme {
-  --font-sans:
-    'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
 /* Used by the Actionability scenario's moving buttons */
 @keyframes actionability-slide {
   0%,
