@@ -160,7 +160,9 @@ const DropZone = (): JSX.Element => {
 
   // Release the previews' object URLs when the page is left
   const uploadsRef = useRef(uploads)
-  uploadsRef.current = uploads
+  useEffect(() => {
+    uploadsRef.current = uploads
+  })
   useEffect(
     () => () => {
       uploadsRef.current.forEach((upload) => {

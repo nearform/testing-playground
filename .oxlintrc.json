@@ -27,13 +27,10 @@
     "typescript/triple-slash-reference": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    // React Compiler style checks. They flag about 20 places, mostly in
-    // scenarios that read the clock or refs while drawing on purpose, so
-    // they are off until each place has been looked at
-    "react/set-state-in-effect": "off",
-    "react/refs": "off",
-    "react/purity": "off",
-    "react/immutability": "off"
+    "react/set-state-in-effect": "error",
+    "react/refs": "error",
+    "react/purity": "error",
+    "react/immutability": "error"
   },
   "ignorePatterns": ["dist/"],
   // The site's own pages and components should be accessible. Scenarios

@@ -1,5 +1,5 @@
 import { Button, FieldError, Input } from '@nearform/quantum'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Alert from '../../components/Alert'
@@ -16,23 +16,20 @@ export const LOGGED_IN_KEY = storageKey('isLoggedIn')
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation()
 
-  const [username, setUsername] = useState('')
+  // The login state saved in localStorage, read once as the page opens
+  const [saved] = useState(() => {
+    const storedUsername = localStorage.getItem(USERNAME_KEY)
+    const storedLoggedIn = localStorage.getItem(LOGGED_IN_KEY)
+    return storedUsername != null && storedLoggedIn != null
+      ? // Compared rather than parsed, so an unexpected value cannot throw
+        { username: storedUsername, loggedIn: storedLoggedIn === 'true' }
+      : { username: '', loggedIn: false }
+  })
+  const [username, setUsername] = useState(saved.username)
   const [password, setPassword] = useState('')
   // Whether to show the error, not its text, so it follows a language switch
   const [invalidCredentials, setInvalidCredentials] = useState(false)
-  const [isLoggedIn, setLoggedIn] = useState(false)
-
-  useEffect(() => {
-    // Read login state from localStorage on component mount
-    const storedUsername = localStorage.getItem(USERNAME_KEY)
-    const storedLoggedIn = localStorage.getItem(LOGGED_IN_KEY)
-
-    if (storedUsername != null && storedLoggedIn != null) {
-      setUsername(storedUsername)
-      // Compared rather than parsed, so an unexpected value cannot throw
-      setLoggedIn(storedLoggedIn === 'true')
-    }
-  }, [])
+  const [isLoggedIn, setLoggedIn] = useState(saved.loggedIn)
 
   const handleLogin = (): void => {
     // Check if username and password match the expected values

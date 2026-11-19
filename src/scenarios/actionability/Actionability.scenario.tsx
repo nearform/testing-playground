@@ -45,7 +45,6 @@ const useDelayedFlag = (delay: number): [boolean, () => void, number] => {
   const [run, setRun] = useState(0)
 
   useEffect(() => {
-    setDone(false)
     const timer = setTimeout(() => {
       setDone(true)
     }, delay)
@@ -54,7 +53,12 @@ const useDelayedFlag = (delay: number): [boolean, () => void, number] => {
     }
   }, [delay, run])
 
-  return [done, () => setRun((current) => current + 1), run]
+  const restart = (): void => {
+    setDone(false)
+    setRun((current) => current + 1)
+  }
+
+  return [done, restart, run]
 }
 
 // The keyframes live in index.css. Animating `left` rather than a transform

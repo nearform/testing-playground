@@ -202,15 +202,16 @@ const CookiesAndStorage = (): JSX.Element => {
   }, [])
 
   // Without a choice, the banner shows up a moment after the page loads (and
-  // again after everything is cleared)
+  // again after everything is cleared, here or in another tab). It is made
+  // not ready again as soon as a choice is made, ready for the next time.
   useEffect(() => {
-    setBannerReady(false)
     if (consent !== null) return
     const timer = setTimeout(() => {
       setBannerReady(true)
     }, BANNER_DELAY)
     return () => {
       clearTimeout(timer)
+      setBannerReady(false)
     }
   }, [consent])
 

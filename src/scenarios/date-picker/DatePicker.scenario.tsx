@@ -110,6 +110,8 @@ interface CalendarPopupProps {
   anchor: RefObject<HTMLElement | null>
   // The day that has focus when the popup opens
   initialFocus: Date
+  // Marked as today in the grid; the page's own, so it agrees with min and max
+  today: Date
   // The first and last days the calendar can show
   min: Date
   max: Date
@@ -130,6 +132,7 @@ const CalendarPopup = ({
   label,
   anchor,
   initialFocus,
+  today,
   min,
   max,
   isDisabled,
@@ -141,7 +144,6 @@ const CalendarPopup = ({
 }: CalendarPopupProps): JSX.Element => {
   const { t, i18n } = useTranslation()
   const locale = dateLocale(i18n.language)
-  const today = startOfDay(new Date())
 
   // The focused day also decides which month is shown
   const [focused, setFocused] = useState(() =>
@@ -159,7 +161,9 @@ const CalendarPopup = ({
 
   // Kept current so the document listener below never calls a stale one
   const onCloseRef = useRef(onClose)
-  onCloseRef.current = onClose
+  useLayoutEffect(() => {
+    onCloseRef.current = onClose
+  })
 
   useEffect(() => {
     if (!focusDay.current) return
@@ -474,6 +478,7 @@ const AppointmentPicker = ({ today }: { today: Date }): JSX.Element => {
           label={t(`scenarios.${SLUG}.appointment.calendar`)}
           anchor={triggerRef}
           initialFocus={value ?? nextWeekday(today)}
+          today={today}
           min={today}
           max={new Date(today.getFullYear() + BOOKING_YEARS, 11, 31)}
           isDisabled={isWeekend}
@@ -549,6 +554,7 @@ const TripPicker = ({ today }: { today: Date }): JSX.Element => {
           label={t(`scenarios.${SLUG}.trip.calendar`)}
           anchor={triggerRef}
           initialFocus={range.start ?? today}
+          today={today}
           min={today}
           max={new Date(today.getFullYear() + BOOKING_YEARS, 11, 31)}
           isDisabled={() => false}
@@ -606,7 +612,9 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
   const { t, i18n } = useTranslation()
   const { order } = dateLocale(i18n.language)
   const [value, setValue] = useState<Date | null>(null)
-  const [text, setText] = useState('')
+  // What is being typed. Otherwise the field shows the chosen date, in the
+  // current language's format, so it follows a language switch
+  const [draft, setDraft] = useState<string | null>(null)
   const [error, setError] = useState<BirthDateError | null>(null)
   const [open, setOpen] = useState(false)
   const fieldRef = useRef<HTMLDivElement>(null)
@@ -615,14 +623,11 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
   const format = t(`scenarios.${SLUG}.birth-date.format`)
   const min = new Date(MIN_BIRTH_YEAR, 0, 1)
 
-  // A chosen date is shown again in the new format after a language switch
-  useEffect(() => {
-    if (value !== null) setText(formatDisplayDate(value, order))
-  }, [order, value])
+  const text = draft ?? (value === null ? '' : formatDisplayDate(value, order))
 
   const choose = (date: Date): void => {
     setValue(date)
-    setText(formatDisplayDate(date, order))
+    setDraft(null)
     setError(null)
   }
 
@@ -630,6 +635,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
   const commit = (): void => {
     if (text.trim() === '') {
       setValue(null)
+      setDraft(null)
       setError(null)
       return
     }
@@ -674,7 +680,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
           aria-invalid={error !== null}
           aria-describedby={error === null ? undefined : 'birth-date-error'}
           value={text}
-          onChange={(event) => setText(event.currentTarget.value)}
+          onChange={(event) => setDraft(event.currentTarget.value)}
           onKeyDown={(event) => {
             if (event.key === 'Enter') commit()
           }}
@@ -714,6 +720,7 @@ const BirthDatePicker = ({ today }: { today: Date }): JSX.Element => {
           label={t(`scenarios.${SLUG}.birth-date.calendar`)}
           anchor={fieldRef}
           initialFocus={value ?? today}
+          today={today}
           min={min}
           max={today}
           isDisabled={() => false}
