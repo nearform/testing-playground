@@ -13,14 +13,18 @@
       "test": "Point your tests at the scenario's page. Each one has its own address, so a test can open it directly."
     },
     "source": "The playground is open source:",
-    "source-link": "suggest or add a scenario on GitHub"
+    "source-link": "suggest or add a scenario on GitHub",
+    "search-label": "Search scenarios",
+    "search-placeholder": "Title or description",
+    "results": "Showing {{count}} of {{total}} scenarios",
+    "no-results-title": "No scenarios match these filters",
+    "no-results-body": "Try another word, or set the difficulty back to All.",
+    "clear-filters": "Clear filters"
   },
   "common": {
     "copyright": "© Copyright {{year}} {{company}} Ltd. All Rights Reserved.",
     "learn-more": "Learn More",
-    "search": "Search...",
     "difficulty": "Difficulty",
-    "select-difficulty": "Select Difficulty",
     "all": "All",
     "easy": "Easy",
     "medium": "Medium",

@@ -31,7 +31,7 @@ const PageSetup: React.FC<PageSetupProps> = ({
   const { t } = useTranslation()
 
   return (
-    <div className='flex flex-col gap-4 p-4'>
+    <div className='flex flex-col gap-4 p-4 md:px-8'>
       <PageHeader>
         <PageHeaderTitle>{title}</PageHeaderTitle>
         {/* A fixed test id: one built from the text would change with the

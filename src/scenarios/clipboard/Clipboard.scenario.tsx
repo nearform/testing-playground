@@ -208,7 +208,7 @@ const Clipboard = (): JSX.Element => {
                     </dt>
                     <dd className='flex flex-wrap items-center gap-4'>
                       <code
-                        className='rounded bg-gray-100 px-2 py-1 font-mono break-all text-gray-900'
+                        className='rounded bg-background-subtle text-foreground dark:bg-background-subtle-dark dark:text-foreground-dark px-2 py-1 font-mono break-all'
                         data-testid={`value-${id}`}
                       >
                         {shown}
@@ -297,7 +297,7 @@ const Clipboard = (): JSX.Element => {
                       })}
                     </p>
                     <pre
-                      className='rounded bg-gray-100 p-2 font-mono break-all whitespace-pre-wrap text-gray-900'
+                      className='rounded bg-background-subtle text-foreground dark:bg-background-subtle-dark dark:text-foreground-dark p-2 font-mono break-all whitespace-pre-wrap'
                       data-testid='pasted-text'
                     >
                       {pasteStatus.text}

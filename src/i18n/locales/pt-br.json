@@ -13,14 +13,18 @@
       "test": "Aponte seus testes para a página do cenário. Cada um tem seu próprio endereço, então um teste pode abri-lo diretamente."
     },
     "source": "O playground é open source:",
-    "source-link": "sugira ou adicione um cenário no GitHub"
+    "source-link": "sugira ou adicione um cenário no GitHub",
+    "search-label": "Pesquisar cenários",
+    "search-placeholder": "Título ou descrição",
+    "results": "Mostrando {{count}} de {{total}} cenários",
+    "no-results-title": "Nenhum cenário corresponde a estes filtros",
+    "no-results-body": "Tente outra palavra ou volte a dificuldade para Todos.",
+    "clear-filters": "Limpar filtros"
   },
   "common": {
     "copyright": "Direitos autorais © {{year}} {{company}} Ltd. Todos os direitos reservados.",
     "learn-more": "Saiba mais",
-    "search": "Pesquisar...",
     "difficulty": "Dificuldade",
-    "select-difficulty": "Selecione a Dificuldade",
     "all": "Todos",
     "easy": "Fácil",
     "medium": "Médio",
