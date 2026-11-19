@@ -64,7 +64,8 @@ const DropTarget = ({
 
 const DragAndDropHard = (): JSX.Element => {
   const { t } = useTranslation()
-  const [shapes, setShapes] = useState<Shape[]>(
+  // Random shapes, chosen once as the page opens
+  const [shapes, setShapes] = useState<Shape[]>(() =>
     Array.from({ length: 5 }, (_, index) => ({
       id: index + 1,
       shape: Math.random() < 0.5 ? 'circle' : 'square',

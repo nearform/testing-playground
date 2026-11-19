@@ -161,16 +161,27 @@ const Combobox = ({
   onSelect,
 }: ComboboxProps): JSX.Element => {
   const [open, setOpen] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(-1)
   const listId = `${id}-listbox`
   const optionId = (index: number): string => `${id}-option-${index}`
 
-  // Different suggestions mean the highlighted one may be gone. Keyed on the
-  // contents, as the array itself is a new one on every render
+  // Different suggestions mean the highlighted one may be gone, so the
+  // highlight is kept with the suggestions it was for, and there is none for
+  // any others. Keyed on the contents, as the array itself is a new one on
+  // every render
   const suggestionsKey = suggestions.join('\n')
-  useEffect(() => {
-    setActiveIndex(-1)
-  }, [suggestionsKey])
+  const [highlighted, setHighlighted] = useState({
+    key: suggestionsKey,
+    index: -1,
+  })
+  const indexIn = (current: typeof highlighted): number =>
+    current.key === suggestionsKey ? current.index : -1
+  const activeIndex = indexIn(highlighted)
+  const setActiveIndex = (next: number | ((index: number) => number)): void => {
+    setHighlighted((current) => ({
+      key: suggestionsKey,
+      index: typeof next === 'function' ? next(indexIn(current)) : next,
+    }))
+  }
 
   const hasSuggestions = suggestions.length > 0
   const expanded = open && hasSuggestions
@@ -311,6 +322,10 @@ const Autocomplete = (): JSX.Element => {
   useEffect(() => {
     // Nothing to look up once a city has been chosen, or for too short a term
     if (city !== null || cityTerm.length < MIN_CITY_CHARACTERS) {
+      // Each new search starts by clearing the old results and showing the
+      // spinner, which is the waiting this scenario is about. Deriving them
+      // instead could show an earlier answer again without a search.
+      // oxlint-disable-next-line react/set-state-in-effect
       setCityResults([])
       setCityLoading(false)
       return

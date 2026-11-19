@@ -186,6 +186,23 @@ describe('Tabs and accordions scenario', () => {
       expect(screen.queryByTestId('reviews-loading')).not.toBeInTheDocument()
     })
 
+    it('carries on loading the reviews while another tab is shown', () => {
+      vi.useFakeTimers()
+      renderScenario()
+
+      fireEvent.click(screen.getByRole('tab', { name: 'Reviews' }))
+      act(() => {
+        vi.advanceTimersByTime(LOAD_DELAY_MS - 1)
+      })
+      fireEvent.click(screen.getByRole('tab', { name: 'Overview' }))
+      act(() => {
+        vi.advanceTimersByTime(1)
+      })
+      fireEvent.click(screen.getByRole('tab', { name: 'Reviews' }))
+
+      expect(screen.getByTestId('reviews-list')).toBeVisible()
+    })
+
     it('loads the reviews when the URL opens that tab', () => {
       vi.useFakeTimers()
       renderScenario('?product=reviews')

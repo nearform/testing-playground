@@ -186,19 +186,19 @@ const PaginatedTable = (): JSX.Element => {
   const [selected, setSelected] = useState<ReadonlySet<string>>(new Set())
   const [markedCount, setMarkedCount] = useState<number | null>(null)
 
+  // A new search or filter, or a new page size, starts again at page 1. It is
+  // reset along with them, so the old page is never asked for in between.
   useEffect(() => {
+    const next = searchText.trim()
+    if (next === search) return
     const timer = window.setTimeout(() => {
-      setSearch(searchText.trim())
+      setSearch(next)
+      setPage(1)
     }, SEARCH_DEBOUNCE)
     return () => {
       window.clearTimeout(timer)
     }
-  }, [searchText])
-
-  // A new search or filter, or a new page size, starts again at page 1
-  useEffect(() => {
-    setPage(1)
-  }, [search, status, from, to, pageSize])
+  }, [searchText, search])
 
   // Only the latest query is loaded: asking for another while one is loading
   // cancels the first
@@ -282,6 +282,7 @@ const PaginatedTable = (): JSX.Element => {
     setStatus('all')
     setFrom('')
     setTo('')
+    setPage(1)
   }
 
   const pagerButton = (
@@ -338,6 +339,7 @@ const PaginatedTable = (): JSX.Element => {
                 value={status}
                 onChange={(event) => {
                   setStatus(event.currentTarget.value as Status | 'all')
+                  setPage(1)
                 }}
                 data-testid='status-filter'
               >
@@ -359,6 +361,7 @@ const PaginatedTable = (): JSX.Element => {
                 max={to === '' ? undefined : to}
                 onChange={(event) => {
                   setFrom(event.currentTarget.value)
+                  setPage(1)
                 }}
                 data-testid='issued-from'
               />
@@ -373,6 +376,7 @@ const PaginatedTable = (): JSX.Element => {
                 min={from === '' ? undefined : from}
                 onChange={(event) => {
                   setTo(event.currentTarget.value)
+                  setPage(1)
                 }}
                 data-testid='issued-to'
               />
@@ -514,6 +518,7 @@ const PaginatedTable = (): JSX.Element => {
                 disabled={loading}
                 onChange={(event) => {
                   setPageSize(Number(event.currentTarget.value))
+                  setPage(1)
                 }}
                 wrapperClassName='w-auto'
                 data-testid='page-size'
