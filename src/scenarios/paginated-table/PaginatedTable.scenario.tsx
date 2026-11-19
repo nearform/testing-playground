@@ -158,7 +158,7 @@ const badgeVariants: Record<Status, 'success' | 'info' | 'error' | 'disabled'> =
 
 const COLUMN_COUNT = 6
 
-const PaginatedTable = (): JSX.Element => {
+const PaginatedTable = (): React.JSX.Element => {
   const { t } = useTranslation()
   const key = (path: string): string => `scenarios.${SLUG}.${path}`
 
@@ -288,7 +288,7 @@ const PaginatedTable = (): JSX.Element => {
     label: string,
     target: number,
     testId: string,
-  ): JSX.Element => (
+  ): React.JSX.Element => (
     <Button
       variant='secondary'
       size='sm'

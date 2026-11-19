@@ -71,7 +71,7 @@ const Section = ({
   title,
   description,
   children,
-}: SectionProps): JSX.Element => (
+}: SectionProps): React.JSX.Element => (
   <Card variant='outline' className='h-full'>
     <CardTitle data-testid={`${testId}-title`}>{title}</CardTitle>
     <CardDescription className='mb-4'>{description}</CardDescription>
@@ -79,7 +79,7 @@ const Section = ({
   </Card>
 )
 
-const OpenShadowForm = (): JSX.Element => {
+const OpenShadowForm = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [greeting, setGreeting] = useState<{
@@ -134,7 +134,7 @@ const OpenShadowForm = (): JSX.Element => {
   )
 }
 
-const InnerCounter = (): JSX.Element => {
+const InnerCounter = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [count, setCount] = useState(0)
 
@@ -172,7 +172,7 @@ const InnerCounter = (): JSX.Element => {
   )
 }
 
-const ShadowDom = (): JSX.Element => {
+const ShadowDom = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [slottedClicks, setSlottedClicks] = useState(0)
   const [closedClicks, setClosedClicks] = useState(0)

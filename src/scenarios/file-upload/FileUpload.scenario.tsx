@@ -9,7 +9,7 @@ import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
 import { SLUG } from './meta'
 
-const FileUpload = (): JSX.Element => {
+const FileUpload = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [file, setFile] = useState<File | null>(null)
   const [uploading, setUploading] = useState(false)

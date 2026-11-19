@@ -4,6 +4,7 @@ import {
   AppHeaderLogo,
   ThemeToggle,
 } from '@nearform/quantum'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ import LanguageDropdown from './LanguageDropdown'
 import { NFLogo } from '../icons/NFLogo'
 import { NFLogoSquare } from '../icons/NFLogoSquare'
 
-function Header(): JSX.Element {
+function Header(): React.JSX.Element {
   const { t } = useTranslation()
 
   return (

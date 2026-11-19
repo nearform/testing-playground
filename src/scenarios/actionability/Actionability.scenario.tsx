@@ -69,7 +69,7 @@ const slide = (iterations: number | 'infinite'): CSSProperties => ({
 
 const boxClasses = 'rounded-lg border border-border p-4 dark:border-border-dark'
 
-const Actionability = (): JSX.Element => {
+const Actionability = (): React.JSX.Element => {
   const { t } = useTranslation()
   // The message's key and values, not its text, so it follows a language
   // switch

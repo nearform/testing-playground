@@ -58,7 +58,7 @@ const useFormatSize = (): ((bytes: number) => string) => {
   return (bytes) => showSize(formatSize(bytes, locale))
 }
 
-const MultipleFiles = (): JSX.Element => {
+const MultipleFiles = (): React.JSX.Element => {
   const { t } = useTranslation()
   const size = useFormatSize()
   const [files, setFiles] = useState<File[]>([])
@@ -119,7 +119,7 @@ const dropZoneClasses = [
   'dark:data-[dragging=true]:bg-background-alt-dark',
 ].join(' ')
 
-const DropZone = (): JSX.Element => {
+const DropZone = (): React.JSX.Element => {
   const { t } = useTranslation()
   const size = useFormatSize()
   const showSize = useShowSize()
@@ -388,7 +388,7 @@ const DropZone = (): JSX.Element => {
   )
 }
 
-const MultipleFileUpload = (): JSX.Element => {
+const MultipleFileUpload = (): React.JSX.Element => {
   const { t } = useTranslation()
   const size = useFormatSize()
   return (

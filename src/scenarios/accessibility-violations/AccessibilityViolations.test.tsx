@@ -25,7 +25,7 @@ const keyPaths = (value: unknown, prefix = ''): string[] =>
     : [prefix]
 
 // Shows the current URL, so tests can see what the switch does to it
-const LocationProbe = (): JSX.Element => {
+const LocationProbe = (): React.JSX.Element => {
   const { search } = useLocation()
   return <output data-testid='location-search'>{search}</output>
 }

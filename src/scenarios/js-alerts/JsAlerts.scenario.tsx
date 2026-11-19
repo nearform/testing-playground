@@ -19,7 +19,7 @@ interface Result {
 
 const dialogTypes: DialogType[] = ['alert', 'confirm', 'prompt']
 
-const JsAlerts = (): JSX.Element => {
+const JsAlerts = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [result, setResult] = useState<Result | null>(null)
 

@@ -8,7 +8,7 @@ import {
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function LanguageSelector(): JSX.Element {
+function LanguageSelector(): React.JSX.Element {
   const { i18n } = useTranslation()
 
   const handleChangeLanguage = (selectedLanguage: string) => {

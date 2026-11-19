@@ -67,7 +67,7 @@ const Tabs = ({
   keepMounted,
   tabLabel,
   renderPanel,
-}: TabsProps): JSX.Element => {
+}: TabsProps): React.JSX.Element => {
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
 
   const onKeyDown = (
@@ -164,7 +164,7 @@ const Accordion = ({
   onToggle,
   title,
   body,
-}: AccordionProps): JSX.Element => (
+}: AccordionProps): React.JSX.Element => (
   <div
     className='divide-y-2 divide-border rounded-lg border-2 border-border dark:divide-border-dark dark:border-border-dark'
     data-testid={`${prefix}-accordion`}
@@ -207,7 +207,7 @@ const Accordion = ({
   </div>
 )
 
-const TabsAndAccordions = (): JSX.Element => {
+const TabsAndAccordions = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -252,7 +252,7 @@ const TabsAndAccordions = (): JSX.Element => {
     new Set(),
   )
 
-  const notesField = (prefix: string): JSX.Element => (
+  const notesField = (prefix: string): React.JSX.Element => (
     <div className='flex max-w-md flex-col gap-2'>
       <Label htmlFor={`${prefix}-notes`}>{t(key('notes-label'))}</Label>
       <Input

@@ -2,7 +2,7 @@ import { FooterStatement, WebsiteFooter } from '@nearform/quantum'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-function Footer(): JSX.Element {
+function Footer(): React.JSX.Element {
   const { t } = useTranslation()
   return (
     <WebsiteFooter size='sm'>

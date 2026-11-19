@@ -128,7 +128,7 @@ const Section = ({
   title,
   description,
   children,
-}: SectionProps): JSX.Element => (
+}: SectionProps): React.JSX.Element => (
   <Card variant='outline' className='h-full'>
     <CardTitle data-testid={`${testId}-title`}>{title}</CardTitle>
     <CardDescription className='mb-4'>{description}</CardDescription>
@@ -141,7 +141,7 @@ interface FrameFormProps {
 }
 
 // Lives inside a frame; only the message it sends reaches the page
-const FrameForm = ({ onSend }: FrameFormProps): JSX.Element => {
+const FrameForm = ({ onSend }: FrameFormProps): React.JSX.Element => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [error, setError] = useState(false)
@@ -185,7 +185,7 @@ const FrameForm = ({ onSend }: FrameFormProps): JSX.Element => {
   )
 }
 
-const InnerCounter = (): JSX.Element => {
+const InnerCounter = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [count, setCount] = useState(0)
 
@@ -219,7 +219,7 @@ const InnerCounter = (): JSX.Element => {
 // A rich text editor built the way classic WYSIWYG editors are: the text being
 // edited is the editable body of a frame, while the toolbar and everything
 // that reads the content back sit on the page around it.
-const RichTextEditor = (): JSX.Element => {
+const RichTextEditor = (): React.JSX.Element => {
   const { t } = useTranslation()
   const frameRef = useRef<HTMLIFrameElement>(null)
   const [editorDocument, setEditorDocument] = useState<Document | null>(null)
@@ -341,7 +341,7 @@ const RichTextEditor = (): JSX.Element => {
   )
 }
 
-const Iframes = (): JSX.Element => {
+const Iframes = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [message, setMessage] = useState<string | null>(null)
 

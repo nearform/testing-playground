@@ -37,7 +37,7 @@ const clamp = (value: number): number =>
 
 type HoldState = 'idle' | 'holding' | 'confirmed' | 'released-early'
 
-const KeyPresses = (): JSX.Element => {
+const KeyPresses = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [lastKey, setLastKey] = useState<KeyDetails | null>(null)
   const [history, setHistory] = useState<string[]>([])

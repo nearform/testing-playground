@@ -91,7 +91,7 @@ const Modal = ({
   footer,
   dismissible = true,
   role = 'dialog',
-}: ModalProps): JSX.Element => {
+}: ModalProps): React.JSX.Element => {
   const { t } = useTranslation()
   const dialogRef = useRef<HTMLDivElement>(null)
   const [container] = useState(() => {
@@ -214,7 +214,7 @@ const Section = ({
 }: {
   title: string
   children: ReactNode
-}): JSX.Element => (
+}): React.JSX.Element => (
   <section className='flex flex-col items-start gap-4'>
     <CardTitle>{title}</CardTitle>
     {children}
@@ -227,7 +227,7 @@ const Result = ({
 }: {
   id: string
   children: ReactNode
-}): JSX.Element => (
+}): React.JSX.Element => (
   <p aria-live='polite' data-testid={`${id}-result`}>
     {children}
   </p>
@@ -235,7 +235,7 @@ const Result = ({
 
 // A plain modal that can be closed with its close button, Escape or a click
 // on the backdrop
-const BasicModal = (): JSX.Element => {
+const BasicModal = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [closedWith, setClosedWith] = useState<CloseReason | null>(null)
@@ -274,7 +274,7 @@ const BasicModal = (): JSX.Element => {
 export const INVOICES = [1001, 1002, 1003]
 
 // A destructive action guarded by a confirmation modal
-const ConfirmDelete = (): JSX.Element => {
+const ConfirmDelete = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [items, setItems] = useState(INVOICES)
   const [pending, setPending] = useState<number | null>(null)
@@ -401,7 +401,7 @@ interface Profile {
 
 // A modal with a form: focus is trapped inside while it is open and goes
 // back to the button that opened it when it closes
-const FormModal = (): JSX.Element => {
+const FormModal = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [profile, setProfile] = useState<Profile | null>(null)
@@ -515,7 +515,7 @@ const FormModal = (): JSX.Element => {
 
 // A modal that opens a second one on top of itself. Escape and the backdrop
 // only close the top one.
-const StackedModals = (): JSX.Element => {
+const StackedModals = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [firstOpen, setFirstOpen] = useState(false)
   const [secondOpen, setSecondOpen] = useState(false)
@@ -584,7 +584,7 @@ const entryDismissed = (): boolean =>
 
 // A welcome modal that opens by itself on the first visit and blocks the page
 // until it is acknowledged
-const EntryModal = (): JSX.Element => {
+const EntryModal = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(() => !entryDismissed())
 
@@ -627,7 +627,7 @@ const EntryModal = (): JSX.Element => {
   )
 }
 
-const ModalDialogs = (): JSX.Element => {
+const ModalDialogs = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

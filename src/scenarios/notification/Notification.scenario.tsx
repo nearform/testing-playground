@@ -50,7 +50,7 @@ const notificationTypes: Array<{
   },
 ]
 
-const Notification = (): JSX.Element => {
+const Notification = (): React.JSX.Element => {
   const { t } = useTranslation()
   // An Intl locale, as not every language code is one (ptBr)
   const locale = useLocale()

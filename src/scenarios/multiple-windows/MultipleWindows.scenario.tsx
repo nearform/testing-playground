@@ -75,7 +75,7 @@ const Section = ({
   title,
   description,
   children,
-}: SectionProps): JSX.Element => (
+}: SectionProps): React.JSX.Element => (
   <Card variant='outline' className='h-full'>
     <CardTitle data-testid={`${testId}-title`}>{title}</CardTitle>
     <CardDescription className='mb-4'>{description}</CardDescription>
@@ -83,7 +83,7 @@ const Section = ({
   </Card>
 )
 
-const NewTabSection = (): JSX.Element => {
+const NewTabSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const href = useWindowHref('new-tab')
 
@@ -105,7 +105,7 @@ const NewTabSection = (): JSX.Element => {
   )
 }
 
-const PopupSection = (): JSX.Element => {
+const PopupSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const href = useWindowHref('popup')
   const popupRef = useRef<Window | null>(null)
@@ -212,7 +212,7 @@ const PopupSection = (): JSX.Element => {
   )
 }
 
-const NamedWindowSection = (): JSX.Element => {
+const NamedWindowSection = (): React.JSX.Element => {
   const { t } = useTranslation()
   const pageOneHref = useWindowHref('named-one')
   const pageTwoHref = useWindowHref('named-two')
@@ -260,7 +260,7 @@ const NamedWindowSection = (): JSX.Element => {
 }
 
 // Lives in the popup: sends a message to the window that opened it, then closes
-const PopupForm = (): JSX.Element => {
+const PopupForm = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
@@ -326,7 +326,7 @@ interface ChildWindowProps {
 }
 
 // What the new tab, popup and named window show
-const ChildWindow = ({ view }: ChildWindowProps): JSX.Element => {
+const ChildWindow = ({ view }: ChildWindowProps): React.JSX.Element => {
   const { t } = useTranslation()
   const key = `scenarios.${SLUG}.windows.${view}`
   const documentTitle = t(`${key}.document-title`)
@@ -363,7 +363,7 @@ const ChildWindow = ({ view }: ChildWindowProps): JSX.Element => {
   )
 }
 
-const MainWindow = (): JSX.Element => {
+const MainWindow = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (
@@ -385,7 +385,7 @@ const MainWindow = (): JSX.Element => {
   )
 }
 
-const MultipleWindows = (): JSX.Element => {
+const MultipleWindows = (): React.JSX.Element => {
   const [searchParams] = useSearchParams()
   const view = searchParams.get(WINDOW_PARAM)
 

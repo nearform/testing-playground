@@ -85,7 +85,7 @@ const fakeButtonClasses = [
   'dark:bg-button-primary-dark dark:text-foreground-inverse-dark dark:hover:bg-button-primary-hover-dark',
 ].join(' ')
 
-const ChallengingSelectors = (): JSX.Element => {
+const ChallengingSelectors = (): React.JSX.Element => {
   const { t } = useTranslation()
   // The message's key and values, not its text, so it follows a language
   // switch
@@ -148,7 +148,7 @@ const ChallengingSelectors = (): JSX.Element => {
     kind: 'delivery' | 'billing',
     address: Address,
     setAddress: (address: Address) => void,
-  ): JSX.Element => (
+  ): React.JSX.Element => (
     // No fieldset, legend or heading on purpose: the title is plain text
     <div className='flex flex-col gap-2'>
       <div className='font-semibold'>{t(key(`addresses.${kind}`))}</div>

@@ -7,7 +7,7 @@ import PageSetup from '../../components/PageSetup'
 import { translateInformation } from '../../utils/information'
 import { SLUG } from './meta'
 
-const TooltipPage = (): JSX.Element => {
+const TooltipPage = (): React.JSX.Element => {
   const { t } = useTranslation()
 
   return (

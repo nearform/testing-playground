@@ -18,7 +18,7 @@ const DraggableShape = ({
 }: {
   shape: Shape
   onDragStart: (e: React.DragEvent, id: number) => void
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <div
       key={shape.id}
@@ -41,7 +41,7 @@ const DropTarget = ({
 }: {
   shape: 'circle' | 'square'
   onDrop: (e: React.DragEvent) => void
-}): JSX.Element => {
+}): React.JSX.Element => {
   return (
     <div
       // Cancelling dragover is what lets a shape be dropped here; only the
@@ -62,7 +62,7 @@ const DropTarget = ({
   )
 }
 
-const DragAndDropHard = (): JSX.Element => {
+const DragAndDropHard = (): React.JSX.Element => {
   const { t } = useTranslation()
   const [shapes, setShapes] = useState<Shape[]>(
     Array.from({ length: 5 }, (_, index) => ({
