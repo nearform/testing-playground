@@ -206,7 +206,7 @@ const ChallengingSelectors = (): JSX.Element => {
       >
         <div className='flex flex-col gap-10'>
           <section
-            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen p-4'
+            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen-100 p-4'
             aria-labelledby='last-action-title'
           >
             <CardTitle id='last-action-title'>
@@ -361,7 +361,7 @@ const ChallengingSelectors = (): JSX.Element => {
             </div>
             <button
               type='button'
-              className={`${addressClass.button} w-fit rounded-md border-2 border-brandGreen px-4 py-2 font-semibold`}
+              className={`${addressClass.button} w-fit rounded-md border-2 border-brandGreen-100 px-4 py-2 font-semibold`}
               onClick={saveAddresses}
             >
               {t(key('addresses.save'))}

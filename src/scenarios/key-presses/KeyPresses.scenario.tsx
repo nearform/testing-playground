@@ -211,7 +211,7 @@ const KeyPresses = (): JSX.Element => {
               className={[
                 'w-fit rounded-lg border-2 px-6 py-4 font-semibold select-none',
                 holdState === 'holding'
-                  ? 'border-brandGreen bg-grey-200 dark:bg-background-alt-dark'
+                  ? 'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark'
                   : 'border-border dark:border-border-dark',
                 'focus-visible:shadow-brandGreen focus-visible:outline-hidden dark:focus-visible:shadow-brandGreen10',
               ].join(' ')}

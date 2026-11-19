@@ -104,7 +104,7 @@ const Actionability = (): JSX.Element => {
       >
         <div className='flex flex-col gap-10'>
           <section
-            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen p-4'
+            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen-100 p-4'
             aria-labelledby='last-action-title'
           >
             <CardTitle id='last-action-title'>
@@ -188,7 +188,7 @@ const Actionability = (): JSX.Element => {
               section scrolls past, covering whatever is scrolled under it */}
           <section className={sectionClasses}>
             <div
-              className='sticky top-0 z-20 flex h-16 items-center justify-between gap-4 rounded-lg bg-brandGreen px-4 font-semibold text-black'
+              className='sticky top-0 z-20 flex h-16 items-center justify-between gap-4 rounded-lg bg-brandGreen-100 px-4 font-semibold text-black'
               data-testid='sticky-header'
               onClick={() => {
                 record('sticky-header')

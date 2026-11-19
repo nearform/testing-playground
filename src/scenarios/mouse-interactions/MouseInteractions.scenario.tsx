@@ -244,7 +244,7 @@ const MouseInteractions = (): JSX.Element => {
       >
         <div className='flex flex-col gap-10'>
           <section
-            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen p-4'
+            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen-100 p-4'
             aria-labelledby='last-interaction-title'
           >
             <CardTitle id='last-interaction-title'>
@@ -298,7 +298,7 @@ const MouseInteractions = (): JSX.Element => {
                 className={[
                   'flex w-72 flex-col gap-2 rounded-lg border-2 p-4 select-none',
                   highlighted
-                    ? 'border-brandGreen bg-grey-200 dark:bg-background-alt-dark'
+                    ? 'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark'
                     : 'border-border dark:border-border-dark',
                   'focus-visible:shadow-brandGreen focus-visible:outline-hidden dark:focus-visible:shadow-brandGreen10',
                 ].join(' ')}
@@ -368,7 +368,7 @@ const MouseInteractions = (): JSX.Element => {
               className={[
                 targetClasses,
                 holdState === 'holding' &&
-                  'border-brandGreen bg-grey-200 dark:bg-background-alt-dark',
+                  'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark',
               ]
                 .filter(Boolean)
                 .join(' ')}
