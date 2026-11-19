@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
 import { switchLanguage } from '../../tests/switchLanguage'
-import Notification from './Notification.scenario'
+import Notification, { NOTIFICATION_DURATION } from './Notification.scenario'
 
 describe('Notification component', () => {
   beforeEach(() => {
@@ -23,19 +23,25 @@ describe('Notification component', () => {
     })
   })
 
-  it('displays and hides the alert after a delay', async () => {
-    TestRenderer(<Notification />)
-    fireEvent.click(screen.getByTestId('button-error'))
-    await waitFor(() => {
-      expect(screen.getByTestId('notification-error')).toBeInTheDocument()
-    })
-    await waitFor(
-      () => {
-        expect(screen.queryByTestId('notification-error')).toBeNull()
-      },
-      { timeout: 6000 }, // Notification displays for 6 seconds
-    )
-  }, 10000)
+  it(
+    'displays and hides the alert after a delay',
+    async () => {
+      TestRenderer(<Notification />)
+      fireEvent.click(screen.getByTestId('button-error'))
+      await waitFor(() => {
+        expect(screen.getByTestId('notification-error')).toBeInTheDocument()
+      })
+      await waitFor(
+        () => {
+          expect(screen.queryByTestId('notification-error')).toBeNull()
+        },
+        // It shows for NOTIFICATION_DURATION of real time; the margin keeps a
+        // busy test run from failing when it closes a moment late
+        { timeout: NOTIFICATION_DURATION + 2000 },
+      )
+    },
+    NOTIFICATION_DURATION + 4000,
+  )
 })
 
 describe('Notification when the language changes', () => {

@@ -17,7 +17,7 @@ import { translateInformation } from '../../utils/information'
 import { useLocale } from '../../utils/locale'
 import { SLUG } from './meta'
 
-const NOTIFICATION_DURATION = 6000
+export const NOTIFICATION_DURATION = 6000
 
 // Only the type is kept: its message and title are translated as they are
 // drawn, so they follow a language switch
