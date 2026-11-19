@@ -130,6 +130,24 @@ describe('Autocomplete scenario', () => {
       expect(highlighted()).toBe('United States')
     })
 
+    it('drops the highlight when typing changes the suggestions', async () => {
+      const user = userEvent.setup()
+      TestRenderer(<Autocomplete />)
+      await user.type(countryInput(), 'united')
+      await user.keyboard('{ArrowDown}')
+      expect(screen.getByRole('option', { selected: true })).toHaveTextContent(
+        'United Arab Emirates',
+      )
+
+      await user.type(countryInput(), ' k')
+
+      expect(screen.getByRole('option')).toHaveTextContent('United Kingdom')
+      expect(
+        screen.queryByRole('option', { selected: true }),
+      ).not.toBeInTheDocument()
+      expect(countryInput()).not.toHaveAttribute('aria-activedescendant')
+    })
+
     it('selects the highlighted suggestion with Enter', async () => {
       const user = userEvent.setup()
       TestRenderer(<Autocomplete />)

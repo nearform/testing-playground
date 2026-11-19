@@ -226,7 +226,7 @@ const RichTextEditor = (): React.JSX.Element => {
   const [html, setHtml] = useState('')
   const [words, setWords] = useState(0)
 
-  useFrameTheme(frameRef.current, editorDocument)
+  useFrameTheme(editorDocument)
 
   const readContent = (body: HTMLElement): void => {
     setHtml(body.innerHTML)

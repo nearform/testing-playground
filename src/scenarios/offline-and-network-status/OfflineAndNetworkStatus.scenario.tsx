@@ -63,11 +63,12 @@ const OfflineAndNetworkStatus = (): React.JSX.Element => {
 
   // Connection status and its event log
   const [online, setOnline] = useState(isOnline)
+  // The first event takes id 0, so ids from here on start at 1
   const nextId = useRef(1)
   const newId = (): number => nextId.current++
   const [events, setEvents] = useState<ConnectionEvent[]>(() => [
     {
-      id: newId(),
+      id: 0,
       type: isOnline() ? 'loaded-online' : 'loaded-offline',
       at: new Date(),
     },

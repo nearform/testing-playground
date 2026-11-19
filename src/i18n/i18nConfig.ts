@@ -128,7 +128,7 @@ i18n
     resources,
   })
   .catch((e) => {
-    console.log(e)
+    console.error(e)
   })
 
 // Storage can be blocked or full, as getSavedLanguage allows for: the

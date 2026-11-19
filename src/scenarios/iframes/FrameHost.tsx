@@ -20,17 +20,18 @@ export const FRAME_THEME_PROPERTIES = [
 ] as const
 
 // Copies the page's theme into the frame now, and again whenever the theme
-// toggle switches the `dark` class on the page's <html>
-export const useFrameTheme = (
-  host: HTMLElement | null,
-  frameDocument: Document | null,
-): void => {
+// toggle switches the `dark` class on the page's <html>. The theme is read
+// from the frame's own <iframe> element, found from its document.
+export const useFrameTheme = (frameDocument: Document | null): void => {
   useEffect(() => {
-    if (host === null || frameDocument === null) return
+    const host = frameDocument?.defaultView?.frameElement ?? null
+    if (frameDocument === null || host === null) return
     const copyTheme = (): void => {
       const hostStyle = (
         host.ownerDocument.defaultView ?? window
       ).getComputedStyle(host)
+      // Changing the frame's document is what this hook is for
+      // oxlint-disable-next-line react/immutability
       const frameRoot = frameDocument.documentElement
       FRAME_THEME_PROPERTIES.forEach((property) => {
         frameRoot.style.setProperty(
@@ -62,7 +63,7 @@ export const useFrameTheme = (
     return () => {
       observer.disconnect()
     }
-  }, [host, frameDocument])
+  }, [frameDocument])
 }
 
 interface FrameHostProps {
@@ -90,7 +91,7 @@ const FrameHost = ({
   const frameRef = useRef<HTMLIFrameElement>(null)
   const [frameDocument, setFrameDocument] = useState<Document | null>(null)
 
-  useFrameTheme(frameRef.current, frameDocument)
+  useFrameTheme(frameDocument)
 
   const handleLoad = (): void => {
     setFrameDocument(frameRef.current?.contentDocument ?? null)

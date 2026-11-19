@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nearform/quantum'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
@@ -78,12 +78,8 @@ const DynamicTable = (): React.JSX.Element => {
   const { t } = useTranslation()
   const name = (id: string): string => t(`scenarios.${SLUG}.${id}`)
 
-  const [tableData, setTableData] = useState<TableDataItem[]>([])
-  const [randomScenario, setRandomScenario] = useState<TableDataItem | null>(
-    null,
-  )
-
-  useEffect(() => {
+  // New random rows, and the one to ask about, each time the page opens
+  const [{ tableData, randomScenario }] = useState(() => {
     const initialData = PROCESSES.map(generateRandomTableData)
     let shuffledData = shuffleData(initialData)
     shuffledData = adjustValues(shuffledData, 100, 'cpu', 3)
@@ -92,9 +88,11 @@ const DynamicTable = (): React.JSX.Element => {
     shuffledData = adjustValues(shuffledData, 500, 'disk', 4)
 
     const randomIndex = Math.floor(Math.random() * initialData.length)
-    setRandomScenario(initialData[randomIndex])
-    setTableData(shuffledData)
-  }, [])
+    return {
+      tableData: shuffledData,
+      randomScenario: initialData[randomIndex],
+    }
+  })
 
   function findCpuPercentage(data: TableDataItem[], id: string): string {
     const row = data.find((item) => item.id === id)
@@ -155,9 +153,8 @@ const DynamicTable = (): React.JSX.Element => {
           className='mt-8'
           data-testid='target-scenario'
         >
-          {randomScenario != null && name(randomScenario.id)}{' '}
-          {t(`scenarios.${SLUG}.cpu`)}:{' '}
-          {findCpuPercentage(tableData, randomScenario?.id ?? '')}
+          {name(randomScenario.id)} {t(`scenarios.${SLUG}.cpu`)}:{' '}
+          {findCpuPercentage(tableData, randomScenario.id)}
         </Notice>
       </PageSetup>
     </Layout>

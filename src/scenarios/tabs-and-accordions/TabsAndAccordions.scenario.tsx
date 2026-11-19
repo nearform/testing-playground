@@ -39,8 +39,6 @@ export const REPORT_TABS: readonly TabItem[] = [
 const FAQ_ITEMS = ['shipping', 'returns', 'warranty'] as const
 const SETTINGS_ITEMS = ['profile', 'notifications', 'privacy'] as const
 
-type LoadState = 'idle' | 'loading' | 'loaded'
-
 const tabId = (prefix: string, id: string): string => `${prefix}-tab-${id}`
 const panelId = (prefix: string, id: string): string => `${prefix}-panel-${id}`
 
@@ -226,25 +224,26 @@ const TabsAndAccordions = (): React.JSX.Element => {
     )
   }
 
-  // The reviews tab loads its content the first time it is selected. Its
-  // panel stays in the DOM, so it is only loaded once.
-  const [reviews, setReviews] = useState<LoadState>('idle')
+  // The reviews tab loads its content the first time it is selected (from
+  // the tabs or the URL), and carries on loading if another tab is chosen.
+  // Its panel stays in the DOM, so it is only loaded once.
+  const [reviewsLoaded, setReviewsLoaded] = useState(false)
   const loadTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   useEffect(
     () => () => {
       if (loadTimer.current !== null) clearTimeout(loadTimer.current)
+      loadTimer.current = null
     },
     [],
   )
   useEffect(() => {
-    if (productTab === 'reviews' && reviews === 'idle') {
-      setReviews('loading')
-      loadTimer.current = setTimeout(() => {
-        loadTimer.current = null
-        setReviews('loaded')
-      }, LOAD_DELAY_MS)
-    }
-  }, [productTab, reviews])
+    if (productTab !== 'reviews' || reviewsLoaded) return
+    if (loadTimer.current !== null) return
+    loadTimer.current = setTimeout(() => {
+      loadTimer.current = null
+      setReviewsLoaded(true)
+    }, LOAD_DELAY_MS)
+  }, [productTab, reviewsLoaded])
 
   // Accordions: one where a single section is open, one where any can be
   const [faqOpen, setFaqOpen] = useState<string | null>(FAQ_ITEMS[0])
@@ -266,7 +265,7 @@ const TabsAndAccordions = (): React.JSX.Element => {
 
   const renderProductPanel = (id: string): React.ReactNode => {
     if (id === 'reviews') {
-      if (reviews !== 'loaded') {
+      if (!reviewsLoaded) {
         return (
           <p aria-busy='true' data-testid='reviews-loading'>
             {t(key('product.reviews-loading'))}

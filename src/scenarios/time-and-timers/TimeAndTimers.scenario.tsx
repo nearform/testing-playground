@@ -483,9 +483,12 @@ const ThrottleSection = (): React.JSX.Element => {
   const cooldown = useRef<ReturnType<typeof setTimeout>>()
   useNow()
   // Worked out from the clock, like the check in save, so the two agree
-  // even when the clock jumps without firing timers
+  // even when the clock jumps without firing timers. Reading the clock while
+  // drawing is deliberate: useNow re-renders this every tick
   const coolingDown =
-    lastSaveAt !== null && Date.now() - lastSaveAt < THROTTLE_INTERVAL
+    lastSaveAt !== null &&
+    // oxlint-disable-next-line react/purity
+    Date.now() - lastSaveAt < THROTTLE_INTERVAL
 
   useEffect(
     () => () => {

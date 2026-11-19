@@ -1,6 +1,6 @@
 {
   "site": {
-    "company": "NearForm",
+    "company": "Nearform",
     "title": "Terrain de jeu pour les tests"
   },
   "home": {
@@ -32,7 +32,8 @@
     "playground": "Cour de récréation",
     "load-error-title": "Cette page n'a pas pu être chargée",
     "load-error-body": "Une partie de la page n'a pas pu être téléchargée. Vérifiez votre connexion, ou le site vient peut-être d'être mis à jour : rechargez pour réessayer.",
-    "reload": "Recharger la page"
+    "reload": "Recharger la page",
+    "language": "Langue"
   },
   "not-found": {
     "title": "Page introuvable",
