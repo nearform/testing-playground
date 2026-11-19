@@ -39,7 +39,7 @@ const DragAndDrop = (): JSX.Element => {
           <div
             draggable
             onDragStart={handleDragStart}
-            className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-grey-900 text-sm shadow'
+            className='m-2.5 flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded bg-red-500 text-center text-grey-900 text-sm shadow dark:bg-red-800 dark:text-white'
             data-testid='draggable-box'
           >
             {t(`scenarios.${SLUG}.drag-me`)}!
@@ -68,7 +68,7 @@ const DragAndDrop = (): JSX.Element => {
               (number) => (
                 <div
                   key={number}
-                  className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-grey-900 text-center text-sm shadow'
+                  className='m-2.5 flex h-[50px] w-[50px] items-center justify-center rounded border border-grey-800 bg-yellow-300 text-grey-900 text-center text-sm shadow dark:border-yellow-600 dark:bg-yellow-400'
                 >
                   {t(`scenarios.${SLUG}.box`)} {number}
                 </div>
