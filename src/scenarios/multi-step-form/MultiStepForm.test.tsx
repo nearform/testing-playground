@@ -132,6 +132,22 @@ describe('MultiStepForm scenario', () => {
     expect(screen.queryByTestId('full-name-error')).toBeNull()
   })
 
+  it('marks an unchosen country as invalid, in the error style, until one is chosen', async () => {
+    const user = renderForm()
+    await fillPersonal(user)
+    const country = screen.getByTestId('country')
+
+    await user.click(screen.getByTestId('next-button'))
+
+    expect(country).toHaveAttribute('aria-invalid', 'true')
+    expect(country).toHaveClass('border-feedback-error')
+
+    await user.selectOptions(country, 'gb')
+
+    expect(country).not.toHaveAttribute('aria-invalid', 'true')
+    expect(country).not.toHaveClass('border-feedback-error')
+  })
+
   it('moves to the address step and updates the URL once the step is valid', async () => {
     const user = renderForm()
 

@@ -5,21 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/nearform.svg" />
     <link rel="stylesheet" href="src/index.css" />
     <title>Nearform Testing Playground</title>
-    <!-- Apply the saved or system theme before first paint, so dark mode does
-         not flash light on load. Same logic as Quantum's themeInitScript. -->
-    <script>
-      ;(function () {
-        try {
-          var t = localStorage.getItem('theme')
-          document.documentElement.classList.toggle(
-            'dark',
-            t === 'dark' ||
-              (t !== 'light' &&
-                matchMedia('(prefers-color-scheme: dark)').matches),
-          )
-        } catch (e) {}
-      })()
-    </script>
+    <!-- quantumThemeInit.ts injects Quantum's theme script at the top of <head> -->
   </head>
   <body
     class="bg-background-alt text-foreground dark:bg-background-dark dark:text-foreground-dark"

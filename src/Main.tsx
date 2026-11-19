@@ -3,9 +3,11 @@ import * as ReactDOM from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
 import { HashRouter } from 'react-router-dom'
 
-// Quantum's typeface. Without it, visitors who have not installed Inter get
-// the system font. Bundled rather than fetched from Google Fonts, so the site
-// makes no third-party requests for tests to see, or to fail on when offline.
+// Quantum's typeface, which Quantum names but does not ship. Without it,
+// visitors who have not installed Inter get the system font. It registers as
+// 'Inter Variable', which Quantum's font stack lists. Bundled rather than
+// fetched from Google Fonts, so the site makes no third-party requests for
+// tests to see, or to fail on when offline.
 import '@fontsource-variable/inter'
 
 import i18n from './i18n/i18nConfig'

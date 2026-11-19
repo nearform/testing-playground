@@ -59,7 +59,9 @@ describe('DynamicLoading scenario', () => {
 
       fireEvent.click(screen.getByTestId('rendered-start'))
 
-      expect(screen.getByTestId('rendered-spinner')).toBeInTheDocument()
+      expect(screen.getByTestId('rendered-spinner')).toBe(
+        screen.getByRole('status', { name: 'Loading' }),
+      )
       expect(screen.getByTestId('rendered-start')).toBeDisabled()
 
       await wait(DELAY - 1)

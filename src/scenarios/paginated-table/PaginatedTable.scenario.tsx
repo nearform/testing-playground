@@ -4,6 +4,7 @@ import {
   Checkbox,
   Input,
   Label,
+  NativeSelect,
   Spinner,
   Table,
   TableBody,
@@ -154,16 +155,6 @@ const badgeVariants: Record<Status, 'success' | 'info' | 'error' | 'disabled'> =
     overdue: 'error',
     cancelled: 'disabled',
   }
-
-// Quantum only styles its own (custom) select, so the native ones borrow the
-// same look as its inputs
-const nativeSelectClasses = [
-  'w-full rounded-lg border-2 border-border bg-grey-100 px-3 py-2 text-sm text-foreground',
-  'hover:border-border-hover focus:outline-hidden focus-visible:shadow-brandGreen',
-  'disabled:cursor-not-allowed disabled:opacity-60',
-  'dark:border-border-dark dark:bg-background-alt-dark dark:text-foreground-muted-dark',
-  'dark:hover:border-border-hover-dark dark:focus-visible:shadow-brandGreen10',
-].join(' ')
 
 const COLUMN_COUNT = 6
 
@@ -340,13 +331,14 @@ const PaginatedTable = (): JSX.Element => {
             </div>
             <div className='flex flex-col gap-2'>
               <Label htmlFor='status-filter'>{t(key('filters.status'))}</Label>
-              <select
+              {/* lg is the height of the inputs beside it */}
+              <NativeSelect
                 id='status-filter'
+                size='lg'
                 value={status}
                 onChange={(event) => {
                   setStatus(event.currentTarget.value as Status | 'all')
                 }}
-                className={nativeSelectClasses}
                 data-testid='status-filter'
               >
                 <option value='all'>{t(key('filters.all-statuses'))}</option>
@@ -355,7 +347,7 @@ const PaginatedTable = (): JSX.Element => {
                     {t(key(`statuses.${value}`))}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </div>
             <div className='flex flex-col gap-2'>
               <Label htmlFor='issued-from'>{t(key('filters.from'))}</Label>
@@ -423,10 +415,7 @@ const PaginatedTable = (): JSX.Element => {
                 className='absolute inset-0 z-10 flex items-start justify-center bg-background-surface/60 pt-16 dark:bg-background-surface-dark/60'
                 data-testid='table-loading'
               >
-                <Spinner
-                  label={t(key('loading'))}
-                  aria-label={t(key('loading'))}
-                />
+                <Spinner label={t(key('loading'))} />
               </div>
             )}
             <Table data-testid='paginated-table' aria-busy={loading} bordered>
@@ -519,14 +508,14 @@ const PaginatedTable = (): JSX.Element => {
               <Label htmlFor='page-size' className='whitespace-nowrap'>
                 {t(key('page-size'))}
               </Label>
-              <select
+              <NativeSelect
                 id='page-size'
                 value={pageSize}
                 disabled={loading}
                 onChange={(event) => {
                   setPageSize(Number(event.currentTarget.value))
                 }}
-                className={`${nativeSelectClasses} w-auto`}
+                wrapperClassName='w-auto'
                 data-testid='page-size'
               >
                 {PAGE_SIZES.map((size) => (
@@ -534,7 +523,7 @@ const PaginatedTable = (): JSX.Element => {
                     {size}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </div>
           </div>
 
