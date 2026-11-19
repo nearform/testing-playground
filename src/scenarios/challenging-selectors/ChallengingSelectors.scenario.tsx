@@ -16,6 +16,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { message, type Message, translateMessage } from '../../utils/message'
 import { SLUG } from './meta'
@@ -77,7 +78,6 @@ interface Address {
 
 const emptyAddress: Address = { city: '', postcode: '' }
 
-const sectionClasses = 'flex flex-col gap-4'
 // Quantum's primary button look, on an element that is not a button
 const fakeButtonClasses = [
   'inline-flex w-fit cursor-pointer items-center rounded-lg p-2.5 text-sm',
@@ -203,303 +203,299 @@ const ChallengingSelectors = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-10'>
-          <section
-            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen-100 p-4'
-            aria-labelledby='last-action-title'
-          >
-            <CardTitle id='last-action-title'>
-              {t(key('result.title'))}
-            </CardTitle>
-            <p aria-live='polite' data-testid='last-action'>
-              {lastAction === null
-                ? t(key('result.none'))
-                : translateMessage(t, lastAction)}
-            </p>
-          </section>
+        <ScenarioSection
+          className='gap-2 border-2 border-brandGreen-100 dark:border-brandGreen-100'
+          aria-labelledby='last-action-title'
+        >
+          <CardTitle id='last-action-title'>{t(key('result.title'))}</CardTitle>
+          <p aria-live='polite' data-testid='last-action'>
+            {lastAction === null
+              ? t(key('result.none'))
+              : translateMessage(t, lastAction)}
+          </p>
+        </ScenarioSection>
 
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('random.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('random.instructions'))}</p>
-            <form
-              id={profileNames.form}
-              className={`${profileNames.form} flex flex-wrap items-end gap-4`}
-              onSubmit={saveProfile}
-            >
-              <div className='flex flex-col gap-2'>
-                <Label htmlFor={profileNames.input}>
-                  {t(key('random.label'))}
-                </Label>
-                <Input
-                  variant='primary'
-                  id={profileNames.input}
-                  type='text'
-                  className={profileNames.input}
-                  value={displayName}
-                  onChange={(event) => {
-                    setDisplayName(event.currentTarget.value)
-                  }}
-                />
-              </div>
-              <Button
-                id={profileNames.save}
-                type='submit'
-                className={profileNames.save}
-              >
-                {t(key('random.save'))}
-              </Button>
-              <Button
-                id={profileNames.reset}
-                type='button'
-                variant='secondary'
-                className={profileNames.reset}
-                onClick={() => {
-                  setDisplayName('')
-                  setLastAction(message(key('result.reset-name')))
+        <ScenarioSection>
+          <CardTitle>{t(key('random.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('random.instructions'))}</p>
+          <form
+            id={profileNames.form}
+            className={`${profileNames.form} flex flex-wrap items-end gap-4`}
+            onSubmit={saveProfile}
+          >
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor={profileNames.input}>
+                {t(key('random.label'))}
+              </Label>
+              <Input
+                variant='primary'
+                id={profileNames.input}
+                type='text'
+                className={profileNames.input}
+                value={displayName}
+                onChange={(event) => {
+                  setDisplayName(event.currentTarget.value)
                 }}
+              />
+            </div>
+            <Button
+              id={profileNames.save}
+              type='submit'
+              className={profileNames.save}
+            >
+              {t(key('random.save'))}
+            </Button>
+            <Button
+              id={profileNames.reset}
+              type='button'
+              variant='secondary'
+              className={profileNames.reset}
+              onClick={() => {
+                setDisplayName('')
+                setLastAction(message(key('result.reset-name')))
+              }}
+            >
+              {t(key('random.reset'))}
+            </Button>
+          </form>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('rows.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('rows.instructions'))}</p>
+          <Table bordered>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{t(key('rows.columns.name'))}</TableHead>
+                <TableHead>{t(key('rows.columns.email'))}</TableHead>
+                <TableHead>{t(key('rows.columns.role'))}</TableHead>
+                <TableHead>{t(key('rows.columns.actions'))}</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {members.map((member) => (
+                <TableRow key={member.email} className={rowClass.row}>
+                  <TableCell>{member.name}</TableCell>
+                  <TableCell>{member.email}</TableCell>
+                  <TableCell>{t(key(`rows.roles.${member.role}`))}</TableCell>
+                  <TableCell>
+                    <div className='flex gap-2'>
+                      {/* Same text in every row and no aria-label */}
+                      <Button
+                        size='xs'
+                        variant='secondary'
+                        className={rowClass.button}
+                        onClick={() => {
+                          setLastAction(
+                            message(key('result.editing'), {
+                              name: member.name,
+                            }),
+                          )
+                        }}
+                      >
+                        {t(key('rows.edit'))}
+                      </Button>
+                      <Button
+                        size='xs'
+                        variant='secondary'
+                        className={rowClass.button}
+                        onClick={() => {
+                          deleteMember(member)
+                        }}
+                      >
+                        {t(key('rows.delete'))}
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {members.length < MEMBERS.length && (
+            <Button
+              size='sm'
+              variant='secondary'
+              className='w-fit'
+              onClick={restoreMembers}
+            >
+              {t(key('rows.restore'))}
+            </Button>
+          )}
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('split.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('split.instructions'))}</p>
+          <p className='text-lg'>
+            <span>{t(key('split.hello'))}</span> <b>{t(key('split.world'))}</b>
+          </p>
+          <p>
+            <Trans
+              i18nKey={key('split.unread')}
+              values={{ count: unread }}
+              components={{ name: <strong />, count: <em /> }}
+            />
+          </p>
+          <Button className='w-fit' onClick={markAllRead}>
+            <Trans
+              i18nKey={key('split.mark-read')}
+              components={{
+                part: <span />,
+                strong: <b />,
+              }}
+            />
+          </Button>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('addresses.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('addresses.instructions'))}</p>
+          <div className='grid gap-6 md:grid-cols-2'>
+            {addressBlock('delivery', delivery, setDelivery)}
+            {addressBlock('billing', billing, setBilling)}
+          </div>
+          <button
+            type='button'
+            className={`${addressClass.button} w-fit rounded-md border-2 border-brandGreen-100 px-4 py-2 font-semibold`}
+            onClick={saveAddresses}
+          >
+            {t(key('addresses.save'))}
+          </button>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('compare.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('compare.instructions'))}</p>
+          <div className='grid gap-6 md:grid-cols-2'>
+            <form
+              aria-labelledby='labelled-form-title'
+              className='flex flex-col gap-3 rounded-lg border border-border p-4 dark:border-border-dark'
+              data-testid='labelled-form'
+              onSubmit={(event) => {
+                event.preventDefault()
+                subscribe('labelled', labelledEmail)
+              }}
+            >
+              <h3 id='labelled-form-title' className='font-semibold'>
+                {t(key('compare.labelled-title'))}
+              </h3>
+              <Label htmlFor='newsletter-email'>
+                {t(key('compare.email'))}
+              </Label>
+              <Input
+                id='newsletter-email'
+                type='email'
+                variant='primary'
+                value={labelledEmail}
+                onChange={(event) => {
+                  setLabelledEmail(event.currentTarget.value)
+                }}
+                data-testid='newsletter-email'
+              />
+              <Button
+                type='submit'
+                className='w-fit'
+                data-testid='newsletter-subscribe'
               >
-                {t(key('random.reset'))}
+                {t(key('compare.subscribe'))}
               </Button>
             </form>
-          </section>
 
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('rows.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('rows.instructions'))}</p>
-            <Table bordered>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t(key('rows.columns.name'))}</TableHead>
-                  <TableHead>{t(key('rows.columns.email'))}</TableHead>
-                  <TableHead>{t(key('rows.columns.role'))}</TableHead>
-                  <TableHead>{t(key('rows.columns.actions'))}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {members.map((member) => (
-                  <TableRow key={member.email} className={rowClass.row}>
-                    <TableCell>{member.name}</TableCell>
-                    <TableCell>{member.email}</TableCell>
-                    <TableCell>{t(key(`rows.roles.${member.role}`))}</TableCell>
-                    <TableCell>
-                      <div className='flex gap-2'>
-                        {/* Same text in every row and no aria-label */}
-                        <Button
-                          size='xs'
-                          variant='secondary'
-                          className={rowClass.button}
-                          onClick={() => {
-                            setLastAction(
-                              message(key('result.editing'), {
-                                name: member.name,
-                              }),
-                            )
-                          }}
-                        >
-                          {t(key('rows.edit'))}
-                        </Button>
-                        <Button
-                          size='xs'
-                          variant='secondary'
-                          className={rowClass.button}
-                          onClick={() => {
-                            deleteMember(member)
-                          }}
-                        >
-                          {t(key('rows.delete'))}
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            {members.length < MEMBERS.length && (
-              <Button
-                size='sm'
-                variant='secondary'
-                className='w-fit'
-                onClick={restoreMembers}
-              >
-                {t(key('rows.restore'))}
-              </Button>
-            )}
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('split.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('split.instructions'))}</p>
-            <p className='text-lg'>
-              <span>{t(key('split.hello'))}</span>{' '}
-              <b>{t(key('split.world'))}</b>
-            </p>
-            <p>
-              <Trans
-                i18nKey={key('split.unread')}
-                values={{ count: unread }}
-                components={{ name: <strong />, count: <em /> }}
-              />
-            </p>
-            <Button className='w-fit' onClick={markAllRead}>
-              <Trans
-                i18nKey={key('split.mark-read')}
-                components={{
-                  part: <span />,
-                  strong: <b />,
-                }}
-              />
-            </Button>
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('addresses.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('addresses.instructions'))}</p>
-            <div className='grid gap-6 md:grid-cols-2'>
-              {addressBlock('delivery', delivery, setDelivery)}
-              {addressBlock('billing', billing, setBilling)}
-            </div>
-            <button
-              type='button'
-              className={`${addressClass.button} w-fit rounded-md border-2 border-brandGreen-100 px-4 py-2 font-semibold`}
-              onClick={saveAddresses}
+            {/* The same form with none of the hooks: no label, no role,
+                no test IDs and random class names */}
+            <div
+              className={`${unlabelledClass.form} flex flex-col gap-3 rounded-lg border border-border p-4 dark:border-border-dark`}
             >
-              {t(key('addresses.save'))}
-            </button>
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('compare.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('compare.instructions'))}</p>
-            <div className='grid gap-6 md:grid-cols-2'>
-              <form
-                aria-labelledby='labelled-form-title'
-                className='flex flex-col gap-3 rounded-lg border-2 border-border p-4 dark:border-border-dark'
-                data-testid='labelled-form'
-                onSubmit={(event) => {
-                  event.preventDefault()
-                  subscribe('labelled', labelledEmail)
+              <div className='font-semibold'>
+                {t(key('compare.unlabelled-title'))}
+              </div>
+              <Input
+                variant='primary'
+                type='email'
+                placeholder={t(key('compare.email-placeholder'))}
+                className={unlabelledClass.input}
+                value={unlabelledEmail}
+                onChange={(event) => {
+                  setUnlabelledEmail(event.currentTarget.value)
+                }}
+              />
+              <div
+                className={`${unlabelledClass.button} ${fakeButtonClasses}`}
+                onClick={() => {
+                  subscribe('unlabelled', unlabelledEmail)
                 }}
               >
-                <h3 id='labelled-form-title' className='font-semibold'>
-                  {t(key('compare.labelled-title'))}
-                </h3>
-                <Label htmlFor='newsletter-email'>
-                  {t(key('compare.email'))}
-                </Label>
-                <Input
-                  id='newsletter-email'
-                  type='email'
-                  variant='primary'
-                  value={labelledEmail}
-                  onChange={(event) => {
-                    setLabelledEmail(event.currentTarget.value)
-                  }}
-                  data-testid='newsletter-email'
-                />
-                <Button
-                  type='submit'
-                  className='w-fit'
-                  data-testid='newsletter-subscribe'
-                >
-                  {t(key('compare.subscribe'))}
-                </Button>
-              </form>
+                {t(key('compare.subscribe'))}
+              </div>
+            </div>
+          </div>
+        </ScenarioSection>
 
-              {/* The same form with none of the hooks: no label, no role,
-                  no test IDs and random class names */}
-              <div
-                className={`${unlabelledClass.form} flex flex-col gap-3 rounded-lg border-2 border-border p-4 dark:border-border-dark`}
+        <ScenarioSection>
+          <CardTitle>{t(key('duplicates.title'))}</CardTitle>
+          <p className='text-sm'>{t(key('duplicates.instructions'))}</p>
+          <div className='flex flex-wrap items-start gap-4'>
+            {/* Only one of these two is shown, depending on screen width */}
+            <span className='md:hidden' data-variant='mobile'>
+              <Button
+                onClick={() => {
+                  checkout('mobile')
+                }}
               >
-                <div className='font-semibold'>
-                  {t(key('compare.unlabelled-title'))}
-                </div>
-                <Input
-                  variant='primary'
-                  type='email'
-                  placeholder={t(key('compare.email-placeholder'))}
-                  className={unlabelledClass.input}
-                  value={unlabelledEmail}
-                  onChange={(event) => {
-                    setUnlabelledEmail(event.currentTarget.value)
-                  }}
-                />
-                <div
-                  className={`${unlabelledClass.button} ${fakeButtonClasses}`}
-                  onClick={() => {
-                    subscribe('unlabelled', unlabelledEmail)
-                  }}
-                >
-                  {t(key('compare.subscribe'))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(key('duplicates.title'))}</CardTitle>
-            <p className='text-sm'>{t(key('duplicates.instructions'))}</p>
-            <div className='flex flex-wrap items-start gap-4'>
-              {/* Only one of these two is shown, depending on screen width */}
-              <span className='md:hidden' data-variant='mobile'>
+                {checkoutLabel}
+              </Button>
+            </span>
+            <span className='hidden md:inline' data-variant='desktop'>
+              <Button
+                onClick={() => {
+                  checkout('desktop')
+                }}
+              >
+                {checkoutLabel}
+              </Button>
+            </span>
+            <div className='flex flex-col gap-2'>
+              <Button
+                variant='secondary'
+                aria-expanded={menuOpen}
+                aria-controls='more-options'
+                onClick={() => {
+                  setMenuOpen((open) => !open)
+                }}
+              >
+                {t(key('duplicates.more'))}
+              </Button>
+              {/* Stays in the page while closed, just hidden */}
+              <div
+                id='more-options'
+                hidden={!menuOpen}
+                className='flex flex-col gap-2 rounded-lg border border-border p-2 dark:border-border-dark'
+              >
                 <Button
-                  onClick={() => {
-                    checkout('mobile')
-                  }}
-                >
-                  {checkoutLabel}
-                </Button>
-              </span>
-              <span className='hidden md:inline' data-variant='desktop'>
-                <Button
-                  onClick={() => {
-                    checkout('desktop')
-                  }}
-                >
-                  {checkoutLabel}
-                </Button>
-              </span>
-              <div className='flex flex-col gap-2'>
-                <Button
+                  size='sm'
                   variant='secondary'
-                  aria-expanded={menuOpen}
-                  aria-controls='more-options'
                   onClick={() => {
-                    setMenuOpen((open) => !open)
+                    checkout('menu')
                   }}
                 >
-                  {t(key('duplicates.more'))}
+                  {checkoutLabel}
                 </Button>
-                {/* Stays in the page while closed, just hidden */}
-                <div
-                  id='more-options'
-                  hidden={!menuOpen}
-                  className='flex flex-col gap-2 rounded-lg border-2 border-border p-2 dark:border-border-dark'
+                <Button
+                  size='sm'
+                  variant='secondary'
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setLastAction(message(key('result.saved-for-later')))
+                  }}
                 >
-                  <Button
-                    size='sm'
-                    variant='secondary'
-                    onClick={() => {
-                      checkout('menu')
-                    }}
-                  >
-                    {checkoutLabel}
-                  </Button>
-                  <Button
-                    size='sm'
-                    variant='secondary'
-                    onClick={() => {
-                      setMenuOpen(false)
-                      setLastAction(message(key('result.saved-for-later')))
-                    }}
-                  >
-                    {t(key('duplicates.save-for-later'))}
-                  </Button>
-                </div>
+                  {t(key('duplicates.save-for-later'))}
+                </Button>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )

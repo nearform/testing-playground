@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import {
   type RequestErrorKey,
@@ -200,228 +201,223 @@ const OfflineAndNetworkStatus = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <div role='status' aria-live='polite'>
-            <Alert
-              severity={online ? 'success' : 'warning'}
-              title={t(
-                key(online ? 'banner.online-title' : 'banner.offline-title'),
-              )}
-              data-testid='network-banner'
-              data-online={online}
-            >
-              {t(key(online ? 'banner.online' : 'banner.offline'))}
-            </Alert>
-          </div>
+        <div role='status' aria-live='polite'>
+          <Alert
+            severity={online ? 'success' : 'warning'}
+            title={t(
+              key(online ? 'banner.online-title' : 'banner.offline-title'),
+            )}
+            data-testid='network-banner'
+            data-online={online}
+          >
+            {t(key(online ? 'banner.online' : 'banner.offline'))}
+          </Alert>
+        </div>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('form.title'))}</CardTitle>
-            <p>{t(key('form.explanation'))}</p>
-            <form
-              className='flex flex-wrap items-end gap-4'
-              onSubmit={submit}
-              data-testid='message-form'
-            >
-              <div className='flex grow flex-col gap-2'>
-                <Label htmlFor='network-message'>
-                  {t(key('form.message-label'))}
-                </Label>
-                <Input
-                  id='network-message'
-                  type='text'
-                  variant='primary'
-                  className='w-full'
-                  value={message}
-                  onChange={(event) => {
-                    setMessage(event.currentTarget.value)
-                  }}
-                  data-testid='input-message'
-                />
-              </div>
-              <Button
-                type='submit'
+        <ScenarioSection>
+          <CardTitle>{t(key('form.title'))}</CardTitle>
+          <p>{t(key('form.explanation'))}</p>
+          <form
+            className='flex flex-wrap items-end gap-4'
+            onSubmit={submit}
+            data-testid='message-form'
+          >
+            <div className='flex grow flex-col gap-2'>
+              <Label htmlFor='network-message'>
+                {t(key('form.message-label'))}
+              </Label>
+              <Input
+                id='network-message'
+                type='text'
                 variant='primary'
-                disabled={message.trim() === ''}
-                data-testid='button-send'
-              >
-                {t(key('form.send'))}
-              </Button>
-            </form>
-
-            <div className='flex flex-col gap-2'>
-              <h3 className='font-semibold'>
-                {t(key('queue.title'))}{' '}
-                <span data-testid='queue-count'>{queue.length}</span>
-              </h3>
-              {queue.length === 0 ? (
-                <p data-testid='queue-empty'>{t(key('queue.empty'))}</p>
-              ) : (
-                <ol className='flex flex-col gap-1' data-testid='queue-list'>
-                  {queue.map((item, index) => {
-                    const state = index === 0 && sending ? 'sending' : 'waiting'
-                    return (
-                      <li
-                        key={item.id}
-                        className='flex flex-wrap gap-2'
-                        data-testid='queue-item'
-                        data-state={state}
-                      >
-                        <span data-testid='queue-item-text'>{item.text}</span>
-                        <span className='text-foreground-muted dark:text-foreground-muted-dark'>
-                          {t(key(`queue.${state}`))} {t(key('queue.queued-at'))}{' '}
-                          <TimeStamp date={item.queuedAt} />
-                        </span>
-                      </li>
-                    )
-                  })}
-                </ol>
-              )}
-              <div aria-live='polite'>
-                {queue.length > 0 && queueError !== null && !sending && (
-                  <Alert
-                    severity={queueError === 'offline' ? 'warning' : 'error'}
-                    title={t(key('queue.paused-title'))}
-                    data-testid='queue-status'
-                    data-error={queueError}
-                  >
-                    {t(key(`queue.paused.${queueError}`))}
-                  </Alert>
-                )}
-              </div>
-              {queue.length > 0 && (
-                <div>
-                  <Button
-                    variant='secondary'
-                    onClick={() => {
-                      void flushQueue()
-                    }}
-                    disabled={sending}
-                    data-testid='button-send-queue'
-                  >
-                    {t(key('queue.send-now'))}
-                  </Button>
-                </div>
-              )}
+                className='w-full'
+                value={message}
+                onChange={(event) => {
+                  setMessage(event.currentTarget.value)
+                }}
+                data-testid='input-message'
+              />
             </div>
+            <Button
+              type='submit'
+              variant='primary'
+              disabled={message.trim() === ''}
+              data-testid='button-send'
+            >
+              {t(key('form.send'))}
+            </Button>
+          </form>
 
-            <div className='flex flex-col gap-2'>
-              <h3 className='font-semibold'>
-                {t(key('sent.title'))}{' '}
-                <span data-testid='sent-count'>{sent.length}</span>
-              </h3>
-              {sent.length === 0 ? (
-                <p data-testid='sent-empty'>{t(key('sent.empty'))}</p>
-              ) : (
-                <ol className='flex flex-col gap-1' data-testid='sent-list'>
-                  {sent.map((item) => (
+          <div className='flex flex-col gap-2'>
+            <h3 className='font-semibold'>
+              {t(key('queue.title'))}{' '}
+              <span data-testid='queue-count'>{queue.length}</span>
+            </h3>
+            {queue.length === 0 ? (
+              <p data-testid='queue-empty'>{t(key('queue.empty'))}</p>
+            ) : (
+              <ol className='flex flex-col gap-1' data-testid='queue-list'>
+                {queue.map((item, index) => {
+                  const state = index === 0 && sending ? 'sending' : 'waiting'
+                  return (
                     <li
                       key={item.id}
                       className='flex flex-wrap gap-2'
-                      data-testid='sent-item'
-                      data-waited={item.waited}
+                      data-testid='queue-item'
+                      data-state={state}
                     >
-                      <span data-testid='sent-item-text'>{item.text}</span>
+                      <span data-testid='queue-item-text'>{item.text}</span>
                       <span className='text-foreground-muted dark:text-foreground-muted-dark'>
-                        {t(key('sent.sent-at'))}{' '}
-                        <TimeStamp date={item.sentAt} />
-                        {item.waited && <> ({t(key('sent.waited'))})</>}
+                        {t(key(`queue.${state}`))} {t(key('queue.queued-at'))}{' '}
+                        <TimeStamp date={item.queuedAt} />
                       </span>
                     </li>
-                  ))}
-                </ol>
+                  )
+                })}
+              </ol>
+            )}
+            <div aria-live='polite'>
+              {queue.length > 0 && queueError !== null && !sending && (
+                <Alert
+                  severity={queueError === 'offline' ? 'warning' : 'error'}
+                  title={t(key('queue.paused-title'))}
+                  data-testid='queue-status'
+                  data-error={queueError}
+                >
+                  {t(key(`queue.paused.${queueError}`))}
+                </Alert>
               )}
             </div>
-          </section>
+            {queue.length > 0 && (
+              <div>
+                <Button
+                  variant='secondary'
+                  onClick={() => {
+                    void flushQueue()
+                  }}
+                  disabled={sending}
+                  data-testid='button-send-queue'
+                >
+                  {t(key('queue.send-now'))}
+                </Button>
+              </div>
+            )}
+          </div>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('request.title'))}</CardTitle>
-            <p>{t(key('request.explanation'))}</p>
-            <div>
-              <Button
-                variant='primary'
-                onClick={() => {
-                  void loadStatus()
-                }}
-                disabled={request.state === 'loading'}
-                data-testid='button-check-status'
+          <div className='flex flex-col gap-2'>
+            <h3 className='font-semibold'>
+              {t(key('sent.title'))}{' '}
+              <span data-testid='sent-count'>{sent.length}</span>
+            </h3>
+            {sent.length === 0 ? (
+              <p data-testid='sent-empty'>{t(key('sent.empty'))}</p>
+            ) : (
+              <ol className='flex flex-col gap-1' data-testid='sent-list'>
+                {sent.map((item) => (
+                  <li
+                    key={item.id}
+                    className='flex flex-wrap gap-2'
+                    data-testid='sent-item'
+                    data-waited={item.waited}
+                  >
+                    <span data-testid='sent-item-text'>{item.text}</span>
+                    <span className='text-foreground-muted dark:text-foreground-muted-dark'>
+                      {t(key('sent.sent-at'))} <TimeStamp date={item.sentAt} />
+                      {item.waited && <> ({t(key('sent.waited'))})</>}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(key('request.title'))}</CardTitle>
+          <p>{t(key('request.explanation'))}</p>
+          <div>
+            <Button
+              variant='primary'
+              onClick={() => {
+                void loadStatus()
+              }}
+              disabled={request.state === 'loading'}
+              data-testid='button-check-status'
+            >
+              {t(key('request.button'))}
+            </Button>
+          </div>
+          <div
+            aria-live='polite'
+            data-testid='request-status'
+            data-state={request.state}
+            data-attempt={request.state === 'idle' ? 0 : request.attempt}
+          >
+            {request.state === 'loading' && <p>{t(key('request.loading'))}</p>}
+            {request.state === 'success' && (
+              <Alert
+                severity='success'
+                title={t(key('request.success-title'))}
+                data-testid='request-success'
               >
-                {t(key('request.button'))}
-              </Button>
-            </div>
-            <div
-              aria-live='polite'
-              data-testid='request-status'
-              data-state={request.state}
-              data-attempt={request.state === 'idle' ? 0 : request.attempt}
-            >
-              {request.state === 'loading' && (
-                <p>{t(key('request.loading'))}</p>
-              )}
-              {request.state === 'success' && (
-                <Alert
-                  severity='success'
-                  title={t(key('request.success-title'))}
-                  data-testid='request-success'
-                >
-                  <span data-testid='request-message'>
-                    {request.data.message}
-                  </span>{' '}
-                  ({t(key('request.checked-at'))}{' '}
-                  <TimeStamp date={request.at} />)
-                </Alert>
-              )}
-              {request.state === 'error' && (
-                <Alert
-                  severity='error'
-                  title={t(key(`request.errors.${request.key}-title`))}
-                  data-testid='request-error'
-                  data-error={request.key}
-                >
-                  <div className='flex flex-col gap-2'>
-                    <p>
-                      {t(key(`request.errors.${request.key}`))}{' '}
-                      {t(key('request.attempt'), { attempt: request.attempt })}
-                    </p>
-                    <div>
-                      <Button
-                        variant='secondary'
-                        onClick={() => {
-                          void loadStatus()
-                        }}
-                        data-testid='button-retry'
-                      >
-                        {t(key('request.retry'))}
-                      </Button>
-                    </div>
+                <span data-testid='request-message'>
+                  {request.data.message}
+                </span>{' '}
+                ({t(key('request.checked-at'))} <TimeStamp date={request.at} />)
+              </Alert>
+            )}
+            {request.state === 'error' && (
+              <Alert
+                severity='error'
+                title={t(key(`request.errors.${request.key}-title`))}
+                data-testid='request-error'
+                data-error={request.key}
+              >
+                <div className='flex flex-col gap-2'>
+                  <p>
+                    {t(key(`request.errors.${request.key}`))}{' '}
+                    {t(key('request.attempt'), { attempt: request.attempt })}
+                  </p>
+                  <div>
+                    <Button
+                      variant='secondary'
+                      onClick={() => {
+                        void loadStatus()
+                      }}
+                      data-testid='button-retry'
+                    >
+                      {t(key('request.retry'))}
+                    </Button>
                   </div>
-                </Alert>
-              )}
-            </div>
-          </section>
+                </div>
+              </Alert>
+            )}
+          </div>
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('events.title'))}</CardTitle>
-            <p>{t(key('events.explanation'))}</p>
-            <ol
-              className='flex flex-col gap-1'
-              aria-live='polite'
-              data-testid='event-list'
-            >
-              {events.map((item) => (
-                <li
-                  key={item.id}
-                  className='flex gap-2'
-                  data-testid='event-item'
-                  data-type={item.type}
-                >
-                  <TimeStamp date={item.at} testId='event-time' />
-                  <span>{t(key(`events.types.${item.type}`))}</span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        </div>
+        <ScenarioSection>
+          <CardTitle>{t(key('events.title'))}</CardTitle>
+          <p>{t(key('events.explanation'))}</p>
+          <ol
+            className='flex flex-col gap-1'
+            aria-live='polite'
+            data-testid='event-list'
+          >
+            {events.map((item) => (
+              <li
+                key={item.id}
+                className='flex gap-2'
+                data-testid='event-item'
+                data-type={item.type}
+              >
+                <TimeStamp date={item.at} testId='event-time' />
+                <span>{t(key(`events.types.${item.type}`))}</span>
+              </li>
+            ))}
+          </ol>
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )

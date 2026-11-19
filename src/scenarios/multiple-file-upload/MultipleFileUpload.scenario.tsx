@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import Alert from '../../components/Alert'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import type { FormattedSize, Rejection } from './fileUpload'
 import {
   ACCEPT,
@@ -63,7 +64,7 @@ const MultipleFiles = (): JSX.Element => {
   const [files, setFiles] = useState<File[]>([])
 
   return (
-    <section className='flex flex-col gap-4' aria-labelledby='multiple-title'>
+    <ScenarioSection aria-labelledby='multiple-title'>
       <CardTitle id='multiple-title'>{t(key('multiple.title'))}</CardTitle>
       <p className='text-sm'>{t(key('multiple.instructions'))}</p>
       <div className='flex flex-col gap-2'>
@@ -107,7 +108,7 @@ const MultipleFiles = (): JSX.Element => {
           ))}
         </ul>
       )}
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -222,7 +223,7 @@ const DropZone = (): JSX.Element => {
   }
 
   return (
-    <section className='flex flex-col gap-4' aria-labelledby='drop-zone-title'>
+    <ScenarioSection aria-labelledby='drop-zone-title'>
       <CardTitle id='drop-zone-title'>{t(key('drop-zone.title'))}</CardTitle>
       <p className='text-sm'>
         {t(key('drop-zone.instructions'), { max: size(MAX_FILE_SIZE) })}
@@ -383,7 +384,7 @@ const DropZone = (): JSX.Element => {
           })}
         </Alert>
       )}
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -398,11 +399,10 @@ const MultipleFileUpload = (): JSX.Element => {
         information={translateInformation(t, key('information'), {
           max: size(MAX_FILE_SIZE),
         })}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <MultipleFiles />
-          <DropZone />
-        </div>
+        <MultipleFiles />
+        <DropZone />
       </PageSetup>
     </Layout>
   )

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { SLUG } from './meta'
 
@@ -41,7 +42,6 @@ type Interaction =
   | { type: 'hold-early' }
   | { type: 'button'; button: MouseButton; modifiers: Modifier[] }
 
-const sectionClasses = 'flex flex-col gap-4'
 const targetClasses = [
   'w-fit rounded-lg border-2 px-6 py-4 font-semibold select-none',
   'border-border dark:border-border-dark',
@@ -241,192 +241,191 @@ const MouseInteractions = (): JSX.Element => {
         title={t(`scenarios.${SLUG}.title`)}
         description={t(`scenarios.${SLUG}.description`)}
         information={translateInformation(t, `scenarios.${SLUG}.information`)}
+        sections
       >
-        <div className='flex flex-col gap-10'>
-          <section
-            className='flex flex-col gap-2 rounded-lg border-2 border-brandGreen-100 p-4'
-            aria-labelledby='last-interaction-title'
+        <ScenarioSection
+          className='gap-2 border-2 border-brandGreen-100 dark:border-brandGreen-100'
+          aria-labelledby='last-interaction-title'
+        >
+          <CardTitle id='last-interaction-title'>
+            {t(`scenarios.${SLUG}.result.title`)}
+          </CardTitle>
+          <p aria-live='polite' data-testid='last-interaction'>
+            {describeInteraction(lastInteraction)}
+          </p>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(`scenarios.${SLUG}.double-click.title`)}</CardTitle>
+          <p className='text-sm'>
+            {t(`scenarios.${SLUG}.double-click.instructions`)}
+          </p>
+          <div
+            onDoubleClick={doubleClick}
+            className={targetClasses}
+            data-testid='double-click-target'
           >
-            <CardTitle id='last-interaction-title'>
-              {t(`scenarios.${SLUG}.result.title`)}
-            </CardTitle>
-            <p aria-live='polite' data-testid='last-interaction'>
-              {describeInteraction(lastInteraction)}
-            </p>
-          </section>
+            {t(`scenarios.${SLUG}.double-click.label`)}
+          </div>
+          <p data-testid='double-click-count'>
+            {t(`scenarios.${SLUG}.double-click.count`, {
+              count: doubleClicks,
+            })}
+          </p>
+        </ScenarioSection>
 
-          <section className={sectionClasses}>
-            <CardTitle>{t(`scenarios.${SLUG}.double-click.title`)}</CardTitle>
-            <p className='text-sm'>
-              {t(`scenarios.${SLUG}.double-click.instructions`)}
-            </p>
-            <div
-              onDoubleClick={doubleClick}
-              className={targetClasses}
-              data-testid='double-click-target'
-            >
-              {t(`scenarios.${SLUG}.double-click.label`)}
-            </div>
-            <p data-testid='double-click-count'>
-              {t(`scenarios.${SLUG}.double-click.count`, {
-                count: doubleClicks,
-              })}
-            </p>
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(`scenarios.${SLUG}.context-menu.title`)}</CardTitle>
-            <p className='text-sm'>
-              {t(`scenarios.${SLUG}.context-menu.instructions`)}
-            </p>
-            {deleted ? (
-              <div className='flex flex-wrap items-center gap-4'>
-                <p data-testid='note-deleted'>
-                  {t(`scenarios.${SLUG}.context-menu.deleted`)}
-                </p>
-                <Button size='xs' variant='secondary' onClick={restoreNote}>
-                  {t(`scenarios.${SLUG}.context-menu.restore`)}
-                </Button>
-              </div>
-            ) : (
-              <div
-                ref={noteRef}
-                tabIndex={0}
-                onContextMenu={openMenu}
-                aria-haspopup='menu'
-                aria-expanded={menuPosition !== null}
-                className={[
-                  'flex w-72 flex-col gap-2 rounded-lg border-2 p-4 select-none',
-                  highlighted
-                    ? 'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark'
-                    : 'border-border dark:border-border-dark',
-                  'focus-visible:shadow-brandGreen focus-visible:outline-hidden dark:focus-visible:shadow-brandGreen10',
-                ].join(' ')}
-                data-testid='note'
-                data-pinned={pinned}
-                data-highlighted={highlighted}
-              >
-                <span>{t(`scenarios.${SLUG}.context-menu.note`)}</span>
-                <span className='flex gap-2 text-xs'>
-                  {pinned && (
-                    <span data-testid='note-pinned'>
-                      {t(`scenarios.${SLUG}.context-menu.pinned`)}
-                    </span>
-                  )}
-                  {highlighted && (
-                    <span data-testid='note-highlighted'>
-                      {t(`scenarios.${SLUG}.context-menu.highlighted`)}
-                    </span>
-                  )}
-                </span>
-              </div>
-            )}
-            {menuPosition !== null && (
-              <ul
-                ref={menuRef}
-                role='menu'
-                aria-label={t(`scenarios.${SLUG}.context-menu.menu-label`)}
-                onKeyDown={menuKeyDown}
-                // Right-clicking the menu itself should not open the
-                // browser's menu on top of it
-                onContextMenu={(event) => event.preventDefault()}
-                style={{ left: menuPosition.x, top: menuPosition.y }}
-                className='fixed z-50 flex min-w-44 flex-col rounded-lg border-2 border-border bg-background py-1 shadow-lg dark:border-border-dark dark:bg-background-dark'
-                data-testid='context-menu'
-              >
-                {menuActions.map((action) => (
-                  <li key={action} role='none'>
-                    <button
-                      type='button'
-                      role='menuitem'
-                      tabIndex={-1}
-                      onClick={() => chooseAction(action)}
-                      className='w-full px-4 py-2 text-left hover:bg-grey-200 focus:bg-grey-200 focus:outline-hidden dark:hover:bg-background-alt-dark dark:focus:bg-background-alt-dark'
-                      data-testid={`context-menu-${action}`}
-                    >
-                      {t(`scenarios.${SLUG}.context-menu.actions.${action}`)}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(`scenarios.${SLUG}.hold.title`)}</CardTitle>
-            <p className='text-sm'>
-              {t(`scenarios.${SLUG}.hold.instructions`, {
-                seconds: HOLD_DURATION / 1000,
-              })}
-            </p>
-            <button
-              type='button'
-              onMouseDown={startHold}
-              onMouseUp={endHold}
-              onMouseLeave={endHold}
-              aria-pressed={holdState === 'holding'}
-              className={[
-                targetClasses,
-                holdState === 'holding' &&
-                  'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              data-testid='hold-button'
-            >
-              {t(`scenarios.${SLUG}.hold.label`)}
-            </button>
-            <ProgressBar
-              aria-label={t(`scenarios.${SLUG}.hold.progress`)}
-              value={holdPercent}
-              className='w-72'
-              data-testid='hold-progress'
-            />
-            <p aria-live='polite' data-testid='hold-result'>
-              {t(`scenarios.${SLUG}.hold.state.${holdState}`)}
-            </p>
-          </section>
-
-          <section className={sectionClasses}>
-            <CardTitle>{t(`scenarios.${SLUG}.buttons.title`)}</CardTitle>
-            <p className='text-sm'>
-              {t(`scenarios.${SLUG}.buttons.instructions`)}
-            </p>
-            <div
-              onMouseDown={readButton}
-              // Chromium navigates on mouseup, others may on auxclick
-              onMouseUp={cancelHistoryButton}
-              onAuxClick={cancelHistoryButton}
-              // Right-clicks are reported here, not answered with a menu
-              onContextMenu={(event) => event.preventDefault()}
-              className={targetClasses}
-              data-testid='button-target'
-            >
-              {t(`scenarios.${SLUG}.buttons.label`)}
-            </div>
-            {buttonPress === null ? (
-              <p data-testid='button-result'>
-                {t(`scenarios.${SLUG}.buttons.none`)}
+        <ScenarioSection>
+          <CardTitle>{t(`scenarios.${SLUG}.context-menu.title`)}</CardTitle>
+          <p className='text-sm'>
+            {t(`scenarios.${SLUG}.context-menu.instructions`)}
+          </p>
+          {deleted ? (
+            <div className='flex flex-wrap items-center gap-4'>
+              <p data-testid='note-deleted'>
+                {t(`scenarios.${SLUG}.context-menu.deleted`)}
               </p>
-            ) : (
-              <dl
-                className='grid grid-cols-[auto_1fr] gap-x-4 text-sm'
-                data-testid='button-result'
-              >
-                <dt>{t(`scenarios.${SLUG}.buttons.button`)}</dt>
-                <dd data-testid='button-result-button'>
-                  {buttonName(buttonPress.button)}
-                </dd>
-                <dt>{t(`scenarios.${SLUG}.buttons.modifiers`)}</dt>
-                <dd data-testid='button-result-modifiers'>
-                  {buttonPress.modifiers.length === 0
-                    ? t(`scenarios.${SLUG}.buttons.no-modifiers`)
-                    : buttonPress.modifiers.join(' + ')}
-                </dd>
-              </dl>
-            )}
-          </section>
-        </div>
+              <Button size='xs' variant='secondary' onClick={restoreNote}>
+                {t(`scenarios.${SLUG}.context-menu.restore`)}
+              </Button>
+            </div>
+          ) : (
+            <div
+              ref={noteRef}
+              tabIndex={0}
+              onContextMenu={openMenu}
+              aria-haspopup='menu'
+              aria-expanded={menuPosition !== null}
+              className={[
+                'flex w-72 flex-col gap-2 rounded-lg border-2 p-4 select-none',
+                highlighted
+                  ? 'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark'
+                  : 'border-border dark:border-border-dark',
+                'focus-visible:shadow-brandGreen focus-visible:outline-hidden dark:focus-visible:shadow-brandGreen10',
+              ].join(' ')}
+              data-testid='note'
+              data-pinned={pinned}
+              data-highlighted={highlighted}
+            >
+              <span>{t(`scenarios.${SLUG}.context-menu.note`)}</span>
+              <span className='flex gap-2 text-xs'>
+                {pinned && (
+                  <span data-testid='note-pinned'>
+                    {t(`scenarios.${SLUG}.context-menu.pinned`)}
+                  </span>
+                )}
+                {highlighted && (
+                  <span data-testid='note-highlighted'>
+                    {t(`scenarios.${SLUG}.context-menu.highlighted`)}
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
+          {menuPosition !== null && (
+            <ul
+              ref={menuRef}
+              role='menu'
+              aria-label={t(`scenarios.${SLUG}.context-menu.menu-label`)}
+              onKeyDown={menuKeyDown}
+              // Right-clicking the menu itself should not open the
+              // browser's menu on top of it
+              onContextMenu={(event) => event.preventDefault()}
+              style={{ left: menuPosition.x, top: menuPosition.y }}
+              className='fixed z-50 flex min-w-44 flex-col rounded-lg border-2 border-border bg-background py-1 shadow-lg dark:border-border-dark dark:bg-background-dark'
+              data-testid='context-menu'
+            >
+              {menuActions.map((action) => (
+                <li key={action} role='none'>
+                  <button
+                    type='button'
+                    role='menuitem'
+                    tabIndex={-1}
+                    onClick={() => chooseAction(action)}
+                    className='w-full px-4 py-2 text-left hover:bg-grey-200 focus:bg-grey-200 focus:outline-hidden dark:hover:bg-background-alt-dark dark:focus:bg-background-alt-dark'
+                    data-testid={`context-menu-${action}`}
+                  >
+                    {t(`scenarios.${SLUG}.context-menu.actions.${action}`)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(`scenarios.${SLUG}.hold.title`)}</CardTitle>
+          <p className='text-sm'>
+            {t(`scenarios.${SLUG}.hold.instructions`, {
+              seconds: HOLD_DURATION / 1000,
+            })}
+          </p>
+          <button
+            type='button'
+            onMouseDown={startHold}
+            onMouseUp={endHold}
+            onMouseLeave={endHold}
+            aria-pressed={holdState === 'holding'}
+            className={[
+              targetClasses,
+              holdState === 'holding' &&
+                'border-brandGreen-100 bg-grey-200 dark:bg-background-alt-dark',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            data-testid='hold-button'
+          >
+            {t(`scenarios.${SLUG}.hold.label`)}
+          </button>
+          <ProgressBar
+            aria-label={t(`scenarios.${SLUG}.hold.progress`)}
+            value={holdPercent}
+            className='w-72'
+            data-testid='hold-progress'
+          />
+          <p aria-live='polite' data-testid='hold-result'>
+            {t(`scenarios.${SLUG}.hold.state.${holdState}`)}
+          </p>
+        </ScenarioSection>
+
+        <ScenarioSection>
+          <CardTitle>{t(`scenarios.${SLUG}.buttons.title`)}</CardTitle>
+          <p className='text-sm'>
+            {t(`scenarios.${SLUG}.buttons.instructions`)}
+          </p>
+          <div
+            onMouseDown={readButton}
+            // Chromium navigates on mouseup, others may on auxclick
+            onMouseUp={cancelHistoryButton}
+            onAuxClick={cancelHistoryButton}
+            // Right-clicks are reported here, not answered with a menu
+            onContextMenu={(event) => event.preventDefault()}
+            className={targetClasses}
+            data-testid='button-target'
+          >
+            {t(`scenarios.${SLUG}.buttons.label`)}
+          </div>
+          {buttonPress === null ? (
+            <p data-testid='button-result'>
+              {t(`scenarios.${SLUG}.buttons.none`)}
+            </p>
+          ) : (
+            <dl
+              className='grid grid-cols-[auto_1fr] gap-x-4 text-sm'
+              data-testid='button-result'
+            >
+              <dt>{t(`scenarios.${SLUG}.buttons.button`)}</dt>
+              <dd data-testid='button-result-button'>
+                {buttonName(buttonPress.button)}
+              </dd>
+              <dt>{t(`scenarios.${SLUG}.buttons.modifiers`)}</dt>
+              <dd data-testid='button-result-modifiers'>
+                {buttonPress.modifiers.length === 0
+                  ? t(`scenarios.${SLUG}.buttons.no-modifiers`)
+                  : buttonPress.modifiers.join(' + ')}
+              </dd>
+            </dl>
+          )}
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )

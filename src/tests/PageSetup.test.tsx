@@ -8,6 +8,7 @@ import '@testing-library/jest-dom'
 import { switchLanguage } from './switchLanguage'
 import TestRenderer from './TestRenderer'
 import PageSetup from '../components/PageSetup'
+import ScenarioSection from '../components/ScenarioSection'
 
 describe('PageSetup', () => {
   it('takes the back link to the main page within the app', async () => {
@@ -79,6 +80,35 @@ describe('PageSetup', () => {
     )
 
     expect(screen.getByText('bold').tagName).toBe('STRONG')
+  })
+
+  it('holds the whole playground in one card by default', () => {
+    TestRenderer(
+      <PageSetup title='A scenario' description='A description'>
+        <p>Scenario content</p>
+      </PageSetup>,
+    )
+
+    const playground = screen.getByRole('main', { name: 'Playground' })
+    const content = screen.getByText('Scenario content')
+    expect(playground.children).toHaveLength(1)
+    expect(playground.firstElementChild).not.toBe(content)
+    expect(playground.firstElementChild).toContainElement(content)
+  })
+
+  it('puts each section of a sectioned playground straight on the page', () => {
+    TestRenderer(
+      <PageSetup title='A scenario' description='A description' sections>
+        <ScenarioSection aria-label='First set'>First</ScenarioSection>
+        <ScenarioSection aria-label='Second set'>Second</ScenarioSection>
+      </PageSetup>,
+    )
+
+    const playground = screen.getByRole('main', { name: 'Playground' })
+    expect([...playground.children]).toEqual([
+      screen.getByRole('region', { name: 'First set' }),
+      screen.getByRole('region', { name: 'Second set' }),
+    ])
   })
 
   describe('when the language changes', () => {

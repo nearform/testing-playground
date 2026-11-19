@@ -10,6 +10,7 @@ import React, {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import ScenarioSection from '../../components/ScenarioSection'
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
 import { translateInformation } from '../../utils/information'
@@ -115,9 +116,8 @@ const ABSOLUTE_FORMAT: Intl.DateTimeFormatOptions = {
   timeStyle: 'medium',
 }
 
-const sectionClasses = 'flex flex-col gap-4'
 const boxClasses =
-  'flex flex-col gap-3 rounded-lg border-2 border-border p-4 dark:border-border-dark'
+  'flex flex-col gap-3 rounded-lg border border-border p-4 dark:border-border-dark'
 
 const ClockSection = (): JSX.Element => {
   const { t } = useTranslation()
@@ -130,7 +130,7 @@ const ClockSection = (): JSX.Element => {
     hoursFormat.format(new Date(2000, 0, 1, hour))
 
   return (
-    <section className={sectionClasses} aria-labelledby='clock-title'>
+    <ScenarioSection aria-labelledby='clock-title'>
       <CardTitle id='clock-title'>{t(key('clock.title'))}</CardTitle>
       <p className='text-sm'>{t(key('clock.instructions'))}</p>
       <div className={boxClasses}>
@@ -166,7 +166,7 @@ const ClockSection = (): JSX.Element => {
           })}
         </p>
       </div>
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -184,7 +184,7 @@ const CountdownSection = (): JSX.Element => {
   else if (expired) status = t(key('countdown.expired'))
 
   return (
-    <section className={sectionClasses} aria-labelledby='countdown-title'>
+    <ScenarioSection aria-labelledby='countdown-title'>
       <CardTitle id='countdown-title'>{t(key('countdown.title'))}</CardTitle>
       <p className='text-sm'>{t(key('countdown.instructions'))}</p>
       <div className={boxClasses}>
@@ -218,7 +218,7 @@ const CountdownSection = (): JSX.Element => {
           </Button>
         </div>
       </div>
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -274,7 +274,7 @@ const SessionSection = (): JSX.Element => {
   }
 
   return (
-    <section className={sectionClasses} aria-labelledby='session-title'>
+    <ScenarioSection aria-labelledby='session-title'>
       <CardTitle id='session-title'>{t(key('session.title'))}</CardTitle>
       <p className='text-sm'>
         {t(key('session.instructions'), {
@@ -328,7 +328,7 @@ const SessionSection = (): JSX.Element => {
           </div>
         </div>
       )}
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -359,7 +359,7 @@ const RelativeSection = (): JSX.Element => {
   }
 
   return (
-    <section className={sectionClasses} aria-labelledby='relative-title'>
+    <ScenarioSection aria-labelledby='relative-title'>
       <CardTitle id='relative-title'>{t(key('relative.title'))}</CardTitle>
       <p className='text-sm'>{t(key('relative.instructions'))}</p>
       <div className={boxClasses}>
@@ -395,7 +395,7 @@ const RelativeSection = (): JSX.Element => {
           ))}
         </ul>
       </div>
-    </section>
+    </ScenarioSection>
   )
 }
 
@@ -546,20 +546,19 @@ const TimeAndTimers = (): JSX.Element => {
           title={t(key('title'))}
           description={t(key('description'))}
           information={translateInformation(t, key('information'))}
+          sections
         >
-          <div className='flex flex-col gap-10'>
-            <ClockSection />
-            <CountdownSection />
-            <SessionSection />
-            <RelativeSection />
-            <section className={sectionClasses}>
-              <CardTitle>{t(key('rate.title'))}</CardTitle>
-              <div className='grid gap-6 md:grid-cols-2'>
-                <DebounceSection />
-                <ThrottleSection />
-              </div>
-            </section>
-          </div>
+          <ClockSection />
+          <CountdownSection />
+          <SessionSection />
+          <RelativeSection />
+          <ScenarioSection>
+            <CardTitle>{t(key('rate.title'))}</CardTitle>
+            <div className='grid gap-6 md:grid-cols-2'>
+              <DebounceSection />
+              <ThrottleSection />
+            </div>
+          </ScenarioSection>
         </PageSetup>
       </Layout>
     </ClockProvider>

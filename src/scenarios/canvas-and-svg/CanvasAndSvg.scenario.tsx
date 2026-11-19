@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { useNumberFormat } from '../../utils/locale'
 import type { ChartLayout, Point, Size } from './canvas'
@@ -194,9 +195,8 @@ interface PanelProps {
 }
 
 const Panel = ({ id, title, intro, children }: PanelProps): JSX.Element => (
-  <section
+  <ScenarioSection
     aria-labelledby={`${id}-title`}
-    className='flex flex-col gap-4'
     data-testid={`section-${id}`}
   >
     <CardTitle asChild>
@@ -204,7 +204,7 @@ const Panel = ({ id, title, intro, children }: PanelProps): JSX.Element => (
     </CardTitle>
     <p>{intro}</p>
     {children}
-  </section>
+  </ScenarioSection>
 )
 
 // The canvases keep their size on small screens and scroll sideways instead,
@@ -612,13 +612,12 @@ const CanvasAndSvg = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <DrawingPad />
-          <BarChart />
-          <TargetGame />
-          <DistrictMap />
-        </div>
+        <DrawingPad />
+        <BarChart />
+        <TargetGame />
+        <DistrictMap />
       </PageSetup>
     </Layout>
   )

@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   CardTitle,
   CodeBlock,
   Link,
@@ -11,6 +12,7 @@ import { Link as RouterLink } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import PageSetup from '../../components/PageSetup'
+import ScenarioSection from '../../components/ScenarioSection'
 import { translateInformation } from '../../utils/information'
 import { SLUG } from './meta'
 
@@ -256,13 +258,10 @@ const BrokenImagesAndLinks = (): JSX.Element => {
         title={t(key('title'))}
         description={t(key('description'))}
         information={translateInformation(t, key('information'))}
+        sections
       >
-        <div className='flex flex-col gap-8'>
-          <nav
-            aria-labelledby='on-this-page'
-            className='flex flex-col gap-2'
-            data-testid='on-this-page'
-          >
+        <Card asChild className='flex flex-col gap-2 md:p-6'>
+          <nav aria-labelledby='on-this-page' data-testid='on-this-page'>
             <h2 id='on-this-page' className='font-semibold'>
               {t(key('nav.title'))}
             </h2>
@@ -272,93 +271,93 @@ const BrokenImagesAndLinks = (): JSX.Element => {
               ))}
             </ul>
           </nav>
+        </Card>
 
-          <section id='images' className='flex flex-col gap-4'>
-            <CardTitle>{t(key('images.title'))}</CardTitle>
-            <p>{t(key('images.explanation'))}</p>
-            <div className='flex flex-wrap gap-6'>
-              {GALLERY.map((image) => renderImage(image))}
+        <ScenarioSection id='images'>
+          <CardTitle>{t(key('images.title'))}</CardTitle>
+          <p>{t(key('images.explanation'))}</p>
+          <div className='flex flex-wrap gap-6'>
+            {GALLERY.map((image) => renderImage(image))}
+          </div>
+          <div className='flex flex-col gap-2'>
+            <div>
+              <Button
+                variant='primary'
+                onClick={checkImages}
+                data-testid='button-check-images'
+              >
+                {t(key('check.button'))}
+              </Button>
             </div>
-            <div className='flex flex-col gap-2'>
-              <div>
-                <Button
-                  variant='primary'
-                  onClick={checkImages}
-                  data-testid='button-check-images'
-                >
-                  {t(key('check.button'))}
-                </Button>
-              </div>
-              {results !== null && (
-                <ul
-                  aria-live='polite'
-                  className='flex flex-col gap-1'
-                  data-testid='image-results'
-                >
-                  {results.map(([id, status]) => (
-                    <li
-                      key={id}
-                      data-testid={`result-${id}`}
-                      data-status={status}
-                    >
-                      <span className='font-semibold'>
-                        {t(key(`images.${id}.caption`))}
-                      </span>
-                      : {t(key(`check.status.${status}`))}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </section>
+            {results !== null && (
+              <ul
+                aria-live='polite'
+                className='flex flex-col gap-1'
+                data-testid='image-results'
+              >
+                {results.map(([id, status]) => (
+                  <li
+                    key={id}
+                    data-testid={`result-${id}`}
+                    data-status={status}
+                  >
+                    <span className='font-semibold'>
+                      {t(key(`images.${id}.caption`))}
+                    </span>
+                    : {t(key(`check.status.${status}`))}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </ScenarioSection>
 
-          <section id='links' className='flex flex-col gap-4'>
-            <CardTitle>{t(key('links.title'))}</CardTitle>
-            <p>{t(key('links.explanation'))}</p>
-            <ul className='flex flex-col gap-2'>
-              {pageLinks.map((link) => (
-                <li key={link.id} className='flex flex-wrap gap-x-2'>
-                  {renderLink(link)}
-                  <span className='text-sm'>
-                    ({t(key(`links.kind.${link.kind}`))})
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
+        <ScenarioSection id='links'>
+          <CardTitle>{t(key('links.title'))}</CardTitle>
+          <p>{t(key('links.explanation'))}</p>
+          <ul className='flex flex-col gap-2'>
+            {pageLinks.map((link) => (
+              <li key={link.id} className='flex flex-wrap gap-x-2'>
+                {renderLink(link)}
+                <span className='text-sm'>
+                  ({t(key(`links.kind.${link.kind}`))})
+                </span>
+              </li>
+            ))}
+          </ul>
+        </ScenarioSection>
 
-          <section className='flex flex-col gap-4'>
-            <CardTitle>{t(key('snippets.title'))}</CardTitle>
-            <p>{t(key('snippets.explanation'))}</p>
-            <CodeBlock
-              label='Playwright'
-              language='ts'
-              data-testid='snippet-playwright'
-            >
-              {playwrightSnippet}
-            </CodeBlock>
-            <CodeBlock
-              label='Cypress'
-              language='js'
-              data-testid='snippet-cypress'
-            >
-              {cypressSnippet}
-            </CodeBlock>
-          </section>
-
-          <p
-            className='flex min-h-[100vh] items-end border-l-4 border-grey-400 pl-4'
-            data-testid='scroll-hint'
+        <ScenarioSection>
+          <CardTitle>{t(key('snippets.title'))}</CardTitle>
+          <p>{t(key('snippets.explanation'))}</p>
+          <CodeBlock
+            label='Playwright'
+            language='ts'
+            data-testid='snippet-playwright'
           >
-            {t(key('lazy.scroll-hint'))}
-          </p>
+            {playwrightSnippet}
+          </CodeBlock>
+          <CodeBlock
+            label='Cypress'
+            language='js'
+            data-testid='snippet-cypress'
+          >
+            {cypressSnippet}
+          </CodeBlock>
+        </ScenarioSection>
 
-          <section id='lazy-image' className='flex flex-col gap-4'>
-            <CardTitle>{t(key('lazy.title'))}</CardTitle>
-            <p>{t(key('lazy.explanation'))}</p>
-            {renderImage(LAZY_IMAGE, true)}
-          </section>
-        </div>
+        <p
+          className='flex min-h-[100vh] items-end border-l-4 border-grey-400 pl-4'
+          data-testid='scroll-hint'
+        >
+          {t(key('lazy.scroll-hint'))}
+        </p>
+
+        <ScenarioSection id='lazy-image'>
+          <CardTitle>{t(key('lazy.title'))}</CardTitle>
+          <p>{t(key('lazy.explanation'))}</p>
+          {renderImage(LAZY_IMAGE, true)}
+        </ScenarioSection>
       </PageSetup>
     </Layout>
   )
