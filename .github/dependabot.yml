@@ -4,7 +4,37 @@ updates:
     directory: '/'
     schedule:
       interval: 'monthly'
+    # An update joins the first group it matches. Majors of packages that
+    # have to move together come as one PR each, for a person to review;
+    # every other minor and patch update comes as a single PR, which the
+    # Dependabot PRs workflow approves and merges once the tests pass.
+    # Majors of anything else still come one PR per package.
+    groups:
+      vite:
+        patterns: ['vite', '@vitejs/*']
+        update-types: ['major']
+      # jest-dom's matchers are typed for one Vitest major at a time
+      vitest:
+        patterns: ['vitest', '@vitest/*', 'jsdom', '@testing-library/jest-dom']
+        update-types: ['major']
+      react:
+        patterns: ['react', 'react-dom', '@types/react', '@types/react-dom']
+        update-types: ['major']
+      i18next:
+        patterns: ['i18next', 'react-i18next']
+        update-types: ['major']
+      tailwind:
+        patterns: ['tailwindcss', '@tailwindcss/*']
+        update-types: ['major']
+      minor-and-patch:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'monthly'
+    # As for npm: minor and patch updates together, majors one PR each
+    groups:
+      actions:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
