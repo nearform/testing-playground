@@ -73,6 +73,10 @@ const lazyTranslations: BackendModule = {
   },
 }
 
+// i18next's own changeLanguage, before it is wrapped below to remember the
+// language chosen
+const originalChangeLanguage = i18n.changeLanguage.bind(i18n)
+
 i18n
   .use(lazyTranslations)
   .use(initReactI18next)
@@ -90,9 +94,10 @@ i18n
   })
   .then(() => {
     // A saved language whose texts could not be downloaded falls back to
-    // English rather than showing every text as its key
+    // English rather than showing every text as its key. The saved language
+    // is kept, so the next visit tries it again.
     if (!i18n.hasResourceBundle(i18n.language, 'translation')) {
-      return i18n.changeLanguage('en')
+      return originalChangeLanguage('en')
     }
   })
   .catch((e) => {
@@ -112,7 +117,6 @@ const saveLanguage = (language: string): void => {
 // A language's texts are downloaded before i18next is asked to switch to it,
 // so if the download fails the page stays as it was, rather than switching to
 // a language with no texts and showing their keys
-const originalChangeLanguage = i18n.changeLanguage.bind(i18n)
 i18n.changeLanguage = async (...args) => {
   const [language] = args
   if (

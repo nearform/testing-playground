@@ -60,6 +60,7 @@ describe('i18n changeLanguage', () => {
 
 describe('when the app starts with a saved language', () => {
   afterEach(() => {
+    vi.doUnmock('../i18n/languages/fr')
     localStorage.removeItem(LANGUAGE_KEY)
     vi.resetModules()
   })
@@ -83,10 +84,26 @@ describe('when the app starts with a saved language', () => {
 
     const { default: freshI18n } = await import('../i18n/i18nConfig')
 
+    // Its texts download first
     await vi.waitFor(() => {
-      expect(freshI18n.language).toBe('fr')
+      expect(freshI18n.t('common.language')).toBe('Langue')
     })
-    expect(freshI18n.t('common.language')).not.toBe('common.language')
+    expect(freshI18n.language).toBe('fr')
+  })
+
+  it('falls back to English, still remembering it, when its texts cannot be downloaded', async () => {
+    localStorage.setItem(LANGUAGE_KEY, 'fr')
+    vi.resetModules()
+    vi.doMock('../i18n/languages/fr', () => {
+      throw new Error('Offline')
+    })
+
+    const { default: freshI18n } = await import('../i18n/i18nConfig')
+
+    await vi.waitFor(() => {
+      expect(freshI18n.language).toBe('en')
+    })
+    expect(localStorage.getItem(LANGUAGE_KEY)).toBe('fr')
   })
 })
 

@@ -20,5 +20,10 @@ export default defineConfig({
     // jsdom's storage, as in a browser. (The --experimental- spelling is the
     // one Node 22 and 24 know too.)
     execArgv: ['--no-experimental-webstorage'],
+    // i18next keeps one shared instance, so these are loaded as the app's own
+    // modules are: a test that reloads the app with vi.resetModules then
+    // starts a fresh instance, as a visitor opening the page does, rather
+    // than one still holding the texts and changes of earlier tests
+    server: { deps: { inline: ['i18next', 'react-i18next'] } },
   },
 })
