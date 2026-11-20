@@ -71,7 +71,57 @@ describe('when the app starts with a saved language', () => {
 
     await import('../i18n/i18nConfig')
 
-    expect(document.documentElement).toHaveAttribute('lang', 'pt-BR')
+    // Its texts download first
+    await vi.waitFor(() => {
+      expect(document.documentElement).toHaveAttribute('lang', 'pt-BR')
+    })
+  })
+
+  it('starts with its texts rather than their keys', async () => {
+    localStorage.setItem(LANGUAGE_KEY, 'fr')
+    vi.resetModules()
+
+    const { default: freshI18n } = await import('../i18n/i18nConfig')
+
+    await vi.waitFor(() => {
+      expect(freshI18n.language).toBe('fr')
+    })
+    expect(freshI18n.t('common.language')).not.toBe('common.language')
+  })
+})
+
+describe('loading a language when it is chosen', () => {
+  afterEach(async () => {
+    vi.doUnmock('../i18n/languages/fr')
+    vi.resetModules()
+    await i18n.changeLanguage('en')
+    localStorage.removeItem(LANGUAGE_KEY)
+  })
+
+  it('switches only once the texts of the new language are in', async () => {
+    const loadedWhenSwitched: boolean[] = []
+    const listener = (language: string) => {
+      loadedWhenSwitched.push(i18n.hasResourceBundle(language, 'translation'))
+    }
+    i18n.on('languageChanged', listener)
+
+    await i18n.changeLanguage('ptBr')
+    i18n.off('languageChanged', listener)
+
+    expect(loadedWhenSwitched).toEqual([true])
+  })
+
+  it('stays in the current language when the new one cannot be downloaded', async () => {
+    vi.resetModules()
+    vi.doMock('../i18n/languages/fr', () => {
+      throw new Error('Offline')
+    })
+    const { default: freshI18n } = await import('../i18n/i18nConfig')
+
+    await expect(freshI18n.changeLanguage('fr')).rejects.toThrow()
+
+    expect(freshI18n.language).toBe('en')
+    expect(localStorage.getItem(LANGUAGE_KEY)).not.toBe('fr')
   })
 })
 

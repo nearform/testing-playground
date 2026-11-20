@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 
-import i18n from '../i18n/i18nConfig'
+import i18n, { LANGUAGES } from '../i18n/i18nConfig'
 
 // Every key path in a translation, such as scenarios.radio-button.title.
 // Scenario information is left out: its notes are parsed into a layout whose
@@ -14,17 +14,16 @@ const keyPaths = (value: unknown, prefix = ''): string[] =>
       )
     : [prefix]
 
-const languages = Object.keys(i18n.options.resources ?? {})
-
 describe('locale files', () => {
-  const english = keyPaths(i18n.getResourceBundle('en', 'translation')).sort()
+  // Only English is there from the start; the others load when chosen
+  beforeAll(() => i18n.loadLanguages(LANGUAGES))
 
-  it.each(languages.filter((language) => language !== 'en'))(
+  it.each(LANGUAGES.filter((language) => language !== 'en'))(
     'have the same texts in %s as in English',
     (language) => {
       expect(
         keyPaths(i18n.getResourceBundle(language, 'translation')).sort(),
-      ).toEqual(english)
+      ).toEqual(keyPaths(i18n.getResourceBundle('en', 'translation')).sort())
     },
   )
 })

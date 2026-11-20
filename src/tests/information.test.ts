@@ -1,7 +1,8 @@
 import i18next from 'i18next'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 
-import i18n, { withScenarios } from '../i18n/i18nConfig'
+import i18n from '../i18n/i18nConfig'
+import { withScenarios } from '../i18n/withScenarios'
 import { scenarios } from '../scenarios/list'
 import {
   parseInformation,
@@ -201,6 +202,9 @@ describe('withScenarios', () => {
       title: 'Hovers',
     })
   })
+
+  // Only English is there from the start; the others load when chosen
+  beforeAll(() => i18n.loadLanguages(LANGUAGES.map(({ language }) => language)))
 
   it.each(LANGUAGES)(
     'gives the app every $folder file, parsed, as its scenario information',
