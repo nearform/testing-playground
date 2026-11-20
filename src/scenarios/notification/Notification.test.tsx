@@ -1,6 +1,6 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import React from 'react'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import TestRenderer from '../../tests/TestRenderer'
 import { switchLanguage } from '../../tests/switchLanguage'
@@ -23,25 +23,32 @@ describe('Notification component', () => {
     })
   })
 
-  it(
-    'displays and hides the alert after a delay',
-    async () => {
+  describe('with fake timers', () => {
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('displays the toast and the alert until the duration has passed', () => {
+      vi.useFakeTimers()
       TestRenderer(<Notification />)
+
       fireEvent.click(screen.getByTestId('button-error'))
-      await waitFor(() => {
-        expect(screen.getByTestId('notification-error')).toBeInTheDocument()
+      expect(screen.getByTestId('notification-error')).toBeInTheDocument()
+      expect(screen.getByTestId('message-error')).toBeInTheDocument()
+
+      act(() => {
+        vi.advanceTimersByTime(NOTIFICATION_DURATION - 1)
       })
-      await waitFor(
-        () => {
-          expect(screen.queryByTestId('notification-error')).toBeNull()
-        },
-        // It shows for NOTIFICATION_DURATION of real time; the margin keeps a
-        // busy test run from failing when it closes a moment late
-        { timeout: NOTIFICATION_DURATION + 2000 },
-      )
-    },
-    NOTIFICATION_DURATION + 4000,
-  )
+      expect(screen.getByTestId('notification-error')).toBeInTheDocument()
+      expect(screen.getByTestId('message-error')).toBeInTheDocument()
+
+      act(() => {
+        vi.advanceTimersByTime(1)
+      })
+      expect(screen.queryByTestId('notification-error')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('message-error')).not.toBeInTheDocument()
+    })
+  })
 })
 
 describe('Notification when the language changes', () => {
