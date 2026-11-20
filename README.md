@@ -18,6 +18,13 @@ npm run lint  # oxlint
 npm run format:check  # Prettier, as CI checks it
 ```
 
+The git hooks run `npx lint-staged` before each commit and `npm test` before each push. Husky runs them with `sh`, not your interactive shell, so Node must be on `PATH` there too. If nvm is loaded lazily by your shell (for example by oh-my-zsh's nvm plugin), GUI git clients, IDEs and agents fail to commit with `npx: command not found`. To fix it, add this to `~/.config/husky/init.sh`, which husky runs before every hook:
+
+```sh
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+```
+
 ## To add a new scenario
 
 Each scenario is one folder in [scenarios](./src/scenarios), named after its slug, which holds everything that belongs to it:
